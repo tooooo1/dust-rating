@@ -18,6 +18,7 @@
     "web-vitals": "^2.1.4",
     "xml-js": "^1.6.11"
   },
+  "proxy": "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -15,7 +15,7 @@ export const GlobalStyle = createGlobalStyle`
 export const Title = styled.div`
     font-size : 8vh;
     font-weight : 1000;
-    margin : 0 0 1.5rem 0;
+    margin-bottom : 1.5rem;
     text-align: center;
     font-family: "Pretendard-Bold";
     color: white;
@@ -41,9 +41,6 @@ export const Text = styled.div`
     text-align: center;
     font-family: "Pretendard-SemiBold";
     color: white;
-    &#last {
-        margin-bottom: 4vh;
-    }
     @media only screen and (min-width: 768px) {
         font-size: 20px;
     }

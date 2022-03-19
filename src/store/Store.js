@@ -1,7 +1,30 @@
-import React, { createContext } from "react";
+import React, { createContext, useReducer } from "react";
 import axios from "axios";
 
+
+export const Context = createContext();
 let data = '';
+const initialState = {
+    place: '서울',
+}
+
+const reducer = (state, actions) => {
+    switch (actions.type) {
+        case "서울":
+            return {
+                ...state,
+                place: actions.value,
+            };
+        // case "ULTRA":
+        //     return {
+        //         ...state,
+        //         ultraDust: actions.value,
+        //     };
+        default:
+            throw new Error();
+    }
+};
+
 const API_KEY = process.env.REACT_APP_API_KEY;
 const url = 'http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty'; /*URL*/
 var queryParams = '?' + encodeURIComponent('sidoName') + '=' + encodeURIComponent('서울'); /**/
@@ -13,48 +36,27 @@ queryParams += '&' + encodeURIComponent('ver') + '=' + encodeURIComponent('1.0')
 console.log("https://cors-anywhere.herokuapp.com/" + url + queryParams);
 
 axios.get("https://cors-anywhere.herokuapp.com/" + url + queryParams)
-.then((response) => {
-    data = response.data;
-    console.log(data);
-    console.log(data.response.body.items[0].pm10Value);
-    console.log(data.response.body.items[0].pm25Value);
-})
-.catch((error) => {
-    console.log(error);
-})
+    .then((response) => {
+        data = response.data;
+        console.log(data);
+        console.log(data.response.body.items[0].pm10Value);
+        console.log(data.response.body.items[0].pm25Value);
+    })
+    .catch((error) => {
+        console.log(error);
+    })
 
-export const Context = createContext();
-// const initialState = {
-//     dust: data.list[0].pm10Value,
-//     ultraDust: data.list[0].pm25Value,
-// }
 
-// const reducer = (state, actions) => {
-//         switch (actions.type) {
-//             case "DUST":
-//                 return {
-//                     ...state,
-//                     dust: actions.value,
-//                 };
-//             case "ULTRA":
-//                 return {
-//                     ...state,
-//                     ultraDust: actions.value,
-//                 };
-//             default:
-//                 return state;
-//         }
-//     };
 
 const Store = ({ children }) => {
-    // const [state, contextDispatch] = useReducer(reducer, initialState);
-    const initialState = {
-    dust: data.list[0].pm10Value,
-    ultraDust: data.list[0].pm25Value,
-    }
+    const [state, contextDispatch] = useReducer(reducer, initialState);
 
     return (
-        <Context.Provider initialState={initialState}>{ children }</Context.Provider>
+        <Context.Provider
+            value={{ place: state.place, contextDispatch }}
+        >
+            {children}
+        </Context.Provider>
     );
 };
 

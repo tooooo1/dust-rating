@@ -9,20 +9,10 @@ const initialState = {
 }
 
 const reducer = (state, actions) => {
-    switch (actions.type) {
-        case '서울':
-            return {
-                ...state,
-                place: actions.value,
-            };
-        case '부산':
-            return {
-                ...state,
-                place: actions.value,
-            };
-        default:
-            throw new Error();
-    }
+        return {
+            ...state,
+            place: actions.value,
+        };
 };
 
 const API_KEY = process.env.REACT_APP_API_KEY;

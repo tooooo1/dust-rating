@@ -10,16 +10,16 @@ const initialState = {
 
 const reducer = (state, actions) => {
     switch (actions.type) {
-        case "서울":
+        case '서울':
             return {
                 ...state,
                 place: actions.value,
             };
-        // case "ULTRA":
-        //     return {
-        //         ...state,
-        //         ultraDust: actions.value,
-        //     };
+        case '부산':
+            return {
+                ...state,
+                place: actions.value,
+            };
         default:
             throw new Error();
     }
@@ -27,7 +27,7 @@ const reducer = (state, actions) => {
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const url = 'http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty'; /*URL*/
-var queryParams = '?' + encodeURIComponent('sidoName') + '=' + encodeURIComponent('서울'); /**/
+var queryParams = '?' + encodeURIComponent('sidoName') + '=' + encodeURIComponent(initialState.place); /**/
 queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
 queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /**/
 queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); /**/

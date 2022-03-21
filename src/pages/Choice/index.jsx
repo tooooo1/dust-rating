@@ -31,7 +31,7 @@ const Choice = () => {
                         ))
                     }
                 </Styled.Select>
-                <Button color={"skyblue"} onClick={()=>navigate("/result")}>검색</Button>
+                <Button color={"skyblue"} onClick={()=>navigate("/result")}>→</Button>
             </Styled.Center>
         </Positioner>
     )

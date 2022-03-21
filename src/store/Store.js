@@ -9,10 +9,10 @@ const initialState = {
 }
 
 const reducer = (state, actions) => {
-        return {
-            ...state,
-            place: actions.value,
-        };
+    return {
+        ...state,
+        place: actions.value,
+    };
 };
 
 const API_KEY = process.env.REACT_APP_API_KEY;

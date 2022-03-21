@@ -69,6 +69,7 @@ export const Text = styled.div`
 
 export const Dust = styled.div`
     font-size : 3vh;
+    margin-bottom: 1vh;
     text-align: center;
     font-family: "Pretendard-Bold";
     color: red;
@@ -92,6 +93,9 @@ export const Rating = styled.div`
 
 export const DustRating = styled.div`
     display: flex;
+    margin: 0 auto;
+    width: 70%;
+    justify-content: center;
     margin-top: 4vh;
     margin-bottom: 2vh;
     padding: 1vh 3vw;

@@ -1,6 +1,7 @@
 import { Positioner } from '../../components/Wrapper/styled'
 import { useNavigate } from "react-router-dom";
 import React, { useContext } from 'react';
+import Button from '../../components/Button'
 import { Context } from "../../store/Store"
 import * as Styled from './styled';
 
@@ -10,11 +11,10 @@ const Choice = () => {
     const city = ['서울', '부산', '대구', '인천', '광주',
         '대전', '울산', '경기', '강원', '충북', '충남', '전북',
         '전남', '경북', '경남', '제주', '세종'];
-    
-    // const temp = (lo) => {
-    //     contextDispatch({ value:lo})
-    //     navigate("/result");
-    // }
+
+    const onChangeHandler=(e)=>{
+        contextDispatch({ value: e.currentTarget.value})
+    }
 
     return (
         <Positioner>
@@ -24,26 +24,15 @@ const Choice = () => {
             <Styled.Title>미먼랭킹</Styled.Title>
             <Styled.Text>미세먼지 농도가 궁금한 지역은?</Styled.Text>
             <Styled.Center>
-                <Styled.Select>
+                <Styled.Select onChange={onChangeHandler} value={place}>
                     {
                         city.map((i) => (
-                            <option value={i} onChange={()=>navigate("/result")}> {i} </option>
+                            <option value={i}> {i} </option>
                         ))
                     }
                 </Styled.Select>
+                <Button color={"skyblue"} onClick={()=>navigate("/result")}>검색</Button>
             </Styled.Center>
-            {/* <div>
-                먼지랭킹 {place}
-                <div>
-                    <select>
-                        <option value="서울" onChange={()=>contextDispatch({ type: "서울", value: "서울" })}>서울</option>
-                        <option value="부산" onChange={()=>contextDispatch({type:"부산", value:"부산"})}>부산</option>
-                        <option value="대구">대구</option>
-                    </select>
-                    <button onClick={() => navigate("/result")}>다음</button>
-                    <button onClick={()=>contextDispatch({ value:'부산'})}>부산</button>
-                </div>
-            </div> */}
         </Positioner>
     )
 };

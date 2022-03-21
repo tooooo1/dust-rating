@@ -54,7 +54,7 @@ export const Center = styled.div`
 export const Select = styled.select`
     height: 6vh;
     color: #9DADB6;
-
+    margin-bottom: 1rem;
     font-weight: bold;
     font-family: "Pretendard-Regular";
     

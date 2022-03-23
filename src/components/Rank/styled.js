@@ -7,70 +7,72 @@ export const RatingWrapper = styled.div`
     text-align: center;
     border-bottom: 1px solid #DFDFDF;
     padding: 1vh 0;
-    /* @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 768px) {
         font-size: 20px;
-    } */
+    }
 `;
 
 export const RatingDetails = styled.div`
+    width: 68%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     text-align: center;
     align-items: center;
-    /* @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 768px) {
         font-size: 20px;
-    } */
+    }
 `;
 
 export const Rank = styled.div`
+    width: 10%;
     display: flex;
     font-size : 2vh;
     color: #9DADB6;
-    /* @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 768px) {
         font-size: 20px;
-    } */
+    }
 `;
 
 export const RankLocation = styled.div`
     display: flex;
-    margin: 0 10vw 0 5vw;
-    /* @media only screen and (min-width: 768px) {
-        font-size: 20px;
-    } */
+    font-size : 5.5vw;
+    @media only screen and (min-width: 768px) {
+        font-size: 25px;
+    }
 `;
 
 export const DustState = styled.div`
-    display: flex;
-    margin: 0 4vw 0 4vw;
-    color: red;
-    /* @media only screen and (min-width: 768px) {
+    width: 50%;
+    @media only screen and (min-width: 768px) {
         font-size: 20px;
-    } */
+    }
 `;
 
 export const DustWrapper = styled.div`
+    width: 32%;
     font-family: 'Pretendard-Medium';
-    font-size : 2vh;
-    /* @media only screen and (min-width: 768px) {
+    font-size : 3.3vw;
+    @media only screen and (min-width: 768px) {
         font-size: 20px;
-    } */
+    }
 `;
 
 export const DustWrapperFlex = styled.div`
     display: flex;
     font-family: 'Pretendard-Medium';
     justify-content: space-between;
-    margin: 0.5rem;
-    /* @media only screen and (min-width: 768px) {
-        font-size: 20px;
-    } */
+    margin: 0.5rem 0;
+    @media only screen and (min-width: 768px) {
+        font-size: 18px;
+    }
 `;
 
 export const DustFigure = styled.div`
     display: flex;
     margin-left: 2vw;
     font-family: 'Pretendard-ExtraBold';
-    /* @media only screen and (min-width: 768px) {
-        font-size: 20px;
-    } */
+    @media only screen and (min-width: 768px) {
+        font-size: 18px;
+        margin-left: 10px;
+    }
 `;

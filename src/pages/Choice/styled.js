@@ -36,7 +36,7 @@ export const SubTitle = styled.div`
 `;
 
 export const Text = styled.div`
-    font-size : 4vw;
+    font-size : 3.5vw;
     margin-bottom : 1.5vh;
     text-align: center;
     font-family: "Pretendard-SemiBold";
@@ -53,15 +53,15 @@ export const Center = styled.div`
 
 export const Select = styled.select`
     height: 6vh;
-    color: #9DADB6;
+    /* color: #9DADB6; */
     margin-bottom: 1rem;
     font-weight: bold;
     font-family: "Pretendard-Regular";
     
-    opacity: 0.8;
-    /* -moz-appearance: none;
+    /* opacity: 0.8; */
+    -moz-appearance: none;
     -webkit-appearance: none;
-    appearance: none; */
+    appearance: none;
     padding-right: 1rem;
     padding-left: 1rem;
     border-radius: 10px;

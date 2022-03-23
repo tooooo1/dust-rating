@@ -12,8 +12,17 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
+export const Mid = styled.div`
+    margin: 0 auto;
+    /* @media only screen and (min-width: 768px) {
+        font-size: 60px;
+    } */
+`;
+
+
 export const State = styled.div`
-    font-size : 2vh;
+    margin-top: 8vh;
+    font-size : 2.5vh;
     margin-bottom : 0.5rem;
     text-align: center;
     font-family: "Pretendard-Regular";
@@ -24,10 +33,10 @@ export const State = styled.div`
 `;
 
 export const Time = styled.div`
-    font-size : 1vh;
+    font-size : 1.8vh;
     margin : 0 0 1.5rem 0;
     text-align: center;
-    font-family: "Pretendard-Light";
+    font-family: "Pretendard-Thin";
     color: white;
     /* @media only screen and (min-width: 768px) {
         font-size: 60px;
@@ -69,7 +78,7 @@ export const Text = styled.div`
 
 export const Dust = styled.div`
     font-size : 3vh;
-    margin-bottom: 1vh;
+    margin-bottom: 2vh;
     text-align: center;
     font-family: "Pretendard-Bold";
     color: red;
@@ -81,7 +90,7 @@ export const Dust = styled.div`
 export const Rating = styled.div`
     display: flex;
     justify-content: center;
-    height: 50vh;
+    height: 60vh;
     background-color: #F6F6F6;
     font-size : 3vh;
     text-align: center;

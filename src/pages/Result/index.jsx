@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Positioner } from '../../components/Wrapper/styled'
 import { Context } from "../../store/Store"
 import Rank from '../../components/Rank'
 import Progress from '../../components/Progress'
@@ -13,7 +12,7 @@ const Result = () => {
         '전남', '경북', '경남', '제주', '세종']
 
     return (
-        <Positioner>
+        <Styled.Mid>
             <Styled.GlobalStyle />
             <div>
                 <Styled.State>현재 미세먼지 농도가 가장 높아요</Styled.State>
@@ -23,7 +22,7 @@ const Result = () => {
                     <Styled.Text>현재의 대기질 지수는</Styled.Text>
                     <Styled.Dust>매우 나쁨</Styled.Dust>
                     <Progress>미세먼지</Progress>
-                    <Progress>초미세먼지</Progress>
+                    <Progress id="id">초미세먼지</Progress>
                 </Styled.Middle>
             </div>
             <div>
@@ -33,10 +32,11 @@ const Result = () => {
                         <Rank />
                         <Rank />
                         <Rank />
+                        <Rank />
                     </div>
                 </Styled.Rating>
             </div>
-        </Positioner>
+        </Styled.Mid>
     )
 };
 

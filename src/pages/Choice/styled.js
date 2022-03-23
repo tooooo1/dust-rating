@@ -53,12 +53,11 @@ export const Center = styled.div`
 
 export const Select = styled.select`
     height: 6vh;
-    /* color: #9DADB6; */
     margin-bottom: 1rem;
     font-weight: bold;
-    font-family: "Pretendard-Regular";
-    
-    /* opacity: 0.8; */
+    font-family: "Pretendard-Medium";
+    background-color: white;
+    opacity: 0.8;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;

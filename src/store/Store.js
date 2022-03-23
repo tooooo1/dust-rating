@@ -38,7 +38,7 @@ const reducer = (state, actions) => {
 
 city.map((i) => {
     let dustState = {
-        time: i.response.body.items[4].dataTime.substring(11),
+        time: i.response.body.items[4].dataTime,
         place: i.response.body.items[4].sidoName,
         dust: i.response.body.items[4].pm10Value,
         grade: (parseInt(i.response.body.items[4].pm10Grade) + parseInt(i.response.body.items[4].pm25Grade)) / 2,

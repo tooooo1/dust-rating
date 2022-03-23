@@ -23,7 +23,7 @@ const Result = () => {
             <Styled.GlobalStyle />
             <div>
                 <Styled.State>전국 미세먼지 농도는 다음과 같습니다</Styled.State>
-                <Styled.Time>실시간 {cityDustList[0].time}  기준</Styled.Time>
+                <Styled.Time>{cityDustList[0].time}  기준</Styled.Time>
                 <Styled.Middle>
                     <Styled.Location>{place}</Styled.Location>
                     <Styled.Text>현재의 대기질 지수는</Styled.Text>

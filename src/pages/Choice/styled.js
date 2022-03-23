@@ -13,7 +13,7 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const Title = styled.div`
-    font-size : 8vh;
+    font-size : 14vw;
     font-weight : 1000;
     margin-bottom : 1.5rem;
     text-align: center;

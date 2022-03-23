@@ -7,6 +7,16 @@ import * as Styled from './styled';
 
 const Result = () => {
     const { place, cityDustList } = useContext(Context);
+    let curDust,curUltraDust, curGrade;
+
+    cityDustList.map((i) => {
+        if (i.place === place) {
+            curDust = i.dust;
+            curUltraDust = i.ultraDust;
+            curGrade = i.grade;
+        }
+        return 0;
+    })
 
     return (
         <Styled.Mid>
@@ -17,16 +27,15 @@ const Result = () => {
                 <Styled.Middle>
                     <Styled.Location>{place}</Styled.Location>
                     <Styled.Text>현재의 대기질 지수는</Styled.Text>
-                    <DustState dustState={cityDustList[0].grade} />
-                    <Progress id="first" state={cityDustList[10].dust}>미세먼지</Progress>
-                    <Progress id="last" state={cityDustList[10].ultraDust}>초미세먼지</Progress>
+                    <DustState dustState={curGrade} />
+                    <Progress id="first" state={curDust}>미세먼지</Progress>
+                    <Progress id="last" state={curUltraDust}>초미세먼지</Progress>
                 </Styled.Middle>
             </div>
             <div>
                 <Styled.Rating>
                     <Styled.RatingWidth>
                         <Styled.DustRating>지역별 미세먼지 농도 순위</Styled.DustRating>
-                        
                         {
                             cityDustList.map((city,i) => {
                                 return (

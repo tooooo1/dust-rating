@@ -1,5 +1,4 @@
 import React, { createContext, useReducer } from "react";
-// import axios from "axios";
 import 서울 from '../json/서울.json'
 import 부산 from '../json/부산.json'
 import 대구 from '../json/대구.json'
@@ -25,7 +24,7 @@ const city = [서울, 부산, 대구, 인천, 광주,
 const cityDustList = [];
 
 export const Context = createContext();
-let data = '';
+
 const initialState = {
     place: '서울',
 }
@@ -37,99 +36,27 @@ const reducer = (state, actions) => {
     };
 };
 
-// const API_KEY = process.env.REACT_APP_API_KEY;
-// const url = ''
-// var queryParams = 'C:\\Users\\정충일\\Documents\\GitHub\\weather-rating\\public\\json\\'+ encodeURIComponent('서울');
-// const url = 'http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty'; /*URL*/
-// var queryParams = '?' + encodeURIComponent('sidoName') + '=' + encodeURIComponent('전국'); /**/
-// queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-// queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /**/
-// queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); /**/
-// queryParams += '&' + encodeURIComponent('serviceKey') + '=' + API_KEY; /*Service Key*/
-// queryParams += '&' + encodeURIComponent('ver') + '=' + encodeURIComponent('1.0'); /**/
-
-// city.map((i) => {
-    // var queryParams = '?' + encodeURIComponent('sidoName') + '=' + encodeURIComponent(i); /**/
-    // queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-    // queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /**/
-    // queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); /**/
-    // queryParams += '&' + encodeURIComponent('serviceKey') + '=' + API_KEY; /*Service Key*/
-    // queryParams += '&' + encodeURIComponent('ver') + '=' + encodeURIComponent('1.0'); /**/
-    // return (
-    // axios.get(url + queryParams)
-    //         .then((response) => {
-    //         console.log(url + queryParams)
-            // data = response.data;
-            // let dustState = {
-            //     place: i,
-            //     dust: data.response.body.items[0].pm10Value,
-            //     ultraDust: data.response.body.items[0].pm25Value,
-            //     totalValue: (parseInt(data.response.body.items[0].pm10Value) + parseInt(data.response.body.items[0].pm25Value))/2
-            // };
-
-            // cityDustList.push(dustState);
-//         })
-//         .catch((error) => {
-//             console.log(error);
-//         })
-//     )
-// })
-
-// console.log("여기", cityDustList)
-
-
 city.map((i) => {
     let dustState = {
-        place: i.response.body.items[0].sidoName,
-        dust: i.response.body.items[0].pm10Value,
-        ultraDust: i.response.body.items[0].pm25Value,
-        totalValue: (parseInt(i.response.body.items[0].pm10Value) + parseInt(i.response.body.items[0].pm25Value)) / 2
+        time: i.response.body.items[4].dataTime.substring(11),
+        place: i.response.body.items[4].sidoName,
+        dust: i.response.body.items[4].pm10Value,
+        grade: (parseInt(i.response.body.items[4].pm10Grade) + parseInt(i.response.body.items[4].pm25Grade)) / 2,
+        ultraDust: i.response.body.items[4].pm25Value,
+        totalValue: (parseInt(i.response.body.items[4].pm10Value) + parseInt(i.response.body.items[4].pm25Value)) / 2
     }
-    cityDustList.push(dustState)
-    return (
-        console.log(i)
-    
-    );
+    cityDustList.push(dustState);
+    return 0;
 })
-console.log(cityDustList)
-const sortCity = cityDustList.sort((a, b) => b.totalValue - a.totalValue);
 
-
-console.log(sortCity)
-
-// console.log("정렬11, ", cityDustList)
-// console.log("정렬", sortCity)
-// axios.get("https://cors-anywhere.herokuapp.com/" + url + queryParams)
-//     .then((response) => {
-//         data = response.data;
-//         console.log(data);
-//         console.log(data.response.body.items[0].pm10Value);
-//         console.log(data.response.body.items[0].pm25Value);
-//         console.log(cityDustList);
-//     })
-//     .catch((error) => {
-//         console.log(error);
-//     })
-
-
-
-
-
-
-
-
-
-
-
-
-
+cityDustList.sort((a, b) => a.totalValue - b.totalValue);
 
 const Store = ({ children }) => {
     const [state, contextDispatch] = useReducer(reducer, initialState);
 
     return (
         <Context.Provider
-            value={{ place: state.place, contextDispatch }}
+            value={{ place: state.place, cityDustList, contextDispatch }}
         >
             {children}
         </Context.Provider>

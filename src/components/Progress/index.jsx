@@ -3,14 +3,14 @@ import * as Styled from './styled';
 import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
 
-const ProgressBar = ({children, id}) => (
+const ProgressBar = ({children, id, state}) => (
     <Styled.DustProgressWrapper id={id}>
         <Styled.DustWrapperFlex>
                 <div>{children}</div>
-                <Styled.DustFigure>105</Styled.DustFigure>
+            <Styled.DustFigure>{state}</Styled.DustFigure>
         </Styled.DustWrapperFlex>
         <Styled.ProgressWrapper>
-            <Progress percent={50} 
+            <Progress percent={state} 
             theme={{
                 success: {
                 symbol: ' ',

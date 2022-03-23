@@ -2,38 +2,39 @@ import React, { useContext } from 'react';
 import { Context } from "../../store/Store"
 import Rank from '../../components/Rank'
 import Progress from '../../components/Progress'
+import DustState from '../../components/DustState'
 import * as Styled from './styled';
 
-
 const Result = () => {
-    const { place, contextDispatch } = useContext(Context);
-    const city = ['서울', '부산', '대구', '인천', '광주',
-        '대전', '울산', '경기', '강원', '충북', '충남', '전북',
-        '전남', '경북', '경남', '제주', '세종']
+    const { place, cityDustList } = useContext(Context);
 
     return (
         <Styled.Mid>
             <Styled.GlobalStyle />
             <div>
-                <Styled.State>현재 미세먼지 농도가 가장 높아요</Styled.State>
-                <Styled.Time>실시간 16:00 기준</Styled.Time>
+                <Styled.State>전국 미세먼지 농도는 다음과 같습니다</Styled.State>
+                <Styled.Time>실시간 {cityDustList[0].time}  기준</Styled.Time>
                 <Styled.Middle>
                     <Styled.Location>{place}</Styled.Location>
                     <Styled.Text>현재의 대기질 지수는</Styled.Text>
-                    <Styled.Dust>매우 나쁨</Styled.Dust>
-                    <Progress>미세먼지</Progress>
-                    <Progress id="id">초미세먼지</Progress>
+                    <DustState dustState={cityDustList[0].grade} />
+                    <Progress id="first" state={cityDustList[10].dust}>미세먼지</Progress>
+                    <Progress id="last" state={cityDustList[10].ultraDust}>초미세먼지</Progress>
                 </Styled.Middle>
             </div>
             <div>
                 <Styled.Rating>
-                    <div>
+                    <Styled.RatingWidth>
                         <Styled.DustRating>지역별 미세먼지 농도 순위</Styled.DustRating>
-                        <Rank />
-                        <Rank />
-                        <Rank />
-                        <Rank />
-                    </div>
+                        
+                        {
+                            cityDustList.map((city,i) => {
+                                return (
+                                    <Rank i={i + 1} city={city.place} dust={ city.dust } ultraDust= {city.ultraDust} dustState={city.grade} />
+                                )
+                            })
+                        }
+                    </Styled.RatingWidth>
                 </Styled.Rating>
             </div>
         </Styled.Mid>

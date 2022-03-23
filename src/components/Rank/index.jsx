@@ -1,21 +1,24 @@
 import React from 'react';
+import DustState from '../DustState'
 import * as Styled from './styled';
 
-const Rank = () => (
+const Rank = ({ i, city ,dust, ultraDust, dustState }) => (
     <Styled.RatingWrapper>
         <Styled.RatingDetails>
-            <Styled.Rank>2</Styled.Rank>
-            <Styled.RankLocation>지역1</Styled.RankLocation>
-            <Styled.DustState>나쁨</Styled.DustState>
+            <Styled.Rank>{i}</Styled.Rank>
+            <Styled.RankLocation>{city}</Styled.RankLocation>
+            <Styled.DustState>
+                <DustState dustState={dustState} />
+            </Styled.DustState>
         </Styled.RatingDetails>
         <Styled.DustWrapper>
             <Styled.DustWrapperFlex>
                 <div>미세먼지</div>
-                <Styled.DustFigure>95</Styled.DustFigure>
+                <Styled.DustFigure>{dust}</Styled.DustFigure>
             </Styled.DustWrapperFlex>
             <Styled.DustWrapperFlex>
                 <div>초미세먼지</div>
-                <Styled.DustFigure>60</Styled.DustFigure>
+                <Styled.DustFigure>{ultraDust}</Styled.DustFigure>
             </Styled.DustWrapperFlex>
         </Styled.DustWrapper>
     </Styled.RatingWrapper>

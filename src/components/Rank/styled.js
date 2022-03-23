@@ -5,7 +5,7 @@ export const RatingWrapper = styled.div`
     justify-content: center;
     font-size : 3vh;
     text-align: center;
-    border-bottom: 1px solid #9DADB6;
+    border-bottom: 1px solid #DFDFDF;
     padding: 1vh 0;
     /* @media only screen and (min-width: 768px) {
         font-size: 20px;

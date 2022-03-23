@@ -34,6 +34,10 @@ export const DustProgressWrapper = styled.div`
     justify-content: space-between;
     margin-left: 7vw;
     font-size: 3vw;
+
+    &#id {
+        padding-bottom: 2.5vh;
+    }
     /* @media only screen and (min-width: 768px) {
         font-size: 20px;
     } */

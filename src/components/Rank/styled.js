@@ -1,14 +1,24 @@
 import styled from 'styled-components';
 
 export const RatingWrapper = styled.div`
+    cursor: pointer;
     display: flex;
     justify-content: center;
     font-size : 3vh;
     text-align: center;
     border-bottom: 1px solid #DFDFDF;
+    border-radius: 10px;
     padding: 1vh 0;
     @media only screen and (min-width: 768px) {
         font-size: 20px;
+    }
+
+    transition-duration: 0.3s;
+    &:hover {
+        background-color: #dfdfdf;
+        padding-left: 10px;
+        padding-right: 10px;
+        opacity: 0.8;
     }
 `;
 
@@ -75,4 +85,9 @@ export const DustFigure = styled.div`
         font-size: 18px;
         margin-left: 10px;
     }
+`;
+
+export const Top = styled.div`
+    display: flex;
+    width: 100%;
 `;

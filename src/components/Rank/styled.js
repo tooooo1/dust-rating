@@ -9,10 +9,10 @@ export const RatingWrapper = styled.div`
     border-bottom: 1px solid #DFDFDF;
     border-radius: 10px;
     padding: 1vh 0;
+    flex-direction: column;
     @media only screen and (min-width: 768px) {
         font-size: 20px;
     }
-
     transition-duration: 0.3s;
     &:hover {
         background-color: #dfdfdf;
@@ -90,4 +90,14 @@ export const DustFigure = styled.div`
 export const Top = styled.div`
     display: flex;
     width: 100%;
+`;
+
+export const Container = styled.div`
+    width: 100%;
+    background-color: #dfdfdf;
+    border-radius: 10px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    display: ${(props) => props.click && `none`};
 `;

@@ -43,7 +43,8 @@ city.map((i) => {
         dust: i.response.body.items[4].pm10Value,
         grade: (parseInt(i.response.body.items[4].pm10Grade) + parseInt(i.response.body.items[4].pm25Grade)) / 2,
         ultraDust: i.response.body.items[4].pm25Value,
-        totalValue: (parseInt(i.response.body.items[4].pm10Value) + parseInt(i.response.body.items[4].pm25Value)) / 2
+        totalValue: (parseInt(i.response.body.items[4].pm10Value) + parseInt(i.response.body.items[4].pm25Value)) / 2,
+        detail: i.response.body.items
     }
     cityDustList.push(dustState);
     return 0;

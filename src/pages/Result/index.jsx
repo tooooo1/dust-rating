@@ -39,7 +39,7 @@ const Result = () => {
                         {
                             cityDustList.map((city,i) => {
                                 return (
-                                    <Rank i={i + 1} city={city.place} dust={ city.dust } ultraDust= {city.ultraDust} dustState={city.grade} />
+                                    <Rank i={i + 1} city={city.place} dust={ city.dust } ultraDust= {city.ultraDust} dustState={city.grade} detail={city.detail} click={false} />
                                 )
                             })
                         }

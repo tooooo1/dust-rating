@@ -21,7 +21,7 @@ const Choice = () => {
             <Styled.GlobalStyle />
             <Styled.Center><img src="img/location.png" alt='location' width={30} /></Styled.Center>
             <Styled.SubTitle>한 눈에 확인하는</Styled.SubTitle>
-            <Styled.Title>먼지랭킹</Styled.Title>
+            <Styled.Title>랭킹먼지</Styled.Title>
             <Styled.Text>미세먼지 농도가 궁금한 지역은?</Styled.Text>
             <Styled.Center>
                 <Styled.Select onChange={onChangeHandler} value={place}>

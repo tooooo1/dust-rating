@@ -8,12 +8,17 @@ import * as Styled from './styled';
 const Choice = () => {
     let navigate = useNavigate();
     const { place, contextDispatch } = useContext(Context);
-    const city = ['서울', '부산', '대구', '인천', '광주',
+    const city = ['선택', '서울', '부산', '대구', '인천', '광주',
         '대전', '울산', '경기', '강원', '충북', '충남', '전북',
         '전남', '경북', '경남', '제주', '세종'];
 
     const onChangeHandler=(e)=>{
         contextDispatch({ value: e.currentTarget.value})
+    }
+
+    const onClick = () => {
+        if (place==='선택') alert("도시를 선택해주세요!")
+        else navigate("/result")
     }
 
     return (
@@ -31,7 +36,7 @@ const Choice = () => {
                         ))
                     }
                 </Styled.Select>
-                <Button color={"skyblue"} onClick={()=>navigate("/result")}>→</Button>
+                <Button color={"#2886A6"} onClick={onClick}>검색</Button>
             </Styled.Center>
         </Positioner>
     )

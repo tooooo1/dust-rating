@@ -26,7 +26,7 @@ const cityDustList = [];
 export const Context = createContext();
 
 const initialState = {
-    place: '서울',
+    place: '선택',
 }
 
 const reducer = (state, actions) => {

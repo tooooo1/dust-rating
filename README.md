@@ -1,7 +1,7 @@
 <div align=center>
 
 # **먼지랭킹**
- [먼지랭킹](https://illustrious-cupcake-6f2ca0.netlify.app/)![image](https://user-images.githubusercontent.com/77133565/159783003-7c303bbc-6548-4e50-abde-7ffb88791bb6.png)
+ [먼지랭킹](https://dust-rating.ga/)![image](https://user-images.githubusercontent.com/77133565/159783003-7c303bbc-6548-4e50-abde-7ffb88791bb6.png)
 
  
 ![image](https://user-images.githubusercontent.com/77133565/159783161-5a270afd-f49f-4762-a0d0-bbb895daa2fb.png)

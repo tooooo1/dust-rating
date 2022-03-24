@@ -86,7 +86,6 @@ export const Text = styled.div`
 export const Rating = styled.div`
     display: flex;
     justify-content: center;
-    height: 190vh;
     background-color: #F6F6F6;
     font-size : 3vh;
     text-align: center;

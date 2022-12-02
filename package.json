@@ -1,16 +1,8 @@
 {
   "name": "dust-rating",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.26.1",
-    "body-parser": "^1.19.2",
-    "cors": "^2.8.5",
-    "express": "^4.17.3",
-    "http-proxy-middleware": "^2.0.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.2.2",
@@ -18,21 +10,15 @@
     "react-sweet-progress": "^1.1.2",
     "styled-components": "^5.3.3",
     "styled-reset": "^4.3.4",
-    "web-vitals": "^2.1.4",
-    "xml-js": "^1.6.11"
+    "web-vitals": "^2.1.4"
   },
   "proxy": "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "eject": "react-scripts eject",
+    "eslint": "eslint --fix"
   },
   "browserslist": {
     "production": [
@@ -45,5 +31,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
+    "prettier": "^2.5.1"
   }
 }

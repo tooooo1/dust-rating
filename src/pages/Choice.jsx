@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 
-import Button from '../components/Button/index.jsx';
-import { Positioner } from '../components/Wrapper/styled';
+import Button from '../components/Button.jsx';
 import { Context } from '../store/Store';
 
 const Choice = () => {
@@ -35,50 +34,48 @@ const Choice = () => {
   };
 
   const onClick = () => {
-    if (place === '선택') alert('도시를 선택해주세요!');
-    else navigate('/result');
+    if (place === '선택') {
+      alert('도시를 선택해주세요!');
+    } else {
+      navigate('/result');
+    }
   };
 
   return (
-    <Positioner>
-      <GlobalStyle />
-      <Center>
-        <img src="img/location.png" alt="location" width={30} />
-      </Center>
+    <Wrapper>
+      <img src="images/location.png" alt="location" width={30} height={30} />
       <SubTitle>한 눈에 확인하는</SubTitle>
       <Title>랭킹먼지</Title>
       <Text>미세먼지 농도가 궁금한 지역은?</Text>
-      <Center>
-        <Select onChange={onChangeHandler} value={place}>
-          {city.map((i) => (
-            <option key={i} value={i}>
-              {i}
-            </option>
-          ))}
-        </Select>
-        <Button color={'#2886A6'} onClick={onClick}>
-          검색
-        </Button>
-      </Center>
-    </Positioner>
+      <Select onChange={onChangeHandler} value={place}>
+        {city.map((i) => (
+          <option key={i} value={i}>
+            {i}
+          </option>
+        ))}
+      </Select>
+      <Button color={'#2886A6'} onClick={onClick}>
+        검색
+      </Button>
+    </Wrapper>
   );
 };
 
 export default Choice;
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: #53CAF2;
-  }
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
 `;
 
 const Title = styled.div`
   font-size: 14vw;
-  font-weight: 1000;
-  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
   text-align: center;
   font-family: 'Pretendard-Bold';
-  color: white;
   @media only screen and (min-width: 768px) {
     font-size: 60px;
   }
@@ -86,10 +83,9 @@ const Title = styled.div`
 
 const SubTitle = styled.div`
   font-size: 5vw;
-  margin-bottom: 1.5vh;
+  padding: 1rem 0;
   text-align: center;
   font-family: 'Pretendard-Regular';
-  color: white;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
   }
@@ -100,15 +96,9 @@ const Text = styled.div`
   margin-bottom: 1.5vh;
   text-align: center;
   font-family: 'Pretendard-SemiBold';
-  color: white;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
   }
-`;
-
-const Center = styled.div`
-  text-align: center;
-  margin-bottom: 1rem;
 `;
 
 const Select = styled.select`

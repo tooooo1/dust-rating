@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 
-import DustState from '../../components/DustState/index.jsx';
-import Progress from '../../components/Progress/index.jsx';
-import Rank from '../../components/Rank/index.jsx';
-import { Context } from '../../store/Store';
+import DustState from '../components/DustState/index.jsx';
+import Progress from '../components/Progress/index.jsx';
+import Rank from '../components/Rank/index.jsx';
+import { Context } from '../store/Store';
 
 const Result = () => {
   const { place, cityDustList } = useContext(Context);
@@ -85,6 +85,7 @@ const GlobalStyle = createGlobalStyle`
 
 const Mid = styled.div`
   margin: 0 auto;
+  height: 100vh;
   /* @media only screen and (min-width: 768px) {
         font-size: 60px;
     } */

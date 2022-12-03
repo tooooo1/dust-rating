@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import DustState from '../DustState';
+
+import Detail from '../Detail/index.jsx';
+import DustState from '../DustState/index.jsx';
 import * as Styled from './styled';
-import Detail from '../Detail';
 
 const Rank = ({ i, city, dust, ultraDust, dustState, detail }) => {
   const [click, setClick] = useState(true);
@@ -33,6 +34,7 @@ const Rank = ({ i, city, dust, ultraDust, dustState, detail }) => {
         {detail.map((city, i) => {
           return (
             <Detail
+              key={i}
               i={i + 1}
               city={city.stationName}
               dust={city.pm10Value}

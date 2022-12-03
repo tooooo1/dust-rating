@@ -23,6 +23,7 @@
     "simple-import-sort/exports": "error",
     "prettier/prettier": ["off", { "endOfLine": "auto" }],
     "react/react-in-jsx-scope": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "import/no-named-as-default": "off"
   }
 }

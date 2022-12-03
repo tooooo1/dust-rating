@@ -9,8 +9,7 @@
     "react-scripts": "5.0.0",
     "react-sweet-progress": "^1.1.2",
     "styled-components": "^5.3.3",
-    "styled-reset": "^4.3.4",
-    "web-vitals": "^2.1.4"
+    "styled-reset": "^4.3.4"
   },
   "proxy": "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc",
   "scripts": {

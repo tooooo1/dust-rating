@@ -1,6 +1,35 @@
+import React from 'react';
 import styled from 'styled-components';
 
-export const RatingWrapper = styled.div`
+import DustState from './DustState.jsx';
+
+const Detail = ({ i, city, dust, ultraDust, dustState }) => (
+  <RatingWrapper>
+    <Top>
+      <RatingDetails>
+        <Rank>{i}</Rank>
+        <RankLocation>{city}</RankLocation>
+        <DustStateWr>
+          <DustState dustState={dustState} />
+        </DustStateWr>
+      </RatingDetails>
+      <DustWrapper>
+        <DustWrapperFlex>
+          <div>미세먼지</div>
+          <DustFigure>{dust}</DustFigure>
+        </DustWrapperFlex>
+        <DustWrapperFlex>
+          <div>초미세먼지</div>
+          <DustFigure>{ultraDust}</DustFigure>
+        </DustWrapperFlex>
+      </DustWrapper>
+    </Top>
+  </RatingWrapper>
+);
+
+export default Detail;
+
+const RatingWrapper = styled.div`
   position: relative;
   flex-direction: column;
   cursor: pointer;
@@ -19,7 +48,7 @@ export const RatingWrapper = styled.div`
   transform: height 0.35s ease;
 `;
 
-export const RatingDetails = styled.div`
+const RatingDetails = styled.div`
   width: 68%;
   display: flex;
   justify-content: space-between;
@@ -30,7 +59,7 @@ export const RatingDetails = styled.div`
   }
 `;
 
-export const Rank = styled.div`
+const Rank = styled.div`
   width: 10%;
   display: flex;
   font-size: 2vh;
@@ -41,7 +70,7 @@ export const Rank = styled.div`
   }
 `;
 
-export const RankLocation = styled.div`
+const RankLocation = styled.div`
   display: flex;
   font-family: 'Pretendard-SemiBold';
   font-size: 5.5vw;
@@ -50,14 +79,14 @@ export const RankLocation = styled.div`
   }
 `;
 
-export const DustState = styled.div`
+const DustStateWr = styled.div`
   width: 50%;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
   }
 `;
 
-export const DustWrapper = styled.div`
+const DustWrapper = styled.div`
   width: 32%;
   font-family: 'Pretendard-Light';
   font-size: 3.3vw;
@@ -66,7 +95,7 @@ export const DustWrapper = styled.div`
   }
 `;
 
-export const DustWrapperFlex = styled.div`
+const DustWrapperFlex = styled.div`
   display: flex;
   font-family: 'Pretendard-Light';
   justify-content: space-between;
@@ -76,7 +105,7 @@ export const DustWrapperFlex = styled.div`
   }
 `;
 
-export const DustFigure = styled.div`
+const DustFigure = styled.div`
   display: flex;
   margin-left: 2vw;
   font-family: 'Pretendard-SemiBold';
@@ -86,13 +115,7 @@ export const DustFigure = styled.div`
   }
 `;
 
-export const Top = styled.div`
+const Top = styled.div`
   display: flex;
   width: 100%;
-`;
-
-export const Container = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: column;
 `;

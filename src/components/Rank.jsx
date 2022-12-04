@@ -1,6 +1,56 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-export const RatingWrapper = styled.div`
+import Detail from './Detail.jsx';
+import DustState from './DustState.jsx';
+
+const Rank = ({ i, city, dust, ultraDust, dustState, detail }) => {
+  const [click, setClick] = useState(true);
+  const show = () => {
+    setClick(!click);
+  };
+  return (
+    <RatingWrapper onClick={show}>
+      <Top>
+        <RatingDetails>
+          <RankW>{i}</RankW>
+          <RankLocation>{city}</RankLocation>
+          <DustStateW>
+            <DustState dustState={dustState} />
+          </DustStateW>
+        </RatingDetails>
+        <DustWrapper>
+          <DustWrapperFlex>
+            <div>미세먼지</div>
+            <DustFigure>{dust}</DustFigure>
+          </DustWrapperFlex>
+          <DustWrapperFlex>
+            <div>초미세먼지</div>
+            <DustFigure>{ultraDust}</DustFigure>
+          </DustWrapperFlex>
+        </DustWrapper>
+      </Top>
+      <Container click={click}>
+        {detail.map((city, i) => {
+          return (
+            <Detail
+              key={i}
+              i={i + 1}
+              city={city.stationName}
+              dust={city.pm10Value}
+              ultraDust={city.pm25Value}
+              dustState={city.pm10Grade}
+            />
+          );
+        })}
+      </Container>
+    </RatingWrapper>
+  );
+};
+
+export default Rank;
+
+const RatingWrapper = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -22,7 +72,7 @@ export const RatingWrapper = styled.div`
   }
 `;
 
-export const RatingDetails = styled.div`
+const RatingDetails = styled.div`
   width: 68%;
   display: flex;
   justify-content: space-between;
@@ -33,7 +83,7 @@ export const RatingDetails = styled.div`
   }
 `;
 
-export const Rank = styled.div`
+const RankW = styled.div`
   width: 10%;
   display: flex;
   font-size: 2vh;
@@ -43,7 +93,7 @@ export const Rank = styled.div`
   }
 `;
 
-export const RankLocation = styled.div`
+const RankLocation = styled.div`
   display: flex;
   font-size: 5.5vw;
   @media only screen and (min-width: 768px) {
@@ -51,14 +101,14 @@ export const RankLocation = styled.div`
   }
 `;
 
-export const DustState = styled.div`
+const DustStateW = styled.div`
   width: 50%;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
   }
 `;
 
-export const DustWrapper = styled.div`
+const DustWrapper = styled.div`
   width: 32%;
   font-family: 'Pretendard-Medium';
   font-size: 3.3vw;
@@ -67,7 +117,7 @@ export const DustWrapper = styled.div`
   }
 `;
 
-export const DustWrapperFlex = styled.div`
+const DustWrapperFlex = styled.div`
   display: flex;
   font-family: 'Pretendard-Medium';
   justify-content: space-between;
@@ -77,7 +127,7 @@ export const DustWrapperFlex = styled.div`
   }
 `;
 
-export const DustFigure = styled.div`
+const DustFigure = styled.div`
   display: flex;
   margin-left: 2vw;
   font-family: 'Pretendard-ExtraBold';
@@ -87,12 +137,12 @@ export const DustFigure = styled.div`
   }
 `;
 
-export const Top = styled.div`
+const Top = styled.div`
   display: flex;
   width: 100%;
 `;
 
-export const Container = styled.div`
+const Container = styled.div`
   width: 100%;
   background-color: #dfdfdf;
   border-radius: 10px;

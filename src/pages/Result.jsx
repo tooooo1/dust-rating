@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 
-import DustState from '../components/DustState/index.jsx';
-import Progress from '../components/Progress/index.jsx';
-import Rank from '../components/Rank/index.jsx';
+import DustState from '../components/DustState.jsx';
+import Progress from '../components/Progress.jsx';
+import Rank from '../components/Rank.jsx';
 import { Context } from '../store/Store';
 
 const Result = () => {

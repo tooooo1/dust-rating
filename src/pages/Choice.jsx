@@ -1,44 +1,20 @@
-import React, { useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/Button.jsx';
-import { Context } from '../store/Store';
+import { cityGroup } from '../hooks/useFetch.js';
 
 const Choice = () => {
-  let navigate = useNavigate();
-  const { place, contextDispatch } = useContext(Context);
-  const city = [
-    '선택',
-    '서울',
-    '부산',
-    '대구',
-    '인천',
-    '광주',
-    '대전',
-    '울산',
-    '경기',
-    '강원',
-    '충북',
-    '충남',
-    '전북',
-    '전남',
-    '경북',
-    '경남',
-    '제주',
-    '세종',
-  ];
-
-  const onChangeHandler = (e) => {
-    contextDispatch({ value: e.currentTarget.value });
-  };
+  const navigate = useNavigate();
+  const [place, setPlace] = useState('서울');
 
   const onClick = () => {
-    if (place === '선택') {
-      alert('도시를 선택해주세요!');
-    } else {
-      navigate('/result');
-    }
+    navigate('/result', { state: place });
+  };
+
+  const onChangeHandler = (e) => {
+    setPlace(e.currentTarget.value);
   };
 
   return (
@@ -48,13 +24,13 @@ const Choice = () => {
       <Title>랭킹먼지</Title>
       <Text>미세먼지 농도가 궁금한 지역은?</Text>
       <Select onChange={onChangeHandler} value={place}>
-        {city.map((i) => (
-          <option key={i} value={i}>
-            {i}
+        {cityGroup.map((v) => (
+          <option key={v.cityName} value={v.cityName}>
+            {v.cityName}
           </option>
         ))}
       </Select>
-      <Button color={'#2886A6'} onClick={onClick}>
+      <Button color={'#2886A6'} onClick={() => onClick()}>
         검색
       </Button>
     </Wrapper>

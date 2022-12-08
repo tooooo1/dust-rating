@@ -1,94 +1,75 @@
-import React, { useContext } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 
 import DustState from '../components/DustState.jsx';
 import Progress from '../components/Progress.jsx';
 import Rank from '../components/Rank.jsx';
-import { Context } from '../store/Store';
+import useFetch, { cityGroup } from '../hooks/useFetch.js';
 
 const Result = () => {
-  const { place, cityDustList } = useContext(Context);
-  let curDust, curUltraDust, curGrade;
+  const data = useFetch();
+  const [dustData, setDustData] = useState({});
+  const location = useLocation();
+  const choiceCity = location.state;
 
-  cityDustList.map((i) => {
-    if (i.place === place) {
-      curDust = i.dust;
-      curUltraDust = i.ultraDust;
-      curGrade = i.grade;
-    }
-    return 0;
-  });
+  data.then((data) => setDustData(data));
 
   return (
     <Mid>
-      <GlobalStyle />
-      <div>
-        <State>전국 미세먼지 농도는 다음과 같습니다</State>
-        <Time>{cityDustList[0].time} 기준</Time>
-        <Middle>
-          <Location>{place}</Location>
-          <Text>현재의 대기질 지수는</Text>
-          <DustState dustState={curGrade} />
-          <Progress id="first" state={curDust}>
-            미세먼지
-          </Progress>
-          <Progress id="last" state={curUltraDust}>
-            초미세먼지
-          </Progress>
-        </Middle>
-      </div>
-      <div>
-        <Rating>
-          <RatingWidth>
-            <DustRating>지역별 미세먼지 농도 순위</DustRating>
-            {cityDustList.map((city, i) => {
-              return (
-                <Rank
-                  key={i}
-                  i={i + 1}
-                  city={city.place}
-                  dust={city.dust}
-                  ultraDust={city.ultraDust}
-                  dustState={city.grade}
-                  detail={city.detail}
-                  click={false}
-                />
-              );
-            })}
-          </RatingWidth>
-        </Rating>
-      </div>
+      <State>전국 미세먼지 농도는 다음과 같습니다</State>
+      <Time>
+        {dustData[0]?.items[0]?.dataTime ?? '0000-00-00 00:00'}
+        기준
+      </Time>
+      <Middle>
+        <Location>{choiceCity}</Location>
+        <Text>현재의 대기질 지수는</Text>
+        <DustState
+          dustState={
+            (parseInt(dustData[0]?.items[4]?.pm10Grade) +
+              parseInt(dustData[0]?.items[4]?.pm25Grade)) /
+            2
+          }
+        />
+        <Progress id="first" state={dustData[0]?.items[4]?.pm10Value}>
+          미세먼지
+        </Progress>
+        <Progress id="last" state={dustData[0]?.items[4]?.pm25Value}>
+          초미세먼지
+        </Progress>
+      </Middle>
+      <Rating>
+        <RatingWidth>
+          <DustRating>지역별 미세먼지 농도 순위</DustRating>
+          {cityGroup.map((city) => {
+            return (
+              <Rank
+                key={city.cityName}
+                i={city.cityNumber + 1}
+                city={city.cityName}
+                dust={dustData[city.cityNumber]?.items[4]?.pm10Value}
+                ultraDust={dustData[city.cityNumber]?.items[4]?.pm25Value}
+                dustState={
+                  (parseInt(dustData[city.cityNumber]?.items[4]?.pm10Grade) +
+                    parseInt(dustData[city.cityNumber]?.items[4]?.pm25Grade)) /
+                  2
+                }
+                detail={dustData[city.cityNumber]?.items}
+                click={false}
+              />
+            );
+          })}
+        </RatingWidth>
+      </Rating>
     </Mid>
   );
 };
 
 export default Result;
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: #53CAF2;
-  }
-  #root>div {
-    width: 100%;
-    /* PC (해상도 1024px)*/ 
-    @media all and (min-width:1024px) { 
-        width: 600px;
-    } /* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
-    @media all and (min-width:768px) and (max-width:1023px) {
-        width: 600px;
-    } /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/ 
-    @media all and (max-width:767px) {
-        width: 100%
-    }
-  }
-`;
-
 const Mid = styled.div`
-  margin: 0 auto;
-  height: 100vh;
-  /* @media only screen and (min-width: 768px) {
-        font-size: 60px;
-    } */
+  min-height: 100vh;
 `;
 
 const State = styled.div`
@@ -121,9 +102,6 @@ const Middle = styled.div`
   border-radius: 10px 10px 0 0;
   font-family: 'Pretendard-Light';
   background-color: white;
-  /* @media only screen and (min-width: 768px) {
-        font-size: 60px;
-    } */
 `;
 
 const Location = styled.div`
@@ -161,9 +139,6 @@ const Rating = styled.div`
 
 const RatingWidth = styled.div`
   width: 70%;
-  /* @media only screen and (min-width: 768px) {
-        font-size: 20px;
-    } */
 `;
 
 const DustRating = styled.div`

@@ -31,7 +31,7 @@ const Rank = ({ i, city, dust, ultraDust, dustState, detail }) => {
         </DustWrapper>
       </Top>
       <Container click={click}>
-        {detail.map((city, i) => {
+        {detail?.map((city, i) => {
           return (
             <Detail
               key={i}

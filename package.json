@@ -7,17 +7,15 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
-    "react-scripts": "5.0.1",
     "react-sweet-progress": "^1.1.2",
     "styled-components": "^5.3.9",
     "styled-reset": "^4.4.5"
   },
   "proxy": "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "eslint": "eslint . --fix"
   },
   "browserslist": {
@@ -33,6 +31,9 @@
     ]
   },
   "devDependencies": {
+    "@types/react": "^18.0.29",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
@@ -41,6 +42,8 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "prettier": "^2.8.7"
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.2",
+    "vite": "^4.2.1"
   }
 }

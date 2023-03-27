@@ -1,10 +1,26 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import Detail from './Detail.jsx';
-import DustState from './DustState.jsx';
+import Detail from './Detail';
+import DustState from './DustState.js';
 
-const Rank = ({ i, city, dust, ultraDust, dustState, detail }) => {
+interface RankProps {
+  i: number;
+  city: string;
+  dust: string;
+  ultraDust: string;
+  dustState: number;
+  detail: [
+    city: {
+      stationName: string;
+      pm10Value: string;
+      pm25Value: string;
+      pm10Grade: string;
+    }
+  ];
+}
+
+const Rank = ({ i, city, dust, ultraDust, dustState, detail }: RankProps) => {
   const [click, setClick] = useState(true);
   const show = () => {
     setClick(!click);
@@ -142,6 +158,10 @@ const Top = styled.div`
   width: 100%;
 `;
 
+interface ContainerProps {
+  click: boolean;
+}
+
 const Container = styled.div`
   width: 100%;
   background-color: #dfdfdf;
@@ -149,5 +169,5 @@ const Container = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  display: ${(props) => props.click && `none`};
+  display: ${(props: ContainerProps) => props.click && `none`};
 `;

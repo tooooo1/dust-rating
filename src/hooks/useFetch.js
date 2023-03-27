@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const API_KEY = process.env.REACT_APP_API_KEY;
-const OPEN_URL = process.env.REACT_APP_OPEN_URL;
+const { VITE_API_KEY, VITE_OPEN_URL } = import.meta.env;
 
 export const cityGroup = [
   { cityName: '서울', cityNumber: 0 },
@@ -32,7 +31,7 @@ const useFetch = async () => {
         cityGroup.map((v) =>
           axios
             .get(
-              `${OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${API_KEY}&ver=1.0`
+              `${VITE_OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
             )
             .then((data) => data.data.response.body)
         )

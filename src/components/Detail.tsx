@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import DustState from './DustState.jsx';
+import DustState from './DustState.js';
 
 const Detail = ({ i, city, dust, ultraDust, dustState }) => (
   <RatingWrapper>

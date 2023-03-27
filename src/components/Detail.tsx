@@ -1,9 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import DustState from './DustState.js';
+import DustState from './DustState';
 
-const Detail = ({ i, city, dust, ultraDust, dustState }) => (
+interface DetailProps {
+  i: number;
+  city: string;
+  dust: number;
+  ultraDust: number;
+  dustState: number;
+}
+
+const Detail = ({ i, city, dust, ultraDust, dustState }: DetailProps) => (
   <RatingWrapper>
     <Top>
       <RatingDetails>

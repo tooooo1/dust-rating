@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Detail from './Detail';
-import DustState from './DustState.js';
+import DustState from './DustState';
 
 interface RankProps {
   i: number;
   city: string;
-  dust: string;
-  ultraDust: string;
+  dust: number;
+  ultraDust: number;
   dustState: number;
   detail: [
     city: {
       stationName: string;
-      pm10Value: string;
-      pm25Value: string;
-      pm10Grade: string;
+      pm10Value: number;
+      pm25Value: number;
+      pm10Grade: number;
     }
   ];
 }

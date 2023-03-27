@@ -8,8 +8,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
     "react-sweet-progress": "^1.1.2",
-    "styled-components": "^5.3.9",
-    "styled-reset": "^4.4.5"
+    "styled-components": "^5.3.9"
   },
   "proxy": "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc",
   "scripts": {
@@ -33,6 +32,7 @@
   "devDependencies": {
     "@types/react": "^18.0.29",
     "@types/react-dom": "^18.0.11",
+    "@types/styled-components": "^5.1.26",
     "@vitejs/plugin-react": "^3.1.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",

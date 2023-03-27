@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-const DustState = ({ dustState }) => {
+interface DustStateProps {
+  dustState: number;
+}
+
+const DustState = ({ dustState }: DustStateProps) => {
   if (dustState < 2)
     return <DustStateColor style={{ color: '#1E64EE' }}>좋음</DustStateColor>;
   if (dustState < 3)

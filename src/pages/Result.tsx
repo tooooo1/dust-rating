@@ -72,7 +72,6 @@ const Result = () => {
                   2
                 ).toString()}
                 detail={dustData[city.cityNumber]?.items}
-                // click={false}
               />
             );
           })}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -7,13 +7,42 @@ import Progress from '../components/Progress';
 import Rank from '../components/Rank';
 import useFetch, { cityGroup } from '../hooks/useFetch';
 
+import axios from 'axios';
+const { VITE_API_KEY, VITE_OPEN_URL } = import.meta.env;
+
 const Result = () => {
-  const data = useFetch();
-  const [dustData, setDustData] = useState({});
+  // const data = useFetch();
+  const [dustData, setDustData] = useState<
+    | {
+        items: {
+          dataTime: string;
+          stationName: string;
+          pm10Value: string;
+          pm25Value: string;
+          pm10Grade: string;
+          pm25Grade: string;
+        }[];
+        numOfRows: number;
+        totalCount: number;
+        pageNo: number;
+      }[]
+    | []
+  >([]);
   const location = useLocation();
   const choiceCity = location.state;
 
-  data.then((data) => setDustData(data));
+  // data.then((data) => setDustData(data));
+  useEffect(() => {
+    Promise.all(
+      cityGroup.map((v) =>
+        axios
+          .get(
+            `${VITE_OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
+          )
+          .then((res) => res.data.response.body)
+      )
+    ).then((data) => setDustData(data));
+  }, [location]);
 
   return (
     <Mid>
@@ -26,11 +55,11 @@ const Result = () => {
         <Location>{choiceCity}</Location>
         <Text>현재의 대기질 지수는</Text>
         <DustState
-          dustState={
+          dustState={(
             (parseInt(dustData[0]?.items[4]?.pm10Grade) +
               parseInt(dustData[0]?.items[4]?.pm25Grade)) /
             2
-          }
+          ).toString()}
         />
         <Progress id="first" state={dustData[0]?.items[4]?.pm10Value}>
           미세먼지
@@ -50,11 +79,11 @@ const Result = () => {
                 city={city.cityName}
                 dust={dustData[city.cityNumber]?.items[4]?.pm10Value}
                 ultraDust={dustData[city.cityNumber]?.items[4]?.pm25Value}
-                dustState={
+                dustState={(
                   (parseInt(dustData[city.cityNumber]?.items[4]?.pm10Grade) +
                     parseInt(dustData[city.cityNumber]?.items[4]?.pm25Grade)) /
                   2
-                }
+                ).toString()}
                 detail={dustData[city.cityNumber]?.items}
                 click={false}
               />

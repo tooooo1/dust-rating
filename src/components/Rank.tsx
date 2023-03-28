@@ -10,14 +10,14 @@ interface RankProps {
   dust: string;
   ultraDust: string;
   dustState: string;
-  detail: [
-    city: {
-      stationName: string;
-      pm10Value: string;
-      pm25Value: string;
-      pm10Grade: string;
-    }
-  ];
+  detail: {
+    dataTime: string;
+    stationName: string;
+    pm10Value: string;
+    pm25Value: string;
+    pm10Grade: string;
+    pm25Grade: string;
+  }[];
 }
 
 const Rank = ({ i, city, dust, ultraDust, dustState, detail }: RankProps) => {

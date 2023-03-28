@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import DustState from '../components/DustState.jsx';
-import Progress from '../components/Progress.jsx';
-import Rank from '../components/Rank.jsx';
-import useFetch, { cityGroup } from '../hooks/useFetch.js';
+import DustState from '../components/DustState';
+import Progress from '../components/Progress';
+import Rank from '../components/Rank';
+import useFetch, { cityGroup } from '../hooks/useFetch';
 
 const Result = () => {
   const data = useFetch();

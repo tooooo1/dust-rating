@@ -6,9 +6,9 @@ import DustState from './DustState';
 interface DetailProps {
   i: number;
   city: string;
-  dust: number;
-  ultraDust: number;
-  dustState: number;
+  dust: string;
+  ultraDust: string;
+  dustState: string;
 }
 
 const Detail = ({ i, city, dust, ultraDust, dustState }: DetailProps) => (

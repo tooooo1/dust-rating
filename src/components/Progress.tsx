@@ -9,7 +9,7 @@ import styled from 'styled-components';
 interface ProgressBarProps {
   children: React.ReactNode;
   id: string;
-  state: number;
+  state: string;
 }
 
 const ProgressBar = ({ children, id, state }: ProgressBarProps) => (

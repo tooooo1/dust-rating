@@ -7,15 +7,15 @@ import DustState from './DustState';
 interface RankProps {
   i: number;
   city: string;
-  dust: number;
-  ultraDust: number;
-  dustState: number;
+  dust: string;
+  ultraDust: string;
+  dustState: string;
   detail: [
     city: {
       stationName: string;
-      pm10Value: number;
-      pm25Value: number;
-      pm10Grade: number;
+      pm10Value: string;
+      pm25Value: string;
+      pm10Grade: string;
     }
   ];
 }

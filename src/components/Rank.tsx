@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import Detail from './Detail';
@@ -54,11 +54,11 @@ const Rank = ({
         </DustWrapper>
       </Top>
       <Container click={click}>
-        {detail?.map((city, i) => {
+        {detail?.map((city, detailIndex) => {
           return (
             <Detail
-              key={i}
-              rank={i + 1}
+              key={detailIndex}
+              rank={detailIndex + 1}
               city={city.stationName}
               dust={city.pm10Value}
               ultraDust={city.pm25Value}

@@ -62,7 +62,7 @@ const Result = () => {
             return (
               <Rank
                 key={city.cityName}
-                i={city.cityNumber + 1}
+                rank={city.cityNumber + 1}
                 city={city.cityName}
                 dust={dustData[city.cityNumber]?.items[4]?.pm10Value}
                 ultraDust={dustData[city.cityNumber]?.items[4]?.pm25Value}

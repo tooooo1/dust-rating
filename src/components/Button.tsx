@@ -1,6 +1,13 @@
+import { CSSProperties, ReactNode } from 'react';
 import styled from 'styled-components';
 
-const Button = ({ children, onClick, color }) => (
+interface ButtonProps {
+  children: ReactNode;
+  color: CSSProperties['color'];
+  onClick: () => void;
+}
+
+const Button = ({ children, color, onClick }: ButtonProps) => (
   <Wrapper onClick={onClick} color={color}>
     {children}
   </Wrapper>
@@ -18,7 +25,6 @@ export const Wrapper = styled.button`
   border-radius: 7px;
   cursor: pointer;
   transition: 0.3s all;
-  font-family: 'Pretendard-Bold';
   &:hover,
   &:active {
     transform: scale(1.1);

@@ -7,27 +7,14 @@ import Progress from '../components/Progress';
 import Rank from '../components/Rank';
 import useFetch, { cityGroup } from '../hooks/useFetch';
 
+import { dustDataType } from '@/type';
+
 import axios from 'axios';
 const { VITE_API_KEY, VITE_OPEN_URL } = import.meta.env;
 
 const Result = () => {
   // const data = useFetch();
-  const [dustData, setDustData] = useState<
-    | {
-        items: {
-          dataTime: string;
-          stationName: string;
-          pm10Value: string;
-          pm25Value: string;
-          pm10Grade: string;
-          pm25Grade: string;
-        }[];
-        numOfRows: number;
-        totalCount: number;
-        pageNo: number;
-      }[]
-    | []
-  >([]);
+  const [dustData, setDustData] = useState<dustDataType | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
 

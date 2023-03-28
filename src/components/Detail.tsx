@@ -4,18 +4,18 @@ import styled from 'styled-components';
 import DustState from './DustState';
 
 interface DetailProps {
-  i: number;
+  rank: number;
   city: string;
   dust: string;
   ultraDust: string;
   dustState: string;
 }
 
-const Detail = ({ i, city, dust, ultraDust, dustState }: DetailProps) => (
+const Detail = ({ rank, city, dust, ultraDust, dustState }: DetailProps) => (
   <RatingWrapper>
     <Top>
       <RatingDetails>
-        <Rank>{i}</Rank>
+        <Rank>{rank}</Rank>
         <RankLocation>{city}</RankLocation>
         <DustStateWr>
           <DustState dustState={dustState} />

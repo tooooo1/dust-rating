@@ -51,7 +51,7 @@ const Rank = ({ i, city, dust, ultraDust, dustState, detail }: RankProps) => {
           return (
             <Detail
               key={i}
-              i={i + 1}
+              rank={i + 1}
               city={city.stationName}
               dust={city.pm10Value}
               ultraDust={city.pm25Value}

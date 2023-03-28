@@ -1,7 +1,6 @@
 import 'react-sweet-progress/lib/style.css';
 
 import React from 'react';
-// react-sweet-progress의 타입을 지정하는 package가 없는것 같아서 repo를 찾아보니 ts-ignore로 처리하라는 답변을 보고 작성해둠.
 // @ts-ignore
 import { Progress } from 'react-sweet-progress';
 import styled from 'styled-components';

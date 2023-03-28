@@ -9,11 +9,11 @@ const Choice = () => {
   const navigate = useNavigate();
   const [place, setPlace] = useState('서울');
 
-  const handleClick = () => {
+  const handleResultPageNavigate = () => {
     navigate('/result', { state: place });
   };
 
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handlePlaceChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setPlace(e.target.value);
   };
 
@@ -23,14 +23,14 @@ const Choice = () => {
       <SubTitle>한 눈에 확인하는</SubTitle>
       <Title>랭킹먼지</Title>
       <Text>미세먼지 농도가 궁금한 지역은?</Text>
-      <Select onChange={handleChange} value={place}>
+      <Select onChange={handlePlaceChange} value={place}>
         {cityGroup.map((v) => (
           <option key={v.cityName} value={v.cityName}>
             {v.cityName}
           </option>
         ))}
       </Select>
-      <Button color={'#2886A6'} onClick={handleClick}>
+      <Button color={'#2886A6'} onClick={handleResultPageNavigate}>
         검색
       </Button>
     </Wrapper>

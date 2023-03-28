@@ -1,10 +1,33 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
-import Detail from './Detail.jsx';
-import DustState from './DustState.jsx';
+import Detail from './Detail';
+import DustState from './DustState';
 
-const Rank = ({ i, city, dust, ultraDust, dustState, detail }) => {
+interface RankProps {
+  rank: number;
+  city: string;
+  dust: string;
+  ultraDust: string;
+  dustState: string;
+  detail: {
+    dataTime: string;
+    stationName: string;
+    pm10Value: string;
+    pm25Value: string;
+    pm10Grade: string;
+    pm25Grade: string;
+  }[];
+}
+
+const Rank = ({
+  rank,
+  city,
+  dust,
+  ultraDust,
+  dustState,
+  detail,
+}: RankProps) => {
   const [click, setClick] = useState(true);
   const show = () => {
     setClick(!click);
@@ -13,7 +36,7 @@ const Rank = ({ i, city, dust, ultraDust, dustState, detail }) => {
     <RatingWrapper onClick={show}>
       <Top>
         <RatingDetails>
-          <RankW>{i}</RankW>
+          <RankW>{rank}</RankW>
           <RankLocation>{city}</RankLocation>
           <DustStateW>
             <DustState dustState={dustState} />
@@ -31,11 +54,11 @@ const Rank = ({ i, city, dust, ultraDust, dustState, detail }) => {
         </DustWrapper>
       </Top>
       <Container click={click}>
-        {detail?.map((city, i) => {
+        {detail?.map((city, detailIndex) => {
           return (
             <Detail
-              key={i}
-              i={i + 1}
+              key={detailIndex}
+              rank={detailIndex + 1}
               city={city.stationName}
               dust={city.pm10Value}
               ultraDust={city.pm25Value}
@@ -142,6 +165,10 @@ const Top = styled.div`
   width: 100%;
 `;
 
+interface ContainerProps {
+  click: boolean;
+}
+
 const Container = styled.div`
   width: 100%;
   background-color: #dfdfdf;
@@ -149,5 +176,5 @@ const Container = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  display: ${(props) => props.click && `none`};
+  display: ${(props: ContainerProps) => props.click && `none`};
 `;

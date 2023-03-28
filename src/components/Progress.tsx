@@ -1,10 +1,17 @@
 import 'react-sweet-progress/lib/style.css';
 
 import React from 'react';
+// @ts-ignore
 import { Progress } from 'react-sweet-progress';
 import styled from 'styled-components';
 
-const ProgressBar = ({ children, id, state }) => (
+interface ProgressBarProps {
+  children: React.ReactNode;
+  id: string;
+  state: string;
+}
+
+const ProgressBar = ({ children, id, state }: ProgressBarProps) => (
   <DustProgressWrapper id={id}>
     <DustWrapperFlex>
       <div>{children}</div>

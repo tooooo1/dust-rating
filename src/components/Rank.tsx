@@ -5,7 +5,7 @@ import Detail from './Detail';
 import DustState from './DustState';
 
 interface RankProps {
-  i: number;
+  rank: number;
   city: string;
   dust: string;
   ultraDust: string;
@@ -20,7 +20,14 @@ interface RankProps {
   }[];
 }
 
-const Rank = ({ i, city, dust, ultraDust, dustState, detail }: RankProps) => {
+const Rank = ({
+  rank,
+  city,
+  dust,
+  ultraDust,
+  dustState,
+  detail,
+}: RankProps) => {
   const [click, setClick] = useState(true);
   const show = () => {
     setClick(!click);
@@ -29,7 +36,7 @@ const Rank = ({ i, city, dust, ultraDust, dustState, detail }: RankProps) => {
     <RatingWrapper onClick={show}>
       <Top>
         <RatingDetails>
-          <RankW>{i}</RankW>
+          <RankW>{rank}</RankW>
           <RankLocation>{city}</RankLocation>
           <DustStateW>
             <DustState dustState={dustState} />

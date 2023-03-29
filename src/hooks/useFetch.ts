@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { dustDataType } from '@/type';
+import { DustDataType } from '@/type';
 
 const { VITE_API_KEY, VITE_OPEN_URL } = import.meta.env;
 
@@ -25,7 +25,7 @@ export const cityGroup = [
 ];
 
 const useFetch = () => {
-  const [data, setData] = useState<dustDataType | []>([]);
+  const [data, setData] = useState<DustDataType | []>([]);
 
   const fetchData = async () => {
     const result = await Promise.all(

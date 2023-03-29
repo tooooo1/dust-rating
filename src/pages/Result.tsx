@@ -7,10 +7,10 @@ import Progress from '../components/Progress';
 import Rank from '../components/Rank';
 import useFetch, { cityGroup } from '../hooks/useFetch';
 
-import { dustDataType } from '@/type';
+import { DustDataType } from '@/type';
 
 const Result = () => {
-  const [dustData, setDustData] = useState<dustDataType | []>([]);
+  const [dustData, setDustData] = useState<DustDataType | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
 

@@ -1,4 +1,4 @@
-export type dustDataType = {
+export type DustDataType = {
   items: {
     dataTime: string;
     stationName: string;

@@ -19,7 +19,7 @@ const ProgressBar = ({ children, id, state }: ProgressBarProps) => (
     </DustWrapperFlex>
     <ProgressWrapper>
       <Progress
-        percent={state}
+        percent={+state * (1 / 1000) * 100}
         theme={{
           success: {
             symbol: ' ',

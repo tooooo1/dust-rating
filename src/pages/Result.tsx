@@ -17,6 +17,24 @@ const Result = () => {
   const data = useFetch();
   data.then((data) => setDustData(data));
 
+  const findChoiceCity = (kindOfdust: string) => {
+    const result = dustData.find(
+      (temp) => temp.items[0].sidoName === choiceCity
+    );
+
+    if (result && kindOfdust === 'DustState') {
+      return (
+        (parseInt(result?.items[4]?.pm10Grade) +
+          parseInt(result?.items[4]?.pm25Grade)) /
+        2
+      ).toString();
+    } else if (result && kindOfdust === 'first') {
+      return result?.items[4]?.pm10Value;
+    } else if (result && kindOfdust === 'last') {
+      return result?.items[4]?.pm25Value;
+    } else return '';
+  };
+
   return (
     <Mid>
       <State>전국 미세먼지 농도는 다음과 같습니다</State>
@@ -27,17 +45,11 @@ const Result = () => {
       <Middle>
         <Location>{choiceCity}</Location>
         <Text>현재의 대기질 지수는</Text>
-        <DustState
-          dustState={(
-            (parseInt(dustData[0]?.items[4]?.pm10Grade) +
-              parseInt(dustData[0]?.items[4]?.pm25Grade)) /
-            2
-          ).toString()}
-        />
-        <Progress id="first" state={dustData[0]?.items[4]?.pm10Value}>
+        <DustState dustState={findChoiceCity('DustState')} />
+        <Progress id="first" state={findChoiceCity('first')}>
           미세먼지
         </Progress>
-        <Progress id="last" state={dustData[0]?.items[4]?.pm25Value}>
+        <Progress id="last" state={findChoiceCity('last')}>
           초미세먼지
         </Progress>
       </Middle>

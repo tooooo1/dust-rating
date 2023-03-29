@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -9,27 +9,13 @@ import useFetch, { cityGroup } from '../hooks/useFetch';
 
 import { dustDataType } from '@/type';
 
-import axios from 'axios';
-const { VITE_API_KEY, VITE_OPEN_URL } = import.meta.env;
-
 const Result = () => {
-  // const data = useFetch();
   const [dustData, setDustData] = useState<dustDataType | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
 
-  // data.then((data) => setDustData(data));
-  useEffect(() => {
-    Promise.all(
-      cityGroup.map((v) =>
-        axios
-          .get(
-            `${VITE_OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
-          )
-          .then((res) => res.data.response.body)
-      )
-    ).then((data) => setDustData(data));
-  }, [location]);
+  const data = useFetch();
+  data.then((data) => setDustData(data));
 
   return (
     <Mid>

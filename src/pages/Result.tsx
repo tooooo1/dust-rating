@@ -24,7 +24,7 @@ const Result = () => {
       (temp) => temp.items[0].sidoName === choiceCity
     );
 
-    if (!result) return;
+    if (!result) return '';
 
     if (kindOfdust === 'DustState') {
       return (

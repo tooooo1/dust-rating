@@ -35,7 +35,6 @@ const useFetch = async () => {
             `${VITE_OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
           )
           .then((res) => {
-            console.log(res);
             return res.data.response.body;
           })
       )

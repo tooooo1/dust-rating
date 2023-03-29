@@ -6,6 +6,7 @@ export type dustDataType = {
     pm25Value: string;
     pm10Grade: string;
     pm25Grade: string;
+    sidoName: string;
   }[];
   numOfRows: number;
   totalCount: number;

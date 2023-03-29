@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -14,8 +14,10 @@ const Result = () => {
   const location = useLocation();
   const choiceCity = location.state;
 
-  const data = useFetch();
-  data.then((data) => setDustData(data));
+  const { data, fetchData } = useFetch();
+  useEffect(() => {
+    setDustData(data);
+  }, [data]);
 
   const findChoiceCity = (kindOfdust: string) => {
     const result = dustData.find(

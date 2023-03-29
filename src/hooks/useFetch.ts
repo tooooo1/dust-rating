@@ -24,28 +24,32 @@ export const cityGroup = [
   { cityName: '세종', cityNumber: 16 },
 ];
 
-const useFetch = async () => {
+const useFetch = () => {
   const [data, setData] = useState<dustDataType | []>([]);
 
-  useEffect(() => {
-    Promise.all(
+  const fetchData = async () => {
+    const result = await Promise.all(
       cityGroup.map((v) =>
         axios
           .get(
             `${VITE_OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
           )
           .then((res) => {
-            console.log(res);
             return res.data.response.body;
           })
       )
-    ).then((res) => {
-      setData(res);
-      return res;
-    });
+    );
+
+    setData(result);
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
-  return data;
+  if (!data[0]) fetchData();
+
+  return { data, fetchData };
 };
 
 export default useFetch;

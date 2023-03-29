@@ -84,7 +84,7 @@ const Result = () => {
 export default Result;
 
 const Mid = styled.div`
-  min-height: 100vh;
+  height: 100vh;
 `;
 
 const State = styled.div`

@@ -24,15 +24,17 @@ const Result = () => {
       (temp) => temp.items[0].sidoName === choiceCity
     );
 
-    if (result && kindOfdust === 'DustState') {
+    if (!result) return;
+
+    if (kindOfdust === 'DustState') {
       return (
         (parseInt(result?.items[4]?.pm10Grade) +
           parseInt(result?.items[4]?.pm25Grade)) /
         2
       ).toString();
-    } else if (result && kindOfdust === 'first') {
+    } else if (kindOfdust === 'first') {
       return result?.items[4]?.pm10Value;
-    } else if (result && kindOfdust === 'last') {
+    } else if (kindOfdust === 'last') {
       return result?.items[4]?.pm25Value;
     } else return '';
   };

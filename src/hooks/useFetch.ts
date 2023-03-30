@@ -25,7 +25,7 @@ export const cityGroup = [
 ];
 
 const useFetch = () => {
-  const [data, setData] = useState<DustDataType | []>([]);
+  const [data, setData] = useState<DustDataType[] | []>([]);
 
   const fetchData = async () => {
     const result = await Promise.all(

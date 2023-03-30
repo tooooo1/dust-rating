@@ -11,4 +11,4 @@ export type DustDataType = {
   numOfRows: number;
   totalCount: number;
   pageNo: number;
-}[];
+};

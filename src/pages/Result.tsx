@@ -10,7 +10,7 @@ import useFetch, { cityGroup } from '../hooks/useFetch';
 import { DustDataType } from '@/type';
 
 const Result = () => {
-  const [dustData, setDustData] = useState<DustDataType | []>([]);
+  const [dustData, setDustData] = useState<DustDataType[] | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
 
@@ -19,23 +19,49 @@ const Result = () => {
     setDustData(data);
   }, [data]);
 
-  const findChoiceCity = (kindOfdust: string) => {
+  const findChoiceCity = (kindOfDust: string) => {
     const result = dustData.find(
       (temp) => temp.items[0].sidoName === choiceCity
     );
 
     if (!result) return '';
 
-    switch (kindOfdust) {
+    return calculateFineDust({ result, kindOfDust });
+
+    // switch (kindOfDust) {
+    //   case 'DustState':
+    //     return (
+    //       (parseInt(result?.items[4]?.pm10Grade) +
+    //         parseInt(result?.items[4]?.pm25Grade)) /
+    //       2
+    //     ).toString();
+    //   case 'first':
+    //     return result?.items[4]?.pm10Value;
+    //   case 'last':
+    //     return result?.items[4]?.pm25Value;
+    //   default:
+    //     return '';
+    // }
+  };
+  // fine dust
+
+  const calculateFineDust = ({
+    result,
+    kindOfDust,
+  }: {
+    result: DustDataType;
+    kindOfDust: string;
+  }) => {
+    switch (kindOfDust) {
       case 'DustState':
         return (
           (parseInt(result?.items[4]?.pm10Grade) +
             parseInt(result?.items[4]?.pm25Grade)) /
           2
         ).toString();
-      case 'first':
+      case 'fineDust':
         return result?.items[4]?.pm10Value;
-      case 'last':
+      case 'ultraFineDust':
         return result?.items[4]?.pm25Value;
       default:
         return '';
@@ -53,10 +79,10 @@ const Result = () => {
         <Location>{choiceCity}</Location>
         <Text>현재의 대기질 지수는</Text>
         <DustState dustState={findChoiceCity('DustState')} />
-        <Progress id="first" state={findChoiceCity('first')}>
+        <Progress id="fineDust" state={findChoiceCity('fineDust')}>
           미세먼지
         </Progress>
-        <Progress id="last" state={findChoiceCity('last')}>
+        <Progress id="ultraFineDust" state={findChoiceCity('ultraFineDust')}>
           초미세먼지
         </Progress>
       </Middle>

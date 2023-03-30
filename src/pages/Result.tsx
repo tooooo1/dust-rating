@@ -26,17 +26,20 @@ const Result = () => {
 
     if (!result) return '';
 
-    if (kindOfdust === 'DustState') {
-      return (
-        (parseInt(result?.items[4]?.pm10Grade) +
-          parseInt(result?.items[4]?.pm25Grade)) /
-        2
-      ).toString();
-    } else if (kindOfdust === 'first') {
-      return result?.items[4]?.pm10Value;
-    } else if (kindOfdust === 'last') {
-      return result?.items[4]?.pm25Value;
-    } else return '';
+    switch (kindOfdust) {
+      case 'DustState':
+        return (
+          (parseInt(result?.items[4]?.pm10Grade) +
+            parseInt(result?.items[4]?.pm25Grade)) /
+          2
+        ).toString();
+      case 'first':
+        return result?.items[4]?.pm10Value;
+      case 'last':
+        return result?.items[4]?.pm25Value;
+      default:
+        return '';
+    }
   };
 
   return (

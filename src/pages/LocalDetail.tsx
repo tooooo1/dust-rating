@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import axios from 'axios';
+import { XMLParser, XMLBuilder, XMLValidator } from 'fast-xml-parser';
 
 const { VITE_WEATHER_API_KEY } = import.meta.env;
 

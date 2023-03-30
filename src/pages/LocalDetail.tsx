@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import { XMLParser, XMLBuilder, XMLValidator } from 'fast-xml-parser';
+import { XMLParser } from 'fast-xml-parser';
+import { useState } from 'react';
 
 const { VITE_WEATHER_API_KEY } = import.meta.env;
 
 const LocalDetail = () => {
+  const [detailState, setDetailState] = useState();
+
   const date = new Date();
   const year = date.getFullYear().toString();
   const month =
@@ -16,14 +19,18 @@ const LocalDetail = () => {
 
   const now = ('0' + date.getHours()).slice(-2) + '00';
 
+  const parser = new XMLParser();
+  // 강남구 신사동
   const fetch = async () => {
     const temp = await axios
       .get(
-        `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?serviceKey=${VITE_WEATHER_API_KEY}&numOfRows=10&pageNo=1&base_date=${today}&base_time=${now}&nx=55&ny=127`
+        `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?serviceKey=${VITE_WEATHER_API_KEY}&numOfRows=10&pageNo=1&base_date=${today}&base_time=${now}&nx=61&ny=126`
       )
-      .then((res) => res.data.json());
+      .then((res) => res.data);
 
-    console.log(temp);
+    const parserd = parser.parse(temp);
+    console.log(parserd.response.body.items);
+    setDetailState(parserd.response.body.items.item[3].obsrValue);
   };
   fetch();
 
@@ -32,6 +39,7 @@ const LocalDetail = () => {
       <TotalWrapper>
         <State>지역 상세 날씨</State>
         <div>This is LocalDetail Page</div>
+        <div>온도{detailState}</div>
       </TotalWrapper>
     </>
   );

@@ -10,6 +10,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
     "react-sweet-progress": "^1.1.2",
+    "react-xml-parser": "^1.1.8",
     "styled-components": "^5.3.9"
   },
   "proxy": "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc",

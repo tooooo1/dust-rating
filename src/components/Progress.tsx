@@ -3,7 +3,7 @@ import 'react-sweet-progress/lib/style.css';
 import React from 'react';
 // @ts-ignore
 import { Progress } from 'react-sweet-progress';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 interface ProgressBarProps {
   children: React.ReactNode;

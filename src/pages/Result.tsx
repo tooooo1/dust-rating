@@ -24,26 +24,10 @@ const Result = () => {
       (temp) => temp.items[0].sidoName === choiceCity
     );
 
-    if (!result) return '';
+    if (!result) return '0';
 
     return calculateFineDust({ result, kindOfDust });
-
-    // switch (kindOfDust) {
-    //   case 'DustState':
-    //     return (
-    //       (parseInt(result?.items[4]?.pm10Grade) +
-    //         parseInt(result?.items[4]?.pm25Grade)) /
-    //       2
-    //     ).toString();
-    //   case 'first':
-    //     return result?.items[4]?.pm10Value;
-    //   case 'last':
-    //     return result?.items[4]?.pm25Value;
-    //   default:
-    //     return '';
-    // }
   };
-  // fine dust
 
   const calculateFineDust = ({
     result,
@@ -64,7 +48,7 @@ const Result = () => {
       case 'ultraFineDust':
         return result?.items[4]?.pm25Value;
       default:
-        return '';
+        return '0';
     }
   };
 

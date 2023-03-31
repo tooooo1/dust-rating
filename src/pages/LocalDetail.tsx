@@ -33,7 +33,8 @@ const LocalDetail = () => {
   const currentTime = ('0' + date.getHours()).slice(-2) + '00';
 
   const location = useLocation();
-  const { stationName, dust, ultraDust, dataTime } = location.state;
+  const { stationName, dust, ultraDust, dataTime, dustState } = location.state;
+  console.log(dustState);
 
   // const fetchLocation = async (stationName: string) => {
   //   const result = await axios({
@@ -108,9 +109,7 @@ const LocalDetail = () => {
             <DetailState>지역 상세 날씨</DetailState>
             <div>미세먼지 {dust}</div>
             <div>초미세먼지 {ultraDust}</div>
-            <DustState
-              dustState={((+dust + +ultraDust) / 2).toString()}
-            ></DustState>
+            <DustState dustState={dustState}></DustState>
           </DustDetailWrapper>
           <DustGraphWrapper>
             <div>this is DustGraphWrapper</div>

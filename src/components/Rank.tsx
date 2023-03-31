@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import Detail from './Detail';
 import DustState from './DustState';
 
+import { DetailType } from '@/type';
+
 interface RankProps {
   rank: number;
   city: string;
@@ -35,18 +37,26 @@ const Rank = ({
   const show = () => {
     setClick(!click);
   };
-  const onClick = (
-    stationName: string,
-    dust: string,
-    ultraDust: string,
-    dataTime: string
-  ) => {
+  const handleClickDetail = ({
+    dataTime,
+    stationName,
+    pm10Value,
+    pm25Value,
+    pm10Grade,
+    pm25Grade,
+  }: DetailType) => {
+    const dustState = (
+      (parseInt(pm10Grade) + parseInt(pm25Grade)) /
+      2
+    ).toString();
+    console.log(dustState);
     navigate(`/LocalDetail`, {
       state: {
         stationName,
-        dust,
-        ultraDust,
-        dataTime,
+        dust: pm10Value,
+        ultraDust: pm25Value,
+        dustState: dustState,
+        dataTime: dataTime,
       },
     });
   };
@@ -82,12 +92,14 @@ const Rank = ({
               ultraDust={city.pm25Value}
               dustState={city.pm10Grade}
               onClick={() =>
-                onClick(
-                  city.stationName,
-                  city.pm25Grade,
-                  city.pm10Grade,
-                  city.dataTime
-                )
+                handleClickDetail({
+                  dataTime: city.dataTime,
+                  stationName: city.stationName,
+                  pm10Value: city.pm10Value,
+                  pm25Value: city.pm25Value,
+                  pm10Grade: city.pm10Grade,
+                  pm25Grade: city.pm25Grade,
+                })
               }
             />
           );

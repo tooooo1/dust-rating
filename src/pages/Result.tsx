@@ -33,7 +33,7 @@ const Result = () => {
     result,
     kindOfDust,
   }: {
-    result: DustDataType;
+    result: DustData;
     kindOfDust: string;
   }) => {
     switch (kindOfDust) {

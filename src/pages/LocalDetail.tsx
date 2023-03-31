@@ -39,7 +39,6 @@ const LocalDetail = () => {
       .then((res) => res.data);
 
     const parsed = parser.parse(result);
-    console.log(parsed);
     setTemperature(parsed.response.body.items.item[3].obsrValue);
     setHumidity(parsed.response.body.items.item[1].obsrValue);
   };
@@ -58,8 +57,6 @@ const LocalDetail = () => {
   useEffect(() => {
     fetchWeather(myLocation);
   }, [myLocation]);
-
-  console.log(myLocation);
 
   return (
     <>

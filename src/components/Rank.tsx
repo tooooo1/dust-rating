@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Detail from './Detail';
@@ -29,8 +30,14 @@ const Rank = ({
   detail,
 }: RankProps) => {
   const [click, setClick] = useState(true);
+  const navigate = useNavigate();
+
   const show = () => {
     setClick(!click);
+  };
+  const onClick = (stationName: string) => {
+    console.log(stationName);
+    navigate('/LocalDetail');
   };
   return (
     <RatingWrapper onClick={show}>
@@ -63,6 +70,7 @@ const Rank = ({
               dust={city.pm10Value}
               ultraDust={city.pm25Value}
               dustState={city.pm10Grade}
+              onClick={() => onClick(city.stationName)}
             />
           );
         })}
@@ -94,6 +102,8 @@ const RatingWrapper = styled.div`
     opacity: 0.8;
   }
 `;
+
+const DetailWrapper = styled.div``;
 
 const RatingDetails = styled.div`
   width: 68%;

@@ -8,31 +8,41 @@ interface DetailProps {
   dust: string;
   ultraDust: string;
   dustState: string;
+  onClick: () => void;
 }
 
-const Detail = ({ rank, city, dust, ultraDust, dustState }: DetailProps) => (
-  <RatingWrapper>
-    <Top>
-      <RatingDetails>
-        <Rank>{rank}</Rank>
-        <RankLocation>{city}</RankLocation>
-        <DustStateWr>
-          <DustState dustState={dustState} />
-        </DustStateWr>
-      </RatingDetails>
-      <DustWrapper>
-        <DustWrapperFlex>
-          <div>미세먼지</div>
-          <DustFigure>{dust}</DustFigure>
-        </DustWrapperFlex>
-        <DustWrapperFlex>
-          <div>초미세먼지</div>
-          <DustFigure>{ultraDust}</DustFigure>
-        </DustWrapperFlex>
-      </DustWrapper>
-    </Top>
-  </RatingWrapper>
-);
+const Detail = ({
+  rank,
+  city,
+  dust,
+  ultraDust,
+  dustState,
+  onClick,
+}: DetailProps) => {
+  return (
+    <RatingWrapper onClick={onClick}>
+      <Top>
+        <RatingDetails>
+          <Rank>{rank}</Rank>
+          <RankLocation>{city}</RankLocation>
+          <DustStateWr>
+            <DustState dustState={dustState} />
+          </DustStateWr>
+        </RatingDetails>
+        <DustWrapper>
+          <DustWrapperFlex>
+            <div>미세먼지</div>
+            <DustFigure>{dust}</DustFigure>
+          </DustWrapperFlex>
+          <DustWrapperFlex>
+            <div>초미세먼지</div>
+            <DustFigure>{ultraDust}</DustFigure>
+          </DustWrapperFlex>
+        </DustWrapper>
+      </Top>
+    </RatingWrapper>
+  );
+};
 
 export default Detail;
 

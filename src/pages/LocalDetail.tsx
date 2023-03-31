@@ -4,6 +4,7 @@ import { XMLParser } from 'fast-xml-parser';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import dfs_xy_conv from '@/components/Translate';
+import DustState from '@/components/DustState';
 
 const { VITE_WEATHER_API_KEY, VITE_KAKAO_API_KEY } = import.meta.env;
 
@@ -33,7 +34,7 @@ const LocalDetail = () => {
 
   const location = useLocation();
   const { stationName, dust, ultraDust, dataTime } = location.state;
-  console.log(stationName, dust, ultraDust, dataTime);
+
   // const fetchLocation = async (stationName: string) => {
   //   const result = await axios({
   //     method: 'get',
@@ -62,7 +63,7 @@ const LocalDetail = () => {
       Number(myLocation.latitude),
       Number(myLocation.longitude)
     );
-    console.log(rs);
+
     const { x, y } = rs;
 
     const result = await axios
@@ -71,7 +72,6 @@ const LocalDetail = () => {
       )
       .then((res) => res.data);
 
-    console.log(result);
     const parsed = parser.parse(result);
     setTemperature(parsed.response.body.items.item[3].obsrValue);
     setHumidity(parsed.response.body.items.item[1].obsrValue);
@@ -108,6 +108,9 @@ const LocalDetail = () => {
             <DetailState>지역 상세 날씨</DetailState>
             <div>미세먼지 {dust}</div>
             <div>초미세먼지 {ultraDust}</div>
+            <DustState
+              dustState={((+dust + +ultraDust) / 2).toString()}
+            ></DustState>
           </DustDetailWrapper>
           <DustGraphWrapper>
             <div>this is DustGraphWrapper</div>
@@ -165,7 +168,6 @@ const WeatherWrapper = styled.div`
 `;
 
 const DustWrapper = styled.div`
-  height: 200px;
   width: 100%;
   align-items: center;
   border-radius: 10px;

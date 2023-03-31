@@ -84,8 +84,8 @@ const Rank = ({
               onClick={() =>
                 onClick(
                   city.stationName,
-                  city.pm10Value,
-                  city.pm25Value,
+                  city.pm25Grade,
+                  city.pm10Grade,
                   city.dataTime
                 )
               }

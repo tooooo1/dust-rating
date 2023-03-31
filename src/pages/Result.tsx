@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 
@@ -7,29 +7,50 @@ import Progress from '../components/Progress';
 import Rank from '../components/Rank';
 import useFetch, { cityGroup } from '../hooks/useFetch';
 
-import { dustDataType } from '@/type';
-
-import axios from 'axios';
-const { VITE_API_KEY, VITE_OPEN_URL } = import.meta.env;
+import { type DustData } from '@/type';
 
 const Result = () => {
-  // const data = useFetch();
-  const [dustData, setDustData] = useState<dustDataType | []>([]);
+  const [dustData, setDustData] = useState<DustDataType[] | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
 
-  // data.then((data) => setDustData(data));
+  const { data, fetchData } = useFetch();
   useEffect(() => {
-    Promise.all(
-      cityGroup.map((v) =>
-        axios
-          .get(
-            `${VITE_OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
-          )
-          .then((res) => res.data.response.body)
-      )
-    ).then((data) => setDustData(data));
-  }, [location]);
+    setDustData(data);
+  }, [data]);
+
+  const findChoiceCity = (kindOfDust: string) => {
+    const result = dustData.find(
+      (temp) => temp.items[0].sidoName === choiceCity
+    );
+
+    if (!result) return '0';
+
+    return calculateFineDust({ result, kindOfDust });
+  };
+
+  const calculateFineDust = ({
+    result,
+    kindOfDust,
+  }: {
+    result: DustData;
+    kindOfDust: string;
+  }) => {
+    switch (kindOfDust) {
+      case 'DustState':
+        return (
+          (parseInt(result?.items[4]?.pm10Grade) +
+            parseInt(result?.items[4]?.pm25Grade)) /
+          2
+        ).toString();
+      case 'fineDust':
+        return result?.items[4]?.pm10Value;
+      case 'ultraFineDust':
+        return result?.items[4]?.pm25Value;
+      default:
+        return '0';
+    }
+  };
 
   return (
     <Mid>
@@ -41,17 +62,11 @@ const Result = () => {
       <Middle>
         <Location>{choiceCity}</Location>
         <Text>현재의 대기질 지수는</Text>
-        <DustState
-          dustState={(
-            (parseInt(dustData[0]?.items[4]?.pm10Grade) +
-              parseInt(dustData[0]?.items[4]?.pm25Grade)) /
-            2
-          ).toString()}
-        />
-        <Progress id="first" state={dustData[0]?.items[4]?.pm10Value}>
+        <DustState dustState={findChoiceCity('DustState')} />
+        <Progress id="fineDust" state={findChoiceCity('fineDust')}>
           미세먼지
         </Progress>
-        <Progress id="last" state={dustData[0]?.items[4]?.pm25Value}>
+        <Progress id="ultraFineDust" state={findChoiceCity('ultraFineDust')}>
           초미세먼지
         </Progress>
       </Middle>

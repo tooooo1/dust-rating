@@ -7,7 +7,7 @@ import Progress from '../components/Progress';
 import Rank from '../components/Rank';
 import useFetch, { cityGroup } from '../hooks/useFetch';
 
-import { DustDataType } from '@/type';
+import { type DustData } from '@/type';
 
 const Result = () => {
   const [dustData, setDustData] = useState<DustDataType[] | []>([]);

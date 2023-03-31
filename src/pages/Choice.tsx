@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import Button from '@/components/Button';
 import { cityGroup } from '@/hooks/useFetch';
@@ -88,6 +88,7 @@ const Select = styled.select`
   border-radius: 10px;
   border: none;
   font-size: 16px;
+  color: #2a282f;
 
   &:focus-visible {
     outline: white solid 2px;
@@ -95,6 +96,5 @@ const Select = styled.select`
 
   option {
     border-radius: 8px;
-    color: black;
   }
 `;

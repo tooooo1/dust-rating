@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import dfs_xy_conv from '@/components/Translate';
 import DustState from '@/components/DustState';
+import FineDustState from '@/components/FineDustState';
+
+import { LocalDetailType } from '@/type';
 
 const { VITE_WEATHER_API_KEY, VITE_KAKAO_API_KEY } = import.meta.env;
 
@@ -33,7 +36,8 @@ const LocalDetail = () => {
   const currentTime = ('0' + date.getHours()).slice(-2) + '00';
 
   const location = useLocation();
-  const { stationName, dust, ultraDust, dataTime, dustState } = location.state;
+  const { stationName, dust, ultraDust, dataTime, dustState }: LocalDetailType =
+    location.state;
   console.log(dustState);
 
   // const fetchLocation = async (stationName: string) => {
@@ -108,6 +112,7 @@ const LocalDetail = () => {
           <DustDetailWrapper>
             <DetailState>지역 상세 날씨</DetailState>
             <div>미세먼지 {dust}</div>
+            <FineDustState fineDustState={dust}></FineDustState>
             <div>초미세먼지 {ultraDust}</div>
             <DustState dustState={dustState}></DustState>
           </DustDetailWrapper>

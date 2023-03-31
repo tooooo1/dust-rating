@@ -20,3 +20,11 @@ export type DetailType = {
   pm10Grade: string;
   pm25Grade: string;
 };
+
+export type LocalDetailType = {
+  stationName: string;
+  dust: string;
+  ultraDust: string;
+  dataTime: string;
+  dustState: string;
+};

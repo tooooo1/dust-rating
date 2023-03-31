@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import dfs_xy_conv from '@/components/Translate';
 import DustState from '@/components/DustState';
 import FineDustState from '@/components/FineDustState';
+import UltraFineDustState from '@/components/UltraFineDustState';
 
 import { LocalDetailType } from '@/type';
 
@@ -109,12 +110,19 @@ const LocalDetail = () => {
           <div>습도 {humidity}</div>
         </WeatherWrapper>
         <DustWrapper>
+          <DetailState>지역 상세 날씨</DetailState>
+          <DustState dustState={dustState}></DustState>
           <DustDetailWrapper>
-            <DetailState>지역 상세 날씨</DetailState>
-            <div>미세먼지 {dust}</div>
-            <FineDustState fineDustState={dust}></FineDustState>
-            <div>초미세먼지 {ultraDust}</div>
-            <DustState dustState={dustState}></DustState>
+            <FineDustWrapper>
+              <div>미세먼지</div>
+              <FineDustState fineDustState={dust}></FineDustState>
+            </FineDustWrapper>
+            <UltraFineDustWrapper>
+              <div>초미세먼지</div>
+              <UltraFineDustState
+                ultraFineDustState={ultraDust}
+              ></UltraFineDustState>
+            </UltraFineDustWrapper>
           </DustDetailWrapper>
           <DustGraphWrapper>
             <div>this is DustGraphWrapper</div>
@@ -180,8 +188,10 @@ const DustWrapper = styled.div`
 `;
 
 const DustDetailWrapper = styled.div`
+  margin-top: 3rem;
+  margin-bottom: 3rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   /* border: solid black; */
 `;
 
@@ -203,6 +213,14 @@ const DetailState = styled.div`
     font-size: 20px;
     padding: 10px 40px;
   }
+`;
+
+const FineDustWrapper = styled.div`
+  margin-left: 5rem;
+`;
+
+const UltraFineDustWrapper = styled.div`
+  margin-left: 5rem;
 `;
 
 const DustInfoWrapper = styled.div`

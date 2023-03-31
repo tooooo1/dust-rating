@@ -49,7 +49,7 @@ const Rank = ({
       (parseInt(pm10Grade) + parseInt(pm25Grade)) /
       2
     ).toString();
-    console.log(dustState);
+
     navigate(`/LocalDetail`, {
       state: {
         stationName,

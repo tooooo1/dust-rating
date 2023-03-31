@@ -112,15 +112,12 @@ const LocalDetail = () => {
       .then((res) => res.data);
 
     const parsed = parser.parse(result);
-    console.log(parsed.response.body.items.item);
+
     setForecast(parsed.response.body.items.item[0].informOverall);
 
     const imgSets = parsed.response.body.items.item[0];
     const TT = Array.from(Object.values<string>(imgSets));
     const tempArray = TT.filter((v) => v.includes('https'));
-    console.log(tempArray);
-    // const temp = Object.values(imgSets);
-    // const filtered = temp.filter((v) => v.includes('https'));
 
     setForecastImg(tempArray);
   };

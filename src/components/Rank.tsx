@@ -36,8 +36,11 @@ const Rank = ({
     setClick(!click);
   };
   const onClick = (stationName: string) => {
-    console.log(stationName);
-    navigate('/LocalDetail');
+    navigate(`/LocalDetail`, {
+      state: {
+        stationName,
+      },
+    });
   };
   return (
     <RatingWrapper onClick={show}>

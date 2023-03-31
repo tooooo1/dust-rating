@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { XMLParser } from 'fast-xml-parser';
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const { VITE_WEATHER_API_KEY } = import.meta.env;
 
@@ -28,6 +29,10 @@ const LocalDetail = () => {
   const today = year + month + day;
 
   const currentTime = ('0' + date.getHours()).slice(-2) + '00';
+
+  const location = useLocation();
+  const stationName = location.state.stationName;
+  console.log(stationName);
 
   // 강남구 신사동로 nx ny 값 고정상태.
   const parser = new XMLParser();

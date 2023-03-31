@@ -35,10 +35,18 @@ const Rank = ({
   const show = () => {
     setClick(!click);
   };
-  const onClick = (stationName: string) => {
+  const onClick = (
+    stationName: string,
+    dust: string,
+    ultraDust: string,
+    dataTime: string
+  ) => {
     navigate(`/LocalDetail`, {
       state: {
         stationName,
+        dust,
+        ultraDust,
+        dataTime,
       },
     });
   };
@@ -73,7 +81,14 @@ const Rank = ({
               dust={city.pm10Value}
               ultraDust={city.pm25Value}
               dustState={city.pm10Grade}
-              onClick={() => onClick(city.stationName)}
+              onClick={() =>
+                onClick(
+                  city.stationName,
+                  city.pm10Value,
+                  city.pm25Value,
+                  city.dataTime
+                )
+              }
             />
           );
         })}

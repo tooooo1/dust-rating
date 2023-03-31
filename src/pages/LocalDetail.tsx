@@ -10,7 +10,8 @@ import UltraFineDustState from '@/components/UltraFineDustState';
 
 import { LocalDetailType } from '@/type';
 
-const { VITE_WEATHER_API_KEY, VITE_KAKAO_API_KEY } = import.meta.env;
+const { VITE_WEATHER_API_KEY, VITE_API_KEY, VITE_KAKAO_API_KEY } = import.meta
+  .env;
 
 type Location = {
   latitude: number;
@@ -24,6 +25,8 @@ const LocalDetail = () => {
     latitude: 0,
     longitude: 0,
   });
+  const [forecast, setForecast] = useState();
+  const [forecastImg, setForecastImg] = useState<string[]>([]);
 
   const date = new Date();
   const year = date.getFullYear().toString();
@@ -39,7 +42,6 @@ const LocalDetail = () => {
   const location = useLocation();
   const { stationName, dust, ultraDust, dataTime, dustState }: LocalDetailType =
     location.state;
-  console.log(dustState);
 
   // const fetchLocation = async (stationName: string) => {
   //   const result = await axios({
@@ -93,19 +95,42 @@ const LocalDetail = () => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success);
     // fetchLocation(stationName);
+    fetchTomorrow();
   }, []);
 
   useEffect(() => {
     fetchWeather(myLocation);
   }, [myLocation]);
 
+  const fetchTomorrow = async () => {
+    const result = await axios
+      .get(
+        `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth?searchDate=${
+          year + `-` + month + `-` + day
+        }&returnType=xml&serviceKey=${VITE_API_KEY}&numOfRows=100&pageNo=1`
+      )
+      .then((res) => res.data);
+
+    const parsed = parser.parse(result);
+    console.log(parsed.response.body.items.item);
+    setForecast(parsed.response.body.items.item[0].informOverall);
+
+    const imgSets = parsed.response.body.items.item[0];
+    const TT = Array.from(Object.values<string>(imgSets));
+    const tempArray = TT.filter((v) => v.includes('https'));
+    console.log(tempArray);
+    // const temp = Object.values(imgSets);
+    // const filtered = temp.filter((v) => v.includes('https'));
+
+    setForecastImg(tempArray);
+  };
+
   return (
     <>
       <TotalWrapper>
-        <State>해당 지역의 미세먼지 농도는 다음과 같습니다.</State>
+        <State>{stationName}의 미세먼지 농도는 다음과 같습니다.</State>
         <Time>{dataTime} 기준</Time>
         <WeatherWrapper>
-          <div>{stationName}</div>
           <div>온도 {temperature}</div>
           <div>습도 {humidity}</div>
         </WeatherWrapper>
@@ -124,9 +149,15 @@ const LocalDetail = () => {
               ></UltraFineDustState>
             </UltraFineDustWrapper>
           </DustDetailWrapper>
+          좋음 15 보통 30 나쁨 75 매우 나쁨
           <DustGraphWrapper>
-            <div>this is DustGraphWrapper</div>
+            <div>{forecast}</div>
           </DustGraphWrapper>
+          <ForecastImgWrapper>
+            {forecastImg.map((value) => {
+              return <img key={value} width="30%" src={value} />;
+            })}
+          </ForecastImgWrapper>
         </DustWrapper>
       </TotalWrapper>
     </>
@@ -171,7 +202,7 @@ const Time = styled.div`
 const WeatherWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 50%;
   justify-content: center;
   text-align: center;
   background-color: white;
@@ -180,7 +211,7 @@ const WeatherWrapper = styled.div`
 `;
 
 const DustWrapper = styled.div`
-  width: 100%;
+  width: 50%;
   align-items: center;
   border-radius: 10px;
   background-color: white;
@@ -223,12 +254,16 @@ const UltraFineDustWrapper = styled.div`
   margin-left: 5rem;
 `;
 
-const DustInfoWrapper = styled.div`
+const ForecastImgWrapper = styled.div`
   display: flex;
-  font-size: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const DustGraphWrapper = styled.div`
-  height: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  /* justify-items: center; */
   /* border: solid black; */
 `;

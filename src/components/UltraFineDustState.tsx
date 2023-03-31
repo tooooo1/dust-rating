@@ -7,15 +7,15 @@ interface UltraFineDustStateProps {
 const UltraFineDustState = ({
   ultraFineDustState,
 }: UltraFineDustStateProps) => {
-  if (+ultraFineDustState < 50)
+  if (+ultraFineDustState < 15)
     return (
       <DustStateColor color="#1E64EE">{ultraFineDustState}좋음</DustStateColor>
     );
-  if (+ultraFineDustState < 100)
+  if (+ultraFineDustState < 35)
     return (
       <DustStateColor color="#00D500">{ultraFineDustState}보통</DustStateColor>
     );
-  if (+ultraFineDustState < 250)
+  if (+ultraFineDustState < 75)
     return (
       <DustStateColor color="#F95A20">{ultraFineDustState}나쁨</DustStateColor>
     );

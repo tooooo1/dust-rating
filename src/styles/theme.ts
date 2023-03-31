@@ -5,6 +5,7 @@ const theme = extendTheme({
     global: () => ({
       body: {
         bg: '#53caf2',
+        lineHeight: 1,
       },
     }),
   },

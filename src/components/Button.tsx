@@ -16,21 +16,17 @@ const Button = ({ children, color, onClick }: ButtonProps) => (
 export default Button;
 
 export const Wrapper = styled.button`
-  width: 25%;
   border: none;
   padding: 0.9rem 2.2rem;
   color: #f9f9f9;
   background: ${(props) => props.color};
-  font-size: 1.5rem;
-  border-radius: 7px;
+  font-size: 1.2rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s all;
+  transition: all 0.3s;
+
   &:hover,
   &:active {
-    transform: scale(1.1);
-  }
-
-  @media only screen and (max-width: 414px) {
-    width: 150px;
+    transform: scale(1.05);
   }
 `;

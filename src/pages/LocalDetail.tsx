@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import axios from 'axios';
-import { XMLParser } from 'fast-xml-parser';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import dfs_xy_conv from '@/components/Translate';
@@ -34,7 +33,7 @@ const LocalDetail = () => {
     date.getMonth() < 10
       ? '0' + (date.getMonth() + 1)
       : (date.getMonth() + 1).toString();
-  const day = date.getDate();
+  const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
   const today = year + month + day;
 
   const currentTime = ('0' + date.getHours()).slice(-2) + '00';
@@ -63,7 +62,7 @@ const LocalDetail = () => {
   //   fetchWeather(myLocation);
   // };
 
-  const parser = new XMLParser();
+  // const parser = new XMLParser();
   const fetchWeather = async (myLocation: Location) => {
     // code : "toXY"(위경도->좌표, v1:위도, v2:경도),
     const rs = dfs_xy_conv(
@@ -76,13 +75,12 @@ const LocalDetail = () => {
 
     const result = await axios
       .get(
-        `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?serviceKey=${VITE_WEATHER_API_KEY}&numOfRows=10&pageNo=1&base_date=${today}&base_time=${currentTime}&nx=${x}&ny=${y}`
+        `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?serviceKey=${VITE_WEATHER_API_KEY}&numOfRows=10&pageNo=1&dataType=JSON&base_date=${today}&base_time=${currentTime}&nx=${x}&ny=${y}`
       )
       .then((res) => res.data);
 
-    const parsed = parser.parse(result);
-    setTemperature(parsed.response.body.items.item[3].obsrValue);
-    setHumidity(parsed.response.body.items.item[1].obsrValue);
+    setTemperature(result.response.body.items.item[3].obsrValue);
+    setHumidity(result.response.body.items.item[1].obsrValue);
   };
 
   const success = ({ coords }: { coords: GeolocationCoordinates }) => {
@@ -107,15 +105,14 @@ const LocalDetail = () => {
       .get(
         `http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth?searchDate=${
           year + `-` + month + `-` + day
-        }&returnType=xml&serviceKey=${VITE_API_KEY}&numOfRows=100&pageNo=1`
+        }&returnType=json&serviceKey=${VITE_API_KEY}&numOfRows=100&pageNo=1`
       )
       .then((res) => res.data);
 
-    const parsed = parser.parse(result);
+    console.log(result);
+    setForecast(result.response.body.items.item[0].informOverall);
 
-    setForecast(parsed.response.body.items.item[0].informOverall);
-
-    const imgSets = parsed.response.body.items.item[0];
+    const imgSets = result.response.body.items.item[0];
     const TT = Array.from(Object.values<string>(imgSets));
     const tempArray = TT.filter((v) => v.includes('https'));
 

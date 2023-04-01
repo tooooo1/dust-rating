@@ -24,6 +24,16 @@ const Map = ({ latitude, longitude }: MapProps) => {
       };
 
       const kakaoMap = new kakao.maps.Map(mapRef.current, options);
+
+      const currentLocationMarker = new kakao.maps.CustomOverlay({
+        position: new kakao.maps.LatLng(latitude, longitude),
+        content: `<div class="circle-marker"></div>`,
+      });
+
+      currentLocationMarker.setMap(kakaoMap);
+
+      kakaoMap.setCenter(new kakao.maps.LatLng(latitude, longitude));
+      kakaoMap.setMaxLevel(10);
     });
   }, [latitude, longitude]);
 

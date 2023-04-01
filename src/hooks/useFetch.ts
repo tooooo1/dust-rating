@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { DustDataType } from '@/type';
 
 const { VITE_API_KEY, VITE_OPEN_URL } = import.meta.env;
 
@@ -23,23 +24,32 @@ export const cityGroup = [
   { cityName: '세종', cityNumber: 16 },
 ];
 
-const useFetch = async () => {
-  const [data, setData] = useState({});
-  useEffect(() => {
-    setData(
-      Promise.all(
-        cityGroup.map((v) =>
-          axios
-            .get(
-              `${VITE_OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
-            )
-            .then((data) => data.data.response.body)
-        )
-      ).then((data) => data)
+const useFetch = () => {
+  const [data, setData] = useState<DustDataType[] | []>([]);
+
+  const fetchData = async () => {
+    const result = await Promise.all(
+      cityGroup.map((v) =>
+        axios
+          .get(
+            `${VITE_OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
+          )
+          .then((res) => {
+            return res.data.response.body;
+          })
+      )
     );
+
+    setData(result);
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
-  return data;
+  if (!data[0]) fetchData();
+
+  return { data, fetchData };
 };
 
 export default useFetch;

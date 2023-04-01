@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import Button from '@/components/Button';
 import { cityGroup } from '@/hooks/useFetch';
@@ -25,9 +25,9 @@ const Choice = () => {
       <Text>미세먼지 농도가 궁금한 지역은?</Text>
       <Select onChange={handlePlaceChange} value={place}>
         {cityGroup.map((v) => (
-          <option key={v.cityName} value={v.cityName}>
+          <Option key={v.cityName} value={v.cityName}>
             {v.cityName}
-          </option>
+          </Option>
         ))}
       </Select>
       <Button color={'#2886A6'} onClick={handleResultPageNavigate}>
@@ -44,57 +44,62 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: #fff;
+  text-align: center;
 `;
 
-const Title = styled.div`
+const Title = styled.h1`
   font-size: 14vw;
   padding-bottom: 1.5rem;
-  text-align: center;
+  font-weight: 600;
   @media only screen and (min-width: 768px) {
-    font-size: 60px;
+    font-size: 3.7rem;
   }
 `;
 
-const SubTitle = styled.div`
+const SubTitle = styled.p`
   font-size: 5vw;
   padding: 1rem 0;
-  text-align: center;
   @media only screen and (min-width: 768px) {
-    font-size: 20px;
+    font-size: 1.2rem;
   }
 `;
 
-const Text = styled.div`
+const Text = styled.span`
   font-size: 3.5vw;
   margin-bottom: 1.5vh;
-  text-align: center;
+  font-weight: 600;
   @media only screen and (min-width: 768px) {
-    font-size: 20px;
+    font-size: 1.2rem;
   }
 `;
 
 const Select = styled.select`
   height: 6vh;
-  margin-bottom: 1rem;
-  font-weight: bold;
-  background-color: white;
+  margin: 1rem 0;
+  font-weight: 600;
+  background-color: #fff;
   opacity: 0.8;
+  color: #2a282f;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  border-radius: 10px;
+  padding: 0 1rem;
+  border-radius: 0.6rem;
   border: none;
-  font-size: 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    opacity: 1;
+  }
 
   &:focus-visible {
-    outline: white solid 2px;
+    outline: 0.1rem solid #fff;
   }
+`;
 
-  option {
-    border-radius: 8px;
-    color: black;
-  }
+const Option = styled.option`
+  border-radius: 0.5rem;
 `;

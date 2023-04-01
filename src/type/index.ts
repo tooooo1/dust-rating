@@ -1,4 +1,4 @@
-export type dustDataType = {
+export type DustData = {
   items: {
     dataTime: string;
     stationName: string;
@@ -6,6 +6,7 @@ export type dustDataType = {
     pm25Value: string;
     pm10Grade: string;
     pm25Grade: string;
+    sidoName: string;
   }[];
   numOfRows: number;
   totalCount: number;

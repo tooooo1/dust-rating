@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import axios from 'axios';
 import { XMLParser } from 'fast-xml-parser';
 import { useState, useEffect } from 'react';

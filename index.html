@@ -13,11 +13,17 @@
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable-dynamic-subset.css"
     />
+    <script
+      defer
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%= VITE_KAKAO_MAP_API_KEY %>&autoload=false&libraries=services"
+    ></script>
     <title>랭킹먼지</title>
   </head>
   <body>
     <noscript>새로고침 해주세요!</noscript>
     <div id="root"></div>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

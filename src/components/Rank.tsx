@@ -31,11 +31,11 @@ const Rank = ({
   dustState,
   detail,
 }: RankProps) => {
-  const [click, setClick] = useState(true);
+  const [showDetail, setShowDetail] = useState(true);
   const navigate = useNavigate();
 
-  const show = () => {
-    setClick(!click);
+  const HandleClickShowDetail = () => {
+    setShowDetail(!showDetail);
   };
   const handleClickDetail = ({
     dataTime,
@@ -61,7 +61,7 @@ const Rank = ({
     });
   };
   return (
-    <RatingWrapper onClick={show}>
+    <RatingWrapper onClick={HandleClickShowDetail}>
       <Top>
         <RatingDetails>
           <RankW>{rank}</RankW>
@@ -81,7 +81,7 @@ const Rank = ({
           </DustWrapperFlex>
         </DustWrapper>
       </Top>
-      <Container click={click}>
+      <Container showDetail={showDetail}>
         {detail?.map((city, detailIndex) => {
           return (
             <Detail
@@ -204,7 +204,7 @@ const Top = styled.div`
 `;
 
 interface ContainerProps {
-  click: boolean;
+  showDetail: boolean;
 }
 
 const Container = styled.div`
@@ -214,5 +214,5 @@ const Container = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  display: ${(props: ContainerProps) => props.click && `none`};
+  display: ${(props: ContainerProps) => props.showDetail && `none`};
 `;

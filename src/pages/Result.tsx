@@ -107,7 +107,6 @@ const State = styled.div`
   font-size: 4vw;
   margin-bottom: 0.5rem;
   text-align: center;
-
   font-weight: 400;
   color: white;
   @media only screen and (min-width: 768px) {
@@ -119,7 +118,6 @@ const Time = styled.div`
   font-size: 3.3vw;
   margin: 0 0 1.5rem 0;
   text-align: center;
-
   font-weight: 100;
   color: white;
   @media only screen and (min-width: 768px) {
@@ -132,7 +130,6 @@ const Middle = styled.div`
   margin: 0 auto;
   text-align: center;
   border-radius: 10px 10px 0 0;
-
   font-weight: 300;
   background-color: white;
 `;
@@ -141,7 +138,6 @@ const Location = styled.div`
   font-size: 6vw;
   padding-top: 1.5rem;
   text-align: center;
-
   font-weight: 600;
   @media only screen and (min-width: 768px) {
     font-size: 30px;
@@ -152,7 +148,6 @@ const Text = styled.div`
   font-size: 3.5vw;
   text-align: center;
   padding: 2vh 0 0.8vh 0;
-
   font-weight: 400;
   color: #9dadb6;
   @media only screen and (min-width: 768px) {
@@ -166,7 +161,6 @@ const Rating = styled.div`
   background-color: #f6f6f6;
   font-size: 3vh;
   text-align: center;
-
   font-weight: 700;
   @media only screen and (min-width: 768px) {
     border-radius: 20px 20px 0 0;
@@ -190,7 +184,6 @@ const DustRating = styled.div`
   font-size: 3.5vw;
   color: white;
   text-align: center;
-
   font-weight: 400;
   @media only screen and (min-width: 768px) {
     font-size: 20px;

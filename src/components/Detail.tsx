@@ -80,7 +80,6 @@ const Rank = styled.div`
   width: 10%;
   display: flex;
   font-size: 2vh;
-
   font-weight: 600;
   color: #9dadb6;
   @media only screen and (min-width: 768px) {
@@ -90,7 +89,6 @@ const Rank = styled.div`
 
 const RankLocation = styled.div`
   display: flex;
-
   font-weight: 600;
   font-size: 5.5vw;
   @media only screen and (min-width: 768px) {
@@ -107,7 +105,6 @@ const DustStateWr = styled.div`
 
 const DustWrapper = styled.div`
   width: 32%;
-
   font-weight: 300;
   font-size: 3.3vw;
   @media only screen and (min-width: 768px) {
@@ -117,7 +114,6 @@ const DustWrapper = styled.div`
 
 const DustWrapperFlex = styled.div`
   display: flex;
-
   font-weight: 300;
   justify-content: space-between;
   margin: 0.5rem 0;
@@ -129,7 +125,6 @@ const DustWrapperFlex = styled.div`
 const DustFigure = styled.div`
   display: flex;
   margin-left: 2vw;
-
   font-weight: 600;
   @media only screen and (min-width: 768px) {
     font-size: 18px;

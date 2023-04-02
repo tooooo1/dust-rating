@@ -46,7 +46,6 @@ const DustWrapperFlex = styled.div`
   width: 30%;
   font-size: 3vw;
   align-items: center;
-
   font-weight: 500;
   justify-content: space-between;
   margin: 0 0.5rem;
@@ -58,7 +57,6 @@ const DustWrapperFlex = styled.div`
 const DustFigure = styled.div`
   display: flex;
   margin-left: 2vw;
-
   font-weight: 800;
   @media only screen and (min-width: 768px) {
     font-size: 18px;
@@ -80,7 +78,6 @@ const DustProgressWrapper = styled.div`
   margin-left: 7vw;
   font-size: 3vw;
   padding-bottom: 5px;
-
   &#first {
     padding-top: 2vh;
   }

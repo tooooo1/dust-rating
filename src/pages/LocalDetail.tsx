@@ -86,8 +86,8 @@ const LocalDetail = () => {
   };
 
   const success = ({ coords }: { coords: GeolocationCoordinates }) => {
-    const latitude = coords.latitude; // 위도
-    const longitude = coords.longitude; // 경도
+    const latitude = coords.latitude;
+    const longitude = coords.longitude;
 
     setMyLocation({ ...myLocation, latitude, longitude });
   };
@@ -167,7 +167,6 @@ const TotalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background-color: white; */
 `;
 
 const State = styled.div`
@@ -176,7 +175,6 @@ const State = styled.div`
   font-size: 4vw;
   border-radius: 20px;
   text-align: center;
-
   font-weight: 400;
   color: white;
   background-color: #53caf2;
@@ -189,7 +187,6 @@ const Time = styled.div`
   font-size: 3.3vw;
   margin: 0 0 1.5rem 0;
   text-align: center;
-
   font-weight: 100;
   color: white;
   @media only screen and (min-width: 768px) {
@@ -244,12 +241,10 @@ const DetailState = styled.div`
 
 const FineDustWrapper = styled.div`
   width: 100%;
-  /* margin-left: 5rem; */
 `;
 
 const UltraFineDustWrapper = styled.div`
   width: 100%;
-  /* margin-left: 5rem; */
 `;
 
 const ForecastImgWrapper = styled.div`
@@ -262,6 +257,4 @@ const DustGraphWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  /* justify-items: center; */
-  /* border: solid black; */
 `;

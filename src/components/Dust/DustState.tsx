@@ -1,20 +1,34 @@
 import styled from '@emotion/styled';
 
 interface DustStateProps {
-  dustState: string;
+  dustDensity: string;
+  kindOfDust: string;
 }
 
-const DustState = ({ dustState }: DustStateProps) => {
-  if (+dustState < 2)
-    return <DustStateColor style={{ color: '#1E64EE' }}>좋음</DustStateColor>;
-  if (+dustState < 3)
-    return <DustStateColor style={{ color: '#00D500' }}>보통</DustStateColor>;
-  if (+dustState < 4)
-    return <DustStateColor style={{ color: '#F95A20' }}>나쁨</DustStateColor>;
-  if (isNaN(+dustState))
+const dustRateColor = ['#1E64EE', '#00D500', '#F95A20', '#E73532'];
+const dustRate = ['좋음', '보통', '나쁨', '매우 나쁨'];
+const averageDustDensity = [2, 3, 4, 10];
+const fineDustDensity = [80, 150, 300, 1200];
+const ultraFineDustDensity = [15, 35, 75, 1200];
+
+const DustState = ({ dustDensity, kindOfDust }: DustStateProps) => {
+  if (isNaN(+dustDensity))
     return <DustStateColor style={{ color: '#666666' }}>측정중</DustStateColor>;
 
-  return <DustStateColor style={{ color: '#E73532' }}>매우나쁨</DustStateColor>;
+  let result = 0;
+  if (kindOfDust === 'avg') {
+    result = averageDustDensity.findIndex((v) => +dustDensity < +v);
+  } else if (kindOfDust === 'fineDust') {
+    result = fineDustDensity.findIndex((v) => +dustDensity < +v);
+  } else if (kindOfDust === 'ultraFineDust') {
+    result = ultraFineDustDensity.findIndex((v) => +dustDensity < +v);
+  }
+
+  return (
+    <DustStateColor color={dustRateColor[result]}>
+      {dustRate[result]}
+    </DustStateColor>
+  );
 };
 
 export default DustState;
@@ -24,6 +38,7 @@ const DustStateColor = styled.div`
   display: flex;
   justify-content: center;
   font-weight: 700;
+  color: ${(props) => props.color};
   @media only screen and (min-width: 768px) {
     font-size: 25px;
   }

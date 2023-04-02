@@ -26,7 +26,7 @@ const Detail = ({
           <Rank>{rank}</Rank>
           <RankLocation>{city}</RankLocation>
           <DustStateWr>
-            <DustState dustState={dustState} />
+            <DustState dustDensity={dustState} kindOfDust="avg" />
           </DustStateWr>
         </RatingDetails>
         <DustWrapper>

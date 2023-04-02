@@ -67,7 +67,7 @@ const Rank = ({
           <RankW>{rank}</RankW>
           <RankLocation>{city}</RankLocation>
           <DustStateW>
-            <DustState dustState={dustState} />
+            <DustState dustDensity={dustState} kindOfDust="avg" />
           </DustStateW>
         </RatingDetails>
         <DustWrapper>

@@ -132,17 +132,18 @@ const LocalDetail = () => {
         </WeatherWrapper>
         <DustWrapper>
           <DetailState>지역 상세 날씨</DetailState>
-          <DustState dustState={dustState}></DustState>
+          <DustState dustDensity={dustState} kindOfDust="avg"></DustState>
           <DustDetailWrapper>
             <FineDustWrapper>
               <div>미세먼지</div>
-              <FineDustState fineDustState={+dust}></FineDustState>
+              <DustState dustDensity={dust} kindOfDust="fineDust"></DustState>
             </FineDustWrapper>
             <UltraFineDustWrapper>
               <div>초미세먼지</div>
-              <UltraFineDustState
-                ultraFineDustState={ultraDust}
-              ></UltraFineDustState>
+              <DustState
+                dustDensity={ultraDust}
+                kindOfDust="ultraFineDust"
+              ></DustState>
             </UltraFineDustWrapper>
           </DustDetailWrapper>
           좋음 15 보통 30 나쁨 75 매우 나쁨

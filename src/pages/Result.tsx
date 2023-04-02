@@ -62,7 +62,7 @@ const Result = () => {
       <Middle>
         <Location>{choiceCity}</Location>
         <Text>현재의 대기질 지수는</Text>
-        <DustState dustState={findChoiceCity('DustState')} />
+        <DustState dustDensity={findChoiceCity('DustState')} kindOfDust="avg" />
         <Progress id="fineDust" state={findChoiceCity('fineDust')}>
           미세먼지
         </Progress>

@@ -86,8 +86,8 @@ const LocalDetail = () => {
   };
 
   const success = ({ coords }: { coords: GeolocationCoordinates }) => {
-    const latitude = coords.latitude; // 위도
-    const longitude = coords.longitude; // 경도
+    const latitude = coords.latitude;
+    const longitude = coords.longitude;
 
     setMyLocation({ ...myLocation, latitude, longitude });
   };

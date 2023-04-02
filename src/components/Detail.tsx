@@ -89,7 +89,6 @@ const Rank = styled.div`
 
 const RankLocation = styled.div`
   display: flex;
-
   font-weight: 600;
   font-size: 5.5vw;
   @media only screen and (min-width: 768px) {

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { DustState } from '@/components/Dust';
 
-interface DetailProps {
+interface CityDustDetailProps {
   rank: number;
   city: string;
   dust: string;
@@ -11,23 +11,23 @@ interface DetailProps {
   onClick: () => void;
 }
 
-const Detail = ({
+const CityDustDetail = ({
   rank,
   city,
   dust,
   ultraDust,
   dustState,
   onClick,
-}: DetailProps) => {
+}: CityDustDetailProps) => {
   return (
     <RatingWrapper onClick={onClick}>
       <Top>
         <RatingDetails>
           <Rank>{rank}</Rank>
           <RankLocation>{city}</RankLocation>
-          <DustStateWr>
+          <DustStateWrapper>
             <DustState dustDensity={dustState} kindOfDust="avg" />
-          </DustStateWr>
+          </DustStateWrapper>
         </RatingDetails>
         <DustWrapper>
           <DustWrapperFlex>
@@ -44,7 +44,7 @@ const Detail = ({
   );
 };
 
-export default Detail;
+export default CityDustDetail;
 
 const RatingWrapper = styled.div`
   position: relative;
@@ -96,7 +96,7 @@ const RankLocation = styled.div`
   }
 `;
 
-const DustStateWr = styled.div`
+const DustStateWrapper = styled.div`
   width: 50%;
   @media only screen and (min-width: 768px) {
     font-size: 20px;

@@ -1,10 +1,15 @@
 import { IconButton } from '@chakra-ui/react';
 import { BiTargetLock, BiPlus, BiMinus } from 'react-icons/bi';
 
-type buttonType = 'current-location' | 'zoom-in' | 'zoom-out';
+const icons = {
+  'current-location': <BiTargetLock />,
+  'zoom-in': <BiPlus />,
+  'zoom-out': <BiMinus />,
+};
 
+type iconType = keyof typeof icons;
 interface MapButtonProps {
-  type: buttonType;
+  type: iconType;
   onClick: () => void;
 }
 
@@ -14,17 +19,8 @@ const MapButton = ({ type, onClick }: MapButtonProps) => {
       aria-label={type}
       onClick={onClick}
       backgroundColor="#b4e9fa"
+      icon={icons[type]}
       _hover={{ bg: '#86e0fc' }}
-      background
-      icon={
-        type === 'current-location' ? (
-          <BiTargetLock />
-        ) : type === 'zoom-in' ? (
-          <BiPlus />
-        ) : (
-          <BiMinus />
-        )
-      }
     />
   );
 };

@@ -22,7 +22,7 @@ export type Detail = {
   pm25Grade: string;
 };
 
-export type LocalDetail = {
+export type LocalDustDetail = {
   stationName: string;
   fineDust: string;
   ultraDust: string;

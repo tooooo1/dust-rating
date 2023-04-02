@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import dfs_xy_conv from '@/components/Translate';
 import { DustState } from '@/components/Dust';
 
-import { LocalDetail } from '@/type';
+import { LocalDustDetail } from '@/type';
 
 const { VITE_WEATHER_API_KEY, VITE_API_KEY, VITE_KAKAO_API_KEY } = import.meta
   .env;
@@ -37,8 +37,13 @@ const LocalDetail = () => {
   const currentTime = ('0' + date.getHours()).slice(-2) + '00';
 
   const location = useLocation();
-  const { stationName, fineDust, ultraDust, dataTime, dustState }: LocalDetail =
-    location.state;
+  const {
+    stationName,
+    fineDust,
+    ultraDust,
+    dataTime,
+    dustState,
+  }: LocalDustDetail = location.state;
 
   // const fetchLocation = async (stationName: string) => {
   //   const result = await axios({

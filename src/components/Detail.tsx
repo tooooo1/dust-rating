@@ -80,7 +80,6 @@ const Rank = styled.div`
   width: 10%;
   display: flex;
   font-size: 2vh;
-
   font-weight: 600;
   color: #9dadb6;
   @media only screen and (min-width: 768px) {

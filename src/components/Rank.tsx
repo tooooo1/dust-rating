@@ -33,7 +33,6 @@ const Rank = ({
 }: RankProps) => {
   const [showDetail, setShowDetail] = useState(true);
   const navigate = useNavigate();
-
   const handleClickShowDetail = () => {
     setShowDetail(!showDetail);
   };
@@ -49,7 +48,6 @@ const Rank = ({
       (parseInt(pm10Grade) + parseInt(pm25Grade)) /
       2
     ).toString();
-
     navigate(`/LocalDetail`, {
       state: {
         stationName,

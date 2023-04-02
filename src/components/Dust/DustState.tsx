@@ -11,16 +11,20 @@ const averageDustDensity = [2, 3, 4, 10];
 const fineDustDensity = [80, 150, 300, 1200];
 const ultraFineDustDensity = [15, 35, 75, 1200];
 
+const KIND_OF_DUST_AVG = 'avg';
+const KIND_OF_DUST_FINEDUST = 'fineDust';
+const KIND_OF_DUST_ULTRAFINEDUST = 'ultraFineDust';
+
 const DustState = ({ dustDensity, kindOfDust }: DustStateProps) => {
   if (isNaN(+dustDensity))
     return <DustStateColor style={{ color: '#666666' }}>측정중</DustStateColor>;
 
   let result = 0;
-  if (kindOfDust === 'avg') {
+  if (kindOfDust === KIND_OF_DUST_AVG) {
     result = averageDustDensity.findIndex((v) => +dustDensity < +v);
-  } else if (kindOfDust === 'fineDust') {
+  } else if (kindOfDust === KIND_OF_DUST_FINEDUST) {
     result = fineDustDensity.findIndex((v) => +dustDensity < +v);
-  } else if (kindOfDust === 'ultraFineDust') {
+  } else if (kindOfDust === KIND_OF_DUST_ULTRAFINEDUST) {
     result = ultraFineDustDensity.findIndex((v) => +dustDensity < +v);
   }
 

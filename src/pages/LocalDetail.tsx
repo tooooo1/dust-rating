@@ -134,7 +134,7 @@ const LocalDetail = () => {
           <DustDetailWrapper>
             <FineDustWrapper>
               <div>미세먼지</div>
-              <FineDustState fineDustState={dust}></FineDustState>
+              <FineDustState fineDustState={+dust}></FineDustState>
             </FineDustWrapper>
             <UltraFineDustWrapper>
               <div>초미세먼지</div>

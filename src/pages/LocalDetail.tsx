@@ -111,14 +111,14 @@ const LocalDetail = () => {
       )
       .then((res) => res.data);
 
-    console.log(result);
     setForecast(result.response.body.items.item[0].informOverall);
 
     const imgSets = result.response.body.items.item[0];
-    const TT = Array.from(Object.values<string>(imgSets));
-    const tempArray = TT.filter((v) => v.includes('https'));
+    const forecastImgArray = Array.from(Object.values<string>(imgSets)).filter(
+      (v) => v.includes('https')
+    );
 
-    setForecastImg(tempArray);
+    setForecastImg(forecastImgArray);
   };
 
   return (

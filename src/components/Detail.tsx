@@ -114,7 +114,6 @@ const DustWrapper = styled.div`
 
 const DustWrapperFlex = styled.div`
   display: flex;
-
   font-weight: 300;
   justify-content: space-between;
   margin: 0.5rem 0;

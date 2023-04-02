@@ -11,7 +11,7 @@ export type DustData = {
   numOfRows: number;
   totalCount: number;
   pageNo: number;
-}[];
+};
 
 export type DetailType = {
   dataTime: string;

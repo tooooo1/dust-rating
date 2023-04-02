@@ -10,7 +10,7 @@ import useFetch, { cityGroup } from '../hooks/useFetch';
 import { type DustData } from '@/type';
 
 const Result = () => {
-  const [dustData, setDustData] = useState<DustDataType[] | []>([]);
+  const [dustData, setDustData] = useState<DustData[] | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
 
@@ -107,7 +107,7 @@ const State = styled.div`
   font-size: 4vw;
   margin-bottom: 0.5rem;
   text-align: center;
-  /* font-family: 'Pretendard-Regular'; */
+  font-family: 'Pretendard-Regular';
   color: white;
   @media only screen and (min-width: 768px) {
     font-size: 30px;
@@ -118,7 +118,7 @@ const Time = styled.div`
   font-size: 3.3vw;
   margin: 0 0 1.5rem 0;
   text-align: center;
-  /* font-family: 'Pretendard-Thin'; */
+  font-family: 'Pretendard-Thin';
   color: white;
   @media only screen and (min-width: 768px) {
     font-size: 24px;
@@ -130,7 +130,7 @@ const Middle = styled.div`
   margin: 0 auto;
   text-align: center;
   border-radius: 10px 10px 0 0;
-  /* font-family: 'Pretendard-Light'; */
+  font-family: 'Pretendard-Light';
   background-color: white;
 `;
 
@@ -138,7 +138,7 @@ const Location = styled.div`
   font-size: 6vw;
   padding-top: 1.5rem;
   text-align: center;
-  /* font-family: 'Pretendard-SemiBold'; */
+  font-family: 'Pretendard-SemiBold';
   @media only screen and (min-width: 768px) {
     font-size: 30px;
   }
@@ -148,7 +148,7 @@ const Text = styled.div`
   font-size: 3.5vw;
   text-align: center;
   padding: 2vh 0 0.8vh 0;
-  /* font-family: 'Pretendard-Regular'; */
+  font-family: 'Pretendard-Regular';
   color: #9dadb6;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
@@ -161,7 +161,7 @@ const Rating = styled.div`
   background-color: #f6f6f6;
   font-size: 3vh;
   text-align: center;
-  /* font-family: 'Pretendard-Bold'; */
+  font-family: 'Pretendard-Bold';
   @media only screen and (min-width: 768px) {
     border-radius: 20px 20px 0 0;
   }
@@ -184,7 +184,7 @@ const DustRating = styled.div`
   font-size: 3.5vw;
   color: white;
   text-align: center;
-  /* font-family: 'Pretendard-Regular'; */
+  font-family: 'Pretendard-Regular';
   @media only screen and (min-width: 768px) {
     font-size: 20px;
     padding: 10px 40px;

@@ -1,6 +1,6 @@
-import { Box } from '@chakra-ui/react';
+import { VStack, Box } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
-import CurrentLocationButton from './currentLocationButton';
+import MapButton from './MapButton';
 
 declare global {
   interface Window {
@@ -62,6 +62,24 @@ const Map = () => {
     });
   };
 
+  const handleZoomIn = () => {
+    kakao.maps.load(() => {
+      if (!map) return;
+
+      const zoomLevel = map.getLevel();
+      map.setLevel(zoomLevel - 1, { animate: true });
+    });
+  };
+
+  const handleZoomOut = () => {
+    kakao.maps.load(() => {
+      if (!map) return;
+
+      const zoomLevel = map.getLevel();
+      map.setLevel(zoomLevel + 1, { animate: true });
+    });
+  };
+
   return (
     <Box position="relative" width="100%" height="100%">
       <div
@@ -71,7 +89,14 @@ const Map = () => {
           height: '100%',
         }}
       />
-      <CurrentLocationButton onClick={handleCurrentLocationChange} />
+      <VStack position="absolute" top="1rem" right="1rem" zIndex={10}>
+        <MapButton
+          type="current-location"
+          onClick={handleCurrentLocationChange}
+        />
+        <MapButton type="zoom-in" onClick={handleZoomIn} />
+        <MapButton type="zoom-out" onClick={handleZoomOut} />
+      </VStack>
     </Box>
   );
 };

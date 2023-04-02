@@ -8,7 +8,7 @@ interface SidoDustDetailProps {
   fineDust: string;
   ultraFineDust: string;
   dustState: string;
-  onClick: () => void;
+  onClickSidoDustDetail: () => void;
 }
 
 const SidoDustDetail = ({
@@ -17,10 +17,15 @@ const SidoDustDetail = ({
   fineDust,
   ultraFineDust,
   dustState,
-  onClick,
+  onClickSidoDustDetail,
 }: SidoDustDetailProps) => {
+  const kindOfDust = [
+    ['미세먼지', fineDust],
+    ['초미세먼지', ultraFineDust],
+  ];
+
   return (
-    <RatingWrapper onClick={onClick}>
+    <RatingWrapper onClick={onClickSidoDustDetail}>
       <Top>
         <RatingDetails>
           <Rank>{rank}</Rank>
@@ -30,14 +35,12 @@ const SidoDustDetail = ({
           </DustStateWrapper>
         </RatingDetails>
         <DustWrapper>
-          <DustWrapperFlex>
-            <div>미세먼지</div>
-            <DustFigure>{fineDust}</DustFigure>
-          </DustWrapperFlex>
-          <DustWrapperFlex>
-            <div>초미세먼지</div>
-            <DustFigure>{ultraFineDust}</DustFigure>
-          </DustWrapperFlex>
+          {kindOfDust.map((v, kindOfDustIdx) => (
+            <DustWrapperFlex key={v + kindOfDustIdx.toString()}>
+              <div>{v[0]}</div>
+              <DustFigure>{v[1]}</DustFigure>
+            </DustWrapperFlex>
+          ))}
         </DustWrapper>
       </Top>
     </RatingWrapper>

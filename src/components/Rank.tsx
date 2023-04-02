@@ -37,7 +37,7 @@ const Rank = ({
   const handleClickShowDetail = () => {
     setShowDetail(!showDetail);
   };
-  const handleClickDetail = ({
+  const handleClickSidoDustDetail = ({
     dataTime,
     stationName,
     pm10Value,
@@ -91,8 +91,8 @@ const Rank = ({
               fineDust={city.pm10Value}
               ultraFineDust={city.pm25Value}
               dustState={city.pm10Grade}
-              onClick={() =>
-                handleClickDetail({
+              onClickSidoDustDetail={() =>
+                handleClickSidoDustDetail({
                   dataTime: city.dataTime,
                   stationName: city.stationName,
                   pm10Value: city.pm10Value,

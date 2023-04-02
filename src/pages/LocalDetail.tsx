@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import dfs_xy_conv from '@/components/Translate';
 import { DustState } from '@/components/Dust';
 
-import { LocalDustDetail } from '@/type';
+import { type LocalDustDetail } from '@/type';
 
 const { VITE_WEATHER_API_KEY, VITE_API_KEY, VITE_KAKAO_API_KEY } = import.meta
   .env;

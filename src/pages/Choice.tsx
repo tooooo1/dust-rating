@@ -22,7 +22,7 @@ const Choice = () => {
       <img src="images/location.png" alt="location" width={30} height={30} />
       <SubTitle>한 눈에 확인하는</SubTitle>
       <Title>랭킹먼지</Title>
-      <Text>미세먼지 농도가 궁금한 지역은?</Text>
+      <Description>미세먼지 농도가 궁금한 지역은?</Description>
       <Select onChange={handlePlaceChange} value={place}>
         {cityGroup.map((v) => (
           <Option key={v.cityName} value={v.cityName}>
@@ -49,7 +49,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 14vw;
+  font-size: 3.75rem;
   padding-bottom: 1.5rem;
   font-weight: 600;
   @media only screen and (min-width: 768px) {
@@ -58,16 +58,16 @@ const Title = styled.h1`
 `;
 
 const SubTitle = styled.p`
-  font-size: 5vw;
+  font-size: 1.25rem;
   padding: 1rem 0;
   @media only screen and (min-width: 768px) {
     font-size: 1.2rem;
   }
 `;
 
-const Text = styled.span`
-  font-size: 3.5vw;
-  margin-bottom: 1.5vh;
+const Description = styled.span`
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
   font-weight: 600;
   @media only screen and (min-width: 768px) {
     font-size: 1.2rem;
@@ -75,7 +75,6 @@ const Text = styled.span`
 `;
 
 const Select = styled.select`
-  height: 6vh;
   margin: 1rem 0;
   font-weight: 600;
   background-color: #fff;
@@ -84,7 +83,7 @@ const Select = styled.select`
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  padding: 0 1rem;
+  padding: 1rem 1.2rem;
   border-radius: 0.6rem;
   border: none;
   font-size: 1rem;

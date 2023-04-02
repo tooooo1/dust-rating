@@ -34,7 +34,7 @@ const Rank = ({
   const [showDetail, setShowDetail] = useState(true);
   const navigate = useNavigate();
 
-  const HandleClickShowDetail = () => {
+  const handleClickShowDetail = () => {
     setShowDetail(!showDetail);
   };
   const handleClickDetail = ({
@@ -61,7 +61,7 @@ const Rank = ({
     });
   };
   return (
-    <RatingWrapper onClick={HandleClickShowDetail}>
+    <RatingWrapper onClick={handleClickShowDetail}>
       <Top>
         <RatingDetails>
           <RankW>{rank}</RankW>

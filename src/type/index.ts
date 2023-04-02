@@ -24,7 +24,7 @@ export type DetailType = {
 
 export type LocalDetailType = {
   stationName: string;
-  dust: string;
+  fineDust: string;
   ultraDust: string;
   dataTime: string;
   dustState: string;

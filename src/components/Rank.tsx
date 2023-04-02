@@ -53,7 +53,7 @@ const Rank = ({
     navigate(`/LocalDetail`, {
       state: {
         stationName,
-        dust: pm10Value,
+        fineDust: pm10Value,
         ultraDust: pm25Value,
         dustState: dustState,
         dataTime: dataTime,

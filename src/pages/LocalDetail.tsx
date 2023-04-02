@@ -150,9 +150,9 @@ const LocalDetail = () => {
             <div>{forecast}</div>
           </DustGraphWrapper>
           <ForecastImgWrapper>
-            {forecastImg.map((value) => {
-              return <img key={value} width="30%" src={value} />;
-            })}
+            {forecastImg.map((value) => (
+              <img key={value} width="30%" src={value} />
+            ))}
           </ForecastImgWrapper>
         </DustWrapper>
       </TotalWrapper>

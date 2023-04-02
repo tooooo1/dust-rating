@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 
 import Logo from '@/components/Logo';
-import { ChoicePage, ResultPage, LocalDetailPage } from '@/pages';
+import { ChoicePage, ResultPage, LocalDetailPage, DustMapPage } from '@/pages';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -14,6 +14,7 @@ const router = createBrowserRouter(
       <Route index element={<ChoicePage />} />
       <Route path="/result" element={<ResultPage />} />
       <Route path="/localdetail" element={<LocalDetailPage />} />
+      <Route path="/dust-map" element={<DustMapPage />} />
     </Route>
   )
 );

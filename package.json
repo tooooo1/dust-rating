@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "dependencies": {
-    "@chakra-ui/react": "^2.5.4",
+    "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@tanstack/react-query": "^4.28.0",
@@ -12,8 +12,10 @@
     "framer-motion": "^10.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
     "react-router-dom": "^6.9.0",
-    "react-sweet-progress": "^1.1.2"
+    "react-sweet-progress": "^1.1.2",
+    "vite-plugin-html": "^3.2.0"
   },
   "proxy": "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc",
   "scripts": {
@@ -46,6 +48,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "kakao.maps.d.ts": "^0.1.34",
     "prettier": "^2.8.7",
     "typescript": "^5.0.2",
     "vite": "^4.2.1"

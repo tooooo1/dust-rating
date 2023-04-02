@@ -133,8 +133,6 @@ const RatingWrapper = styled.div`
   }
 `;
 
-const DetailWrapper = styled.div``;
-
 const RatingDetails = styled.div`
   width: 68%;
   display: flex;

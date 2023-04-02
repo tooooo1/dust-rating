@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 
-import CityDustDetail from './CityDustDetail';
+import SidoDustDetail from './SidoDustDetail';
 import { DustState } from '@/components/Dust';
 
 import { type Detail } from '@/type';
@@ -84,7 +84,7 @@ const Rank = ({
       <Container showDetail={showDetail}>
         {detail?.map((city, detailIndex) => {
           return (
-            <CityDustDetail
+            <SidoDustDetail
               key={detailIndex}
               rank={detailIndex + 1}
               city={city.stationName}

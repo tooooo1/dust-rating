@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { DustState } from '@/components/Dust';
 
-interface CityDustDetailProps {
+interface SidoDustDetailProps {
   rank: number;
   city: string;
   fineDust: string;
@@ -11,14 +11,14 @@ interface CityDustDetailProps {
   onClick: () => void;
 }
 
-const CityDustDetail = ({
+const SidoDustDetail = ({
   rank,
   city,
   fineDust,
   ultraFineDust,
   dustState,
   onClick,
-}: CityDustDetailProps) => {
+}: SidoDustDetailProps) => {
   return (
     <RatingWrapper onClick={onClick}>
       <Top>
@@ -44,7 +44,7 @@ const CityDustDetail = ({
   );
 };
 
-export default CityDustDetail;
+export default SidoDustDetail;
 
 const RatingWrapper = styled.div`
   position: relative;

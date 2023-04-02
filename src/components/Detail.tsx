@@ -105,7 +105,6 @@ const DustStateWr = styled.div`
 
 const DustWrapper = styled.div`
   width: 32%;
-
   font-weight: 300;
   font-size: 3.3vw;
   @media only screen and (min-width: 768px) {

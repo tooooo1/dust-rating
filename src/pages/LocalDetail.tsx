@@ -3,9 +3,11 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import dfs_xy_conv from '@/components/Translate';
-import DustState from '@/components/DustState';
-import FineDustState from '@/components/FineDustState';
-import UltraFineDustState from '@/components/UltraFineDustState';
+import {
+  DustState,
+  FineDustState,
+  UltraFineDustState,
+} from '@/components/Dust';
 
 import { LocalDetailType } from '@/type';
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 import Detail from './Detail';
-import DustState from './DustState';
+import { DustState } from '@/components/Dust';
 
 import { DetailType } from '@/type';
 

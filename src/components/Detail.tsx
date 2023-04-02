@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import DustState from './DustState';
+import { DustState } from '@/components/Dust';
 
 interface DetailProps {
   rank: number;

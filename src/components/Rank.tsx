@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import CityDustDetail from './CityDustDetail';
 import { DustState } from '@/components/Dust';
 
-import { DetailType } from '@/type';
+import { type Detail } from '@/type';
 
 interface RankProps {
   rank: number;
@@ -44,7 +44,7 @@ const Rank = ({
     pm25Value,
     pm10Grade,
     pm25Grade,
-  }: DetailType) => {
+  }: Detail) => {
     const dustState = (
       (parseInt(pm10Grade) + parseInt(pm25Grade)) /
       2

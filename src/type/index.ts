@@ -13,7 +13,7 @@ export type DustData = {
   pageNo: number;
 };
 
-export type DetailType = {
+export type Detail = {
   dataTime: string;
   stationName: string;
   pm10Value: string;

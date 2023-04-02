@@ -243,11 +243,13 @@ const DetailState = styled.div`
 `;
 
 const FineDustWrapper = styled.div`
-  margin-left: 5rem;
+  width: 100%;
+  /* margin-left: 5rem; */
 `;
 
 const UltraFineDustWrapper = styled.div`
-  margin-left: 5rem;
+  width: 100%;
+  /* margin-left: 5rem; */
 `;
 
 const ForecastImgWrapper = styled.div`

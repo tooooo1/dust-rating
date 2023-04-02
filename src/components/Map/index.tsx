@@ -13,22 +13,22 @@ const DEFAULT_LOCATION = { latitude: 37.5665, longitude: 126.978 };
 const Map = () => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
-  const { latitude, longitude } = DEFAULT_LOCATION;
   const [location, setLocation] = useState(DEFAULT_LOCATION);
 
   useEffect(() => {
-    console.log('useFE');
     kakao.maps.load(() => {
       if (!mapRef.current) return;
 
       const options = {
-        center: new kakao.maps.LatLng(latitude, longitude),
+        center: new kakao.maps.LatLng(location.latitude, location.longitude),
         level: 5,
       };
 
       const kakaoMap = new kakao.maps.Map(mapRef.current, options);
 
-      kakaoMap.setCenter(new kakao.maps.LatLng(latitude, longitude));
+      kakaoMap.setCenter(
+        new kakao.maps.LatLng(location.latitude, location.longitude)
+      );
 
       navigator.geolocation &&
         navigator.geolocation.getCurrentPosition((position) => {
@@ -50,7 +50,7 @@ const Map = () => {
 
       setMap(kakaoMap);
     });
-  }, [latitude, longitude]);
+  }, []);
 
   const handleCurrentLocationChange = () => {
     kakao.maps.load(() => {

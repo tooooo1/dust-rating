@@ -38,7 +38,7 @@ const Map = () => {
 
           const currentLocationMarker = new kakao.maps.CustomOverlay({
             position: new kakao.maps.LatLng(latitude, longitude),
-            content: `<div class="circle-marker"></div>`,
+            content: `<div class="circle-marker" />`,
           });
 
           currentLocationMarker.setMap(kakaoMap);

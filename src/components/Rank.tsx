@@ -88,8 +88,8 @@ const Rank = ({
               key={detailIndex}
               rank={detailIndex + 1}
               city={city.stationName}
-              dust={city.pm10Value}
-              ultraDust={city.pm25Value}
+              fineDust={city.pm10Value}
+              ultraFineDust={city.pm25Value}
               dustState={city.pm10Grade}
               onClick={() =>
                 handleClickDetail({

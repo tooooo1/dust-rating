@@ -5,8 +5,8 @@ import { DustState } from '@/components/Dust';
 interface CityDustDetailProps {
   rank: number;
   city: string;
-  dust: string;
-  ultraDust: string;
+  fineDust: string;
+  ultraFineDust: string;
   dustState: string;
   onClick: () => void;
 }
@@ -14,8 +14,8 @@ interface CityDustDetailProps {
 const CityDustDetail = ({
   rank,
   city,
-  dust,
-  ultraDust,
+  fineDust,
+  ultraFineDust,
   dustState,
   onClick,
 }: CityDustDetailProps) => {
@@ -32,11 +32,11 @@ const CityDustDetail = ({
         <DustWrapper>
           <DustWrapperFlex>
             <div>미세먼지</div>
-            <DustFigure>{dust}</DustFigure>
+            <DustFigure>{fineDust}</DustFigure>
           </DustWrapperFlex>
           <DustWrapperFlex>
             <div>초미세먼지</div>
-            <DustFigure>{ultraDust}</DustFigure>
+            <DustFigure>{ultraFineDust}</DustFigure>
           </DustWrapperFlex>
         </DustWrapper>
       </Top>

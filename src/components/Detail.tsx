@@ -80,7 +80,7 @@ const Rank = styled.div`
   width: 10%;
   display: flex;
   font-size: 2vh;
-  font-family: 'Pretendard-SemiBold';
+  /* font-family: 'Pretendard-SemiBold'; */
   color: #9dadb6;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
@@ -89,7 +89,7 @@ const Rank = styled.div`
 
 const RankLocation = styled.div`
   display: flex;
-  font-family: 'Pretendard-SemiBold';
+  /* font-family: 'Pretendard-SemiBold'; */
   font-size: 5.5vw;
   @media only screen and (min-width: 768px) {
     font-size: 25px;
@@ -105,7 +105,7 @@ const DustStateWr = styled.div`
 
 const DustWrapper = styled.div`
   width: 32%;
-  font-family: 'Pretendard-Light';
+  /* font-family: 'Pretendard-Light'; */
   font-size: 3.3vw;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
@@ -114,7 +114,7 @@ const DustWrapper = styled.div`
 
 const DustWrapperFlex = styled.div`
   display: flex;
-  font-family: 'Pretendard-Light';
+  /* font-family: 'Pretendard-Light'; */
   justify-content: space-between;
   margin: 0.5rem 0;
   @media only screen and (min-width: 768px) {
@@ -125,7 +125,7 @@ const DustWrapperFlex = styled.div`
 const DustFigure = styled.div`
   display: flex;
   margin-left: 2vw;
-  font-family: 'Pretendard-SemiBold';
+  /* font-family: 'Pretendard-SemiBold'; */
   @media only screen and (min-width: 768px) {
     font-size: 18px;
     margin-left: 10px;

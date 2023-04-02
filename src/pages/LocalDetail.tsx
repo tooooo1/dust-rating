@@ -176,7 +176,7 @@ const State = styled.div`
   font-size: 4vw;
   border-radius: 20px;
   text-align: center;
-  font-family: 'Pretendard-Regular';
+  /* font-family: 'Pretendard-Regular'; */
   color: white;
   background-color: #53caf2;
   @media only screen and (min-width: 768px) {
@@ -188,7 +188,7 @@ const Time = styled.div`
   font-size: 3.3vw;
   margin: 0 0 1.5rem 0;
   text-align: center;
-  font-family: 'Pretendard-Thin';
+  /* font-family: 'Pretendard-Thin'; */
   color: white;
   @media only screen and (min-width: 768px) {
     font-size: 24px;
@@ -235,7 +235,7 @@ const DetailState = styled.div`
   font-size: 3.5vw;
   color: white;
   text-align: center;
-  font-family: 'Pretendard-Regular';
+  /* font-family: 'Pretendard-Regular'; */
   @media only screen and (min-width: 768px) {
     font-size: 20px;
     padding: 10px 40px;

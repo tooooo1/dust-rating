@@ -173,7 +173,7 @@ const DustStateW = styled.div`
 
 const DustWrapper = styled.div`
   width: 32%;
-  font-family: 'Pretendard-Medium';
+  /* font-family: 'Pretendard-Medium'; */
   font-size: 3.3vw;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
@@ -182,7 +182,7 @@ const DustWrapper = styled.div`
 
 const DustWrapperFlex = styled.div`
   display: flex;
-  font-family: 'Pretendard-Medium';
+  /* font-family: 'Pretendard-Medium'; */
   justify-content: space-between;
   margin: 0.5rem 0;
   @media only screen and (min-width: 768px) {
@@ -193,7 +193,7 @@ const DustWrapperFlex = styled.div`
 const DustFigure = styled.div`
   display: flex;
   margin-left: 2vw;
-  font-family: 'Pretendard-ExtraBold';
+  /* font-family: 'Pretendard-ExtraBold'; */
   @media only screen and (min-width: 768px) {
     font-size: 18px;
     margin-left: 10px;

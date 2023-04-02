@@ -176,7 +176,8 @@ const State = styled.div`
   font-size: 4vw;
   border-radius: 20px;
   text-align: center;
-  /* font-family: 'Pretendard-Regular'; */
+
+  font-weight: 400;
   color: white;
   background-color: #53caf2;
   @media only screen and (min-width: 768px) {
@@ -188,7 +189,8 @@ const Time = styled.div`
   font-size: 3.3vw;
   margin: 0 0 1.5rem 0;
   text-align: center;
-  /* font-family: 'Pretendard-Thin'; */
+
+  font-weight: 100;
   color: white;
   @media only screen and (min-width: 768px) {
     font-size: 24px;
@@ -203,7 +205,6 @@ const WeatherWrapper = styled.div`
   text-align: center;
   background-color: white;
   border-radius: 10px 10px 0px 0px;
-  /* border: solid black; */
 `;
 
 const DustWrapper = styled.div`
@@ -211,7 +212,6 @@ const DustWrapper = styled.div`
   align-items: center;
   border-radius: 10px;
   background-color: white;
-  /* border: solid black; */
 `;
 
 const DustDetailWrapper = styled.div`
@@ -219,7 +219,6 @@ const DustDetailWrapper = styled.div`
   margin-bottom: 3rem;
   display: flex;
   flex-direction: row;
-  /* border: solid black; */
 `;
 
 const DetailState = styled.div`
@@ -235,7 +234,8 @@ const DetailState = styled.div`
   font-size: 3.5vw;
   color: white;
   text-align: center;
-  /* font-family: 'Pretendard-Regular'; */
+
+  font-weight: 400;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
     padding: 10px 40px;

@@ -53,8 +53,8 @@ const Rank = ({
         stationName,
         fineDust: pm10Value,
         ultraDust: pm25Value,
-        dustState: dustState,
-        dataTime: dataTime,
+        dustState,
+        dataTime,
       },
     });
   };

@@ -19,9 +19,9 @@ const SidoDustDetail = ({
   dustState,
   onClickSidoDustDetail,
 }: SidoDustDetailProps) => {
-  const kindOfDust = [
-    ['미세먼지', fineDust],
-    ['초미세먼지', ultraFineDust],
+  const kindOfDusts = [
+    { kindOfDust: '미세먼지', dustDensity: fineDust },
+    { kindOfDust: '초미세먼지', dustDensity: ultraFineDust },
   ];
 
   return (
@@ -35,10 +35,10 @@ const SidoDustDetail = ({
           </DustStateWrapper>
         </RatingDetails>
         <DustWrapper>
-          {kindOfDust.map((v, kindOfDustIdx) => (
-            <DustWrapperFlex key={v + kindOfDustIdx.toString()}>
-              <div>{v[0]}</div>
-              <DustFigure>{v[1]}</DustFigure>
+          {kindOfDusts.map((value, kindOfDustIdx) => (
+            <DustWrapperFlex key={value + kindOfDustIdx.toString()}>
+              <div>{value.kindOfDust}</div>
+              <DustFigure>{value.dustDensity}</DustFigure>
             </DustWrapperFlex>
           ))}
         </DustWrapper>

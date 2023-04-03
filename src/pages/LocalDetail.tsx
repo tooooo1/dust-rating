@@ -140,7 +140,7 @@ const LocalDetail = () => {
               <DustState
                 dustDensity={fineDust}
                 kindOfDust="fineDust"
-              ></DustState>
+              />
             </FineDustWrapper>
             <UltraFineDustWrapper>
               <div>초미세먼지</div>

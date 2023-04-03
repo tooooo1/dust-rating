@@ -10,13 +10,13 @@ const { VITE_WEATHER_API_KEY, VITE_API_KEY, VITE_KAKAO_API_KEY } = import.meta
   .env;
 
 const LocalDetail = () => {
-  const [temperature, setTemperature] = useState();
-  const [humidity, setHumidity] = useState();
+  const [temperature, setTemperature] = useState<number | null>(null);
+  const [humidity, setHumidity] = useState<number | null>(null);
   const [myLocation, setMyLocation] = useState<Location>({
     latitude: 0,
     longitude: 0,
   });
-  const [forecast, setForecast] = useState();
+  const [forecast, setForecast] = useState<string | null>(null);
   const [forecastImg, setForecastImg] = useState<string[]>([]);
 
   const date = new Date();

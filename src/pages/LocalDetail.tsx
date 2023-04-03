@@ -147,7 +147,7 @@ const LocalDetail = () => {
               <DustState
                 dustDensity={ultraDust}
                 kindOfDust="ultraFineDust"
-              ></DustState>
+              />
             </UltraFineDustWrapper>
           </DustDetailWrapper>
           좋음 15 보통 30 나쁨 75 매우 나쁨

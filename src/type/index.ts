@@ -29,3 +29,8 @@ export interface LocalDustDetail {
   dataTime: string;
   dustState: string;
 }
+
+export interface Location {
+  latitude: number;
+  longitude: number;
+}

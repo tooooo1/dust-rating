@@ -133,7 +133,7 @@ const LocalDetail = () => {
         </WeatherWrapper>
         <DustWrapper>
           <DetailState>지역 상세 날씨</DetailState>
-          <DustState dustDensity={dustState} kindOfDust="avg"></DustState>
+          <DustState dustDensity={dustState} kindOfDust="avg" />
           <DustDetailWrapper>
             <FineDustWrapper>
               <div>미세먼지</div>

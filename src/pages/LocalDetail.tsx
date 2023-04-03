@@ -4,16 +4,10 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import dfs_xy_conv from '@/components/Translate';
 import { DustState } from '@/components/Dust';
-
-import { type LocalDustDetail } from '@/type';
+import type { LocalDustDetail, Location } from '@/type';
 
 const { VITE_WEATHER_API_KEY, VITE_API_KEY, VITE_KAKAO_API_KEY } = import.meta
   .env;
-
-type Location = {
-  latitude: number;
-  longitude: number;
-};
 
 const LocalDetail = () => {
   const [temperature, setTemperature] = useState();
@@ -137,17 +131,11 @@ const LocalDetail = () => {
           <DustDetailWrapper>
             <FineDustWrapper>
               <div>미세먼지</div>
-              <DustState
-                dustDensity={fineDust}
-                kindOfDust="fineDust"
-              />
+              <DustState dustDensity={fineDust} kindOfDust="fineDust" />
             </FineDustWrapper>
             <UltraFineDustWrapper>
               <div>초미세먼지</div>
-              <DustState
-                dustDensity={ultraDust}
-                kindOfDust="ultraFineDust"
-              />
+              <DustState dustDensity={ultraDust} kindOfDust="ultraFineDust" />
             </UltraFineDustWrapper>
           </DustDetailWrapper>
           좋음 15 보통 30 나쁨 75 매우 나쁨

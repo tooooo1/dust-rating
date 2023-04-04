@@ -1,9 +1,8 @@
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-
 import Button from '@/components/Button';
-import { cityGroup } from '@/hooks/useFetch';
+import { cityGroup } from '@/hooks/useFetchDustInfo';
 
 const Choice = () => {
   const navigate = useNavigate();

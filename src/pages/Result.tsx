@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { DustState } from '../components/Dust';
 import Progress from '../components/Progress';
 import Rank from '../components/Rank';
-import useFetch, { cityGroup } from '../hooks/useFetch';
+import useFetch, { cityGroup } from '../hooks/useFetchDustInfo';
 import { type SidoDust } from '@/type';
 
 const Result = () => {

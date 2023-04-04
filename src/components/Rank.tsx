@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-
 import SidoDustDetail from './SidoDustDetail';
 import { DustState } from '@/components/Dust';
-
 import { type DustDetail } from '@/type';
 
 interface RankProps {

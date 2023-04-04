@@ -8,7 +8,7 @@ import { HiArrowRight } from 'react-icons/hi';
 
 const Choice = () => {
   const navigate = useNavigate();
-  const [place, setPlace] = useState('서울');
+  const [place, setPlace] = useState(cityGroup[0].cityName);
 
   const handleResultPageNavigate = () => {
     navigate('/result', { state: place });

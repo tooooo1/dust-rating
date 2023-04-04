@@ -83,7 +83,7 @@ const Rank = ({
         {detail?.map((city, detailIndex) => {
           return (
             <SidoDustDetail
-              key={detailIndex}
+              key={city + detailIndex.toString()}
               rank={detailIndex + 1}
               city={city.stationName}
               fineDust={city.pm10Value}

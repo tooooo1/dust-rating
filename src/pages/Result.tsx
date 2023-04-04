@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
-
 import { DustState } from '../components/Dust';
 import Progress from '../components/Progress';
 import Rank from '../components/Rank';
 import useFetch, { cityGroup } from '../hooks/useFetch';
-
-import { type DustData } from '@/type';
+import { type SidoDust } from '@/type';
 
 const Result = () => {
-  const [dustData, setDustData] = useState<DustData[] | []>([]);
+  const [dustData, setDustData] = useState<SidoDust[] | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
 
@@ -33,7 +31,7 @@ const Result = () => {
     result,
     kindOfDust,
   }: {
-    result: DustData;
+    result: SidoDust;
     kindOfDust: string;
   }) => {
     switch (kindOfDust) {

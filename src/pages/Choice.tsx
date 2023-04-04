@@ -41,6 +41,7 @@ const Choice = () => {
           width={28}
           bg="#ffffff"
           color="#2a282f"
+          opacity={0.8}
           cursor="pointer"
           _focus={{ bg: '#ffffff' }}
           onChange={handlePlaceChange}
@@ -68,3 +69,32 @@ const Choice = () => {
 };
 
 export default Choice;
+
+// const Select = styled.select`
+//   margin: 1rem 0;
+//   font-weight: 600;
+//   background-color: #fff;
+//   opacity: 0.8;
+//   color: #2a282f;
+//   -moz-appearance: none;
+//   -webkit-appearance: none;
+//   appearance: none;
+//   padding: 1rem 1.1rem;
+//   border-radius: 0.5rem;
+//   border: none;
+//   font-size: 1rem;
+//   cursor: pointer;
+//   transition: all 0.3s;
+
+//   &:hover {
+//     opacity: 1;
+//   }
+
+//   &:focus-visible {
+//     outline: 0.1rem solid #fff;
+//   }
+// `;
+
+// const Option = styled.option`
+//   border-radius: 0.5rem;
+// `;

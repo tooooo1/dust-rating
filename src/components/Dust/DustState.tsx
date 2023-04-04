@@ -18,17 +18,17 @@ const DUST_KIND = {
 };
 
 const DustState = ({ dustDensity, kindOfDust }: DustStateProps) => {
-  const DUST_DENSITY_NUMBER = +dustDensity;
-  if (isNaN(DUST_DENSITY_NUMBER))
+  const dustDensityNumber = +dustDensity;
+  if (isNaN(dustDensityNumber))
     return <DustStateColor style={{ color: '#666666' }}>측정중</DustStateColor>;
 
   const discriminateDust = (): number => {
     if (kindOfDust === DUST_KIND.AVG) {
-      return AVERAGE_DUST_DENSITY.findIndex((v) => DUST_DENSITY_NUMBER < +v);
+      return AVERAGE_DUST_DENSITY.findIndex((v) => dustDensityNumber < +v);
     } else if (kindOfDust === DUST_KIND.FINEDUST) {
-      return FINE_DUST_DENSITY.findIndex((v) => DUST_DENSITY_NUMBER < +v);
+      return FINE_DUST_DENSITY.findIndex((v) => dustDensityNumber < +v);
     } else if (kindOfDust === DUST_KIND.ULTRAFINEDUST) {
-      return ULTRA_FINE_DUST_DENSITY.findIndex((v) => DUST_DENSITY_NUMBER < +v);
+      return ULTRA_FINE_DUST_DENSITY.findIndex((v) => dustDensityNumber < +v);
     }
     return 0;
   };

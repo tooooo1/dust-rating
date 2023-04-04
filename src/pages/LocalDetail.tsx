@@ -14,35 +14,33 @@ const LocalDetail = () => {
   }: LocalDustDetail = location.state;
 
   return (
-    <>
-      <TotalWrapper>
-        <State>{stationName}의 미세먼지 농도는 다음과 같습니다.</State>
-        <Time>{dataTime} 기준</Time>
-        <WeatherWrapper>
-          <div>온도 {20}</div>
-          <div>습도 {20}</div>
-        </WeatherWrapper>
-        <DustWrapper>
-          <DetailState>지역 상세 날씨</DetailState>
-          <DustState dustDensity={dustState} kindOfDust="avg" />
-          <DustDetailWrapper>
-            <FineDustWrapper>
-              <div>미세먼지</div>
-              <DustState dustDensity={fineDust} kindOfDust="fineDust" />
-            </FineDustWrapper>
-            <UltraFineDustWrapper>
-              <div>초미세먼지</div>
-              <DustState dustDensity={ultraDust} kindOfDust="ultraFineDust" />
-            </UltraFineDustWrapper>
-          </DustDetailWrapper>
-          좋음 15 보통 30 나쁨 75 매우 나쁨
-          <DustGraphWrapper>
-            <div>{'기상예보를 준비중 입니다.'}</div>
-          </DustGraphWrapper>
-          <ForecastImgWrapper></ForecastImgWrapper>
-        </DustWrapper>
-      </TotalWrapper>
-    </>
+    <TotalWrapper>
+      <State>{stationName}의 미세먼지 농도는 다음과 같습니다.</State>
+      <Time>{dataTime} 기준</Time>
+      <WeatherWrapper>
+        <div>온도 {20}</div>
+        <div>습도 {20}</div>
+      </WeatherWrapper>
+      <DustWrapper>
+        <DetailState>지역 상세 날씨</DetailState>
+        <DustState dustDensity={dustState} kindOfDust="avg" />
+        <DustDetailWrapper>
+          <FineDustWrapper>
+            <div>미세먼지</div>
+            <DustState dustDensity={fineDust} kindOfDust="fineDust" />
+          </FineDustWrapper>
+          <UltraFineDustWrapper>
+            <div>초미세먼지</div>
+            <DustState dustDensity={ultraDust} kindOfDust="ultraFineDust" />
+          </UltraFineDustWrapper>
+        </DustDetailWrapper>
+        좋음 15 보통 30 나쁨 75 매우 나쁨
+        <DustGraphWrapper>
+          <div>{'기상예보를 준비중 입니다.'}</div>
+        </DustGraphWrapper>
+        <ForecastImgWrapper></ForecastImgWrapper>
+      </DustWrapper>
+    </TotalWrapper>
   );
 };
 

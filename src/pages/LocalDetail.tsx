@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useLocation } from 'react-router-dom';
 import { DustState } from '@/components/Dust';
 import type { LocalDustDetail } from '@/type';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constance';
 
 const LocalDetail = () => {
   const location = useLocation();
@@ -15,7 +16,9 @@ const LocalDetail = () => {
 
   return (
     <TotalWrapper>
-      <State>{stationName}의 미세먼지 농도는 다음과 같습니다.</State>
+      <State>
+        {stationName}의 {FINE_DUST} 농도는 다음과 같습니다.
+      </State>
       <Time>{dataTime} 기준</Time>
       <WeatherWrapper>
         <div>온도 {20}</div>
@@ -26,11 +29,11 @@ const LocalDetail = () => {
         <DustState dustDensity={dustState} kindOfDust="avg" />
         <DustDetailWrapper>
           <FineDustWrapper>
-            <div>미세먼지</div>
+            <div>{FINE_DUST}</div>
             <DustState dustDensity={fineDust} kindOfDust="fineDust" />
           </FineDustWrapper>
           <UltraFineDustWrapper>
-            <div>초미세먼지</div>
+            <div>{ULTRA_FINE_DUST}</div>
             <DustState dustDensity={ultraDust} kindOfDust="ultraFineDust" />
           </UltraFineDustWrapper>
         </DustDetailWrapper>

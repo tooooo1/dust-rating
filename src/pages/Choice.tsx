@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '@/components/Button';
 import { cityGroup } from '@/hooks/useFetchDustInfo';
+import { FINE_DUST } from '@/utils/constance';
 
 const Choice = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Choice = () => {
       <img src="images/location.png" alt="location" width={30} height={30} />
       <SubTitle>한 눈에 확인하는</SubTitle>
       <Title>랭킹먼지</Title>
-      <Text>미세먼지 농도가 궁금한 지역은?</Text>
+      <Text>{FINE_DUST} 농도가 궁금한 지역은?</Text>
       <Select onChange={handlePlaceChange} value={place}>
         {cityGroup.map((v) => (
           <Option key={v.cityName} value={v.cityName}>

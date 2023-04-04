@@ -6,6 +6,7 @@ import Progress from '../components/Progress';
 import Rank from '../components/Rank';
 import useFetch, { cityGroup } from '../hooks/useFetchDustInfo';
 import { type SidoDust } from '@/type';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constance';
 
 const Result = () => {
   const [sidoDust, setSidoDust] = useState<SidoDust[] | []>([]);
@@ -49,7 +50,7 @@ const Result = () => {
 
   return (
     <Mid>
-      <State>전국 미세먼지 농도는 다음과 같습니다</State>
+      <State>전국 {FINE_DUST} 농도는 다음과 같습니다</State>
       <Time>
         {sidoDust[0]?.items[0]?.dataTime ?? '0000-00-00 00:00'}
         기준
@@ -59,15 +60,15 @@ const Result = () => {
         <Text>현재의 대기질 지수는</Text>
         <DustState dustDensity={findChoiceCity('DustState')} kindOfDust="avg" />
         <Progress id="fineDust" state={findChoiceCity('fineDust')}>
-          미세먼지
+          {FINE_DUST}
         </Progress>
         <Progress id="ultraFineDust" state={findChoiceCity('ultraFineDust')}>
-          초미세먼지
+          {ULTRA_FINE_DUST}
         </Progress>
       </Middle>
       <Rating>
         <RatingWidth>
-          <DustRating>지역별 미세먼지 농도 순위</DustRating>
+          <DustRating>지역별 {FINE_DUST} 농도 순위</DustRating>
           {cityGroup.map((city) => {
             return (
               <Rank

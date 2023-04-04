@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import SidoDustDetail from './SidoDustDetail';
 import { DustState } from '@/components/Dust';
 import { type DustDetail } from '@/type';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constance';
 
 interface RankProps {
   rank: number;
@@ -68,11 +69,11 @@ const Rank = ({
         </RatingDetails>
         <DustWrapper>
           <DustWrapperFlex>
-            <div>미세먼지</div>
+            <div>{FINE_DUST}</div>
             <DustFigure>{dust}</DustFigure>
           </DustWrapperFlex>
           <DustWrapperFlex>
-            <div>초미세먼지</div>
+            <div>{ULTRA_FINE_DUST}</div>
             <DustFigure>{ultraDust}</DustFigure>
           </DustWrapperFlex>
         </DustWrapper>

@@ -1,9 +1,10 @@
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
-
-import Button from '@/components/Button';
 import { cityGroup } from '@/hooks/useFetch';
+
+import styled from '@emotion/styled';
+import { Flex, Text, IconButton } from '@chakra-ui/react';
+import { HiArrowRight } from 'react-icons/hi';
 
 const Choice = () => {
   const navigate = useNavigate();
@@ -18,11 +19,23 @@ const Choice = () => {
   };
 
   return (
-    <Wrapper>
+    <Flex
+      direction="column"
+      justify="center"
+      align="center"
+      color="#fff"
+      textAlign="center"
+    >
       <img src="images/location.png" alt="location" width={30} height={30} />
-      <SubTitle>한 눈에 확인하는</SubTitle>
-      <Title>랭킹먼지</Title>
-      <Description>미세먼지 농도가 궁금한 지역은?</Description>
+      <Text as="span" fontSize={18} mt={4}>
+        한 눈에 확인하는
+      </Text>
+      <Text as="h1" fontSize={62} fontWeight={700} my={4}>
+        랭킹먼지
+      </Text>
+      <Text as="span" fontSize={18} lineHeight="2rem">
+        미세먼지 농도가 궁금한 지역은?
+      </Text>
       <Select onChange={handlePlaceChange} value={place}>
         {cityGroup.map((v) => (
           <Option key={v.cityName} value={v.cityName}>
@@ -30,49 +43,21 @@ const Choice = () => {
           </Option>
         ))}
       </Select>
-      <Button color={'#2886A6'} onClick={handleResultPageNavigate}>
-        검색
-      </Button>
-    </Wrapper>
+      <IconButton
+        aria-label="search"
+        color="#fff"
+        backgroundColor="#3a9cbd"
+        px={6}
+        borderRadius={20}
+        icon={<HiArrowRight />}
+        onClick={handleResultPageNavigate}
+        _hover={{ bg: '#2886A6' }}
+      />
+    </Flex>
   );
 };
 
 export default Choice;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  text-align: center;
-`;
-
-const Title = styled.h1`
-  font-size: 3.75rem;
-  padding-bottom: 1.5rem;
-  font-weight: 600;
-  @media only screen and (min-width: 768px) {
-    font-size: 3.7rem;
-  }
-`;
-
-const SubTitle = styled.p`
-  font-size: 1.25rem;
-  padding: 1rem 0;
-  @media only screen and (min-width: 768px) {
-    font-size: 1.2rem;
-  }
-`;
-
-const Description = styled.span`
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  @media only screen and (min-width: 768px) {
-    font-size: 1.2rem;
-  }
-`;
 
 const Select = styled.select`
   margin: 1rem 0;
@@ -83,8 +68,8 @@ const Select = styled.select`
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  padding: 1rem 1.2rem;
-  border-radius: 0.6rem;
+  padding: 1rem 1.1rem;
+  border-radius: 0.5rem;
   border: none;
   font-size: 1rem;
   cursor: pointer;

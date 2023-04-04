@@ -13,7 +13,7 @@ export interface DustData {
   pageNo: number;
 }
 
-export interface Detail {
+export interface DustDetail {
   dataTime: string;
   stationName: string;
   pm10Value: string;

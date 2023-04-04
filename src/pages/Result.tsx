@@ -8,17 +8,17 @@ import useFetch, { cityGroup } from '../hooks/useFetchDustInfo';
 import { type SidoDust } from '@/type';
 
 const Result = () => {
-  const [dustData, setDustData] = useState<SidoDust[] | []>([]);
+  const [sidoDust, setSidoDust] = useState<SidoDust[] | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
 
   const { data, fetchData } = useFetch();
   useEffect(() => {
-    setDustData(data);
+    setSidoDust(data);
   }, [data]);
 
   const findChoiceCity = (kindOfDust: string) => {
-    const result = dustData.find(
+    const result = sidoDust.find(
       (temp) => temp.items[0].sidoName === choiceCity
     );
 
@@ -54,7 +54,7 @@ const Result = () => {
     <Mid>
       <State>전국 미세먼지 농도는 다음과 같습니다</State>
       <Time>
-        {dustData[0]?.items[0]?.dataTime ?? '0000-00-00 00:00'}
+        {sidoDust[0]?.items[0]?.dataTime ?? '0000-00-00 00:00'}
         기준
       </Time>
       <Middle>
@@ -77,14 +77,14 @@ const Result = () => {
                 key={city.cityName}
                 rank={city.cityNumber + 1}
                 city={city.cityName}
-                dust={dustData[city.cityNumber]?.items[4]?.pm10Value}
-                ultraDust={dustData[city.cityNumber]?.items[4]?.pm25Value}
+                dust={sidoDust[city.cityNumber]?.items[4]?.pm10Value}
+                ultraDust={sidoDust[city.cityNumber]?.items[4]?.pm25Value}
                 dustState={(
-                  (parseInt(dustData[city.cityNumber]?.items[4]?.pm10Grade) +
-                    parseInt(dustData[city.cityNumber]?.items[4]?.pm25Grade)) /
+                  (parseInt(sidoDust[city.cityNumber]?.items[4]?.pm10Grade) +
+                    parseInt(sidoDust[city.cityNumber]?.items[4]?.pm25Grade)) /
                   2
                 ).toString()}
-                detail={dustData[city.cityNumber]?.items}
+                detail={sidoDust[city.cityNumber]?.items}
               />
             );
           })}

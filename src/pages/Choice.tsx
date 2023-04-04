@@ -27,13 +27,13 @@ const Choice = () => {
       textAlign="center"
     >
       <img src="images/location.png" alt="location" width={30} height={30} />
-      <Text as="span" fontSize={18} mt={4}>
+      <Text as="span" fontSize={18} fontWeight={400} mt={4}>
         한 눈에 확인하는
       </Text>
       <Text as="h1" fontSize={62} fontWeight={700} my={4}>
         랭킹먼지
       </Text>
-      <Text as="span" fontSize={18} lineHeight="2rem">
+      <Text as="span" fontSize={18} fontWeight={400} lineHeight="2rem">
         미세먼지 농도가 궁금한 지역은?
       </Text>
       <Select onChange={handlePlaceChange} value={place}>

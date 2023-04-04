@@ -22,7 +22,7 @@ const DustState = ({ dustDensity, kindOfDust }: DustStateProps) => {
   if (isNaN(dustDensityNumber))
     return <DustStateColor style={{ color: '#666666' }}>측정중</DustStateColor>;
 
-  const discriminateDust = (): number => {
+  const discriminateDust = () => {
     if (kindOfDust === DUST_KIND.AVG) {
       return AVERAGE_DUST_DENSITY.findIndex((v) => dustDensityNumber < +v);
     } else if (kindOfDust === DUST_KIND.FINEDUST) {

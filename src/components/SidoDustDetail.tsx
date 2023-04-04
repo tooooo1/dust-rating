@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-
 import { DustState } from '@/components/Dust';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constance';
 
 interface SidoDustDetailProps {
   rank: number;
@@ -19,11 +19,6 @@ const SidoDustDetail = ({
   dustState,
   onClickSidoDustDetail,
 }: SidoDustDetailProps) => {
-  const kindOfDusts = [
-    { kindOfDust: '미세먼지', dustDensity: fineDust },
-    { kindOfDust: '초미세먼지', dustDensity: ultraFineDust },
-  ];
-
   return (
     <RatingWrapper onClick={onClickSidoDustDetail}>
       <Top>
@@ -35,12 +30,14 @@ const SidoDustDetail = ({
           </DustStateWrapper>
         </RatingDetails>
         <DustWrapper>
-          {kindOfDusts.map((value, kindOfDustIdx) => (
-            <DustWrapperFlex key={value + kindOfDustIdx.toString()}>
-              <div>{value.kindOfDust}</div>
-              <DustFigure>{value.dustDensity}</DustFigure>
-            </DustWrapperFlex>
-          ))}
+          <DustWrapperFlex>
+            <div>{FINE_DUST}</div>
+            <DustFigure>{fineDust}</DustFigure>
+          </DustWrapperFlex>
+          <DustWrapperFlex>
+            <div>{ULTRA_FINE_DUST}</div>
+            <DustFigure>{ultraFineDust}</DustFigure>
+          </DustWrapperFlex>
         </DustWrapper>
       </Top>
     </RatingWrapper>

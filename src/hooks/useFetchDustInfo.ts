@@ -47,8 +47,6 @@ const useFetch = () => {
     fetchData();
   }, []);
 
-  // if (!data[0]) fetchData();
-
   return { data, fetchData };
 };
 

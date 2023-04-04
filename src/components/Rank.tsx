@@ -32,7 +32,7 @@ const Rank = ({
   const [showDetail, setShowDetail] = useState(true);
   const navigate = useNavigate();
   const handleClickShowDetail = () => {
-    setShowDetail(!showDetail);
+    setShowDetail((showDetail) => !showDetail);
   };
   const handleClickSidoDustDetail = ({
     dataTime,

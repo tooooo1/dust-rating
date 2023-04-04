@@ -11,12 +11,10 @@ const Result = () => {
   const [sidoDust, setSidoDust] = useState<SidoDust[] | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
-
   const { data, fetchData } = useFetch();
   useEffect(() => {
     setSidoDust(data);
   }, [data]);
-
   const findChoiceCity = (kindOfDust: string) => {
     const result = sidoDust.find(
       (temp) => temp.items[0].sidoName === choiceCity
@@ -26,7 +24,6 @@ const Result = () => {
 
     return calculateFineDust({ result, kindOfDust });
   };
-
   const calculateFineDust = ({
     result,
     kindOfDust,

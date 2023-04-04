@@ -22,7 +22,7 @@ const Choice = () => {
       direction="column"
       justify="center"
       align="center"
-      color="#fff"
+      color="#ffffff"
       textAlign="center"
     >
       <img src="images/location.png" alt="location" width={30} height={30} />

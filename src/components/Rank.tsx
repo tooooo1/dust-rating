@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-
-import Detail from './Detail';
-import DustState from './DustState';
+import SidoDustDetail from './SidoDustDetail';
+import { DustState } from '@/components/Dust';
+import { type DustDetail } from '@/type';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constance';
 
 interface RankProps {
   rank: number;
@@ -28,41 +30,74 @@ const Rank = ({
   dustState,
   detail,
 }: RankProps) => {
-  const [click, setClick] = useState(true);
-  const show = () => {
-    setClick(!click);
+  const [showDetail, setShowDetail] = useState(true);
+  const navigate = useNavigate();
+  const handleClickShowDetail = () => {
+    setShowDetail((showDetail) => !showDetail);
+  };
+  const handleClickSidoDustDetail = ({
+    dataTime,
+    stationName,
+    pm10Value,
+    pm25Value,
+    pm10Grade,
+    pm25Grade,
+  }: DustDetail) => {
+    const dustState = (
+      (parseInt(pm10Grade) + parseInt(pm25Grade)) /
+      2
+    ).toString();
+    navigate(`/LocalDetail`, {
+      state: {
+        stationName,
+        fineDust: pm10Value,
+        ultraDust: pm25Value,
+        dustState,
+        dataTime,
+      },
+    });
   };
   return (
-    <RatingWrapper onClick={show}>
+    <RatingWrapper onClick={handleClickShowDetail}>
       <Top>
         <RatingDetails>
           <RankW>{rank}</RankW>
           <RankLocation>{city}</RankLocation>
           <DustStateW>
-            <DustState dustState={dustState} />
+            <DustState dustDensity={dustState} kindOfDust="avg" />
           </DustStateW>
         </RatingDetails>
         <DustWrapper>
           <DustWrapperFlex>
-            <div>미세먼지</div>
+            <div>{FINE_DUST}</div>
             <DustFigure>{dust}</DustFigure>
           </DustWrapperFlex>
           <DustWrapperFlex>
-            <div>초미세먼지</div>
+            <div>{ULTRA_FINE_DUST}</div>
             <DustFigure>{ultraDust}</DustFigure>
           </DustWrapperFlex>
         </DustWrapper>
       </Top>
-      <Container click={click}>
+      <Container showDetail={showDetail}>
         {detail?.map((city, detailIndex) => {
           return (
-            <Detail
-              key={detailIndex}
+            <SidoDustDetail
+              key={city + detailIndex.toString()}
               rank={detailIndex + 1}
               city={city.stationName}
-              dust={city.pm10Value}
-              ultraDust={city.pm25Value}
+              fineDust={city.pm10Value}
+              ultraFineDust={city.pm25Value}
               dustState={city.pm10Grade}
+              onClickSidoDustDetail={() =>
+                handleClickSidoDustDetail({
+                  dataTime: city.dataTime,
+                  stationName: city.stationName,
+                  pm10Value: city.pm10Value,
+                  pm25Value: city.pm25Value,
+                  pm10Grade: city.pm10Grade,
+                  pm25Grade: city.pm25Grade,
+                })
+              }
             />
           );
         })}
@@ -133,7 +168,7 @@ const DustStateW = styled.div`
 
 const DustWrapper = styled.div`
   width: 32%;
-  font-family: 'Pretendard-Medium';
+  font-weight: 500;
   font-size: 3.3vw;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
@@ -142,7 +177,7 @@ const DustWrapper = styled.div`
 
 const DustWrapperFlex = styled.div`
   display: flex;
-  font-family: 'Pretendard-Medium';
+  font-weight: 500;
   justify-content: space-between;
   margin: 0.5rem 0;
   @media only screen and (min-width: 768px) {
@@ -153,7 +188,7 @@ const DustWrapperFlex = styled.div`
 const DustFigure = styled.div`
   display: flex;
   margin-left: 2vw;
-  font-family: 'Pretendard-ExtraBold';
+  font-weight: 800;
   @media only screen and (min-width: 768px) {
     font-size: 18px;
     margin-left: 10px;
@@ -166,7 +201,7 @@ const Top = styled.div`
 `;
 
 interface ContainerProps {
-  click: boolean;
+  showDetail: boolean;
 }
 
 const Container = styled.div`
@@ -176,5 +211,5 @@ const Container = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  display: ${(props: ContainerProps) => props.click && `none`};
+  display: ${(props: ContainerProps) => props.showDetail && `none`};
 `;

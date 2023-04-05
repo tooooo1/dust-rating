@@ -1,26 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
-
-import DustState from '../components/DustState';
+import { DustState } from '../components/Dust';
 import Progress from '../components/Progress';
 import Rank from '../components/Rank';
-import useFetch, { cityGroup } from '../hooks/useFetch';
-
-import { type DustData } from '@/type';
+import useFetch, { cityGroup } from '../hooks/useFetchDustInfo';
+import { type SidoDust } from '@/type';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constance';
 
 const Result = () => {
-  const [dustData, setDustData] = useState<DustDataType[] | []>([]);
+  const [sidoDust, setSidoDust] = useState<SidoDust[] | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
-
   const { data, fetchData } = useFetch();
   useEffect(() => {
-    setDustData(data);
+    setSidoDust(data);
   }, [data]);
-
   const findChoiceCity = (kindOfDust: string) => {
-    const result = dustData.find(
+    const result = sidoDust.find(
       (temp) => temp.items[0].sidoName === choiceCity
     );
 
@@ -28,12 +25,11 @@ const Result = () => {
 
     return calculateFineDust({ result, kindOfDust });
   };
-
   const calculateFineDust = ({
     result,
     kindOfDust,
   }: {
-    result: DustData;
+    result: SidoDust;
     kindOfDust: string;
   }) => {
     switch (kindOfDust) {
@@ -54,39 +50,39 @@ const Result = () => {
 
   return (
     <Mid>
-      <State>전국 미세먼지 농도는 다음과 같습니다</State>
+      <State>전국 {FINE_DUST} 농도는 다음과 같습니다</State>
       <Time>
-        {dustData[0]?.items[0]?.dataTime ?? '0000-00-00 00:00'}
+        {sidoDust[0]?.items[0]?.dataTime ?? '0000-00-00 00:00'}
         기준
       </Time>
       <Middle>
         <Location>{choiceCity}</Location>
         <Text>현재의 대기질 지수는</Text>
-        <DustState dustState={findChoiceCity('DustState')} />
+        <DustState dustDensity={findChoiceCity('DustState')} kindOfDust="avg" />
         <Progress id="fineDust" state={findChoiceCity('fineDust')}>
-          미세먼지
+          {FINE_DUST}
         </Progress>
         <Progress id="ultraFineDust" state={findChoiceCity('ultraFineDust')}>
-          초미세먼지
+          {ULTRA_FINE_DUST}
         </Progress>
       </Middle>
       <Rating>
         <RatingWidth>
-          <DustRating>지역별 미세먼지 농도 순위</DustRating>
+          <DustRating>지역별 {FINE_DUST} 농도 순위</DustRating>
           {cityGroup.map((city) => {
             return (
               <Rank
                 key={city.cityName}
                 rank={city.cityNumber + 1}
                 city={city.cityName}
-                dust={dustData[city.cityNumber]?.items[4]?.pm10Value}
-                ultraDust={dustData[city.cityNumber]?.items[4]?.pm25Value}
+                dust={sidoDust[city.cityNumber]?.items[4]?.pm10Value}
+                ultraDust={sidoDust[city.cityNumber]?.items[4]?.pm25Value}
                 dustState={(
-                  (parseInt(dustData[city.cityNumber]?.items[4]?.pm10Grade) +
-                    parseInt(dustData[city.cityNumber]?.items[4]?.pm25Grade)) /
+                  (parseInt(sidoDust[city.cityNumber]?.items[4]?.pm10Grade) +
+                    parseInt(sidoDust[city.cityNumber]?.items[4]?.pm25Grade)) /
                   2
                 ).toString()}
-                detail={dustData[city.cityNumber]?.items}
+                detail={sidoDust[city.cityNumber]?.items}
               />
             );
           })}
@@ -107,7 +103,7 @@ const State = styled.div`
   font-size: 4vw;
   margin-bottom: 0.5rem;
   text-align: center;
-  font-family: 'Pretendard-Regular';
+  font-weight: 400;
   color: white;
   @media only screen and (min-width: 768px) {
     font-size: 30px;
@@ -118,7 +114,7 @@ const Time = styled.div`
   font-size: 3.3vw;
   margin: 0 0 1.5rem 0;
   text-align: center;
-  font-family: 'Pretendard-Thin';
+  font-weight: 100;
   color: white;
   @media only screen and (min-width: 768px) {
     font-size: 24px;
@@ -130,7 +126,7 @@ const Middle = styled.div`
   margin: 0 auto;
   text-align: center;
   border-radius: 10px 10px 0 0;
-  font-family: 'Pretendard-Light';
+  font-weight: 300;
   background-color: white;
 `;
 
@@ -138,7 +134,7 @@ const Location = styled.div`
   font-size: 6vw;
   padding-top: 1.5rem;
   text-align: center;
-  font-family: 'Pretendard-SemiBold';
+  font-weight: 600;
   @media only screen and (min-width: 768px) {
     font-size: 30px;
   }
@@ -148,7 +144,7 @@ const Text = styled.div`
   font-size: 3.5vw;
   text-align: center;
   padding: 2vh 0 0.8vh 0;
-  font-family: 'Pretendard-Regular';
+  font-weight: 400;
   color: #9dadb6;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
@@ -161,7 +157,7 @@ const Rating = styled.div`
   background-color: #f6f6f6;
   font-size: 3vh;
   text-align: center;
-  font-family: 'Pretendard-Bold';
+  font-weight: 700;
   @media only screen and (min-width: 768px) {
     border-radius: 20px 20px 0 0;
   }
@@ -184,7 +180,7 @@ const DustRating = styled.div`
   font-size: 3.5vw;
   color: white;
   text-align: center;
-  font-family: 'Pretendard-Regular';
+  font-weight: 400;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
     padding: 10px 40px;

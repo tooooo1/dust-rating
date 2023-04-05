@@ -1,40 +1,50 @@
 import styled from '@emotion/styled';
+import { DustState } from '@/components/Dust';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constance';
 
-import DustState from './DustState';
-
-interface DetailProps {
+interface SidoDustDetailProps {
   rank: number;
   city: string;
-  dust: string;
-  ultraDust: string;
+  fineDust: string;
+  ultraFineDust: string;
   dustState: string;
+  onClickSidoDustDetail: () => void;
 }
 
-const Detail = ({ rank, city, dust, ultraDust, dustState }: DetailProps) => (
-  <RatingWrapper>
-    <Top>
-      <RatingDetails>
-        <Rank>{rank}</Rank>
-        <RankLocation>{city}</RankLocation>
-        <DustStateWr>
-          <DustState dustState={dustState} />
-        </DustStateWr>
-      </RatingDetails>
-      <DustWrapper>
-        <DustWrapperFlex>
-          <div>미세먼지</div>
-          <DustFigure>{dust}</DustFigure>
-        </DustWrapperFlex>
-        <DustWrapperFlex>
-          <div>초미세먼지</div>
-          <DustFigure>{ultraDust}</DustFigure>
-        </DustWrapperFlex>
-      </DustWrapper>
-    </Top>
-  </RatingWrapper>
-);
+const SidoDustDetail = ({
+  rank,
+  city,
+  fineDust,
+  ultraFineDust,
+  dustState,
+  onClickSidoDustDetail,
+}: SidoDustDetailProps) => {
+  return (
+    <RatingWrapper onClick={onClickSidoDustDetail}>
+      <Top>
+        <RatingDetails>
+          <Rank>{rank}</Rank>
+          <RankLocation>{city}</RankLocation>
+          <DustStateWrapper>
+            <DustState dustDensity={dustState} kindOfDust="avg" />
+          </DustStateWrapper>
+        </RatingDetails>
+        <DustWrapper>
+          <DustWrapperFlex>
+            <div>{FINE_DUST}</div>
+            <DustFigure>{fineDust}</DustFigure>
+          </DustWrapperFlex>
+          <DustWrapperFlex>
+            <div>{ULTRA_FINE_DUST}</div>
+            <DustFigure>{ultraFineDust}</DustFigure>
+          </DustWrapperFlex>
+        </DustWrapper>
+      </Top>
+    </RatingWrapper>
+  );
+};
 
-export default Detail;
+export default SidoDustDetail;
 
 const RatingWrapper = styled.div`
   position: relative;
@@ -70,7 +80,7 @@ const Rank = styled.div`
   width: 10%;
   display: flex;
   font-size: 2vh;
-  font-family: 'Pretendard-SemiBold';
+  font-weight: 600;
   color: #9dadb6;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
@@ -79,14 +89,14 @@ const Rank = styled.div`
 
 const RankLocation = styled.div`
   display: flex;
-  font-family: 'Pretendard-SemiBold';
+  font-weight: 600;
   font-size: 5.5vw;
   @media only screen and (min-width: 768px) {
     font-size: 25px;
   }
 `;
 
-const DustStateWr = styled.div`
+const DustStateWrapper = styled.div`
   width: 50%;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
@@ -95,7 +105,7 @@ const DustStateWr = styled.div`
 
 const DustWrapper = styled.div`
   width: 32%;
-  font-family: 'Pretendard-Light';
+  font-weight: 300;
   font-size: 3.3vw;
   @media only screen and (min-width: 768px) {
     font-size: 20px;
@@ -104,7 +114,7 @@ const DustWrapper = styled.div`
 
 const DustWrapperFlex = styled.div`
   display: flex;
-  font-family: 'Pretendard-Light';
+  font-weight: 300;
   justify-content: space-between;
   margin: 0.5rem 0;
   @media only screen and (min-width: 768px) {
@@ -115,7 +125,7 @@ const DustWrapperFlex = styled.div`
 const DustFigure = styled.div`
   display: flex;
   margin-left: 2vw;
-  font-family: 'Pretendard-SemiBold';
+  font-weight: 600;
   @media only screen and (min-width: 768px) {
     font-size: 18px;
     margin-left: 10px;

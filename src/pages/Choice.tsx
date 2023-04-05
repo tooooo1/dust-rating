@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { cityGroup } from '@/hooks/useFetch';
-
+import { cityGroup } from '@/hooks/useFetchDustInfo';
+import { FINE_DUST } from '@/utils/constance';
 import { Flex, Text, Select, IconButton } from '@chakra-ui/react';
 import { HiArrowRight } from 'react-icons/hi';
 
@@ -33,7 +33,7 @@ const Choice = () => {
         랭킹먼지
       </Text>
       <Text as="span" fontSize={18} fontWeight={400} lineHeight="2rem">
-        미세먼지 농도가 궁금한 지역은?
+        {FINE_DUST} 농도가 궁금한 지역은?
       </Text>
       <Flex gap={4} mt={6}>
         <Select

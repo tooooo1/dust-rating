@@ -41,7 +41,6 @@ const LocalDetail = () => {
         <DustGraphWrapper>
           <div>기상예보를 준비중 입니다.</div>
         </DustGraphWrapper>
-        <ForecastImgWrapper></ForecastImgWrapper>
       </DustWrapper>
     </TotalWrapper>
   );

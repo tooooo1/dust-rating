@@ -39,7 +39,7 @@ const LocalDetail = () => {
         </DustDetailWrapper>
         좋음 15 보통 30 나쁨 75 매우 나쁨
         <DustGraphWrapper>
-          <div>{'기상예보를 준비중 입니다.'}</div>
+          <div>기상예보를 준비중 입니다.</div>
         </DustGraphWrapper>
         <ForecastImgWrapper></ForecastImgWrapper>
       </DustWrapper>

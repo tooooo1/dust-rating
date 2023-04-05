@@ -22,7 +22,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "eslint": "eslint . --fix"
+    "lint": "eslint",
+    "type:check": "tsc --noEmit"
   },
   "browserslist": {
     "production": [

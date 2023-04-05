@@ -29,22 +29,28 @@ const useFetchDustInfo = () => {
   const [dustData, setDustData] = useState<SidoDust[] | []>([]);
 
   const fetchData = async () => {
-    const result = await Promise.all(
-      cityGroup.map((v) =>
-        axios
-          .get(
-            `${VITE_OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
-          )
-          .then((res) => {
-            return res.data.response.body;
-          })
-      )
-    );
-
-    setDustData(result);
+    try {
+      const result = Promise.all(
+        cityGroup.map((v) =>
+          axios
+            .get(
+              `${VITE_OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
+            )
+            .then((res) => {
+              return res.data.response.body;
+            })
+        )
+      );
+      setDustData(await result);
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw new Error('FetchDustInfo Error');
+    }
   };
 
-  const { isLoading, isError, error } = useQuery(dustData, fetchData);
+  const { isLoading, isError, data, error } = useQuery(dustData, fetchData);
+  console.log(data);
 
   useEffect(() => {
     fetchData();

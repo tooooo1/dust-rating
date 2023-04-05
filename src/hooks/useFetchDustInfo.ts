@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { type SidoDust } from '@/type';
-import { useQuery } from '@tanstack/react-query';
 
 const { VITE_API_KEY, VITE_OPEN_URL } = import.meta.env;
 
@@ -48,13 +47,6 @@ const useFetchDustInfo = () => {
       throw new Error('FetchDustInfo Error');
     }
   };
-
-  const { isLoading, isError, data, error } = useQuery(dustData, fetchData);
-  console.log(data);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return { dustData, fetchData };
 };

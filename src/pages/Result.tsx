@@ -7,15 +7,23 @@ import Rank from '../components/Rank';
 import useFetchDustInfo, { cityGroup } from '../hooks/useFetchDustInfo';
 import { type SidoDust } from '@/type';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constance';
+import { useQuery } from '@tanstack/react-query';
 
 const Result = () => {
   const [sidoDust, setSidoDust] = useState<SidoDust[] | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
-  const { dustData, fetchData } = useFetchDustInfo();
+  const { fetchData } = useFetchDustInfo();
+  const { data } = useQuery({
+    queryKey: [choiceCity],
+    queryFn: fetchData,
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 5,
+  });
   useEffect(() => {
-    setSidoDust(dustData);
-  }, [dustData]);
+    if (data) setSidoDust(data);
+  }, [data]);
+
   const findChoiceCity = (kindOfDust: string) => {
     const result = sidoDust.find(
       (temp) => temp.items[0].sidoName === choiceCity
@@ -25,6 +33,7 @@ const Result = () => {
 
     return calculateFineDust({ result, kindOfDust });
   };
+
   const calculateFineDust = ({
     result,
     kindOfDust,

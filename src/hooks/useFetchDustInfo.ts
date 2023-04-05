@@ -25,7 +25,7 @@ export const cityGroup = [
 ];
 
 const useFetchDustInfo = () => {
-  const [dustData, setDustData] = useState<SidoDust[] | []>([]);
+  const [dustInfo, setDustInfo] = useState<SidoDust[] | []>([]);
 
   const fetchData = async () => {
     try {
@@ -40,7 +40,7 @@ const useFetchDustInfo = () => {
             })
         )
       );
-      setDustData(await result);
+      setDustInfo(await result);
       return result;
     } catch (err) {
       console.log(err);
@@ -48,7 +48,7 @@ const useFetchDustInfo = () => {
     }
   };
 
-  return { dustData, fetchData };
+  return { dustInfo, fetchData };
 };
 
 export default useFetchDustInfo;

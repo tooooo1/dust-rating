@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { type SidoDust } from '@/type';
 
 const { VITE_API_KEY, VITE_OPEN_URL } = import.meta.env;

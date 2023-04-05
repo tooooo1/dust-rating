@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { DustState } from '../components/Dust';
 import Progress from '../components/Progress';
 import Rank from '../components/Rank';
-import useFetch, { cityGroup } from '../hooks/useFetchDustInfo';
+import useFetchDustInfo, { cityGroup } from '../hooks/useFetchDustInfo';
 import { type SidoDust } from '@/type';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constance';
 
@@ -12,10 +12,10 @@ const Result = () => {
   const [sidoDust, setSidoDust] = useState<SidoDust[] | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
-  const { data, fetchData } = useFetch();
+  const { dustData, fetchData } = useFetchDustInfo();
   useEffect(() => {
-    setSidoDust(data);
-  }, [data]);
+    setSidoDust(dustData);
+  }, [dustData]);
   const findChoiceCity = (kindOfDust: string) => {
     const result = sidoDust.find(
       (temp) => temp.items[0].sidoName === choiceCity

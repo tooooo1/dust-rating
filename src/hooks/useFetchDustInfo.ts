@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { type SidoDust } from '@/type';
+import { useQuery } from '@tanstack/react-query';
 
 const { VITE_API_KEY, VITE_OPEN_URL } = import.meta.env;
 
@@ -24,8 +25,8 @@ export const cityGroup = [
   { cityName: '세종', cityNumber: 16 },
 ];
 
-const useFetch = () => {
-  const [data, setData] = useState<SidoDust[] | []>([]);
+const useFetchDustInfo = () => {
+  const [dustData, setDustData] = useState<SidoDust[] | []>([]);
 
   const fetchData = async () => {
     const result = await Promise.all(
@@ -40,14 +41,16 @@ const useFetch = () => {
       )
     );
 
-    setData(result);
+    setDustData(result);
   };
+
+  const { isLoading, isError, error } = useQuery(dustData, fetchData);
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  return { data, fetchData };
+  return { dustData, fetchData };
 };
 
-export default useFetch;
+export default useFetchDustInfo;

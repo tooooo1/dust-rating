@@ -1,7 +1,7 @@
 import { VStack, Box } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import MapButton from './MapButton';
-import { DEFAULT_LOCATION } from '@/utils/constance';
+import { INIT_LOCATION } from '@/utils/constance';
 
 declare global {
   interface Window {
@@ -12,7 +12,7 @@ declare global {
 const Map = () => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
-  const [location, setLocation] = useState(DEFAULT_LOCATION);
+  const [location, setLocation] = useState(INIT_LOCATION);
 
   useEffect(() => {
     kakao.maps.load(() => {

@@ -27,7 +27,7 @@ export const cityGroup = [
 const useFetchDustInfo = () => {
   const [dustInfo, setDustInfo] = useState<SidoDust[] | []>([]);
 
-  const fetchData = async () => {
+  const fetchDustInfo = async () => {
     try {
       const result = Promise.all(
         cityGroup.map((v) =>
@@ -48,7 +48,7 @@ const useFetchDustInfo = () => {
     }
   };
 
-  return { dustInfo, fetchData };
+  return { dustInfo, fetchDustInfo };
 };
 
 export default useFetchDustInfo;

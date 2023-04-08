@@ -36,13 +36,11 @@ export const getAirQuality = async () => {
       )
     );
 
-    const airQuality = CITY_GROUP.map((city) => ({
+    return CITY_GROUP.map((city) => ({
       cityName: city.cityName,
       fineDustScale: Number(result[city.cityNumber]?.items[4]?.pm10Value),
       ultraFineDustScale: Number(result[city.cityNumber]?.items[4]?.pm25Value),
     }));
-
-    return airQuality;
   } catch (error) {
     console.error(error);
   }

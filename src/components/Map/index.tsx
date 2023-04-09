@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import MapButton from './MapButton';
-import DustInfo from './DustInfo';
 import { VStack, Box, Spinner } from '@chakra-ui/react';
+import MapButton from './MapButton';
 import { getAirQuality } from '@/api/airQuality';
-import { INIT_LOCATION } from '@/utils/constance';
+import { getAllLocation } from '@/api/location';
+import { INIT_LOCATION } from '@/utils/constants';
+import { getDustScaleColor } from '@/utils/map';
 
 declare global {
   interface Window {
@@ -69,9 +70,48 @@ const Map = () => {
     });
   }, [map]);
 
-  const { data, isLoading } = useQuery(['airQuality'], getAirQuality, {
+  const { data: airQuality, isLoading } = useQuery(
+    ['air-quality'],
+    getAirQuality,
+    {
+      enabled: zoomLevel === MAX_ZOOM_LEVEL,
+    }
+  );
+
+  const { data: allLocation } = useQuery(['all-location'], getAllLocation, {
     enabled: zoomLevel === MAX_ZOOM_LEVEL,
   });
+
+  useEffect(() => {
+    kakao.maps.load(() => {
+      if (!map) return;
+      if (!airQuality) return;
+      if (!allLocation) return;
+
+      airQuality.forEach(({ cityName, fineDustScale, ultraFineDustScale }) => {
+        const { latitude, longitude } = allLocation.filter(
+          (scale) => scale.cityName === cityName
+        )[0];
+
+        const backgroundColor = getDustScaleColor(fineDustScale);
+
+        const template = `
+          <div class="dust-info-marker" style="background-color: ${backgroundColor};">
+            <span>${fineDustScale}/${ultraFineDustScale}</span>
+            <p class="city-name">${cityName}</p>
+          </div>`;
+
+        const marker = new kakao.maps.CustomOverlay({
+          position: new kakao.maps.LatLng(latitude, longitude),
+          content: template,
+        });
+
+        marker.setMap(map);
+
+        map.setCenter(new kakao.maps.LatLng(36.2, 127.7));
+      });
+    });
+  }, [airQuality, allLocation]);
 
   const handleCurrentLocationChange = () => {
     kakao.maps.load(() => {
@@ -127,17 +167,6 @@ const Map = () => {
         <MapButton type="zoom-out" onClick={handleZoomOut} />
         <MapButton type="full-screen" onClick={handleFullScreenChange} />
         {zoomLevel === MAX_ZOOM_LEVEL && isLoading && <Spinner />}
-        {zoomLevel === MAX_ZOOM_LEVEL &&
-          !isLoading &&
-          data &&
-          data.map((v) => (
-            <DustInfo
-              key={v.cityName}
-              area={v.cityName}
-              fineDust={v.fineDustScale}
-              ultraFineDust={v.ultraFineDustScale}
-            />
-          ))}
       </VStack>
     </Box>
   );

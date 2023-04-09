@@ -4,7 +4,7 @@ import { VStack, Box, Spinner } from '@chakra-ui/react';
 import MapButton from './MapButton';
 import { getAirQuality } from '@/api/airQuality';
 import { getAllLocation } from '@/api/location';
-import { INIT_LOCATION } from '@/utils/constants';
+import { INIT_LOCATION, CENTER_LOCATION } from '@/utils/constants';
 import { getDustScaleColor } from '@/utils/map';
 
 declare global {
@@ -108,7 +108,12 @@ const Map = () => {
 
         marker.setMap(map);
 
-        map.setCenter(new kakao.maps.LatLng(36.2, 127.7));
+        map.setCenter(
+          new kakao.maps.LatLng(
+            CENTER_LOCATION.latitude,
+            CENTER_LOCATION.longitude
+          )
+        );
       });
     });
   }, [airQuality, allLocation]);

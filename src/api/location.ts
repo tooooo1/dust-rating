@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CITY_GROUP } from '@/utils/constance';
+import { CITY_GROUP } from '@/utils/constants';
 
 const { VITE_KAKAO_API_KEY } = import.meta.env;
 

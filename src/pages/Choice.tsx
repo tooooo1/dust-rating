@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cityGroup } from '@/hooks/useFetchDustInfo';
-import { FINE_DUST } from '@/utils/constance';
+import { FINE_DUST } from '@/utils/constants';
 import { Flex, Text, Select, IconButton } from '@chakra-ui/react';
 import { HiArrowRight } from 'react-icons/hi';
 

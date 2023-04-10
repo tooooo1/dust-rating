@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import SidoDustDetail from './SidoDustDetail';
 import { DustState } from '@/components/Dust';
 import { type DustDetail } from '@/type';
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constance';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 
 interface RankProps {
   rank: number;

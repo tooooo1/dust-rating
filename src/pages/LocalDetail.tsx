@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useLocation } from 'react-router-dom';
 import { DustState } from '@/components/Dust';
 import type { LocalDustDetail } from '@/type';
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constance';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 
 const LocalDetail = () => {
   const location = useLocation();

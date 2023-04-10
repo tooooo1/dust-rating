@@ -31,10 +31,46 @@
 .circle-marker {
   width: 1.2rem;
   height: 1.2rem;
-  border: 0.2rem solid #fff;
+  border: 0.2rem solid #ffffff;
   border-radius: 50%;
   background-color: #ec5641;
   -webkit-box-shadow: 0px 0px 26px 1px rgba(190, 190, 190, 1);
   -moz-box-shadow: 0px 0px 26px 1px rgba(190, 190, 190, 1);
   box-shadow: 0px 0px 26px 1px rgba(190, 190, 190, 1);
+}
+
+.dust-info-marker {
+  position: relative;
+  top: -2.2rem;
+  min-width: 2rem;
+  padding: 0.8rem 1rem;
+  color: #ffffff;
+  background-color: #e64746;
+  border: 0.2rem solid #ffffff;
+  border-radius: 2rem;
+}
+
+.dust-info-marker::before {
+  content: '';
+  position: absolute;
+  bottom: -0.8rem;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-width: 0.7rem 0.6rem 0;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: inherit;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.city-name {
+  position: absolute;
+  left: 50%;
+  bottom: -2.2rem;
+  font-weight: 700;
+  color: #2a282f;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
 }

@@ -18,6 +18,7 @@ const INIT_ZOOM_LEVEL = 5;
 
 const Map = () => {
   const mapRef = useRef<HTMLDivElement>(null);
+  const dustInfoMarkers: kakao.maps.CustomOverlay[] = [];
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [location, setLocation] = useState(INIT_LOCATION);
   const [zoomLevel, setZoomLevel] = useState(INIT_ZOOM_LEVEL);
@@ -106,17 +107,34 @@ const Map = () => {
           content: template,
         });
 
-        marker.setMap(map);
-
-        map.setCenter(
-          new kakao.maps.LatLng(
-            CENTER_LOCATION.latitude,
-            CENTER_LOCATION.longitude
-          )
-        );
+        dustInfoMarkers.push(marker);
       });
     });
   }, [airQuality, allLocation]);
+
+  useEffect(() => {
+    kakao.maps.load(() => {
+      if (!map) return;
+      if (!dustInfoMarkers.length) return;
+
+      dustInfoMarkers.forEach((marker) => {
+        marker.setMap(map);
+      });
+
+      map.setCenter(
+        new kakao.maps.LatLng(
+          CENTER_LOCATION.latitude,
+          CENTER_LOCATION.longitude
+        )
+      );
+    });
+
+    return () => {
+      dustInfoMarkers.forEach((marker) => {
+        marker.setMap(null);
+      });
+    };
+  }, [dustInfoMarkers]);
 
   const handleCurrentLocationChange = () => {
     kakao.maps.load(() => {

@@ -43,7 +43,7 @@ const useFetchDustInfo = () => {
       setDustInfo(await result);
       return result;
     } catch (err) {
-      console.log(err);
+      console.error(err);
       throw new Error('FetchDustInfo Error');
     }
   };

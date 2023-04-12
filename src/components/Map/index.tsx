@@ -109,32 +109,20 @@ const Map = () => {
 
         dustInfoMarkers.push(marker);
       });
-    });
-  }, [airQuality, allLocation]);
-
-  useEffect(() => {
-    kakao.maps.load(() => {
-      if (!map) return;
-      if (!dustInfoMarkers.length) return;
 
       dustInfoMarkers.forEach((marker) => {
         marker.setMap(map);
       });
-
-      map.setCenter(
-        new kakao.maps.LatLng(
-          CENTER_LOCATION.latitude,
-          CENTER_LOCATION.longitude
-        )
-      );
     });
 
     return () => {
-      dustInfoMarkers.forEach((marker) => {
-        marker.setMap(null);
-      });
+      if (map && dustInfoMarkers.length) {
+        dustInfoMarkers.forEach((marker) => {
+          marker.setMap(null);
+        });
+      }
     };
-  }, [dustInfoMarkers]);
+  }, [airQuality, allLocation, dustInfoMarkers]);
 
   const handleCurrentLocationChange = () => {
     kakao.maps.load(() => {
@@ -169,6 +157,12 @@ const Map = () => {
       if (!map) return;
 
       map.setLevel(MAX_ZOOM_LEVEL, { animate: true });
+      map.setCenter(
+        new kakao.maps.LatLng(
+          CENTER_LOCATION.latitude,
+          CENTER_LOCATION.longitude
+        )
+      );
     });
   };
 

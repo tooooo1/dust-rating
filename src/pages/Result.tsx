@@ -23,7 +23,7 @@ const Result = () => {
     if (!sidoDust) return '0';
 
     const result = sidoDust.find(
-      (temp) => temp.items[0].sidoName === choiceCity
+      (temp: SidoDust) => temp.items[0].sidoName === choiceCity
     );
 
     if (!result) return '0';

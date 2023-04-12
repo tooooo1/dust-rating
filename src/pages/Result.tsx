@@ -12,7 +12,7 @@ const Result = () => {
   const location = useLocation();
   const choiceCity = location.state;
   const { fetchDustInfo } = useFetchDustInfo();
-  const { data: sidoDust, isLoading } = useQuery<SidoDust[], any, any, any>({
+  const { data: sidoDust, isLoading } = useQuery<SidoDust[]>({
     queryKey: [choiceCity],
     queryFn: fetchDustInfo,
     cacheTime: 1000 * 60 * 5,

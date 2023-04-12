@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { DustState } from '../components/Dust';
@@ -10,21 +9,19 @@ import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { useQuery } from '@tanstack/react-query';
 
 const Result = () => {
-  const [sidoDust, setSidoDust] = useState<SidoDust[] | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
   const { fetchDustInfo } = useFetchDustInfo();
-  const { data } = useQuery({
+  const { data: sidoDust, isLoading } = useQuery<SidoDust[], any, any, any>({
     queryKey: [choiceCity],
     queryFn: fetchDustInfo,
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 5,
   });
-  useEffect(() => {
-    if (data) setSidoDust(data);
-  }, [data]);
 
   const findChoiceCity = (kindOfDust: string) => {
+    if (!sidoDust) return '0';
+
     const result = sidoDust.find(
       (temp) => temp.items[0].sidoName === choiceCity
     );
@@ -60,10 +57,14 @@ const Result = () => {
   return (
     <Mid>
       <State>전국 {FINE_DUST} 농도는 다음과 같습니다</State>
-      <Time>
-        {sidoDust[0]?.items[0]?.dataTime ?? '0000-00-00 00:00'}
-        기준
-      </Time>
+      {sidoDust ? (
+        <Time>
+          {sidoDust[0]?.items[0]?.dataTime ?? '0000-00-00 00:00'}
+          기준
+        </Time>
+      ) : (
+        ''
+      )}
       <Middle>
         <Location>{choiceCity}</Location>
         <Text>현재의 대기질 지수는</Text>
@@ -78,23 +79,29 @@ const Result = () => {
       <Rating>
         <RatingWidth>
           <DustRating>지역별 {FINE_DUST} 농도 순위</DustRating>
-          {cityGroup.map((city) => {
-            return (
-              <Rank
-                key={city.cityName}
-                rank={city.cityNumber + 1}
-                city={city.cityName}
-                dust={sidoDust[city.cityNumber]?.items[4]?.pm10Value}
-                ultraDust={sidoDust[city.cityNumber]?.items[4]?.pm25Value}
-                dustState={(
-                  (parseInt(sidoDust[city.cityNumber]?.items[4]?.pm10Grade) +
-                    parseInt(sidoDust[city.cityNumber]?.items[4]?.pm25Grade)) /
-                  2
-                ).toString()}
-                detail={sidoDust[city.cityNumber]?.items}
-              />
-            );
-          })}
+          {sidoDust
+            ? cityGroup.map((city) => {
+                return (
+                  <Rank
+                    key={city.cityName}
+                    rank={city.cityNumber + 1}
+                    city={city.cityName}
+                    dust={sidoDust[city.cityNumber]?.items[4]?.pm10Value}
+                    ultraDust={sidoDust[city.cityNumber]?.items[4]?.pm25Value}
+                    dustState={(
+                      (parseInt(
+                        sidoDust[city.cityNumber]?.items[4]?.pm10Grade
+                      ) +
+                        parseInt(
+                          sidoDust[city.cityNumber]?.items[4]?.pm25Grade
+                        )) /
+                      2
+                    ).toString()}
+                    detail={sidoDust[city.cityNumber]?.items}
+                  />
+                );
+              })
+            : ''}
         </RatingWidth>
       </Rating>
     </Mid>

@@ -54,17 +54,17 @@ const Result = () => {
     }
   };
 
+  if (!sidoDust || isLoading) {
+    return <Time>Loading...</Time>;
+  }
+
   return (
     <Mid>
       <State>전국 {FINE_DUST} 농도는 다음과 같습니다</State>
-      {sidoDust === undefined || isLoading ? (
-        <Time>Loading...</Time>
-      ) : (
-        <Time>
-          {sidoDust[0]?.items[0]?.dataTime ?? '0000-00-00 00:00'}
-          기준
-        </Time>
-      )}
+      <Time>
+        {sidoDust[0]?.items[0]?.dataTime ?? '0000-00-00 00:00'}
+        기준
+      </Time>
       <Middle>
         <Location>{choiceCity}</Location>
         <Text>현재의 대기질 지수는</Text>
@@ -79,29 +79,23 @@ const Result = () => {
       <Rating>
         <RatingWidth>
           <DustRating>지역별 {FINE_DUST} 농도 순위</DustRating>
-          {sidoDust === undefined || isLoading
-            ? 'Loading...'
-            : cityGroup.map((city) => {
-                return (
-                  <Rank
-                    key={city.cityName}
-                    rank={city.cityNumber + 1}
-                    city={city.cityName}
-                    dust={sidoDust[city.cityNumber]?.items[4]?.pm10Value}
-                    ultraDust={sidoDust[city.cityNumber]?.items[4]?.pm25Value}
-                    dustState={(
-                      (parseInt(
-                        sidoDust[city.cityNumber]?.items[4]?.pm10Grade
-                      ) +
-                        parseInt(
-                          sidoDust[city.cityNumber]?.items[4]?.pm25Grade
-                        )) /
-                      2
-                    ).toString()}
-                    detail={sidoDust[city.cityNumber]?.items}
-                  />
-                );
-              })}
+          {cityGroup.map((city) => {
+            return (
+              <Rank
+                key={city.cityName}
+                rank={city.cityNumber + 1}
+                city={city.cityName}
+                dust={sidoDust[city.cityNumber]?.items[4]?.pm10Value}
+                ultraDust={sidoDust[city.cityNumber]?.items[4]?.pm25Value}
+                dustState={(
+                  (parseInt(sidoDust[city.cityNumber]?.items[4]?.pm10Grade) +
+                    parseInt(sidoDust[city.cityNumber]?.items[4]?.pm25Grade)) /
+                  2
+                ).toString()}
+                detail={sidoDust[city.cityNumber]?.items}
+              />
+            );
+          })}
         </RatingWidth>
       </Rating>
     </Mid>

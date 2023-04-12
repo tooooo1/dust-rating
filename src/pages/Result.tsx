@@ -63,7 +63,7 @@ const Result = () => {
           기준
         </Time>
       ) : (
-        ''
+        'Loading...'
       )}
       <Middle>
         <Location>{choiceCity}</Location>
@@ -101,7 +101,7 @@ const Result = () => {
                   />
                 );
               })
-            : ''}
+            : 'Loading...'}
         </RatingWidth>
       </Rating>
     </Mid>

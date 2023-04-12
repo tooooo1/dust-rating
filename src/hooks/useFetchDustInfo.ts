@@ -30,10 +30,10 @@ const useFetchDustInfo = () => {
   const fetchDustInfo = async () => {
     try {
       const result = Promise.all(
-        cityGroup.map((v) =>
+        cityGroup.map((city) =>
           axios
             .get(
-              `${VITE_OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
+              `${VITE_OPEN_URL}?sidoName=${city.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
             )
             .then((res) => {
               return res.data.response.body;

@@ -1,30 +1,36 @@
-import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { DustState } from '../components/Dust';
 import Progress from '../components/Progress';
 import Rank from '../components/Rank';
-import useFetch, { cityGroup } from '../hooks/useFetchDustInfo';
+import useFetchDustInfo, { cityGroup } from '../hooks/useFetchDustInfo';
 import { type SidoDust } from '@/type';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import { useQuery } from '@tanstack/react-query';
 
 const Result = () => {
-  const [sidoDust, setSidoDust] = useState<SidoDust[] | []>([]);
   const location = useLocation();
   const choiceCity = location.state;
-  const { data, fetchData } = useFetch();
-  useEffect(() => {
-    setSidoDust(data);
-  }, [data]);
+  const { fetchDustInfo } = useFetchDustInfo();
+  const { data: sidoDust, isLoading } = useQuery<SidoDust[]>({
+    queryKey: [choiceCity],
+    queryFn: fetchDustInfo,
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 5,
+  });
+
   const findChoiceCity = (kindOfDust: string) => {
+    if (!sidoDust) return '0';
+
     const result = sidoDust.find(
-      (temp) => temp.items[0].sidoName === choiceCity
+      (temp: SidoDust) => temp.items[0].sidoName === choiceCity
     );
 
     if (!result) return '0';
 
     return calculateFineDust({ result, kindOfDust });
   };
+
   const calculateFineDust = ({
     result,
     kindOfDust,
@@ -47,6 +53,10 @@ const Result = () => {
         return '0';
     }
   };
+
+  if (!sidoDust || isLoading) {
+    return <Time>Loading...</Time>;
+  }
 
   return (
     <Mid>

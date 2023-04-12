@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { type SidoDust } from '@/type';
 
 const { VITE_API_KEY, VITE_OPEN_URL } = import.meta.env;
@@ -24,30 +24,31 @@ export const cityGroup = [
   { cityName: '세종', cityNumber: 16 },
 ];
 
-const useFetch = () => {
-  const [data, setData] = useState<SidoDust[] | []>([]);
+const useFetchDustInfo = () => {
+  const [dustInfo, setDustInfo] = useState<SidoDust[] | []>([]);
 
-  const fetchData = async () => {
-    const result = await Promise.all(
-      cityGroup.map((v) =>
-        axios
-          .get(
-            `${VITE_OPEN_URL}?sidoName=${v.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
-          )
-          .then((res) => {
-            return res.data.response.body;
-          })
-      )
-    );
-
-    setData(result);
+  const fetchDustInfo = async () => {
+    try {
+      const result = Promise.all(
+        cityGroup.map((city) =>
+          axios
+            .get(
+              `${VITE_OPEN_URL}?sidoName=${city.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_API_KEY}&ver=1.0`
+            )
+            .then((res) => {
+              return res.data.response.body;
+            })
+        )
+      );
+      setDustInfo(await result);
+      return result;
+    } catch (err) {
+      console.error(err);
+      throw new Error('FetchDustInfo Error');
+    }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  return { data, fetchData };
+  return { dustInfo, fetchDustInfo };
 };
 
-export default useFetch;
+export default useFetchDustInfo;

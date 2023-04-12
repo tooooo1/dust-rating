@@ -13,8 +13,8 @@ declare global {
   }
 }
 
-const MAX_ZOOM_LEVEL = 13;
 const INIT_ZOOM_LEVEL = 5;
+const MAX_ZOOM_LEVEL = 13;
 
 const Map = () => {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -128,6 +128,7 @@ const Map = () => {
     kakao.maps.load(() => {
       if (!map) return;
 
+      map.setLevel(INIT_ZOOM_LEVEL, { animate: true });
       map.setCenter(
         new kakao.maps.LatLng(location.latitude, location.longitude)
       );

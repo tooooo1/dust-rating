@@ -57,13 +57,13 @@ const Result = () => {
   return (
     <Mid>
       <State>전국 {FINE_DUST} 농도는 다음과 같습니다</State>
-      {sidoDust ? (
+      {sidoDust === undefined || isLoading ? (
+        <Time>Loading...</Time>
+      ) : (
         <Time>
           {sidoDust[0]?.items[0]?.dataTime ?? '0000-00-00 00:00'}
           기준
         </Time>
-      ) : (
-        'Loading...'
       )}
       <Middle>
         <Location>{choiceCity}</Location>
@@ -79,8 +79,9 @@ const Result = () => {
       <Rating>
         <RatingWidth>
           <DustRating>지역별 {FINE_DUST} 농도 순위</DustRating>
-          {sidoDust
-            ? cityGroup.map((city) => {
+          {sidoDust === undefined || isLoading
+            ? 'Loading...'
+            : cityGroup.map((city) => {
                 return (
                   <Rank
                     key={city.cityName}
@@ -100,8 +101,7 @@ const Result = () => {
                     detail={sidoDust[city.cityNumber]?.items}
                   />
                 );
-              })
-            : 'Loading...'}
+              })}
         </RatingWidth>
       </Rating>
     </Mid>

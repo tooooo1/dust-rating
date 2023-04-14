@@ -27,3 +27,8 @@ export interface Location {
   latitude: number;
   longitude: number;
 }
+
+export interface CityGroup {
+  cityName: string;
+  cityNumber: number;
+}

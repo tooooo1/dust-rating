@@ -4,12 +4,11 @@ import { DustState } from '../components/Dust';
 import Progress from '../components/Progress';
 import Rank from '../components/Rank';
 import useFetchDustInfo, { cityGroup } from '../hooks/useFetchDustInfo';
-import { type SidoDust } from '@/type';
+import { type SidoDust type CityGroup } from '@/type';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { useQuery } from '@tanstack/react-query';
 import { Select } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
-import { CityGroup } from '@/type';
 
 const Result = () => {
   const [selectedDust, setSelectedDust] = useState(FINE_DUST);
@@ -60,8 +59,7 @@ const Result = () => {
 
   const handleDustChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { target } = e;
-    if (target.value === FINE_DUST) setSelectedDust(FINE_DUST);
-    else if (target.value === ULTRA_FINE_DUST) setSelectedDust(ULTRA_FINE_DUST);
+    target.value === FINE_DUST ? setSelectedDust(FINE_DUST) : setSelectedDust(ULTRA_FINE_DUST);    
   };
 
   const sortCityDust = (cityGroup: CityGroup[]) => {

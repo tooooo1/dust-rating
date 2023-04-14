@@ -7,8 +7,12 @@ import useFetchDustInfo, { cityGroup } from '../hooks/useFetchDustInfo';
 import { type SidoDust } from '@/type';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { useQuery } from '@tanstack/react-query';
+import { Select } from '@chakra-ui/react';
+import { ChangeEvent, useState } from 'react';
+import { CityGroup } from '@/type';
 
 const Result = () => {
+  const [selectedDust, setSelectedDust] = useState(FINE_DUST);
   const location = useLocation();
   const choiceCity = location.state;
   const { fetchDustInfo } = useFetchDustInfo();
@@ -54,6 +58,35 @@ const Result = () => {
     }
   };
 
+  const handleDustChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { target } = e;
+    if (target.value === FINE_DUST) setSelectedDust(FINE_DUST);
+    else if (target.value === ULTRA_FINE_DUST) setSelectedDust(ULTRA_FINE_DUST);
+  };
+
+  const sortCityDust = (cityGroup: CityGroup[]) => {
+    if (!sidoDust) return [];
+
+    return cityGroup.sort((prev, next) => {
+      const prevCity = sidoDust[prev.cityNumber]?.items[4];
+      const nextCity = sidoDust[next.cityNumber]?.items[4];
+      if (selectedDust === FINE_DUST) {
+        const prevCityFineDust = +prevCity.pm10Value;
+        const nextCityFineDust = +nextCity.pm10Value;
+        if (prevCityFineDust < nextCityFineDust) return -1;
+        else if (prevCityFineDust > nextCityFineDust) return 1;
+        else return 0;
+      } else if (selectedDust === ULTRA_FINE_DUST) {
+        const prevCityUltraFineDust = +prevCity.pm25Value;
+        const nextCityUltraFineDust = +nextCity.pm25Value;
+        if (prevCityUltraFineDust < nextCityUltraFineDust) return -1;
+        else if (prevCityUltraFineDust > nextCityUltraFineDust) return 1;
+        else return 0;
+      }
+      return 0;
+    });
+  };
+
   if (!sidoDust || isLoading) {
     return <Time>Loading...</Time>;
   }
@@ -79,36 +112,35 @@ const Result = () => {
       <Rating>
         <RatingWidth>
           <DustRating>지역별 {FINE_DUST} 농도 순위</DustRating>
-          {cityGroup
-            .sort((prevCity, nextCity) => {
-              const prevCityFineDust =
-                sidoDust[prevCity.cityNumber]?.items[4]?.pm10Value;
-              const nextCityFineDust =
-                sidoDust[nextCity.cityNumber]?.items[4]?.pm10Value;
-
-              if (prevCityFineDust < nextCityFineDust) return -1;
-              else if (prevCityFineDust > nextCityFineDust) return 1;
-              else return 0;
-            })
-            .map((city, cityIdx) => {
-              return (
-                <Rank
-                  key={city.cityName}
-                  rank={cityIdx + 1}
-                  city={city.cityName}
-                  dust={sidoDust[city.cityNumber]?.items[4]?.pm10Value}
-                  ultraDust={sidoDust[city.cityNumber]?.items[4]?.pm25Value}
-                  dustState={(
-                    (parseInt(sidoDust[city.cityNumber]?.items[4]?.pm10Grade) +
-                      parseInt(
-                        sidoDust[city.cityNumber]?.items[4]?.pm25Grade
-                      )) /
-                    2
-                  ).toString()}
-                  detail={sidoDust[city.cityNumber]?.items}
-                />
-              );
-            })}
+          <Select
+            bg="#44b7f7"
+            color="#ffffff"
+            onChange={(e) => handleDustChange(e)}
+          >
+            <option style={{ backgroundColor: '#44b7f7', color: '#ffffff' }}>
+              {FINE_DUST}
+            </option>
+            <option style={{ backgroundColor: '#44b7f7', color: '#ffffff' }}>
+              {ULTRA_FINE_DUST}
+            </option>
+          </Select>
+          {sortCityDust(cityGroup).map((city, cityIdx) => {
+            return (
+              <Rank
+                key={city.cityName}
+                rank={cityIdx + 1}
+                city={city.cityName}
+                dust={sidoDust[city.cityNumber]?.items[4]?.pm10Value}
+                ultraDust={sidoDust[city.cityNumber]?.items[4]?.pm25Value}
+                dustState={(
+                  (parseInt(sidoDust[city.cityNumber]?.items[4]?.pm10Grade) +
+                    parseInt(sidoDust[city.cityNumber]?.items[4]?.pm25Grade)) /
+                  2
+                ).toString()}
+                detail={sidoDust[city.cityNumber]?.items}
+              />
+            );
+          })}
         </RatingWidth>
       </Rating>
     </Mid>

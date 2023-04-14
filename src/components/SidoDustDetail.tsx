@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { DustState } from '@/components/Dust';
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants/constants';
 
 interface SidoDustDetailProps {
   rank: number;

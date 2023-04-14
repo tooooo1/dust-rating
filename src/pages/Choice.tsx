@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Flex, Text, Select, Button } from '@chakra-ui/react';
 import { HiArrowRight } from 'react-icons/hi';
-import { FINE_DUST, CITY_GROUP } from '@/utils/constants';
+import { FINE_DUST, CITY_GROUP } from '@/utils/constants/constants';
 
 const Choice = () => {
   const navigate = useNavigate();

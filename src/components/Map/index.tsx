@@ -4,7 +4,7 @@ import { VStack, Box, Spinner } from '@chakra-ui/react';
 import MapButton from './MapButton';
 import { getAirQuality } from '@/api/airQuality';
 import { getAllLocation } from '@/api/location';
-import { INIT_LOCATION, CENTER_LOCATION } from '@/utils/constants';
+import { INIT_LOCATION, CENTER_LOCATION } from '@/utils/constants/constants';
 import { getDustScaleColor } from '@/utils/map';
 
 declare global {

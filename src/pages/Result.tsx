@@ -5,7 +5,7 @@ import Progress from '../components/Progress';
 import Rank from '../components/Rank';
 import useFetchDustInfo, { cityGroup } from '../hooks/useFetchDustInfo';
 import type { SidoDust, CityGroup } from '@/type';
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants/constants';
 import { useQuery } from '@tanstack/react-query';
 import { Select } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';

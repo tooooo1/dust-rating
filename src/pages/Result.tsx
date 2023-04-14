@@ -62,7 +62,7 @@ const Result = () => {
     target.value === FINE_DUST ? setSelectedDust(FINE_DUST) : setSelectedDust(ULTRA_FINE_DUST);    
   };
 
-  const sortCityDust = (cityGroup: CityGroup[]) => {
+  const sortCityByDustDensity = (cityGroup: CityGroup[]) => {
     if (!sidoDust) return [];
 
     return cityGroup.sort((prev, next) => {
@@ -118,7 +118,7 @@ const Result = () => {
               {ULTRA_FINE_DUST}
             </option>
           </Select>
-          {sortCityDust(cityGroup).map((city, cityIdx) => {
+          {sortCityByDustDensity(cityGroup).map((city, cityIdx) => {
             return (
               <Rank
                 key={city.cityName}

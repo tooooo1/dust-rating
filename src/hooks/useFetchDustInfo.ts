@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { type SidoDust } from '@/type';
 
-const { VITE_WEATHER_API_KEY, VITE_AIR_QUALITY_URL } = import.meta.env;
+const { VITE_AIR_QUALITY_URL, VITE_AIR_QUALITY_API_KEY } = import.meta.env;
 
 export const cityGroup = [
   { cityName: '서울', cityNumber: 0 },
@@ -33,7 +33,7 @@ const useFetchDustInfo = () => {
         cityGroup.map((city) =>
           axios
             .get(
-              `${VITE_AIR_QUALITY_URL}?sidoName=${city.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_WEATHER_API_KEY}&ver=1.0`
+              `${VITE_AIR_QUALITY_URL}?sidoName=${city.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
             )
             .then((res) => {
               return res.data.response.body;

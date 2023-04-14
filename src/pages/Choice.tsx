@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { cityGroup } from '@/hooks/useFetchDustInfo';
 import { FINE_DUST } from '@/utils/constants';
-import { Flex, Text, Select, IconButton } from '@chakra-ui/react';
+import { cityGroup } from '@/hooks/useFetchDustInfo';
+import { Flex, Text, Select, Button } from '@chakra-ui/react';
 import { HiArrowRight } from 'react-icons/hi';
 
 const Choice = () => {
@@ -11,6 +11,10 @@ const Choice = () => {
 
   const handleResultPageNavigate = () => {
     navigate('/result', { state: place });
+  };
+
+  const handleMapPageNavigate = () => {
+    navigate('/dust-map');
   };
 
   const handlePlaceChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -35,7 +39,7 @@ const Choice = () => {
       <Text as="span" fontSize={18} fontWeight={400} lineHeight="2rem">
         {FINE_DUST} 농도가 궁금한 지역은?
       </Text>
-      <Flex gap={4} mt={6}>
+      <Flex gap={4} my={6}>
         <Select
           variant="filled"
           width={28}
@@ -53,17 +57,28 @@ const Choice = () => {
             </option>
           ))}
         </Select>
-        <IconButton
-          aria-label="search"
+        <Button
           color="#ffffff"
           bg="#3a9cbd"
-          px={6}
-          borderRadius={20}
-          icon={<HiArrowRight />}
-          onClick={handleResultPageNavigate}
+          px={4}
           _hover={{ bg: '#2886A6' }}
-        />
+          onClick={handleResultPageNavigate}
+        >
+          검색
+        </Button>
       </Flex>
+      <Button
+        rightIcon={<HiArrowRight />}
+        color="#3a9cbd"
+        borderColor="#3a9cbd"
+        borderWidth={2}
+        bg="#ffffff"
+        opacity={0.8}
+        borderRadius={20}
+        onClick={handleMapPageNavigate}
+      >
+        미세먼지 지도
+      </Button>
     </Flex>
   );
 };

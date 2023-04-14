@@ -11,6 +11,10 @@ export const getAirQuality = async () => {
           `${VITE_AIR_QUALITY_URL}?sidoName=${city.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
         );
 
+        if (response.status !== 200) {
+          throw new Error('API 에러');
+        }
+
         let fineDustScale = 0;
         let ultraFineDustScale = 0;
 

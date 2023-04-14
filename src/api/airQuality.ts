@@ -3,6 +3,13 @@ import { CITY_GROUP } from '@/utils/constants';
 
 const { VITE_AIR_QUALITY_URL, VITE_AIR_QUALITY_API_KEY } = import.meta.env;
 
+type Flag = null | '통신장애';
+
+interface AirQuality {
+  pm10Flag: Flag;
+  pm25Flag: Flag;
+}
+
 export const getAirQuality = async () => {
   try {
     return await Promise.all(
@@ -15,22 +22,14 @@ export const getAirQuality = async () => {
           throw new Error('API 에러');
         }
 
-        let fineDustScale = 0;
-        let ultraFineDustScale = 0;
-
-        for (const airQuality of response.data.response.body.items) {
-          if (!airQuality.pm10Flag && !airQuality.pm25Flag) {
-            fineDustScale = Number(airQuality.pm10Value);
-            ultraFineDustScale = Number(airQuality.pm25Value);
-
-            break;
-          }
-        }
+        const airQuality = response.data.response.body.items.filter(
+          ({ pm10Flag, pm25Flag }: AirQuality) => !pm10Flag && !pm25Flag
+        )[0];
 
         return {
           cityName: city.cityName,
-          fineDustScale,
-          ultraFineDustScale,
+          fineDustScale: Number(airQuality.pm10Value),
+          ultraFineDustScale: Number(airQuality.pm25Value),
         };
       })
     );

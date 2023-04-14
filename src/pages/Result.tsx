@@ -4,7 +4,7 @@ import { DustState } from '../components/Dust';
 import Progress from '../components/Progress';
 import Rank from '../components/Rank';
 import useFetchDustInfo, { cityGroup } from '../hooks/useFetchDustInfo';
-import { type SidoDust type CityGroup } from '@/type';
+import type { SidoDust, CityGroup } from '@/type';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { useQuery } from '@tanstack/react-query';
 import { Select } from '@chakra-ui/react';
@@ -59,7 +59,9 @@ const Result = () => {
 
   const handleDustChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { target } = e;
-    target.value === FINE_DUST ? setSelectedDust(FINE_DUST) : setSelectedDust(ULTRA_FINE_DUST);    
+    target.value === FINE_DUST
+      ? setSelectedDust(FINE_DUST)
+      : setSelectedDust(ULTRA_FINE_DUST);
   };
 
   const sortCityByDustDensity = (cityGroup: CityGroup[]) => {
@@ -68,12 +70,12 @@ const Result = () => {
     return cityGroup.sort((prev, next) => {
       const prevCity = sidoDust[prev.cityNumber]?.items[4];
       const nextCity = sidoDust[next.cityNumber]?.items[4];
-      if (selectedDust === FINE_DUST) {        
+      if (selectedDust === FINE_DUST) {
         if (+prevCity.pm10Value < +nextCity.pm10Value) return -1;
         else if (+prevCity.pm10Value > +nextCity.pm10Value) return 1;
         else return 0;
-      } else if (selectedDust === ULTRA_FINE_DUST) {        
-        if (+prevCity.pm25Value< +nextCity.pm25Value) return -1;
+      } else if (selectedDust === ULTRA_FINE_DUST) {
+        if (+prevCity.pm25Value < +nextCity.pm25Value) return -1;
         else if (+prevCity.pm25Value > +nextCity.pm25Value) return 1;
         else return 0;
       }

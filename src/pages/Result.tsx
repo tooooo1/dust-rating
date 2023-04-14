@@ -4,11 +4,14 @@ import { DustState } from '../components/Dust';
 import Progress from '../components/Progress';
 import Rank from '../components/Rank';
 import useFetchDustInfo, { cityGroup } from '../hooks/useFetchDustInfo';
-import { type SidoDust } from '@/type';
+import type { SidoDust, CityGroup } from '@/type';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { useQuery } from '@tanstack/react-query';
+import { Select } from '@chakra-ui/react';
+import { ChangeEvent, useState } from 'react';
 
 const Result = () => {
+  const [selectedDust, setSelectedDust] = useState(FINE_DUST);
   const location = useLocation();
   const choiceCity = location.state;
   const { fetchDustInfo } = useFetchDustInfo();
@@ -54,6 +57,32 @@ const Result = () => {
     }
   };
 
+  const handleDustChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { target } = e;
+    target.value === FINE_DUST
+      ? setSelectedDust(FINE_DUST)
+      : setSelectedDust(ULTRA_FINE_DUST);
+  };
+
+  const sortCityByDustDensity = (cityGroup: CityGroup[]) => {
+    if (!sidoDust) return [];
+
+    return cityGroup.sort((prev, next) => {
+      const prevCity = sidoDust[prev.cityNumber]?.items[4];
+      const nextCity = sidoDust[next.cityNumber]?.items[4];
+      if (selectedDust === FINE_DUST) {
+        if (+prevCity.pm10Value < +nextCity.pm10Value) return -1;
+        else if (+prevCity.pm10Value > +nextCity.pm10Value) return 1;
+        else return 0;
+      } else if (selectedDust === ULTRA_FINE_DUST) {
+        if (+prevCity.pm25Value < +nextCity.pm25Value) return -1;
+        else if (+prevCity.pm25Value > +nextCity.pm25Value) return 1;
+        else return 0;
+      }
+      return 0;
+    });
+  };
+
   if (!sidoDust || isLoading) {
     return <Time>Loading...</Time>;
   }
@@ -79,11 +108,23 @@ const Result = () => {
       <Rating>
         <RatingWidth>
           <DustRating>지역별 {FINE_DUST} 농도 순위</DustRating>
-          {cityGroup.map((city) => {
+          <Select
+            bg="#44b7f7"
+            color="#ffffff"
+            onChange={(e) => handleDustChange(e)}
+          >
+            <option style={{ backgroundColor: '#44b7f7', color: '#ffffff' }}>
+              {FINE_DUST}
+            </option>
+            <option style={{ backgroundColor: '#44b7f7', color: '#ffffff' }}>
+              {ULTRA_FINE_DUST}
+            </option>
+          </Select>
+          {sortCityByDustDensity(cityGroup).map((city, cityIdx) => {
             return (
               <Rank
                 key={city.cityName}
-                rank={city.cityNumber + 1}
+                rank={cityIdx + 1}
                 city={city.cityName}
                 dust={sidoDust[city.cityNumber]?.items[4]?.pm10Value}
                 ultraDust={sidoDust[city.cityNumber]?.items[4]?.pm25Value}

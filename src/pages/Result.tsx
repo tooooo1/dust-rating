@@ -68,17 +68,13 @@ const Result = () => {
     return cityGroup.sort((prev, next) => {
       const prevCity = sidoDust[prev.cityNumber]?.items[4];
       const nextCity = sidoDust[next.cityNumber]?.items[4];
-      if (selectedDust === FINE_DUST) {
-        const prevCityFineDust = +prevCity.pm10Value;
-        const nextCityFineDust = +nextCity.pm10Value;
-        if (prevCityFineDust < nextCityFineDust) return -1;
-        else if (prevCityFineDust > nextCityFineDust) return 1;
+      if (selectedDust === FINE_DUST) {        
+        if (+prevCity.pm10Value < +nextCity.pm10Value) return -1;
+        else if (+prevCity.pm10Value > +nextCity.pm10Value) return 1;
         else return 0;
-      } else if (selectedDust === ULTRA_FINE_DUST) {
-        const prevCityUltraFineDust = +prevCity.pm25Value;
-        const nextCityUltraFineDust = +nextCity.pm25Value;
-        if (prevCityUltraFineDust < nextCityUltraFineDust) return -1;
-        else if (prevCityUltraFineDust > nextCityUltraFineDust) return 1;
+      } else if (selectedDust === ULTRA_FINE_DUST) {        
+        if (+prevCity.pm25Value< +nextCity.pm25Value) return -1;
+        else if (+prevCity.pm25Value > +nextCity.pm25Value) return 1;
         else return 0;
       }
       return 0;

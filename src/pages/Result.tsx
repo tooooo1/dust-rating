@@ -79,23 +79,36 @@ const Result = () => {
       <Rating>
         <RatingWidth>
           <DustRating>지역별 {FINE_DUST} 농도 순위</DustRating>
-          {cityGroup.map((city) => {
-            return (
-              <Rank
-                key={city.cityName}
-                rank={city.cityNumber + 1}
-                city={city.cityName}
-                dust={sidoDust[city.cityNumber]?.items[4]?.pm10Value}
-                ultraDust={sidoDust[city.cityNumber]?.items[4]?.pm25Value}
-                dustState={(
-                  (parseInt(sidoDust[city.cityNumber]?.items[4]?.pm10Grade) +
-                    parseInt(sidoDust[city.cityNumber]?.items[4]?.pm25Grade)) /
-                  2
-                ).toString()}
-                detail={sidoDust[city.cityNumber]?.items}
-              />
-            );
-          })}
+          {cityGroup
+            .sort((prevCity, nextCity) => {
+              const prevCityFineDust =
+                sidoDust[prevCity.cityNumber]?.items[4]?.pm10Value;
+              const nextCityFineDust =
+                sidoDust[nextCity.cityNumber]?.items[4]?.pm10Value;
+
+              if (prevCityFineDust < nextCityFineDust) return -1;
+              else if (prevCityFineDust > nextCityFineDust) return 1;
+              else return 0;
+            })
+            .map((city, cityIdx) => {
+              return (
+                <Rank
+                  key={city.cityName}
+                  rank={cityIdx + 1}
+                  city={city.cityName}
+                  dust={sidoDust[city.cityNumber]?.items[4]?.pm10Value}
+                  ultraDust={sidoDust[city.cityNumber]?.items[4]?.pm25Value}
+                  dustState={(
+                    (parseInt(sidoDust[city.cityNumber]?.items[4]?.pm10Grade) +
+                      parseInt(
+                        sidoDust[city.cityNumber]?.items[4]?.pm25Grade
+                      )) /
+                    2
+                  ).toString()}
+                  detail={sidoDust[city.cityNumber]?.items}
+                />
+              );
+            })}
         </RatingWidth>
       </Rating>
     </Mid>

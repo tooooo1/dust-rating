@@ -19,14 +19,12 @@ export const getAirQuality = async () => {
         let ultraFineDustScale = 0;
 
         for (const airQuality of response.data.response.body.items) {
-          if (airQuality.pm10Flag !== null || airQuality.pm25Flag !== null) {
-            continue;
+          if (airQuality.pm10Flag === null && airQuality.pm25Flag === null) {
+            fineDustScale = Number(airQuality.pm10Value);
+            ultraFineDustScale = Number(airQuality.pm25Value);
+
+            break;
           }
-
-          fineDustScale = Number(airQuality.pm10Value);
-          ultraFineDustScale = Number(airQuality.pm25Value);
-
-          break;
         }
 
         return {

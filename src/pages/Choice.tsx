@@ -13,7 +13,7 @@ const Choice = () => {
   };
 
   const handleMapPageNavigate = () => {
-    navigate('/dust-map');
+    navigate('/dustmap');
   };
 
   const handlePlaceChange = (e: ChangeEvent<HTMLSelectElement>) => {

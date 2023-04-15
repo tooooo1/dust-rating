@@ -7,14 +7,15 @@ import {
 
 import Logo from '@/components/Logo';
 import { ChoicePage, ResultPage, LocalDetailPage, DustMapPage } from '@/pages';
+import { ROUTE } from '@/utils/constants';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Logo />}>
+    <Route path={ROUTE.HOME} element={<Logo />}>
       <Route index element={<ChoicePage />} />
-      <Route path="/result" element={<ResultPage />} />
-      <Route path="/localdetail" element={<LocalDetailPage />} />
-      <Route path="/dust-map" element={<DustMapPage />} />
+      <Route path={ROUTE.RESULT} element={<ResultPage />} />
+      <Route path={ROUTE.LOCAL_DETAIL} element={<LocalDetailPage />} />
+      <Route path={ROUTE.DUST_MAP} element={<DustMapPage />} />
     </Route>
   )
 );

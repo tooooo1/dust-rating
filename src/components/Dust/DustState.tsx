@@ -13,8 +13,8 @@ const ULTRA_FINE_DUST_DENSITY = [15, 35, 75, 1200];
 
 const DUST_KIND = {
   AVG: 'avg',
-  FINEDUST: 'fineDust',
-  ULTRAFINEDUST: 'ultraFineDust',
+  FINE_DUST: 'fineDust',
+  ULTRA_FINE_DUST: 'ultraFineDust',
 };
 
 const DustState = ({ dustDensity, kindOfDust }: DustStateProps) => {
@@ -25,9 +25,9 @@ const DustState = ({ dustDensity, kindOfDust }: DustStateProps) => {
   const discriminateDust = () => {
     if (kindOfDust === DUST_KIND.AVG) {
       return AVERAGE_DUST_DENSITY.findIndex((v) => dustDensityNumber < +v);
-    } else if (kindOfDust === DUST_KIND.FINEDUST) {
+    } else if (kindOfDust === DUST_KIND.FINE_DUST) {
       return FINE_DUST_DENSITY.findIndex((v) => dustDensityNumber < +v);
-    } else if (kindOfDust === DUST_KIND.ULTRAFINEDUST) {
+    } else if (kindOfDust === DUST_KIND.ULTRA_FINE_DUST) {
       return ULTRA_FINE_DUST_DENSITY.findIndex((v) => dustDensityNumber < +v);
     }
     return 0;

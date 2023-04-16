@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { DustState } from '@/components/Dust';
 import type { LocalDustDetail } from '@/type';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import useFetchDustForecast from '@/hooks/useFetchDustForecast';
+import { useEffect } from 'react';
 
 const LocalDetail = () => {
   const location = useLocation();
@@ -13,6 +15,12 @@ const LocalDetail = () => {
     dataTime,
     dustState,
   }: LocalDustDetail = location.state;
+
+  const { dustForecase, fetchDustForecast } = useFetchDustForecast();
+
+  useEffect(() => {
+    fetchDustForecast();
+  }, []);
 
   return (
     <TotalWrapper>
@@ -37,10 +45,9 @@ const LocalDetail = () => {
             <DustState dustDensity={ultraDust} kindOfDust="ultraFineDust" />
           </UltraFineDustWrapper>
         </DustDetailWrapper>
-        좋음 15 보통 30 나쁨 75 매우 나쁨
-        <DustGraphWrapper>
-          <div>기상예보를 준비중 입니다.</div>
-        </DustGraphWrapper>
+        <DustForecastWrapper>
+          <div>{dustForecase}</div>
+        </DustForecastWrapper>
       </DustWrapper>
     </TotalWrapper>
   );
@@ -93,7 +100,6 @@ const WeatherWrapper = styled.div`
 const DustWrapper = styled.div`
   width: 50%;
   align-items: center;
-  border-radius: 10px;
   background-color: white;
 `;
 
@@ -126,20 +132,17 @@ const DetailState = styled.div`
 `;
 
 const FineDustWrapper = styled.div`
+  padding: 0 10% 0 10%;
   width: 100%;
 `;
 
 const UltraFineDustWrapper = styled.div`
+  padding: 0 10% 0 10%;
   width: 100%;
 `;
 
-const ForecastImgWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
-
-const DustGraphWrapper = styled.div`
+const DustForecastWrapper = styled.div`
+  padding: 10%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;

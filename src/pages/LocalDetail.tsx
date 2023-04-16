@@ -5,6 +5,7 @@ import type { LocalDustDetail } from '@/type';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import useFetchDustForecast from '@/hooks/useFetchDustForecast';
 import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 const LocalDetail = () => {
   const location = useLocation();
@@ -16,12 +17,18 @@ const LocalDetail = () => {
     dustState,
   }: LocalDustDetail = location.state;
 
-  const { dustForecast, dustForecastImg, fetchDustForecast } =
-    useFetchDustForecast();
+  const { fetchDustForecast } = useFetchDustForecast();
 
   useEffect(() => {
     fetchDustForecast();
   }, [stationName]);
+
+  const { data: dustForecast, isLoading } = useQuery({
+    queryKey: [stationName],
+    queryFn: fetchDustForecast,
+  });
+
+  if (!dustForecast || isLoading) return <Time>Loading...</Time>;
 
   return (
     <TotalWrapper>
@@ -47,8 +54,8 @@ const LocalDetail = () => {
           </UltraFineDustWrapper>
         </DustDetailWrapper>
         <DustForecastWrapper>
-          <div>{dustForecast}</div>
-          <img src={dustForecastImg} alt="기상 이미지를 준비중입니다." />
+          <div>{dustForecast.informOverall}</div>
+          <img src={dustForecast.imageUrl1} alt="기상 이미지를 준비중입니다." />
         </DustForecastWrapper>
       </DustWrapper>
     </TotalWrapper>

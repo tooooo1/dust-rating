@@ -16,7 +16,8 @@ const LocalDetail = () => {
     dustState,
   }: LocalDustDetail = location.state;
 
-  const { dustForecast, fetchDustForecast } = useFetchDustForecast();
+  const { dustForecast, dustForecastImg, fetchDustForecast } =
+    useFetchDustForecast();
 
   useEffect(() => {
     fetchDustForecast();
@@ -47,6 +48,7 @@ const LocalDetail = () => {
         </DustDetailWrapper>
         <DustForecastWrapper>
           <div>{dustForecast}</div>
+          <img src={dustForecastImg} alt="기상 이미지를 준비중입니다." />
         </DustForecastWrapper>
       </DustWrapper>
     </TotalWrapper>

@@ -6,6 +6,7 @@ const { VITE_AIR_QUALITY_API_KEY, VITE_MINU_DUST_FRCST_DSPTH_URL } = import.meta
 
 export const useFetchDustForecast = () => {
   const [dustForecast, setDustForecast] = useState('기상예보를 준비중 입니다.');
+  const [dustForecastImg, setDustForecastImg] = useState('');
 
   const getToday = () => {
     const date = new Date();
@@ -26,17 +27,16 @@ export const useFetchDustForecast = () => {
         .get(
           `${VITE_MINU_DUST_FRCST_DSPTH_URL}?searchDate=${getToday()}&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&numOfRows=100&pageNo=1`
         )
-        .then((res) => {
-          return res.data.response.body.items[0].informOverall;
-        });
-      setDustForecast(forecast);
+        .then((res) => res.data.response.body.items[0]);
+      setDustForecast(forecast.informOverall);
+      setDustForecastImg(forecast.imageUrl1);
     } catch (err) {
       console.error(err);
       throw new Error('fetchDustForecast Error');
     }
   };
 
-  return { dustForecast, fetchDustForecast };
+  return { dustForecast, dustForecastImg, fetchDustForecast };
 };
 
 export default useFetchDustForecast;

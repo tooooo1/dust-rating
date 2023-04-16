@@ -20,7 +20,7 @@ const LocalDetail = () => {
 
   useEffect(() => {
     fetchDustForecast();
-  }, []);
+  }, [stationName]);
 
   return (
     <TotalWrapper>

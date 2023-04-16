@@ -26,6 +26,8 @@ const LocalDetail = () => {
   const { data: dustForecast, isLoading } = useQuery({
     queryKey: [stationName],
     queryFn: fetchDustForecast,
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 5,
   });
 
   if (!dustForecast || isLoading) return <Time>Loading...</Time>;

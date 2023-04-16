@@ -16,7 +16,7 @@ const LocalDetail = () => {
     dustState,
   }: LocalDustDetail = location.state;
 
-  const { dustForecase, fetchDustForecast } = useFetchDustForecast();
+  const { dustForecast, fetchDustForecast } = useFetchDustForecast();
 
   useEffect(() => {
     fetchDustForecast();
@@ -46,7 +46,7 @@ const LocalDetail = () => {
           </UltraFineDustWrapper>
         </DustDetailWrapper>
         <DustForecastWrapper>
-          <div>{dustForecase}</div>
+          <div>{dustForecast}</div>
         </DustForecastWrapper>
       </DustWrapper>
     </TotalWrapper>

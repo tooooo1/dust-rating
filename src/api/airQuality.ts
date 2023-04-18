@@ -5,9 +5,15 @@ const { VITE_AIR_QUALITY_URL, VITE_AIR_QUALITY_API_KEY } = import.meta.env;
 
 type Flag = null | '통신장애';
 
-interface AirQuality {
+interface AirQualityScale {
   pm10Flag: Flag;
   pm25Flag: Flag;
+}
+
+interface AirQuality {
+  stationName: string;
+  pm10Value: string;
+  pm25Value: string;
 }
 
 export const getAirQuality = async () => {
@@ -15,7 +21,7 @@ export const getAirQuality = async () => {
     return await Promise.all(
       CITY_GROUP.map(async (city) => {
         const response = await axios.get(
-          `${VITE_AIR_QUALITY_URL}?sidoName=${city.cityName}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
+          `${VITE_AIR_QUALITY_URL}?sidoName=${city.cityName}&pageNo=1&numOfRows=10&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
         );
 
         if (response.status !== 200) {
@@ -23,7 +29,7 @@ export const getAirQuality = async () => {
         }
 
         const airQuality = response.data.response.body.items.filter(
-          ({ pm10Flag, pm25Flag }: AirQuality) => !pm10Flag && !pm25Flag
+          ({ pm10Flag, pm25Flag }: AirQualityScale) => !pm10Flag && !pm25Flag
         )[0];
 
         return {
@@ -31,6 +37,32 @@ export const getAirQuality = async () => {
           fineDustScale: Number(airQuality.pm10Value),
           ultraFineDustScale: Number(airQuality.pm25Value),
         };
+      })
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getAirQualityByCity = async (city: string) => {
+  try {
+    const response = await axios.get(
+      `${VITE_AIR_QUALITY_URL}?sidoName=${city}&pageNo=1&numOfRows=250&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
+    );
+
+    if (response.status !== 200) {
+      throw new Error('API 에러');
+    }
+
+    const airQuality = response.data.response.body.items.filter(
+      ({ pm10Flag, pm25Flag }: AirQualityScale) => !pm10Flag && !pm25Flag
+    );
+
+    return airQuality.map(
+      ({ stationName, pm10Value, pm25Value }: AirQuality) => ({
+        cityName: stationName,
+        fineDustScale: Number(pm10Value),
+        ultraFineDustScale: Number(pm25Value),
       })
     );
   } catch (error) {

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { VStack, Box, Spinner } from '@chakra-ui/react';
 import MapButton from './MapButton';
-import { getAirQuality } from '@/api/airQuality';
+import { getAirQuality, getAirQualityByCity } from '@/api/airQuality';
 import { getAllLocation } from '@/api/location';
 import { INIT_LOCATION, CENTER_LOCATION } from '@/utils/constants';
 import { getDustScaleColor } from '@/utils/map';
@@ -13,15 +13,22 @@ declare global {
   }
 }
 
+interface AirQuality {
+  cityName: string;
+  fineDustScale: number;
+  ultraFineDustScale: number;
+}
+
 const INIT_ZOOM_LEVEL = 5;
-const MAX_ZOOM_LEVEL = 13;
+const MAX_ZOOM_LEVEL = 8;
 
 const Map = () => {
-  const mapRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement | null>(null);
   const dustInfoMarkers: kakao.maps.CustomOverlay[] = [];
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [location, setLocation] = useState(INIT_LOCATION);
   const [zoomLevel, setZoomLevel] = useState(INIT_ZOOM_LEVEL);
+  const [currentCity, setCurrentCity] = useState('서울');
 
   useEffect(() => {
     kakao.maps.load(() => {
@@ -68,6 +75,22 @@ const Map = () => {
         const zoomLevel = map.getLevel();
         setZoomLevel(zoomLevel);
       });
+
+      const geocoder = new kakao.maps.services.Geocoder();
+
+      kakao.maps.event.addListener(map, 'dragend', function () {
+        const coords = map.getCenter();
+
+        geocoder.coord2Address(
+          coords.getLng(),
+          coords.getLat(),
+          (result, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+              setCurrentCity(result[0].address.address_name.split(' ')[0]);
+            }
+          }
+        );
+      });
     });
   }, [map]);
 
@@ -75,13 +98,20 @@ const Map = () => {
     ['air-quality'],
     getAirQuality,
     {
-      enabled: zoomLevel === MAX_ZOOM_LEVEL,
+      refetchOnWindowFocus: false,
     }
   );
 
-  const { data: allLocation } = useQuery(['all-location'], getAllLocation, {
-    enabled: zoomLevel === MAX_ZOOM_LEVEL,
-  });
+  const { data: airQualityByCity, refetch } = useQuery<AirQuality[]>(
+    ['city-air-quality'],
+    () => getAirQualityByCity(currentCity)
+  );
+
+  useEffect(() => {
+    refetch();
+  }, [currentCity]);
+
+  const { data: allLocation } = useQuery(['all-location'], getAllLocation);
 
   useEffect(() => {
     kakao.maps.load(() => {
@@ -95,7 +125,6 @@ const Map = () => {
         )[0];
 
         const backgroundColor = getDustScaleColor(fineDustScale);
-
         const template = `
           <div class="dust-info-marker" style="background-color: ${backgroundColor};">
             <span>${fineDustScale}/${ultraFineDustScale}</span>
@@ -123,6 +152,39 @@ const Map = () => {
       }
     };
   }, [airQuality, allLocation, dustInfoMarkers]);
+
+  useEffect(() => {
+    kakao.maps.load(() => {
+      if (!map) return;
+      if (!airQualityByCity) return;
+
+      const geocoder = new kakao.maps.services.Geocoder();
+
+      airQualityByCity.forEach(
+        ({ cityName, fineDustScale, ultraFineDustScale }) => {
+          geocoder.addressSearch(cityName, (result, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+              const latitude = Number(result[0].y);
+              const longitude = Number(result[0].x);
+
+              const backgroundColor = getDustScaleColor(fineDustScale);
+              const template = `
+              <div class="dust-info-marker" style="background-color: ${backgroundColor};">
+                <span>${fineDustScale}/${ultraFineDustScale}</span>
+                <p class="city-name">${cityName}</p>
+              </div>`;
+
+              new kakao.maps.CustomOverlay({
+                map,
+                position: new kakao.maps.LatLng(latitude, longitude),
+                content: template,
+              });
+            }
+          });
+        }
+      );
+    });
+  }, [airQualityByCity]);
 
   const handleCurrentLocationChange = () => {
     kakao.maps.load(() => {

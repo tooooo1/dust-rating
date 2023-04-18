@@ -40,37 +40,28 @@
 }
 
 .dust-info-marker {
-  position: relative;
-  top: -2.2rem;
-  min-width: 2rem;
-  padding: 0.8rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
   color: #ffffff;
-  background-color: #e64746;
-  border: 0.2rem solid #ffffff;
+  border: 0.18rem solid #ffffff;
   border-radius: 2rem;
 }
 
-.dust-info-marker::before {
-  content: '';
-  position: absolute;
-  bottom: -0.8rem;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-width: 0.7rem 0.6rem 0;
-  border-style: solid;
-  border-color: transparent;
-  border-top-color: inherit;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
+.dust-info {
+  display: flex;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.divider {
+  padding: 0 0.05rem 0 0.08rem;
 }
 
 .city-name {
-  position: absolute;
-  left: 50%;
-  bottom: -2.2rem;
+  font-size: 0.8rem;
   font-weight: 700;
+  margin-bottom: 0.2rem;
   color: #2a282f;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
 }

@@ -1,4 +1,11 @@
 import styled from '@emotion/styled';
+import { Box } from '@chakra-ui/react';
+import {
+  BsEmojiHeartEyes,
+  BsEmojiNeutral,
+  BsEmojiFrown,
+  BsEmojiAngry,
+} from 'react-icons/bs';
 
 interface DustStateProps {
   dustDensity: string;
@@ -10,6 +17,12 @@ const DUST_RATE = ['좋음', '보통', '나쁨', '매우 나쁨'];
 const AVERAGE_DUST_DENSITY = [2, 3, 4, 10];
 const FINE_DUST_DENSITY = [80, 150, 300, 1200];
 const ULTRA_FINE_DUST_DENSITY = [15, 35, 75, 1200];
+const DUST_ICON = [
+  <BsEmojiHeartEyes />,
+  <BsEmojiNeutral />,
+  <BsEmojiFrown />,
+  <BsEmojiAngry />,
+];
 
 const DUST_KIND = {
   AVG: 'avg',
@@ -35,7 +48,13 @@ const DustState = ({ dustDensity, kindOfDust }: DustStateProps) => {
 
   return (
     <DustStateColor color={DUST_RATE_COLOR[discriminateDust()]}>
-      {DUST_RATE[discriminateDust()]}
+      <Box fontSize={`1.5vh`}>{`${
+        kindOfDust === 'avg' ? `` : `${dustDensity}㎍/㎥`
+      }`}</Box>
+      <Box display={'flex'} flexDirection={'column'} justifyContent={'center'}>
+        {DUST_ICON[discriminateDust()]}
+        {DUST_RATE[discriminateDust()]}
+      </Box>
     </DustStateColor>
   );
 };

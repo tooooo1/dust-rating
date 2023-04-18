@@ -86,7 +86,6 @@ const Map = () => {
           coords.getLat(),
           (result, status) => {
             if (status === kakao.maps.services.Status.OK) {
-              console.log(result[0].address.address_name.split(' ')[0]);
               setCurrentCity(result[0].address.address_name.split(' ')[0]);
             }
           }

@@ -127,8 +127,12 @@ const Map = () => {
         const backgroundColor = getDustScaleColor(fineDustScale);
         const template = `
           <div class="dust-info-marker" style="background-color: ${backgroundColor};">
-            <span>${fineDustScale}/${ultraFineDustScale}</span>
             <p class="city-name">${cityName}</p>
+            <div class="dust-info">
+              <div>${fineDustScale}</div>
+              <span class="divider">&sol;</span>
+              <div>${ultraFineDustScale}</div>  
+            </div>
           </div>`;
 
         const marker = new kakao.maps.CustomOverlay({

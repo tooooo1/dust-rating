@@ -78,7 +78,7 @@ const Map = () => {
 
       const geocoder = new kakao.maps.services.Geocoder();
 
-      kakao.maps.event.addListener(map, 'idle', function () {
+      kakao.maps.event.addListener(map, 'dragend', function () {
         const coords = map.getCenter();
 
         geocoder.coord2Address(
@@ -86,6 +86,7 @@ const Map = () => {
           coords.getLat(),
           (result, status) => {
             if (status === kakao.maps.services.Status.OK) {
+              console.log(result[0].address.address_name.split(' ')[0]);
               setCurrentCity(result[0].address.address_name.split(' ')[0]);
             }
           }
@@ -102,13 +103,14 @@ const Map = () => {
     }
   );
 
-  const { data: airQualityByCity } = useQuery<AirQuality[]>(
+  const { data: airQualityByCity, refetch } = useQuery<AirQuality[]>(
     ['city-air-quality'],
-    () => getAirQualityByCity(currentCity),
-    {
-      refetchOnWindowFocus: false,
-    }
+    () => getAirQualityByCity(currentCity)
   );
+
+  useEffect(() => {
+    refetch();
+  }, [currentCity]);
 
   const { data: allLocation } = useQuery(['all-location'], getAllLocation);
 

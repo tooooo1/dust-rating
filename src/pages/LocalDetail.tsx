@@ -6,6 +6,7 @@ import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import useFetchDustForecast from '@/hooks/useFetchDustForecast';
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { Box, useMediaQuery } from '@chakra-ui/react';
 
 const LocalDetail = () => {
   const location = useLocation();
@@ -30,131 +31,102 @@ const LocalDetail = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  if (!dustForecast || isLoading) return <Time>Loading...</Time>;
+  const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+
+  if (!dustForecast || isLoading)
+    return (
+      <Box
+        fontSize={isLargerThan768 ? '3.3vw' : '24px'}
+        margin="0 0 1.5rem 0"
+        textAlign="center"
+        fontWeight="100"
+        color="white"
+      >
+        Loading...
+      </Box>
+    );
 
   return (
-    <TotalWrapper>
-      <State>
+    <Box
+      height="100vh"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+    >
+      <Box
+        alignItems="center"
+        marginTop="8vh"
+        fontSize={isLargerThan768 ? '4vw' : '30px'}
+        borderRadius="20px"
+        textAlign="center"
+        fontWeight="400"
+        color="white"
+        backgroundColor="#53caf2"
+      >
         {stationName}의 {FINE_DUST} 농도는 다음과 같습니다.
-      </State>
-      <Time>{dataTime} 기준</Time>
-      <WeatherWrapper>
+      </Box>
+      <Box
+        fontSize={isLargerThan768 ? '3.3vw' : '24px'}
+        margin="0 0 1.5rem 0"
+        textAlign="center"
+        fontWeight="100"
+        color="white"
+      >
+        {dataTime} 기준
+      </Box>
+      <Box
+        display="flex"
+        flexDirection="column"
+        width="50%"
+        justifyContent="center"
+        textAlign="center"
+        backgroundColor="white"
+        borderRadius="10px 10px 0px 0px"
+      >
         <div>온도 {20}</div>
         <div>습도 {20}</div>
-      </WeatherWrapper>
-      <DustWrapper>
-        <DetailState>지역 상세 날씨</DetailState>
+      </Box>
+      <Box width="50%" alignItems="center" backgroundColor="white">
+        <Box
+          display="flex"
+          margin="0 auto"
+          width="70%"
+          justifyContent="center"
+          marginTop="4vh"
+          marginBottom="2vh"
+          padding={isLargerThan768 ? '1vh 3vw' : '10px 40px'}
+          backgroundColor="#44b7f7"
+          borderRadius="20px"
+          fontSize={isLargerThan768 ? '3.5vw' : '20px'}
+          color="white"
+          textAlign="center"
+          fontWeight="400"
+        >
+          지역 상세 날씨
+        </Box>
         <DustState dustDensity={dustState} kindOfDust="avg" />
-        <DustDetailWrapper>
-          <FineDustWrapper>
+        <Box
+          marginTop="3rem"
+          marginBottom="3rem"
+          display="flex"
+          flexDirection="row"
+        >
+          <Box padding="0 10% 0 10%" width="100%">
             <div>{FINE_DUST}</div>
             <DustState dustDensity={fineDust} kindOfDust="fineDust" />
-          </FineDustWrapper>
-          <UltraFineDustWrapper>
+          </Box>
+          <Box padding="0 10% 0 10%" width="100%">
             <div>{ULTRA_FINE_DUST}</div>
             <DustState dustDensity={ultraDust} kindOfDust="ultraFineDust" />
-          </UltraFineDustWrapper>
-        </DustDetailWrapper>
-        <DustForecastWrapper>
+          </Box>
+        </Box>
+        <Box padding="10%" display="flex" flexWrap="wrap" alignItems="center">
           <div>{dustForecast.informOverall}</div>
           <img src={dustForecast.imageUrl1} alt="기상 이미지를 준비중입니다." />
-        </DustForecastWrapper>
-      </DustWrapper>
-    </TotalWrapper>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
 export default LocalDetail;
-
-const TotalWrapper = styled.div`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const State = styled.div`
-  align-items: center;
-  margin-top: 8vh;
-  font-size: 4vw;
-  border-radius: 20px;
-  text-align: center;
-  font-weight: 400;
-  color: white;
-  background-color: #53caf2;
-  @media only screen and (min-width: 768px) {
-    font-size: 30px;
-  }
-`;
-
-const Time = styled.div`
-  font-size: 3.3vw;
-  margin: 0 0 1.5rem 0;
-  text-align: center;
-  font-weight: 100;
-  color: white;
-  @media only screen and (min-width: 768px) {
-    font-size: 24px;
-  }
-`;
-
-const WeatherWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  justify-content: center;
-  text-align: center;
-  background-color: white;
-  border-radius: 10px 10px 0px 0px;
-`;
-
-const DustWrapper = styled.div`
-  width: 50%;
-  align-items: center;
-  background-color: white;
-`;
-
-const DustDetailWrapper = styled.div`
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-  display: flex;
-  flex-direction: row;
-`;
-
-const DetailState = styled.div`
-  display: flex;
-  margin: 0 auto;
-  width: 70%;
-  justify-content: center;
-  margin-top: 4vh;
-  margin-bottom: 2vh;
-  padding: 1vh 3vw;
-  background-color: #44b7f7;
-  border-radius: 20px;
-  font-size: 3.5vw;
-  color: white;
-  text-align: center;
-
-  font-weight: 400;
-  @media only screen and (min-width: 768px) {
-    font-size: 20px;
-    padding: 10px 40px;
-  }
-`;
-
-const FineDustWrapper = styled.div`
-  padding: 0 10% 0 10%;
-  width: 100%;
-`;
-
-const UltraFineDustWrapper = styled.div`
-  padding: 0 10% 0 10%;
-  width: 100%;
-`;
-
-const DustForecastWrapper = styled.div`
-  padding: 10%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-`;

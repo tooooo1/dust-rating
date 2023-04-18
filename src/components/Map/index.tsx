@@ -116,7 +116,6 @@ const Map = () => {
   useEffect(() => {
     kakao.maps.load(() => {
       if (!map) return;
-      if (map.getLevel() < 9) return;
       if (!airQuality) return;
       if (!allLocation) return;
 
@@ -157,7 +156,6 @@ const Map = () => {
   useEffect(() => {
     kakao.maps.load(() => {
       if (!map) return;
-      if (map.getLevel() > 9) return;
       if (!airQualityByCity) return;
 
       const geocoder = new kakao.maps.services.Geocoder();

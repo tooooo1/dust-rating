@@ -2,18 +2,18 @@ import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Flex, Text, Select, Button } from '@chakra-ui/react';
 import { HiArrowRight } from 'react-icons/hi';
-import { FINE_DUST, CITY_GROUP } from '@/utils/constants';
+import { FINE_DUST, CITY_GROUP, ROUTE } from '@/utils/constants';
 
 const Choice = () => {
   const navigate = useNavigate();
   const [place, setPlace] = useState(CITY_GROUP[0].cityName);
 
   const handleResultPageNavigate = () => {
-    navigate('/result', { state: place });
+    navigate(ROUTE.RANKING, { state: place });
   };
 
   const handleMapPageNavigate = () => {
-    navigate('/dustmap');
+    navigate(ROUTE.DUST_MAP);
   };
 
   const handlePlaceChange = (e: ChangeEvent<HTMLSelectElement>) => {

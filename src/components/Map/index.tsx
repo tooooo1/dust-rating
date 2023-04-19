@@ -6,6 +6,7 @@ import { getAirQuality, getAirQualityByCity } from '@/api/airQuality';
 import { getAllLocation } from '@/api/location';
 import { INIT_LOCATION, CENTER_LOCATION } from '@/utils/constants';
 import { getDustScaleColor } from '@/utils/map';
+import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
 
 declare global {
   interface Window {
@@ -252,6 +253,9 @@ const Map = () => {
         <MapButton type="full-screen" onClick={handleFullScreenChange} />
         {zoomLevel === MAX_ZOOM_LEVEL && isLoading && <Spinner />}
       </VStack>
+      <Box position="absolute" bottom="1.5rem" zIndex={10}>
+        <AirPollutionLevels />
+      </Box>
     </Box>
   );
 };

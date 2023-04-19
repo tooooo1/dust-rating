@@ -8,6 +8,8 @@ type Flag = null | '통신장애';
 interface AirQualityScale {
   pm10Flag: Flag;
   pm25Flag: Flag;
+  pm10Value: string;
+  pm25Value: string;
 }
 
 interface AirQuality {
@@ -32,13 +34,16 @@ export const getAirQuality = async () => {
         }
 
         const airQuality = response.data.response.body.items.find(
-          ({ pm10Flag, pm25Flag }: AirQualityScale) => !pm10Flag && !pm25Flag
+          ({ pm10Flag, pm25Flag, pm10Value, pm25Value }: AirQualityScale) =>
+            !pm10Flag && !pm25Flag && pm10Value && pm25Value
         );
 
         return {
           cityName: city.cityName,
           fineDustScale: Number(airQuality.pm10Value),
+          fineDustGrade: Number(airQuality.pm10Grade),
           ultraFineDustScale: Number(airQuality.pm25Value),
+          ultraFineDustGrade: Number(airQuality.pm25Grade),
         };
       })
     );
@@ -58,7 +63,8 @@ export const getAirQualityByCity = async (city: string) => {
     }
 
     const airQuality = response.data.response.body.items.find(
-      ({ pm10Flag, pm25Flag }: AirQualityScale) => !pm10Flag && !pm25Flag
+      ({ pm10Flag, pm25Flag, pm10Value, pm25Value }: AirQualityScale) =>
+        !pm10Flag && !pm25Flag && pm10Value && pm25Value
     );
 
     return {
@@ -85,7 +91,8 @@ export const getAllAirQualityByCity = async (city: string) => {
     }
 
     const airQualities = response.data.response.body.items.filter(
-      ({ pm10Flag, pm25Flag }: AirQualityScale) => !pm10Flag && !pm25Flag
+      ({ pm10Flag, pm25Flag, pm10Value, pm25Value }: AirQualityScale) =>
+        !pm10Flag && !pm25Flag && pm10Value && pm25Value
     );
 
     return airQualities.map(

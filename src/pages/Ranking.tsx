@@ -4,12 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Select } from '@chakra-ui/react';
 import { DustState } from '@/components/Dust';
 import ProgressBar from '@/components/ProgressBar';
-import RankList from '@/components/Ranking/RankList';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getAirQualityByCity } from '@/api/airQuality';
 import styled from '@emotion/styled';
 
-const Result = () => {
+const Ranking = () => {
   const { state: choiceCity } = useLocation();
   const [selectedSortKey, setSelectedSortKey] = useState(FINE_DUST);
 
@@ -62,14 +61,13 @@ const Result = () => {
               {ULTRA_FINE_DUST}
             </option>
           </Select>
-          <RankList standard={selectedSortKey} list={sidoDust} />
         </RatingWidth>
       </Rating>
     </Mid>
   );
 };
 
-export default Result;
+export default Ranking;
 
 const Mid = styled.div`
   height: 100vh;

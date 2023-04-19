@@ -1,118 +1,60 @@
+import { ChangeEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import styled from '@emotion/styled';
-import { DustState } from '../components/Dust';
-import Progress from '../components/Progress';
-import Rank from '../components/Rank';
-import useFetchDustInfo, { cityGroup } from '../hooks/useFetchDustInfo';
-import type { SidoDust, CityGroup } from '@/type';
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { useQuery } from '@tanstack/react-query';
 import { Select } from '@chakra-ui/react';
-import { ChangeEvent, useState } from 'react';
+import { DustState } from '@/components/Dust';
+import ProgressBar from '@/components/ProgressBar';
+import RankList from '@/components/Ranking/RankList';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import { getAirQualityByCity } from '@/api/airQuality';
+import styled from '@emotion/styled';
 
 const Result = () => {
-  const [selectedDust, setSelectedDust] = useState(FINE_DUST);
-  const location = useLocation();
-  const choiceCity = location.state;
-  const { fetchDustInfo } = useFetchDustInfo();
-  const { data: sidoDust, isLoading } = useQuery<SidoDust[]>({
-    queryKey: [choiceCity],
-    queryFn: fetchDustInfo,
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { state: choiceCity } = useLocation();
+  const [selectedSortKey, setSelectedSortKey] = useState(FINE_DUST);
 
-  const findChoiceCity = (kindOfDust: string) => {
-    if (!sidoDust) return '0';
-
-    const result = sidoDust.find(
-      (temp: SidoDust) => temp.items[0].sidoName === choiceCity
-    );
-
-    if (!result) return '0';
-
-    return calculateFineDust({ result, kindOfDust });
-  };
-
-  const calculateFineDust = ({
-    result,
-    kindOfDust,
-  }: {
-    result: SidoDust;
-    kindOfDust: string;
-  }) => {
-    switch (kindOfDust) {
-      case 'DustState':
-        return (
-          (parseInt(result?.items[4]?.pm10Grade) +
-            parseInt(result?.items[4]?.pm25Grade)) /
-          2
-        ).toString();
-      case 'fineDust':
-        return result?.items[4]?.pm10Value;
-      case 'ultraFineDust':
-        return result?.items[4]?.pm25Value;
-      default:
-        return '0';
+  const { data: sidoDust, isLoading } = useQuery(
+    ['dust-info', choiceCity],
+    () => getAirQualityByCity(choiceCity),
+    {
+      staleTime: 1000 * 60 * 5,
     }
-  };
+  );
 
-  const handleDustChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleSortKeyChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { target } = e;
     target.value === FINE_DUST
-      ? setSelectedDust(FINE_DUST)
-      : setSelectedDust(ULTRA_FINE_DUST);
-  };
-
-  const sortCityByDustDensity = (cityGroup: CityGroup[]) => {
-    if (!sidoDust) return [];
-
-    return cityGroup.sort((prev, next) => {
-      const prevCity = sidoDust[prev.cityNumber]?.items[4];
-      const nextCity = sidoDust[next.cityNumber]?.items[4];
-      if (selectedDust === FINE_DUST) {
-        if (+prevCity.pm10Value < +nextCity.pm10Value) return -1;
-        else if (+prevCity.pm10Value > +nextCity.pm10Value) return 1;
-        else return 0;
-      } else if (selectedDust === ULTRA_FINE_DUST) {
-        if (+prevCity.pm25Value < +nextCity.pm25Value) return -1;
-        else if (+prevCity.pm25Value > +nextCity.pm25Value) return 1;
-        else return 0;
-      }
-      return 0;
-    });
+      ? setSelectedSortKey(FINE_DUST)
+      : setSelectedSortKey(ULTRA_FINE_DUST);
   };
 
   if (!sidoDust || isLoading) {
-    return <Time>Loading...</Time>;
+    return <Time>로딩 중...</Time>;
   }
 
   return (
     <Mid>
-      <State>전국 {FINE_DUST} 농도는 다음과 같습니다</State>
-      <Time>
-        {sidoDust[0]?.items[0]?.dataTime ?? '0000-00-00 00:00'}
-        기준
-      </Time>
+      <State>전국 미세 먼지 농도는 다음과 같습니다</State>
+      <Time>{sidoDust[0].dataTime} 기준</Time>
       <Middle>
         <Location>{choiceCity}</Location>
         <Text>현재의 대기질 지수는</Text>
-        <DustState dustDensity={findChoiceCity('DustState')} kindOfDust="avg" />
-        <Progress id="fineDust" state={findChoiceCity('fineDust')}>
+        <DustState
+          fineDust={sidoDust[0].fineDustGrade}
+          ultraFineDust={sidoDust[0].ultraFineDustGrade}
+          kindOfDust="avg"
+        />
+        <ProgressBar id="fineDust" state={sidoDust[0].fineDustScale}>
           {FINE_DUST}
-        </Progress>
-        <Progress id="ultraFineDust" state={findChoiceCity('ultraFineDust')}>
+        </ProgressBar>
+        <ProgressBar id="ultraFineDust" state={sidoDust[0].ultraFineDustScale}>
           {ULTRA_FINE_DUST}
-        </Progress>
+        </ProgressBar>
       </Middle>
       <Rating>
         <RatingWidth>
-          <DustRating>지역별 {FINE_DUST} 농도 순위</DustRating>
-          <Select
-            bg="#44b7f7"
-            color="#ffffff"
-            onChange={(e) => handleDustChange(e)}
-          >
+          <DustRating>지역별 미세 먼지 농도 순위</DustRating>
+          <Select bg="#44b7f7" color="#ffffff" onChange={handleSortKeyChange}>
             <option style={{ backgroundColor: '#44b7f7', color: '#ffffff' }}>
               {FINE_DUST}
             </option>
@@ -120,23 +62,7 @@ const Result = () => {
               {ULTRA_FINE_DUST}
             </option>
           </Select>
-          {sortCityByDustDensity(cityGroup).map((city, cityIdx) => {
-            return (
-              <Rank
-                key={city.cityName}
-                rank={cityIdx + 1}
-                city={city.cityName}
-                dust={sidoDust[city.cityNumber]?.items[4]?.pm10Value}
-                ultraDust={sidoDust[city.cityNumber]?.items[4]?.pm25Value}
-                dustState={(
-                  (parseInt(sidoDust[city.cityNumber]?.items[4]?.pm10Grade) +
-                    parseInt(sidoDust[city.cityNumber]?.items[4]?.pm25Grade)) /
-                  2
-                ).toString()}
-                detail={sidoDust[city.cityNumber]?.items}
-              />
-            );
-          })}
+          <RankList standard={selectedSortKey} list={sidoDust} />
         </RatingWidth>
       </Rating>
     </Mid>

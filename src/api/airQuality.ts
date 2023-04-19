@@ -28,9 +28,9 @@ export const getAirQuality = async () => {
           throw new Error('API 에러');
         }
 
-        const airQuality = response.data.response.body.items.filter(
+        const airQuality = response.data.response.body.items.find(
           ({ pm10Flag, pm25Flag }: AirQualityScale) => !pm10Flag && !pm25Flag
-        )[0];
+        );
 
         return {
           cityName: city.cityName,
@@ -62,7 +62,10 @@ export const getAirQualityByCity = async (city: string) => {
       ({ stationName, pm10Value, pm25Value }: AirQuality) => ({
         cityName: stationName,
         fineDustScale: Number(pm10Value),
+        fineDustGrade: Number(airQuality.pm10Grade),
         ultraFineDustScale: Number(pm25Value),
+        ultraFineDustGrade: Number(airQuality.pm25Grade),
+        dataTime: airQuality.dataTime,
       })
     );
   } catch (error) {

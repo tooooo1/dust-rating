@@ -8,7 +8,8 @@ import {
 } from 'react-icons/bs';
 
 interface DustStateProps {
-  dustDensity: string;
+  fineDust: number;
+  ultraFineDust: number;
   kindOfDust: string;
 }
 
@@ -30,8 +31,8 @@ const DUST_KIND = {
   ULTRA_FINE_DUST: 'ultraFineDust',
 };
 
-const DustState = ({ dustDensity, kindOfDust }: DustStateProps) => {
-  const dustDensityNumber = +dustDensity;
+const DustState = ({ fineDust, ultraFineDust, kindOfDust }: DustStateProps) => {
+  const dustDensityNumber = +fineDust;
   if (isNaN(dustDensityNumber))
     return <DustStateColor style={{ color: '#666666' }}>측정중</DustStateColor>;
 
@@ -49,7 +50,7 @@ const DustState = ({ dustDensity, kindOfDust }: DustStateProps) => {
   return (
     <DustStateColor color={DUST_RATE_COLOR[discriminateDust()]}>
       <Box fontSize={`1.5vh`}>{`${
-        kindOfDust === 'avg' ? `` : `${dustDensity}㎍/㎥`
+        kindOfDust === 'avg' ? `` : `${fineDust}㎍/㎥`
       }`}</Box>
       <Box display={'flex'} flexDirection={'column'} justifyContent={'center'}>
         {DUST_ICON[discriminateDust()]}

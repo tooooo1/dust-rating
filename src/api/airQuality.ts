@@ -50,6 +50,33 @@ export const getAirQuality = async () => {
 export const getAirQualityByCity = async (city: string) => {
   try {
     const response = await axios.get(
+      `${VITE_AIR_QUALITY_URL}?sidoName=${city}&pageNo=1&numOfRows=10&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
+    );
+
+    if (response.status !== 200) {
+      throw new Error('API 에러');
+    }
+
+    const airQuality = response.data.response.body.items.find(
+      ({ pm10Flag, pm25Flag }: AirQualityScale) => !pm10Flag && !pm25Flag
+    );
+
+    return {
+      cityName: airQuality.stationName,
+      fineDustScale: Number(airQuality.pm10Value),
+      fineDustGrade: Number(airQuality.pm10Grade),
+      ultraFineDustScale: Number(airQuality.pm25Value),
+      ultraFineDustGrade: Number(airQuality.pm25Grade),
+      dataTime: airQuality.dataTime,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getAllAirQualityByCity = async (city: string) => {
+  try {
+    const response = await axios.get(
       `${VITE_AIR_QUALITY_URL}?sidoName=${city}&pageNo=1&numOfRows=250&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
     );
 
@@ -57,11 +84,11 @@ export const getAirQualityByCity = async (city: string) => {
       throw new Error('API 에러');
     }
 
-    const airQuality = response.data.response.body.items.filter(
+    const airQualities = response.data.response.body.items.filter(
       ({ pm10Flag, pm25Flag }: AirQualityScale) => !pm10Flag && !pm25Flag
     );
 
-    return airQuality.map(
+    return airQualities.map(
       ({
         stationName,
         pm10Value,

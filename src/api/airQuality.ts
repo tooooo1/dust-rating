@@ -13,7 +13,10 @@ interface AirQualityScale {
 interface AirQuality {
   stationName: string;
   pm10Value: string;
+  pm10Grade: string;
   pm25Value: string;
+  pm25Grade: string;
+  dataTime: string;
 }
 
 export const getAirQuality = async () => {
@@ -59,13 +62,20 @@ export const getAirQualityByCity = async (city: string) => {
     );
 
     return airQuality.map(
-      ({ stationName, pm10Value, pm25Value }: AirQuality) => ({
+      ({
+        stationName,
+        pm10Value,
+        pm10Grade,
+        pm25Value,
+        pm25Grade,
+        dataTime,
+      }: AirQuality) => ({
         cityName: stationName,
         fineDustScale: Number(pm10Value),
-        fineDustGrade: Number(airQuality.pm10Grade),
+        fineDustGrade: Number(pm10Grade),
         ultraFineDustScale: Number(pm25Value),
-        ultraFineDustGrade: Number(airQuality.pm25Grade),
-        dataTime: airQuality.dataTime,
+        ultraFineDustGrade: Number(pm25Grade),
+        dataTime,
       })
     );
   } catch (error) {

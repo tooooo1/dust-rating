@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { CITY_GROUP } from '@/utils/constants';
+import { SIDO_GROUP } from '@/utils/constants';
 
 const { VITE_KAKAO_API_KEY, VITE_KAKAO_MAP_URL } = import.meta.env;
 
 export const getAllLocation = async () => {
   try {
     const result = await Promise.all(
-      CITY_GROUP.map((city) =>
+      SIDO_GROUP.map((city) =>
         axios
           .get(VITE_KAKAO_MAP_URL + encodeURIComponent(city.cityName), {
             headers: {

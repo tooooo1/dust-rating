@@ -1,4 +1,4 @@
-export const CITY_GROUP = [
+export const SIDO_GROUP = [
   { cityName: '서울', cityNumber: 0 },
   { cityName: '부산', cityNumber: 1 },
   { cityName: '대구', cityNumber: 2 },

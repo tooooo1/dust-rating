@@ -5,18 +5,19 @@ const { VITE_AIR_QUALITY_URL, VITE_AIR_QUALITY_API_KEY } = import.meta.env;
 
 type Flag = null | '통신장애';
 
-interface AirQualityScale {
-  pm10Flag: Flag;
-  pm25Flag: Flag;
+interface DustValues {
   pm10Value: string;
   pm25Value: string;
 }
 
-interface AirQuality {
+interface AirQualityScale extends DustValues {
+  pm10Flag: Flag;
+  pm25Flag: Flag;
+}
+
+interface AirQuality extends DustValues {
   stationName: string;
-  pm10Value: string;
   pm10Grade: string;
-  pm25Value: string;
   pm25Grade: string;
   dataTime: string;
 }
@@ -34,8 +35,11 @@ export const getSidoAirQualities = async () => {
         }
 
         const airQuality = response.data.response.body.items.find(
-          ({ pm10Flag, pm25Flag, pm10Value, pm25Value }: AirQualityScale) =>
-            !pm10Flag && !pm25Flag && pm10Value && pm25Value
+          (scale: AirQualityScale) =>
+            !scale.pm10Flag &&
+            !scale.pm25Flag &&
+            scale.pm10Value &&
+            scale.pm25Value
         );
 
         return {
@@ -63,8 +67,8 @@ export const getSidoAirQuality = async (sido: string) => {
     }
 
     const airQuality = response.data.response.body.items.find(
-      ({ pm10Flag, pm25Flag, pm10Value, pm25Value }: AirQualityScale) =>
-        !pm10Flag && !pm25Flag && pm10Value && pm25Value
+      (scale: AirQualityScale) =>
+        !scale.pm10Flag && !scale.pm25Flag && scale.pm10Value && scale.pm25Value
     );
 
     return {
@@ -91,27 +95,18 @@ export const getCityAirQualities = async (sido: string) => {
     }
 
     const airQualities = response.data.response.body.items.filter(
-      ({ pm10Flag, pm25Flag, pm10Value, pm25Value }: AirQualityScale) =>
-        !pm10Flag && !pm25Flag && pm10Value && pm25Value
+      (scale: AirQualityScale) =>
+        !scale.pm10Flag && !scale.pm25Flag && scale.pm10Value && scale.pm25Value
     );
 
-    return airQualities.map(
-      ({
-        stationName,
-        pm10Value,
-        pm10Grade,
-        pm25Value,
-        pm25Grade,
-        dataTime,
-      }: AirQuality) => ({
-        cityName: stationName,
-        fineDustScale: Number(pm10Value),
-        fineDustGrade: Number(pm10Grade),
-        ultraFineDustScale: Number(pm25Value),
-        ultraFineDustGrade: Number(pm25Grade),
-        dataTime,
-      })
-    );
+    return airQualities.map((airQuality: AirQuality) => ({
+      cityName: airQuality.stationName,
+      fineDustScale: Number(airQuality.pm10Value),
+      fineDustGrade: Number(airQuality.pm10Grade),
+      ultraFineDustScale: Number(airQuality.pm25Value),
+      ultraFineDustGrade: Number(airQuality.pm25Grade),
+      dataTime: airQuality.dataTime,
+    }));
   } catch (error) {
     console.error(error);
   }

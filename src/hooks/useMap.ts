@@ -119,46 +119,33 @@ const useMap = ({ mapRef }: useMapProps) => {
   }, [currentLocation]);
 
   const handleCurrentLocationChange = () => {
-    kakao.maps.load(() => {
-      if (!map) return;
+    if (!map) return;
 
-      map.setLevel(INIT_ZOOM_LEVEL, { animate: true });
-      map.setCenter(
-        new kakao.maps.LatLng(location.latitude, location.longitude)
-      );
-    });
+    map.setLevel(INIT_ZOOM_LEVEL, { animate: true });
+    map.setCenter(new kakao.maps.LatLng(location.latitude, location.longitude));
   };
 
   const handleZoomIn = () => {
-    kakao.maps.load(() => {
-      if (!map) return;
+    if (!map) return;
 
-      const zoomLevel = map.getLevel();
-      map.setLevel(zoomLevel - 1, { animate: true });
-    });
+    const zoomLevel = map.getLevel();
+    map.setLevel(zoomLevel - 1, { animate: true });
   };
 
   const handleZoomOut = () => {
-    kakao.maps.load(() => {
-      if (!map) return;
+    if (!map) return;
 
-      const zoomLevel = map.getLevel();
-      map.setLevel(zoomLevel + 1, { animate: true });
-    });
+    const zoomLevel = map.getLevel();
+    map.setLevel(zoomLevel + 1, { animate: true });
   };
 
   const handleFullScreenChange = () => {
-    kakao.maps.load(() => {
-      if (!map) return;
+    if (!map) return;
 
-      map.setLevel(MAX_ZOOM_LEVEL, { animate: true });
-      map.setCenter(
-        new kakao.maps.LatLng(
-          CENTER_LOCATION.latitude,
-          CENTER_LOCATION.longitude
-        )
-      );
-    });
+    map.setLevel(MAX_ZOOM_LEVEL, { animate: true });
+    map.setCenter(
+      new kakao.maps.LatLng(CENTER_LOCATION.latitude, CENTER_LOCATION.longitude)
+    );
   };
 
   return {

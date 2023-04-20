@@ -26,10 +26,11 @@ export interface AirQualities {
 
 export interface LocalDustDetail {
   stationName: string;
-  fineDust: string;
-  ultraDust: string;
+  fineDustScale: number;
+  fineDustGrade: number;
+  ultraFineDustScale: number;
+  ultraFineDustGrade: number;
   dataTime: string;
-  dustState: string;
 }
 
 export interface Location {

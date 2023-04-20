@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { useLocation } from 'react-router-dom';
 import { DustState } from '@/components/Dust';
 import type { LocalDustDetail } from '@/type';
@@ -12,10 +11,11 @@ const LocalDetail = () => {
   const location = useLocation();
   const {
     stationName,
-    fineDust,
-    ultraDust,
+    fineDustScale,
+    fineDustGrade,
+    ultraFineDustScale,
+    ultraFineDustGrade,
     dataTime,
-    dustState,
   }: LocalDustDetail = location.state;
 
   const { fetchDustForecast } = useFetchDustForecast();
@@ -104,7 +104,11 @@ const LocalDetail = () => {
         >
           지역 상세 날씨
         </Box>
-        <DustState dustDensity={dustState} kindOfDust="avg" />
+        <DustState
+          fineDust={fineDustGrade}
+          ultraFineDust={ultraFineDustGrade}
+          kindOfDust="avg"
+        />
         <Box
           marginTop="3rem"
           marginBottom="3rem"
@@ -113,11 +117,19 @@ const LocalDetail = () => {
         >
           <Box padding="0 10% 0 10%" width="100%">
             <div>{FINE_DUST}</div>
-            <DustState dustDensity={fineDust} kindOfDust="fineDust" />
+            <DustState
+              fineDust={fineDustGrade}
+              ultraFineDust={ultraFineDustGrade}
+              kindOfDust="fineDust"
+            />
           </Box>
           <Box padding="0 10% 0 10%" width="100%">
             <div>{ULTRA_FINE_DUST}</div>
-            <DustState dustDensity={ultraDust} kindOfDust="ultraFineDust" />
+            <DustState
+              fineDust={fineDustGrade}
+              ultraFineDust={ultraFineDustGrade}
+              kindOfDust="ultraFineDust"
+            />
           </Box>
         </Box>
         <Box padding="10%" display="flex" flexWrap="wrap" alignItems="center">

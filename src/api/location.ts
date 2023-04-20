@@ -1,20 +1,20 @@
 import axios from 'axios';
-import { CITY_GROUP } from '@/utils/constants';
+import { SIDO_GROUP } from '@/utils/constants';
 
 const { VITE_KAKAO_API_KEY, VITE_KAKAO_MAP_URL } = import.meta.env;
 
 export const getAllLocation = async () => {
   try {
     const result = await Promise.all(
-      CITY_GROUP.map((city) =>
+      SIDO_GROUP.map((sido) =>
         axios
-          .get(VITE_KAKAO_MAP_URL + encodeURIComponent(city.cityName), {
+          .get(VITE_KAKAO_MAP_URL + encodeURIComponent(sido.sidoName), {
             headers: {
               Authorization: `KakaoAK ${VITE_KAKAO_API_KEY}`,
             },
           })
           .then((res) => ({
-            cityName: city.cityName,
+            sidoName: sido.sidoName,
             latitude: Number(res.data.documents[0].y),
             longitude: Number(res.data.documents[0].x),
           }))
@@ -27,10 +27,10 @@ export const getAllLocation = async () => {
   }
 };
 
-export const getLocation = async (cityName: string) => {
+export const getLocation = async (city: string) => {
   try {
     const result = await axios
-      .get(VITE_KAKAO_MAP_URL + encodeURIComponent(cityName), {
+      .get(VITE_KAKAO_MAP_URL + encodeURIComponent(city), {
         headers: {
           Authorization: `KakaoAK ${VITE_KAKAO_API_KEY}`,
         },

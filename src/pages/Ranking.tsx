@@ -9,7 +9,7 @@ import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getSidoAirQualities, getSidoAirQuality } from '@/api/airQuality';
 import styled from '@emotion/styled';
 
-type SortKey = '미세먼지' | '초미세먼지';
+type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
 const Ranking = () => {
   const { state: selectedSido } = useLocation();

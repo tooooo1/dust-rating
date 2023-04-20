@@ -19,7 +19,8 @@ const CityRank = ({ sido, isShow }: CityRankProps) => {
   return (
     <>
       {isShow &&
-        cityAirQualities?.map((city, idx) => (
+        cityAirQualities &&
+        cityAirQualities.map((city, idx) => (
           <RatingWrapper key={city.cityName}>
             <Top>
               <RatingDetails>

@@ -23,7 +23,6 @@ interface AirQuality {
 const MAX_ZOOM_LEVEL = 8;
 
 const Map = () => {
-  console.log('재랜더링');
   const mapRef = useRef<HTMLDivElement | null>(null);
   const dustInfoMarkersBySido: kakao.maps.CustomOverlay[] = [];
   const dustInfoMarkersByCity: kakao.maps.CustomOverlay[] = [];

@@ -11,7 +11,6 @@ interface useMapProps {
 }
 
 const useMap = ({ mapRef }: useMapProps) => {
-  console.log('useMap');
   const [location, setLocation] = useState(INIT_LOCATION); // 내 디바이스 위치
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [zoomLevel, setZoomLevel] = useState(INIT_ZOOM_LEVEL);
@@ -108,8 +107,6 @@ const useMap = ({ mapRef }: useMapProps) => {
   };
 
   useEffect(() => {
-    // if (!document.querySelectorAll('.dust-info-marker')) return;
-
     document.querySelectorAll('.dust-info-marker').forEach((value) => {
       value.addEventListener('click', tempClick);
     });

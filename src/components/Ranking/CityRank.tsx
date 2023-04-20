@@ -1,50 +1,56 @@
-import styled from '@emotion/styled';
+import { useQuery } from '@tanstack/react-query';
 import { DustState } from '@/components/Dust';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import { getCityAirQualities } from '@/api/airQuality';
+import { AirQualities } from '@/type';
+import styled from '@emotion/styled';
 
-interface SidoDustDetailProps {
-  rank: number;
-  city: string;
-  fineDust: string;
-  ultraFineDust: string;
-  dustState: string;
-  onClickSidoDustDetail: () => void;
+interface CityRankProps {
+  sido: string;
+  isShow: boolean;
 }
 
-const SidoDustDetail = ({
-  rank,
-  city,
-  fineDust,
-  ultraFineDust,
-  dustState,
-  onClickSidoDustDetail,
-}: SidoDustDetailProps) => {
+const CityRank = ({ sido, isShow }: CityRankProps) => {
+  const { data: cityAirQualities } = useQuery<AirQualities[]>(
+    ['city-air-qualities'],
+    () => getCityAirQualities(sido)
+  );
+
   return (
-    <RatingWrapper onClick={onClickSidoDustDetail}>
-      <Top>
-        <RatingDetails>
-          <Rank>{rank}</Rank>
-          <RankLocation>{city}</RankLocation>
-          <DustStateWrapper>
-            <DustState dustDensity={dustState} kindOfDust="avg" />
-          </DustStateWrapper>
-        </RatingDetails>
-        <DustWrapper>
-          <DustWrapperFlex>
-            <div>{FINE_DUST}</div>
-            <DustFigure>{fineDust}</DustFigure>
-          </DustWrapperFlex>
-          <DustWrapperFlex>
-            <div>{ULTRA_FINE_DUST}</div>
-            <DustFigure>{ultraFineDust}</DustFigure>
-          </DustWrapperFlex>
-        </DustWrapper>
-      </Top>
-    </RatingWrapper>
+    <>
+      {isShow &&
+        cityAirQualities?.map((city, idx) => (
+          <RatingWrapper key={city.cityName}>
+            <Top>
+              <RatingDetails>
+                <Rank>{idx + 1}</Rank>
+                <RankLocation>{city.cityName}</RankLocation>
+                <DustStateWrapper>
+                  <DustState
+                    fineDust={city.fineDustGrade}
+                    ultraFineDust={city.ultraFineDustGrade}
+                    kindOfDust="avg"
+                  />
+                </DustStateWrapper>
+              </RatingDetails>
+              <DustWrapper>
+                <DustWrapperFlex>
+                  <div>{FINE_DUST}</div>
+                  <DustFigure>{city.fineDustScale}</DustFigure>
+                </DustWrapperFlex>
+                <DustWrapperFlex>
+                  <div>{ULTRA_FINE_DUST}</div>
+                  <DustFigure>{city.ultraFineDustScale}</DustFigure>
+                </DustWrapperFlex>
+              </DustWrapper>
+            </Top>
+          </RatingWrapper>
+        ))}
+    </>
   );
 };
 
-export default SidoDustDetail;
+export default CityRank;
 
 const RatingWrapper = styled.div`
   position: relative;

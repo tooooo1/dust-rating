@@ -15,6 +15,15 @@ export interface DustDetail {
   sidoName?: string;
 }
 
+export interface AirQualities {
+  cityName: string;
+  fineDustScale: number;
+  fineDustGrade: number;
+  ultraFineDustScale: number;
+  ultraFineDustGrade: number;
+  dataTime: string;
+}
+
 export interface LocalDustDetail {
   stationName: string;
   fineDust: string;

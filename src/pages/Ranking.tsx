@@ -1,24 +1,50 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Select } from '@chakra-ui/react';
 import { DustState } from '@/components/Dust';
 import ProgressBar from '@/components/ProgressBar';
+import SidoRank from '@/components/Ranking/SidoRank';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
-import { getAirQualityByCity } from '@/api/airQuality';
+import { getSidoAirQualities, getSidoAirQuality } from '@/api/airQuality';
 import styled from '@emotion/styled';
 
-const Ranking = () => {
-  const { state: choiceCity } = useLocation();
-  const [selectedSortKey, setSelectedSortKey] = useState(FINE_DUST);
+type SortKey = '미세먼지' | '초미세먼지';
 
-  const { data: sidoDust, isLoading } = useQuery(
-    ['dust-info', choiceCity],
-    () => getAirQualityByCity(choiceCity),
+const Ranking = () => {
+  const { state: selectedSido } = useLocation();
+  const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
+
+  const { data: sidoAirQuality } = useQuery(
+    ['sido-air-quality', selectedSido],
+    () => getSidoAirQuality(selectedSido),
     {
       staleTime: 1000 * 60 * 5,
     }
   );
+
+  const { data: sidoAirQualities, refetch } = useQuery(
+    ['sido-air-qualities'],
+    getSidoAirQualities,
+    {
+      select: (data) => {
+        if (selectedSortKey === FINE_DUST) {
+          return data?.sort(
+            (prev, cur) => prev.fineDustScale - cur.fineDustScale
+          );
+        }
+        if (selectedSortKey === ULTRA_FINE_DUST) {
+          return data?.sort(
+            (prev, cur) => prev.ultraFineDustScale - cur.ultraFineDustScale
+          );
+        }
+      },
+    }
+  );
+
+  useEffect(() => {
+    refetch();
+  }, [selectedSortKey]);
 
   const handleSortKeyChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { target } = e;
@@ -27,26 +53,29 @@ const Ranking = () => {
       : setSelectedSortKey(ULTRA_FINE_DUST);
   };
 
-  if (!sidoDust || isLoading) {
+  if (!sidoAirQuality) {
     return <Time>로딩 중...</Time>;
   }
 
   return (
     <Mid>
       <State>전국 미세 먼지 농도는 다음과 같습니다</State>
-      <Time>{sidoDust[0].dataTime} 기준</Time>
+      <Time>{sidoAirQuality.dataTime} 기준</Time>
       <Middle>
-        <Location>{choiceCity}</Location>
+        <Location>{selectedSido}</Location>
         <Text>현재의 대기질 지수는</Text>
         <DustState
-          fineDust={sidoDust[0].fineDustGrade}
-          ultraFineDust={sidoDust[0].ultraFineDustGrade}
+          fineDust={sidoAirQuality.fineDustGrade}
+          ultraFineDust={sidoAirQuality.ultraFineDustGrade}
           kindOfDust="avg"
         />
-        <ProgressBar id="fineDust" state={sidoDust[0].fineDustScale}>
+        <ProgressBar id="fineDust" state={sidoAirQuality.fineDustScale}>
           {FINE_DUST}
         </ProgressBar>
-        <ProgressBar id="ultraFineDust" state={sidoDust[0].ultraFineDustScale}>
+        <ProgressBar
+          id="ultraFineDust"
+          state={sidoAirQuality.ultraFineDustScale}
+        >
           {ULTRA_FINE_DUST}
         </ProgressBar>
       </Middle>
@@ -61,6 +90,17 @@ const Ranking = () => {
               {ULTRA_FINE_DUST}
             </option>
           </Select>
+          {sidoAirQualities?.map((sido, idx) => (
+            <SidoRank
+              key={sido.sidoName}
+              rank={idx + 1}
+              sidoName={sido.sidoName}
+              fineDustScale={sido.fineDustScale}
+              ultraFineDustScale={sido.ultraFineDustScale}
+              fineDustGrade={sido.fineDustGrade}
+              ultraFineDustGrade={sido.ultraFineDustGrade}
+            />
+          ))}
         </RatingWidth>
       </Rating>
     </Mid>

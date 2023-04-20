@@ -1,112 +1,65 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
-import SidoDustDetail from './SidoDustDetail';
 import { DustState } from '@/components/Dust';
-import { type DustDetail } from '@/type';
+import CityRank from './CityRank';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import styled from '@emotion/styled';
 
-interface RankProps {
+interface SidoRankProps {
   rank: number;
-  city: string;
-  dust: string;
-  ultraDust: string;
-  dustState: string;
-  detail: {
-    dataTime: string;
-    stationName: string;
-    pm10Value: string;
-    pm25Value: string;
-    pm10Grade: string;
-    pm25Grade: string;
-  }[];
+  sidoName: string;
+  fineDustScale: number;
+  ultraFineDustScale: number;
+  fineDustGrade: number;
+  ultraFineDustGrade: number;
 }
 
-const Rank = ({
+const SidoRank = ({
   rank,
-  city,
-  dust,
-  ultraDust,
-  dustState,
-  detail,
-}: RankProps) => {
-  const [showDetail, setShowDetail] = useState(true);
-  const navigate = useNavigate();
-  const handleClickShowDetail = () => {
-    setShowDetail((showDetail) => !showDetail);
+  sidoName,
+  fineDustScale,
+  ultraFineDustScale,
+  fineDustGrade,
+  ultraFineDustGrade,
+}: SidoRankProps) => {
+  const [isShow, setIsShow] = useState(false);
+
+  const handleSidoClick = () => {
+    setIsShow((isShow) => !isShow);
   };
-  const handleClickSidoDustDetail = ({
-    dataTime,
-    stationName,
-    pm10Value,
-    pm25Value,
-    pm10Grade,
-    pm25Grade,
-  }: DustDetail) => {
-    const dustState = (
-      (parseInt(pm10Grade) + parseInt(pm25Grade)) /
-      2
-    ).toString();
-    navigate(`/LocalDetail`, {
-      state: {
-        stationName,
-        fineDust: pm10Value,
-        ultraDust: pm25Value,
-        dustState,
-        dataTime,
-      },
-    });
-  };
+
   return (
-    <RatingWrapper onClick={handleClickShowDetail}>
+    <RatingWrapper key={sidoName} onClick={handleSidoClick}>
       <Top>
         <RatingDetails>
           <RankW>{rank}</RankW>
-          <RankLocation>{city}</RankLocation>
+          <RankLocation>{sidoName}</RankLocation>
           <DustStateW>
-            <DustState dustDensity={dustState} kindOfDust="avg" />
+            <DustState
+              fineDust={fineDustGrade}
+              ultraFineDust={ultraFineDustGrade}
+              kindOfDust="avg"
+            />
           </DustStateW>
         </RatingDetails>
         <DustWrapper>
           <DustWrapperFlex>
             <div>{FINE_DUST}</div>
-            <DustFigure>{dust}</DustFigure>
+            <DustFigure>{fineDustScale}</DustFigure>
           </DustWrapperFlex>
           <DustWrapperFlex>
             <div>{ULTRA_FINE_DUST}</div>
-            <DustFigure>{ultraDust}</DustFigure>
+            <DustFigure>{ultraFineDustScale}</DustFigure>
           </DustWrapperFlex>
         </DustWrapper>
       </Top>
-      <Container showDetail={showDetail}>
-        {detail?.map((city, detailIndex) => {
-          return (
-            <SidoDustDetail
-              key={city + detailIndex.toString()}
-              rank={detailIndex + 1}
-              city={city.stationName}
-              fineDust={city.pm10Value}
-              ultraFineDust={city.pm25Value}
-              dustState={city.pm10Grade}
-              onClickSidoDustDetail={() =>
-                handleClickSidoDustDetail({
-                  dataTime: city.dataTime,
-                  stationName: city.stationName,
-                  pm10Value: city.pm10Value,
-                  pm25Value: city.pm25Value,
-                  pm10Grade: city.pm10Grade,
-                  pm25Grade: city.pm25Grade,
-                })
-              }
-            />
-          );
-        })}
+      <Container>
+        <CityRank sido={sidoName} isShow={isShow} />
       </Container>
     </RatingWrapper>
   );
 };
 
-export default Rank;
+export default SidoRank;
 
 const RatingWrapper = styled.div`
   cursor: pointer;
@@ -200,10 +153,6 @@ const Top = styled.div`
   width: 100%;
 `;
 
-interface ContainerProps {
-  showDetail: boolean;
-}
-
 const Container = styled.div`
   width: 100%;
   background-color: #dfdfdf;
@@ -211,5 +160,4 @@ const Container = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  display: ${(props: ContainerProps) => props.showDetail && `none`};
 `;

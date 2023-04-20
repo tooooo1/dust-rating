@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { VStack, Box, Spinner } from '@chakra-ui/react';
 import MapButton from './MapButton';
-import { getAirQuality, getAirQualityByCity } from '@/api/airQuality';
+import { getSidoAirQualities, getCityAirQualities } from '@/api/airQuality';
 import { getAllLocation } from '@/api/location';
 import { INIT_LOCATION, CENTER_LOCATION } from '@/utils/constants';
 import { getDustScaleColor } from '@/utils/map';
@@ -96,7 +96,7 @@ const Map = () => {
 
   const { data: airQuality, isLoading } = useQuery(
     ['air-quality'],
-    getAirQuality,
+    getSidoAirQualities,
     {
       refetchOnWindowFocus: false,
     }
@@ -104,7 +104,7 @@ const Map = () => {
 
   const { data: airQualityByCity, refetch } = useQuery<AirQuality[]>(
     ['city-air-quality'],
-    () => getAirQualityByCity(currentCity)
+    () => getCityAirQualities(currentCity)
   );
 
   useEffect(() => {
@@ -119,15 +119,15 @@ const Map = () => {
       if (!airQuality) return;
       if (!allLocation) return;
 
-      airQuality.forEach(({ cityName, fineDustScale, ultraFineDustScale }) => {
+      airQuality.forEach(({ sidoName, fineDustScale, ultraFineDustScale }) => {
         const { latitude, longitude } = allLocation.filter(
-          (scale) => scale.cityName === cityName
+          (scale) => scale.sidoName === sidoName
         )[0];
 
         const backgroundColor = getDustScaleColor(fineDustScale);
         const template = `
           <div class="dust-info-marker" style="background-color: ${backgroundColor};">
-            <p class="city-name">${cityName}</p>
+            <p class="city-name">${sidoName}</p>
             <div class="dust-info">
               <div>${fineDustScale}</div>
               <span class="divider">&sol;</span>

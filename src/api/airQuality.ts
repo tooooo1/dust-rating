@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CITY_GROUP } from '@/utils/constants';
+import { SIDO_GROUP } from '@/utils/constants';
 
 const { VITE_AIR_QUALITY_URL, VITE_AIR_QUALITY_API_KEY } = import.meta.env;
 
@@ -21,12 +21,12 @@ interface AirQuality {
   dataTime: string;
 }
 
-export const getAirQuality = async () => {
+export const getSidoAirQualities = async () => {
   try {
     return await Promise.all(
-      CITY_GROUP.map(async (city) => {
+      SIDO_GROUP.map(async (sido) => {
         const response = await axios.get(
-          `${VITE_AIR_QUALITY_URL}?sidoName=${city.cityName}&pageNo=1&numOfRows=10&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
+          `${VITE_AIR_QUALITY_URL}?sidoName=${sido.sidoName}&pageNo=1&numOfRows=10&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
         );
 
         if (response.status !== 200) {
@@ -39,7 +39,7 @@ export const getAirQuality = async () => {
         );
 
         return {
-          cityName: city.cityName,
+          sidoName: sido.sidoName,
           fineDustScale: Number(airQuality.pm10Value),
           fineDustGrade: Number(airQuality.pm10Grade),
           ultraFineDustScale: Number(airQuality.pm25Value),
@@ -52,10 +52,10 @@ export const getAirQuality = async () => {
   }
 };
 
-export const getAirQualityByCity = async (city: string) => {
+export const getSidoAirQuality = async (sido: string) => {
   try {
     const response = await axios.get(
-      `${VITE_AIR_QUALITY_URL}?sidoName=${city}&pageNo=1&numOfRows=10&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
+      `${VITE_AIR_QUALITY_URL}?sidoName=${sido}&pageNo=1&numOfRows=10&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
     );
 
     if (response.status !== 200) {
@@ -80,10 +80,10 @@ export const getAirQualityByCity = async (city: string) => {
   }
 };
 
-export const getAllAirQualityByCity = async (city: string) => {
+export const getCityAirQualities = async (sido: string) => {
   try {
     const response = await axios.get(
-      `${VITE_AIR_QUALITY_URL}?sidoName=${city}&pageNo=1&numOfRows=250&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
+      `${VITE_AIR_QUALITY_URL}?sidoName=${sido}&pageNo=1&numOfRows=250&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
     );
 
     if (response.status !== 200) {

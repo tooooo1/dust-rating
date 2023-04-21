@@ -46,14 +46,10 @@ const Map = () => {
     }
   );
 
-  const { data: airQualityByCity, refetch } = useQuery<AirQuality[]>(
-    ['city-air-quality'],
+  const { data: airQualityByCity } = useQuery<AirQuality[]>(
+    ['city-air-quality', currentCity],
     () => getAirQualityByCity(currentCity)
   );
-
-  useEffect(() => {
-    refetch();
-  }, [currentCity]);
 
   const { data: allLocation } = useQuery(['all-location'], getAllLocation);
 
@@ -103,27 +99,32 @@ const Map = () => {
 
     const geocoder = new kakao.maps.services.Geocoder();
 
+    console.log(airQualityByCity, 'airQualityByCity');
     airQualityByCity.forEach(
-      ({ cityName, fineDustScale, ultraFineDustScale }) => {
-        geocoder.addressSearch(cityName, (result, status) => {
-          if (status === kakao.maps.services.Status.OK) {
-            const latitude = Number(result[0].y);
-            const longitude = Number(result[0].x);
-            const backgroundColor = getDustScaleColor(fineDustScale);
-            const template = `
-                  <div class="dust-info-marker" style="background-color: ${backgroundColor};" >
-                    <span>${fineDustScale}/${ultraFineDustScale}</span>
-                    <p class="city-name">${cityName}</p>
-                  </div>`;
+      async ({ cityName, fineDustScale, ultraFineDustScale }) => {
+        return new Promise(() => {
+          geocoder.addressSearch(cityName, (result, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+              const latitude = Number(result[0].y);
+              const longitude = Number(result[0].x);
+              const backgroundColor = getDustScaleColor(fineDustScale);
+              const template = `
+                    <div class="dust-info-marker" id="${cityName}" style="background-color: ${backgroundColor};" >
+                      <span>${fineDustScale}/${ultraFineDustScale}</span>
+                      <p class="city-name">${cityName}</p>
+                    </div>`;
 
-            const marker = new kakao.maps.CustomOverlay({
-              map,
-              position: new kakao.maps.LatLng(latitude, longitude),
-              content: template,
-            });
+              const marker = new kakao.maps.CustomOverlay({
+                map,
+                position: new kakao.maps.LatLng(latitude, longitude),
+                content: template,
+              });
 
-            dustInfoMarkersByCity.push(marker);
-          }
+              dustInfoMarkersByCity.push(marker);
+            }
+          });
+        }).then(() => {
+          console.log('프로미스 끝.');
         });
       }
     );
@@ -143,11 +144,11 @@ const Map = () => {
 
   useEffect(() => {
     if (!document.querySelectorAll('.dust-info-marker')) return;
-
-    document.querySelectorAll('.dust-info-marker').forEach((value) => {
-      value.removeEventListener('click', tempClick);
-      value.addEventListener('click', tempClick);
-    });
+    console.log('야 위치 바뀌었다.');
+    // document.querySelectorAll('.dust-info-marker').forEach((value) => {
+    //   value.removeEventListener('click', tempClick);
+    //   value.addEventListener('click', tempClick);
+    // });
   }, [currentLocation]);
 
   return (

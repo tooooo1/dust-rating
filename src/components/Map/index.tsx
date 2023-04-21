@@ -1,12 +1,27 @@
-import { useEffect, useRef, useCallback } from 'react';
+import {
+  VStack,
+  Box,
+  Spinner,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { VStack, Box, Spinner } from '@chakra-ui/react';
 import MapButton from './MapButton';
 import { getAirQuality, getAirQualityByCity } from '@/api/airQuality';
 import { getAllLocation } from '@/api/location';
 import { getDustScaleColor } from '@/utils/map';
 import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
 import useMap from '@/hooks/useMap';
+import DustState from '@/components/Dust/DustState';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 
 declare global {
   interface Window {
@@ -26,7 +41,10 @@ const Map = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const dustInfoMarkersBySido: kakao.maps.CustomOverlay[] = [];
   const dustInfoMarkersByCity: kakao.maps.CustomOverlay[] = [];
-
+  const [city, setCity] = useState('동네 정보를 받아오지 못했어요');
+  const [fineDustScale, setFineDustScale] = useState('측정중');
+  const [ultraFineDustScale, setUltraFineDustScale] = useState('측정중');
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     map,
     zoomLevel,
@@ -53,18 +71,23 @@ const Map = () => {
 
   const { data: allLocation } = useQuery(['all-location'], getAllLocation);
 
-  const tempClick = useCallback(() => {
-    alert('clicked');
-  }, []);
-
   useEffect(() => {
     document.querySelectorAll('.dust-info-marker').forEach((city) => {
-      city.addEventListener('click', tempClick);
+      city.addEventListener('click', onOpen);
+      if (city instanceof HTMLElement) {
+        setCity(city.id);
+        city.dataset.finedustscale
+          ? setFineDustScale(city.dataset.finedustscale)
+          : '';
+        city.dataset.ultrafinedustscale
+          ? setUltraFineDustScale(city.dataset.ultrafinedustscale)
+          : '';
+      }
     });
 
     return () => {
       document.querySelectorAll('.dust-info-marker').forEach((city) => {
-        city.removeEventListener('click', tempClick);
+        city.removeEventListener('click', onOpen);
       });
     };
   }, [currentLocation]);
@@ -124,7 +147,7 @@ const Map = () => {
               const longitude = Number(result[0].x);
               const backgroundColor = getDustScaleColor(fineDustScale);
               const template = `
-                    <div class="dust-info-marker" id="${cityName}" style="background-color: ${backgroundColor};" >
+                    <div class="dust-info-marker" id="${cityName}" data-finedustscale="${fineDustScale}" data-ultrafinedustscale="${ultraFineDustScale}" style="background-color: ${backgroundColor};" >
                       <span>${fineDustScale}/${ultraFineDustScale}</span>
                       <p class="city-name">${cityName}</p>
                     </div>`;
@@ -173,6 +196,32 @@ const Map = () => {
       <Box position="absolute" bottom="1.5rem" zIndex={10}>
         <AirPollutionLevels />
       </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{city}</ModalHeader>
+          <ModalCloseButton borderColor={'#ffffff'} />
+          <ModalBody>
+            {FINE_DUST}
+            <DustState dustDensity={fineDustScale} kindOfDust={'fineDust'} />
+            {ULTRA_FINE_DUST}
+            <DustState
+              dustDensity={ultraFineDustScale}
+              kindOfDust={'ultraFineDust'}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={onClose}
+              backgroundColor="#53caf2"
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

@@ -54,7 +54,7 @@ const Map = () => {
     handleZoomIn,
     handleZoomOut,
     handleFullScreenChange,
-  } = useMap({ mapRef: mapRef });
+  } = useMap({ mapRef });
 
   const { data: airQualityBySido, isLoading } = useQuery(
     ['air-quality'],

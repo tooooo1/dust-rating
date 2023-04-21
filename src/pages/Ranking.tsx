@@ -19,12 +19,13 @@ const Ranking = () => {
     ['sido-air-quality', selectedSido],
     () => getSidoAirQuality(selectedSido),
     {
+      refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5,
     }
   );
 
-  const { data: sidoAirQualities, refetch } = useQuery(
-    ['sido-air-qualities'],
+  const { data: sidoAirQualities } = useQuery(
+    ['sido-air-qualities', selectedSortKey],
     getSidoAirQualities,
     {
       select: (data) => {
@@ -39,12 +40,11 @@ const Ranking = () => {
           );
         }
       },
+      refetchOnWindowFocus: false,
+      keepPreviousData: true,
+      staleTime: 1000 * 60 * 5,
     }
   );
-
-  useEffect(() => {
-    refetch();
-  }, [selectedSortKey]);
 
   const handleSortKeyChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { target } = e;

@@ -12,8 +12,11 @@ interface CityRankProps {
 
 const CityRank = ({ sido, isShow }: CityRankProps) => {
   const { data: cityAirQualities } = useQuery<AirQualities[]>(
-    ['city-air-qualities'],
-    () => getCityAirQualities(sido)
+    ['city-air-qualities', sido],
+    () => getCityAirQualities(sido),
+    {
+      refetchOnWindowFocus: false,
+    }
   );
 
   return (

@@ -39,16 +39,18 @@ const SidoRank = ({
       onClick={handleSidoClick}
     >
       <Flex alignItems="center">
-        <Text
-          as="span"
-          width="10%"
-          fontSize={20}
-          fontWeight={600}
-          color="#9dadb6"
-        >
+        <Text as="span" fontSize={20} fontWeight={600} mr={4} color="#9dadb6">
           {rank}
         </Text>
-        <Text as="p" width="26%" fontSize={26} fontWeight={700}>
+        <Text
+          as="p"
+          width="30%"
+          fontSize={26}
+          fontWeight={700}
+          overflow="hidden"
+          whiteSpace="nowrap"
+          textOverflow="ellipsis"
+        >
           {sidoName}
         </Text>
         <DustState

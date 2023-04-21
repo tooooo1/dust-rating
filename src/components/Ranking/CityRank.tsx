@@ -20,58 +20,83 @@ const CityRank = ({ sido, isShow }: CityRankProps) => {
   );
 
   return (
-    <>
+    <Box
+      width="98%"
+      margin="0 auto"
+      bg="#dfdfdf"
+      borderRadius={10}
+      px={4}
+      cursor="pointer"
+    >
       {isShow &&
         cityAirQualities &&
         cityAirQualities.map((city, cityIndex) => (
-          <Box
+          <Flex
             key={city.cityName}
-            width="95%"
-            margin="0 auto"
-            borderRadius={10}
+            justifyContent="space-between"
+            alignItems="center"
             py={3}
-            cursor="pointer"
           >
-            <Flex justifyContent="space-between" alignItems="center">
-              <Text
-                as="span"
-                width="10%"
-                fontSize={18}
-                fontWeight={400}
-                color="#9dadb6"
-              >
-                {cityIndex + 1}
-              </Text>
-              <Text as="p" width="26%" fontSize={24} fontWeight={500}>
-                {city.cityName}
-              </Text>
-              <DustState
-                fineDust={city.fineDustGrade}
-                ultraFineDust={city.ultraFineDustGrade}
-                kindOfDust="avg"
-              />
-              <Flex direction="column" justifyContent="center" flexGrow={1}>
-                <Flex justifyContent="space-between" py={1}>
-                  <Text as="p" fontSize={16} fontWeight={400}>
-                    {FINE_DUST}
-                  </Text>
-                  <Text as="p" fontSize={16} fontWeight={600}>
-                    {city.fineDustScale}
-                  </Text>
-                </Flex>
-                <Flex justifyContent="space-between" py={1}>
-                  <Text as="p" fontSize={16} fontWeight={400}>
-                    {ULTRA_FINE_DUST}
-                  </Text>
-                  <Text as="p" fontSize={16} fontWeight={600}>
-                    {city.ultraFineDustScale}
-                  </Text>
-                </Flex>
+            <Text
+              as="span"
+              fontSize={18}
+              fontWeight={400}
+              mr={4}
+              color="#9dadb6"
+            >
+              {cityIndex + 1}
+            </Text>
+            <Text
+              as="p"
+              width="30%"
+              fontSize={24}
+              fontWeight={500}
+              overflow="hidden"
+              whiteSpace="nowrap"
+              textOverflow="ellipsis"
+            >
+              {city.cityName}
+            </Text>
+            <DustState
+              fineDust={city.fineDustGrade}
+              ultraFineDust={city.ultraFineDustGrade}
+              kindOfDust="avg"
+            />
+            <Flex direction="column" justifyContent="center" flexGrow={1}>
+              <Flex justifyContent="space-between" py={1}>
+                <Text
+                  as="p"
+                  fontSize={16}
+                  fontWeight={400}
+                  overflow="hidden"
+                  whiteSpace="nowrap"
+                  textOverflow="ellipsis"
+                >
+                  {FINE_DUST}
+                </Text>
+                <Text as="p" fontSize={16} fontWeight={600}>
+                  {city.fineDustScale}
+                </Text>
+              </Flex>
+              <Flex justifyContent="space-between" py={1}>
+                <Text
+                  as="p"
+                  fontSize={16}
+                  fontWeight={400}
+                  overflow="hidden"
+                  whiteSpace="nowrap"
+                  textOverflow="ellipsis"
+                >
+                  {ULTRA_FINE_DUST}
+                </Text>
+                <Text as="p" fontSize={16} fontWeight={600}>
+                  {city.ultraFineDustScale}
+                </Text>
               </Flex>
             </Flex>
-          </Box>
+          </Flex>
         ))}
-    </>
+    </Box>
   );
 };
 

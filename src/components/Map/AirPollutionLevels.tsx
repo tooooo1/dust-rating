@@ -11,7 +11,7 @@ export const AirPollutionLevels = () => {
       minHeight="5rem"
       display="flex"
       flexDirection="column"
-      justifyContent="space-evenly"
+      rowGap="1"
       color="#ffffff"
     >
       <Box

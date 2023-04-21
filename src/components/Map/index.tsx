@@ -39,8 +39,8 @@ const MAX_ZOOM_LEVEL = 8;
 
 const Map = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const dustInfoMarkersBySido: kakao.maps.CustomOverlay[] = [];
-  const dustInfoMarkersByCity: kakao.maps.CustomOverlay[] = [];
+  const sidoDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
+  const cityDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
   const [city, setCity] = useState('동네 정보를 받아오지 못했어요');
   const [fineDustScale, setFineDustScale] = useState('측정중');
   const [ultraFineDustScale, setUltraFineDustScale] = useState('측정중');
@@ -117,21 +117,21 @@ const Map = () => {
           content: template,
         });
 
-        dustInfoMarkersBySido.push(marker);
+        sidoDustInfoMarkers.push(marker);
       }
     );
-    dustInfoMarkersBySido.forEach((marker) => {
+    sidoDustInfoMarkers.forEach((marker) => {
       marker.setMap(map);
     });
 
     return () => {
-      if (map && dustInfoMarkersBySido.length) {
-        dustInfoMarkersBySido.forEach((marker) => {
+      if (map && sidoDustInfoMarkers.length) {
+        sidoDustInfoMarkers.forEach((marker) => {
           marker.setMap(null);
         });
       }
     };
-  }, [airQualityBySido, allLocation, dustInfoMarkersBySido]);
+  }, [airQualityBySido, allLocation, sidoDustInfoMarkers]);
 
   useEffect(() => {
     if (!map || !airQualityByCity) return;
@@ -158,7 +158,7 @@ const Map = () => {
                 content: template,
               });
 
-              dustInfoMarkersByCity.push(marker);
+              cityDustInfoMarkers.push(marker);
             }
           });
         });
@@ -166,8 +166,8 @@ const Map = () => {
     );
 
     return () => {
-      if (map && dustInfoMarkersByCity.length) {
-        dustInfoMarkersByCity.forEach((marker) => {
+      if (map && cityDustInfoMarkers.length) {
+        cityDustInfoMarkers.forEach((marker) => {
           marker.setMap(null);
         });
       }

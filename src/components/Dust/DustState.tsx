@@ -65,7 +65,8 @@ export default DustState;
 const DustStateColor = styled.div`
   display: flex;
   justify-content: center;
-  width: 40%;
+  width: 36%;
+  margin-right: 1rem;
   font-size: 1.4rem;
   text-align: center;
   font-weight: 700;

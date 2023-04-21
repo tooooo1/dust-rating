@@ -28,9 +28,7 @@ export const Img = styled.img`
 `;
 
 export const Main = styled.main`
-  @media screen and (min-width: 768px) {
-    width: 37.5rem;
-  }
+  width: 37.5rem;
   @media screen and (max-width: 767px) {
     width: 100%;
   }

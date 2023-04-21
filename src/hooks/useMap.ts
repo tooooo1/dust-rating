@@ -83,7 +83,7 @@ const useMap = ({ mapRef }: useMapProps) => {
 
     const geocoder = new kakao.maps.services.Geocoder();
 
-    kakao.maps.event.addListener(map, 'dragend', function () {
+    kakao.maps.event.addListener(map, 'dragend', () => {
       const coords = map.getCenter();
       const [latitude, longitude] = [coords.getLat(), coords.getLng()];
       setCurrentLocation({ latitude, longitude });

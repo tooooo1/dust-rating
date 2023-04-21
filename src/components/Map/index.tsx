@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { VStack, Box, Spinner } from '@chakra-ui/react';
 import MapButton from './MapButton';
@@ -52,6 +52,22 @@ const Map = () => {
   );
 
   const { data: allLocation } = useQuery(['all-location'], getAllLocation);
+
+  const tempClick = useCallback(() => {
+    alert('clicked');
+  }, []);
+
+  useEffect(() => {
+    document.querySelectorAll('.dust-info-marker').forEach((city) => {
+      city.addEventListener('click', tempClick);
+    });
+
+    return () => {
+      document.querySelectorAll('.dust-info-marker').forEach((city) => {
+        city.removeEventListener('click', tempClick);
+      });
+    };
+  }, [currentLocation]);
 
   useEffect(() => {
     if (!map || !airQualityBySido || !allLocation) return;

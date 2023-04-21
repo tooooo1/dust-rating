@@ -1,4 +1,4 @@
-const DUST_SCALE_COLOR = {
+export const DUST_SCALE_COLOR = {
   DANGER: '#e64746',
   BAD: '#fda60d',
   NORMAL: '#03c73c',

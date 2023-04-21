@@ -1,11 +1,27 @@
+import {
+  VStack,
+  Box,
+  Spinner,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { VStack, Box, Spinner } from '@chakra-ui/react';
 import MapButton from './MapButton';
 import { getAirQuality, getAirQualityByCity } from '@/api/airQuality';
 import { getAllLocation } from '@/api/location';
-import { INIT_LOCATION, CENTER_LOCATION } from '@/utils/constants';
 import { getDustScaleColor } from '@/utils/map';
+import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
+import useMap from '@/hooks/useMap';
+import DustState from '@/components/Dust/DustState';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 
 declare global {
   interface Window {
@@ -19,82 +35,28 @@ interface AirQuality {
   ultraFineDustScale: number;
 }
 
-const INIT_ZOOM_LEVEL = 5;
 const MAX_ZOOM_LEVEL = 8;
 
 const Map = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const dustInfoMarkers: kakao.maps.CustomOverlay[] = [];
-  const [map, setMap] = useState<kakao.maps.Map | null>(null);
-  const [location, setLocation] = useState(INIT_LOCATION);
-  const [zoomLevel, setZoomLevel] = useState(INIT_ZOOM_LEVEL);
-  const [currentCity, setCurrentCity] = useState('서울');
+  const sidoDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
+  const cityDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
+  const [city, setCity] = useState('동네 정보를 받아오지 못했어요');
+  const [fineDustScale, setFineDustScale] = useState('측정중');
+  const [ultraFineDustScale, setUltraFineDustScale] = useState('측정중');
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    map,
+    zoomLevel,
+    currentCity,
+    currentLocation,
+    handleCurrentLocationChange,
+    handleZoomIn,
+    handleZoomOut,
+    handleFullScreenChange,
+  } = useMap({ mapRef });
 
-  useEffect(() => {
-    kakao.maps.load(() => {
-      if (!mapRef.current) return;
-
-      const options = {
-        center: new kakao.maps.LatLng(location.latitude, location.longitude),
-        level: INIT_ZOOM_LEVEL,
-      };
-
-      const kakaoMap = new kakao.maps.Map(mapRef.current, options);
-
-      kakaoMap.setCenter(
-        new kakao.maps.LatLng(location.latitude, location.longitude)
-      );
-
-      navigator.geolocation &&
-        navigator.geolocation.getCurrentPosition((position) => {
-          setLocation(position.coords);
-
-          const { latitude, longitude } = position.coords;
-
-          const currentLocationMarker = new kakao.maps.CustomOverlay({
-            position: new kakao.maps.LatLng(latitude, longitude),
-            content: `<div class="circle-marker" />`,
-          });
-
-          currentLocationMarker.setMap(kakaoMap);
-
-          kakaoMap.setCenter(new kakao.maps.LatLng(latitude, longitude));
-        });
-
-      kakaoMap.setMaxLevel(MAX_ZOOM_LEVEL);
-
-      setMap(kakaoMap);
-    });
-  }, []);
-
-  useEffect(() => {
-    kakao.maps.load(() => {
-      if (!map) return;
-
-      kakao.maps.event.addListener(map, 'zoom_changed', () => {
-        const zoomLevel = map.getLevel();
-        setZoomLevel(zoomLevel);
-      });
-
-      const geocoder = new kakao.maps.services.Geocoder();
-
-      kakao.maps.event.addListener(map, 'dragend', function () {
-        const coords = map.getCenter();
-
-        geocoder.coord2Address(
-          coords.getLng(),
-          coords.getLat(),
-          (result, status) => {
-            if (status === kakao.maps.services.Status.OK) {
-              setCurrentCity(result[0].address.address_name.split(' ')[0]);
-            }
-          }
-        );
-      });
-    });
-  }, [map]);
-
-  const { data: airQuality, isLoading } = useQuery(
+  const { data: airQualityBySido, isLoading } = useQuery(
     ['air-quality'],
     getAirQuality,
     {
@@ -102,24 +64,39 @@ const Map = () => {
     }
   );
 
-  const { data: airQualityByCity, refetch } = useQuery<AirQuality[]>(
-    ['city-air-quality'],
+  const { data: airQualityByCity } = useQuery<AirQuality[]>(
+    ['city-air-quality', currentCity],
     () => getAirQualityByCity(currentCity)
   );
-
-  useEffect(() => {
-    refetch();
-  }, [currentCity]);
 
   const { data: allLocation } = useQuery(['all-location'], getAllLocation);
 
   useEffect(() => {
-    kakao.maps.load(() => {
-      if (!map) return;
-      if (!airQuality) return;
-      if (!allLocation) return;
+    document.querySelectorAll('.dust-info-marker').forEach((city) => {
+      city.addEventListener('click', onOpen);
+      if (city instanceof HTMLElement) {
+        setCity(city.id);
+        city.dataset.finedustscale
+          ? setFineDustScale(city.dataset.finedustscale)
+          : '';
+        city.dataset.ultrafinedustscale
+          ? setUltraFineDustScale(city.dataset.ultrafinedustscale)
+          : '';
+      }
+    });
 
-      airQuality.forEach(({ cityName, fineDustScale, ultraFineDustScale }) => {
+    return () => {
+      document.querySelectorAll('.dust-info-marker').forEach((city) => {
+        city.removeEventListener('click', onOpen);
+      });
+    };
+  }, [currentLocation]);
+
+  useEffect(() => {
+    if (!map || !airQualityBySido || !allLocation) return;
+
+    airQualityBySido.forEach(
+      ({ cityName, fineDustScale, ultraFineDustScale }) => {
         const { latitude, longitude } = allLocation.filter(
           (scale) => scale.cityName === cityName
         )[0];
@@ -140,98 +117,62 @@ const Map = () => {
           content: template,
         });
 
-        dustInfoMarkers.push(marker);
-      });
-
-      dustInfoMarkers.forEach((marker) => {
-        marker.setMap(map);
-      });
+        sidoDustInfoMarkers.push(marker);
+      }
+    );
+    sidoDustInfoMarkers.forEach((marker) => {
+      marker.setMap(map);
     });
 
     return () => {
-      if (map && dustInfoMarkers.length) {
-        dustInfoMarkers.forEach((marker) => {
+      if (map && sidoDustInfoMarkers.length) {
+        sidoDustInfoMarkers.forEach((marker) => {
           marker.setMap(null);
         });
       }
     };
-  }, [airQuality, allLocation, dustInfoMarkers]);
+  }, [airQualityBySido, allLocation, sidoDustInfoMarkers]);
 
   useEffect(() => {
-    kakao.maps.load(() => {
-      if (!map) return;
-      if (!airQualityByCity) return;
+    if (!map || !airQualityByCity) return;
 
-      const geocoder = new kakao.maps.services.Geocoder();
+    const geocoder = new kakao.maps.services.Geocoder();
 
-      airQualityByCity.forEach(
-        ({ cityName, fineDustScale, ultraFineDustScale }) => {
+    airQualityByCity.forEach(
+      async ({ cityName, fineDustScale, ultraFineDustScale }) => {
+        return new Promise(() => {
           geocoder.addressSearch(cityName, (result, status) => {
             if (status === kakao.maps.services.Status.OK) {
               const latitude = Number(result[0].y);
               const longitude = Number(result[0].x);
-
               const backgroundColor = getDustScaleColor(fineDustScale);
               const template = `
-              <div class="dust-info-marker" style="background-color: ${backgroundColor};">
-                <span>${fineDustScale}/${ultraFineDustScale}</span>
-                <p class="city-name">${cityName}</p>
-              </div>`;
+                    <div class="dust-info-marker" id="${cityName}" data-finedustscale="${fineDustScale}" data-ultrafinedustscale="${ultraFineDustScale}" style="background-color: ${backgroundColor};" >
+                      <span>${fineDustScale}/${ultraFineDustScale}</span>
+                      <p class="city-name">${cityName}</p>
+                    </div>`;
 
-              new kakao.maps.CustomOverlay({
+              const marker = new kakao.maps.CustomOverlay({
                 map,
                 position: new kakao.maps.LatLng(latitude, longitude),
                 content: template,
               });
+
+              cityDustInfoMarkers.push(marker);
             }
           });
-        }
-      );
-    });
+        });
+      }
+    );
+
+    return () => {
+      if (map && cityDustInfoMarkers.length) {
+        cityDustInfoMarkers.forEach((marker) => {
+          marker.setMap(null);
+        });
+      }
+    };
   }, [airQualityByCity]);
-
-  const handleCurrentLocationChange = () => {
-    kakao.maps.load(() => {
-      if (!map) return;
-
-      map.setLevel(INIT_ZOOM_LEVEL, { animate: true });
-      map.setCenter(
-        new kakao.maps.LatLng(location.latitude, location.longitude)
-      );
-    });
-  };
-
-  const handleZoomIn = () => {
-    kakao.maps.load(() => {
-      if (!map) return;
-
-      const zoomLevel = map.getLevel();
-      map.setLevel(zoomLevel - 1, { animate: true });
-    });
-  };
-
-  const handleZoomOut = () => {
-    kakao.maps.load(() => {
-      if (!map) return;
-
-      const zoomLevel = map.getLevel();
-      map.setLevel(zoomLevel + 1, { animate: true });
-    });
-  };
-
-  const handleFullScreenChange = () => {
-    kakao.maps.load(() => {
-      if (!map) return;
-
-      map.setLevel(MAX_ZOOM_LEVEL, { animate: true });
-      map.setCenter(
-        new kakao.maps.LatLng(
-          CENTER_LOCATION.latitude,
-          CENTER_LOCATION.longitude
-        )
-      );
-    });
-  };
 
   return (
     <Box position="relative" width="100%" height="100%">
@@ -252,6 +193,35 @@ const Map = () => {
         <MapButton type="full-screen" onClick={handleFullScreenChange} />
         {zoomLevel === MAX_ZOOM_LEVEL && isLoading && <Spinner />}
       </VStack>
+      <Box position="absolute" bottom="1.5rem" zIndex={10}>
+        <AirPollutionLevels />
+      </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{city}</ModalHeader>
+          <ModalCloseButton borderColor={'#ffffff'} />
+          <ModalBody>
+            {FINE_DUST}
+            <DustState dustDensity={fineDustScale} kindOfDust={'fineDust'} />
+            {ULTRA_FINE_DUST}
+            <DustState
+              dustDensity={ultraFineDustScale}
+              kindOfDust={'ultraFineDust'}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={onClose}
+              backgroundColor="#53caf2"
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

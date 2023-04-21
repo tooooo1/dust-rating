@@ -2,18 +2,18 @@ import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Flex, Text, Select, Button } from '@chakra-ui/react';
 import { HiArrowRight } from 'react-icons/hi';
-import { FINE_DUST, SIDO_GROUP } from '@/utils/constants';
+import { FINE_DUST, SIDO_GROUP, ROUTE } from '@/utils/constants';
 
 const Choice = () => {
   const navigate = useNavigate();
-  const [place, setPlace] = useState('서울');
+  const [place, setPlace] = useState(SIDO_GROUP[0].sidoName);
 
   const handleResultPageNavigate = () => {
-    navigate('/result', { state: place });
+    navigate(ROUTE.RANKING, { state: place });
   };
 
   const handleMapPageNavigate = () => {
-    navigate('/dustmap');
+    navigate(ROUTE.DUST_MAP);
   };
 
   const handlePlaceChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -50,9 +50,9 @@ const Choice = () => {
           onChange={handlePlaceChange}
           value={place}
         >
-          {SIDO_GROUP.map((city) => (
-            <option key={city.sidoName} value={city.sidoName}>
-              {city.sidoName}
+          {SIDO_GROUP.map((sido) => (
+            <option key={sido.sidoName} value={sido.sidoName}>
+              {sido.sidoName}
             </option>
           ))}
         </Select>

@@ -1,6 +1,6 @@
 export const ROUTE = {
   HOME: '/',
-  RESULT: '/result',
+  RANKING: '/ranking',
   LOCAL_DETAIL: '/localdetail',
   DUST_MAP: '/dustmap',
 };

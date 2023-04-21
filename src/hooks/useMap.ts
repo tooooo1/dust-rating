@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { INIT_LOCATION, CENTER_LOCATION } from '@/utils/constants';
 import { RefObject } from 'react';
-import { useDisclosure } from '@chakra-ui/react';
 
 const INIT_ZOOM_LEVEL = 5;
 const MAX_ZOOM_LEVEL = 8;

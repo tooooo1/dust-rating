@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { DustState } from '@/components/Dust';
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getCityAirQualities } from '@/api/airQuality';
-import { AirQualities } from '@/type';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import type { CityAirQuality } from '@/type';
 import styled from '@emotion/styled';
 
 interface CityRankProps {
@@ -11,7 +11,7 @@ interface CityRankProps {
 }
 
 const CityRank = ({ sido, isShow }: CityRankProps) => {
-  const { data: cityAirQualities } = useQuery<AirQualities[]>(
+  const { data: cityAirQualities } = useQuery<CityAirQuality[]>(
     ['city-air-qualities', sido],
     () => getCityAirQualities(sido),
     {

@@ -101,23 +101,6 @@ const useMap = ({ mapRef }: useMapProps) => {
     });
   }, [map]);
 
-  const { isOpen } = useDisclosure();
-  const tempClick = () => {
-    isOpen != isOpen;
-  };
-
-  useEffect(() => {
-    document.querySelectorAll('.dust-info-marker').forEach((value) => {
-      value.addEventListener('click', tempClick);
-    });
-
-    return () => {
-      document.querySelectorAll('.dust-info-marker').forEach((value) => {
-        value.removeEventListener('click', tempClick);
-      });
-    };
-  }, [currentLocation]);
-
   const handleCurrentLocationChange = () => {
     if (!map) return;
 
@@ -149,7 +132,6 @@ const useMap = ({ mapRef }: useMapProps) => {
   };
 
   return {
-    isOpen,
     map,
     zoomLevel,
     currentCity,

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import {
   VStack,
   Box,
@@ -12,27 +13,21 @@ import {
   Button,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import MapButton from './MapButton';
-import { getSidoAirQualities, getCityAirQualities } from '@/api/airQuality';
-import { getAllLocation } from '@/api/location';
-import { getDustScaleColor } from '@/utils/map';
 import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
-import useMap from '@/hooks/useMap';
 import DustState from '@/components/Dust/DustState';
+import { getAllLocation } from '@/api/location';
+import { getSidoAirQualities, getCityAirQualities } from '@/api/airQuality';
+import { getDustScaleColor } from '@/utils/map';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import useMap from '@/hooks/useMap';
+import type { CityAirQuality } from '@/type';
 
 declare global {
   interface Window {
     kakao: any;
   }
-}
-
-interface AirQuality {
-  cityName: string;
-  fineDustScale: number;
-  ultraFineDustScale: number;
 }
 
 const MAX_ZOOM_LEVEL = 8;
@@ -64,9 +59,9 @@ const Map = () => {
     }
   );
 
-  const { data: airQualityByCity } = useQuery<AirQuality[]>(
+  const { data: airQualityByCity } = useQuery<CityAirQuality[]>(
     ['city-air-quality', currentCity],
-    () => getAirQualityByCity(currentCity)
+    () => getCityAirQualities(currentCity)
   );
 
   const { data: allLocation } = useQuery(['all-location'], getAllLocation);
@@ -96,7 +91,7 @@ const Map = () => {
     if (!map || !airQualityBySido || !allLocation) return;
 
     airQualityBySido.forEach(
-      ({ cityName, fineDustScale, ultraFineDustScale }) => {
+      ({ sidoName, fineDustScale, ultraFineDustScale }) => {
         const { latitude, longitude } = allLocation.filter(
           (scale) => scale.sidoName === sidoName
         )[0];
@@ -147,10 +142,10 @@ const Map = () => {
               const longitude = Number(result[0].x);
               const backgroundColor = getDustScaleColor(fineDustScale);
               const template = `
-                    <div class="dust-info-marker" id="${cityName}" data-finedustscale="${fineDustScale}" data-ultrafinedustscale="${ultraFineDustScale}" style="background-color: ${backgroundColor};" >
-                      <span>${fineDustScale}/${ultraFineDustScale}</span>
-                      <p class="city-name">${cityName}</p>
-                    </div>`;
+                <div class="dust-info-marker" id="${cityName}" data-finedustscale="${fineDustScale}" data-ultrafinedustscale="${ultraFineDustScale}" style="background-color: ${backgroundColor};" >
+                  <span>${fineDustScale}/${ultraFineDustScale}</span>
+                  <p class="city-name">${cityName}</p>
+                </div>`;
 
               const marker = new kakao.maps.CustomOverlay({
                 map,
@@ -203,10 +198,11 @@ const Map = () => {
           <ModalCloseButton borderColor={'#ffffff'} />
           <ModalBody>
             {FINE_DUST}
-            <DustState dustDensity={fineDustScale} kindOfDust={'fineDust'} />
+            <DustState fineDust={0} ultraFineDust={0} kindOfDust={'fineDust'} />
             {ULTRA_FINE_DUST}
             <DustState
-              dustDensity={ultraFineDustScale}
+              fineDust={0}
+              ultraFineDust={0}
               kindOfDust={'ultraFineDust'}
             />
           </ModalBody>

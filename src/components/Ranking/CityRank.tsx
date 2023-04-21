@@ -23,11 +23,11 @@ const CityRank = ({ sido, isShow }: CityRankProps) => {
     <>
       {isShow &&
         cityAirQualities &&
-        cityAirQualities.map((city, idx) => (
+        cityAirQualities.map((city, cityIndex) => (
           <RatingWrapper key={city.cityName}>
             <Top>
               <RatingDetails>
-                <Rank>{idx + 1}</Rank>
+                <Rank>{cityIndex + 1}</Rank>
                 <RankLocation>{city.cityName}</RankLocation>
                 <DustStateWrapper>
                   <DustState

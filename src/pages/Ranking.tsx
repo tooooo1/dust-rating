@@ -90,10 +90,10 @@ const Ranking = () => {
               {ULTRA_FINE_DUST}
             </option>
           </Select>
-          {sidoAirQualities?.map((sido, idx) => (
+          {sidoAirQualities?.map((sido, sidoIndex) => (
             <SidoRank
               key={sido.sidoName}
-              rank={idx + 1}
+              rank={sidoIndex + 1}
               sidoName={sido.sidoName}
               fineDustScale={sido.fineDustScale}
               ultraFineDustScale={sido.ultraFineDustScale}

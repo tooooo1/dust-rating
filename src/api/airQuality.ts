@@ -19,9 +19,9 @@ interface AirQuality {
 export const getAirQuality = async () => {
   try {
     return await Promise.all(
-      SIDO_GROUP.map(async (city) => {
+      SIDO_GROUP.map(async (sido) => {
         const response = await axios.get(
-          `${VITE_AIR_QUALITY_URL}?sidoName=${city.cityName}&pageNo=1&numOfRows=10&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
+          `${VITE_AIR_QUALITY_URL}?sidoName=${sido.cityName}&pageNo=1&numOfRows=10&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.0`
         );
 
         if (response.status !== 200) {
@@ -33,7 +33,7 @@ export const getAirQuality = async () => {
         )[0];
 
         return {
-          cityName: city.cityName,
+          cityName: sido.cityName,
           fineDustScale: Number(airQuality.pm10Value),
           ultraFineDustScale: Number(airQuality.pm25Value),
         };

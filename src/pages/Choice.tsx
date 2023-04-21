@@ -6,7 +6,7 @@ import { FINE_DUST, SIDO_GROUP } from '@/utils/constants';
 
 const Choice = () => {
   const navigate = useNavigate();
-  const [place, setPlace] = useState(SIDO_GROUP[0].sidoName);
+  const [place, setPlace] = useState('서울');
 
   const handleResultPageNavigate = () => {
     navigate('/result', { state: place });

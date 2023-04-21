@@ -16,18 +16,6 @@
   font-weight: 600;
 }
 
-#root > div {
-  @media all and (min-width: 1024px) {
-    width: 600px;
-  }
-  @media all and (min-width: 768px) and (max-width: 1023px) {
-    width: 600px;
-  }
-  @media all and (max-width: 767px) {
-    width: 100%;
-  }
-}
-
 .circle-marker {
   width: 1.2rem;
   height: 1.2rem;

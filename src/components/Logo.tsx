@@ -10,9 +10,9 @@ const Logo = () => (
       width={50}
       height={50}
     />
-    <main>
+    <Main>
       <Outlet />
-    </main>
+    </Main>
   </>
 );
 
@@ -25,4 +25,13 @@ export const Img = styled.img`
   z-index: 1;
   border-radius: 100px;
   cursor: pointer;
+`;
+
+export const Main = styled.main`
+  @media screen and (min-width: 768px) {
+    width: 37.5rem;
+  }
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;

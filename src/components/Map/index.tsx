@@ -99,7 +99,6 @@ const Map = () => {
 
     const geocoder = new kakao.maps.services.Geocoder();
 
-    console.log(airQualityByCity, 'airQualityByCity');
     airQualityByCity.forEach(
       async ({ cityName, fineDustScale, ultraFineDustScale }) => {
         return new Promise(() => {
@@ -123,8 +122,6 @@ const Map = () => {
               dustInfoMarkersByCity.push(marker);
             }
           });
-        }).then(() => {
-          console.log('프로미스 끝.');
         });
       }
     );
@@ -137,19 +134,6 @@ const Map = () => {
       }
     };
   }, [airQualityByCity]);
-
-  const tempClick = () => {
-    alert('clicked');
-  };
-
-  useEffect(() => {
-    if (!document.querySelectorAll('.dust-info-marker')) return;
-    console.log('야 위치 바뀌었다.');
-    // document.querySelectorAll('.dust-info-marker').forEach((value) => {
-    //   value.removeEventListener('click', tempClick);
-    //   value.addEventListener('click', tempClick);
-    // });
-  }, [currentLocation]);
 
   return (
     <Box position="relative" width="100%" height="100%">

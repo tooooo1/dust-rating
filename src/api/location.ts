@@ -8,13 +8,13 @@ export const getAllLocation = async () => {
     const result = await Promise.all(
       SIDO_GROUP.map((city) =>
         axios
-          .get(VITE_KAKAO_MAP_URL + encodeURIComponent(city.cityName), {
+          .get(VITE_KAKAO_MAP_URL + encodeURIComponent(city.sidoName), {
             headers: {
               Authorization: `KakaoAK ${VITE_KAKAO_API_KEY}`,
             },
           })
           .then((res) => ({
-            cityName: city.cityName,
+            cityName: city.sidoName,
             latitude: Number(res.data.documents[0].y),
             longitude: Number(res.data.documents[0].x),
           }))

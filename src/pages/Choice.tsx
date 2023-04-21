@@ -6,7 +6,7 @@ import { FINE_DUST, SIDO_GROUP } from '@/utils/constants';
 
 const Choice = () => {
   const navigate = useNavigate();
-  const [place, setPlace] = useState(SIDO_GROUP[0].cityName);
+  const [place, setPlace] = useState(SIDO_GROUP[0].sidoName);
 
   const handleResultPageNavigate = () => {
     navigate('/result', { state: place });
@@ -51,8 +51,8 @@ const Choice = () => {
           value={place}
         >
           {SIDO_GROUP.map((city) => (
-            <option key={city.cityName} value={city.cityName}>
-              {city.cityName}
+            <option key={city.sidoName} value={city.sidoName}>
+              {city.sidoName}
             </option>
           ))}
         </Select>

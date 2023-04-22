@@ -1,5 +1,5 @@
+import { Box, Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import { Box } from '@chakra-ui/react';
 import {
   BsEmojiHeartEyes,
   BsEmojiNeutral,
@@ -52,14 +52,14 @@ const DustState = ({ fineDust, ultraFineDust, kindOfDust }: DustStateProps) => {
       {kindOfDust === 'avg' ? (
         ''
       ) : (
-        <Box fontSize={`1.5vh`}>{`${`${
+        <Box fontSize={3}>{`${
           kindOfDust === DUST_KIND.FINE_DUST ? fineDust : ultraFineDust
-        }㎍/㎥`}`}</Box>
+        }㎍/㎥`}</Box>
       )}
-      <Box display={'flex'} flexDirection={'column'} justifyContent={'center'}>
+      <Flex flexDirection="column" justifyContent="center">
         {DUST_ICON[discriminateDust()]}
         {DUST_RATE[discriminateDust()]}
-      </Box>
+      </Flex>
     </DustStateColor>
   );
 };
@@ -67,12 +67,12 @@ const DustState = ({ fineDust, ultraFineDust, kindOfDust }: DustStateProps) => {
 export default DustState;
 
 const DustStateColor = styled.div`
-  font-size: 5.5vw;
   display: flex;
   justify-content: center;
+  width: 36%;
+  margin-right: 1rem;
+  font-size: 1.4rem;
+  text-align: center;
   font-weight: 700;
   color: ${(props) => props.color};
-  @media only screen and (min-width: 768px) {
-    font-size: 25px;
-  }
 `;

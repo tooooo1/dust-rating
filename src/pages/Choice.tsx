@@ -22,6 +22,7 @@ const Choice = () => {
 
   return (
     <Flex
+      height="100vh"
       direction="column"
       justify="center"
       align="center"

@@ -37,8 +37,8 @@ const Map = () => {
   const sidoDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
   const cityDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
   const [city, setCity] = useState('동네 정보를 받아오지 못했어요');
-  const [fineDustScale, setFineDustScale] = useState('측정중');
-  const [ultraFineDustScale, setUltraFineDustScale] = useState('측정중');
+  const [fineDustScale, setFineDustScale] = useState(0);
+  const [ultraFineDustScale, setUltraFineDustScale] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     map,
@@ -72,10 +72,10 @@ const Map = () => {
       if (city instanceof HTMLElement) {
         setCity(city.id);
         city.dataset.finedustscale
-          ? setFineDustScale(city.dataset.finedustscale)
+          ? setFineDustScale(+city.dataset.finedustscale)
           : '';
         city.dataset.ultrafinedustscale
-          ? setUltraFineDustScale(city.dataset.ultrafinedustscale)
+          ? setUltraFineDustScale(+city.dataset.ultrafinedustscale)
           : '';
       }
     });
@@ -198,11 +198,15 @@ const Map = () => {
           <ModalCloseButton borderColor={'#ffffff'} />
           <ModalBody>
             {FINE_DUST}
-            <DustState fineDust={0} ultraFineDust={0} kindOfDust={'fineDust'} />
+            <DustState
+              fineDust={fineDustScale}
+              ultraFineDust={ultraFineDustScale}
+              kindOfDust={'fineDust'}
+            />
             {ULTRA_FINE_DUST}
             <DustState
-              fineDust={0}
-              ultraFineDust={0}
+              fineDust={fineDustScale}
+              ultraFineDust={ultraFineDustScale}
               kindOfDust={'ultraFineDust'}
             />
           </ModalBody>

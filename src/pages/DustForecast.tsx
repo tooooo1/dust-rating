@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Center, Box } from '@chakra-ui/react';
 import { DustState } from '@/components/Dust';
-import { getDustForcast } from '@/api/dustForecast';
+import { getDustForcast } from '@/apis/dustForecast';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import type { CityAirQuality } from '@/type';
 

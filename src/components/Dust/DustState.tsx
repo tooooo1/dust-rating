@@ -32,7 +32,7 @@ const DUST_KIND = {
 };
 
 const DustState = ({ fineDust, ultraFineDust, kindOfDust }: DustStateProps) => {
-  const dustDensityNumber = +fineDust;
+  const dustDensityNumber = (fineDust + ultraFineDust) / 2;
   if (isNaN(dustDensityNumber))
     return <DustStateColor style={{ color: '#666666' }}>측정중</DustStateColor>;
 
@@ -40,21 +40,25 @@ const DustState = ({ fineDust, ultraFineDust, kindOfDust }: DustStateProps) => {
     if (kindOfDust === DUST_KIND.AVG) {
       return AVERAGE_DUST_DENSITY.findIndex((v) => dustDensityNumber < +v);
     } else if (kindOfDust === DUST_KIND.FINE_DUST) {
-      return FINE_DUST_DENSITY.findIndex((v) => dustDensityNumber < +v);
+      return FINE_DUST_DENSITY.findIndex((v) => fineDust < +v);
     } else if (kindOfDust === DUST_KIND.ULTRA_FINE_DUST) {
-      return ULTRA_FINE_DUST_DENSITY.findIndex((v) => dustDensityNumber < +v);
+      return ULTRA_FINE_DUST_DENSITY.findIndex((v) => ultraFineDust < +v);
     }
     return 0;
   };
 
   return (
     <DustStateColor color={DUST_RATE_COLOR[discriminateDust()]}>
-      <Box fontSize={3}>{`${
-        kindOfDust === 'avg' ? `` : `${fineDust}㎍/㎥`
-      }`}</Box>
-      <Flex direction="column" alignItems="center">
-        <Box>{DUST_ICON[discriminateDust()]}</Box>
-        <Box>{DUST_RATE[discriminateDust()]}</Box>
+      {kindOfDust === 'avg' ? (
+        ''
+      ) : (
+        <Box fontSize={3}>{`${
+          kindOfDust === DUST_KIND.FINE_DUST ? fineDust : ultraFineDust
+        }㎍/㎥`}</Box>
+      )}
+      <Flex flexDirection="column" justifyContent="center">
+        {DUST_ICON[discriminateDust()]}
+        {DUST_RATE[discriminateDust()]}
       </Flex>
     </DustStateColor>
   );

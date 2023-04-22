@@ -20,7 +20,7 @@ const RankItem = ({
   const navigate = useNavigate();
 
   const handlePageNavigate = () => {
-    navigate(ROUTE.LOCAL_DETAIL, {
+    navigate(ROUTE.DUST_FORECAST, {
       state: {
         cityName,
         fineDustScale,

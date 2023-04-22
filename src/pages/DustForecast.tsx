@@ -6,7 +6,7 @@ import { getDustForcast } from '@/api/dustForecast';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import type { CityAirQuality } from '@/type';
 
-const LocalDetail = () => {
+const DustForecast = () => {
   const location = useLocation();
   const {
     cityName,
@@ -95,4 +95,4 @@ const LocalDetail = () => {
   );
 };
 
-export default LocalDetail;
+export default DustForecast;

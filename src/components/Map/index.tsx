@@ -67,29 +67,6 @@ const Map = () => {
   const { data: allLocation } = useQuery(['all-location'], getAllLocation);
 
   useEffect(() => {
-    document.querySelectorAll('.dust-info-marker').forEach((city) => {
-      city.addEventListener('click', () => {
-        setCity(city.id);
-        if (city instanceof HTMLElement) {
-          city.dataset.finedustscale
-            ? setFineDustScale(+city.dataset.finedustscale)
-            : '';
-          city.dataset.ultrafinedustscale
-            ? setUltraFineDustScale(+city.dataset.ultrafinedustscale)
-            : '';
-        }
-        onOpen();
-      });
-    });
-
-    return () => {
-      document.querySelectorAll('.dust-info-marker').forEach((city) => {
-        city.removeEventListener('click', onOpen);
-      });
-    };
-  }, [currentLocation, zoomLevel]);
-
-  useEffect(() => {
     if (!map || !airQualityBySido || !allLocation) return;
 
     airQualityBySido.forEach(
@@ -170,6 +147,29 @@ const Map = () => {
       }
     };
   }, [airQualityByCity]);
+
+  useEffect(() => {
+    document.querySelectorAll('.dust-info-marker').forEach((city) => {
+      city.addEventListener('click', () => {
+        setCity(city.id);
+        if (city instanceof HTMLElement) {
+          city.dataset.finedustscale
+            ? setFineDustScale(+city.dataset.finedustscale)
+            : '';
+          city.dataset.ultrafinedustscale
+            ? setUltraFineDustScale(+city.dataset.ultrafinedustscale)
+            : '';
+        }
+        onOpen();
+      });
+    });
+
+    return () => {
+      document.querySelectorAll('.dust-info-marker').forEach((city) => {
+        city.removeEventListener('click', onOpen);
+      });
+    };
+  }, [currentLocation, zoomLevel]);
 
   return (
     <Box position="relative" width="100%" height="100%">

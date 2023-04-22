@@ -53,8 +53,8 @@ const DustState = ({ fineDust, ultraFineDust, kindOfDust }: DustStateProps) => {
         kindOfDust === 'avg' ? `` : `${fineDust}㎍/㎥`
       }`}</Box>
       <Flex direction="column" alignItems="center">
-        <div>{DUST_ICON[discriminateDust()]}</div>
-        <div>{DUST_RATE[discriminateDust()]}</div>
+        <Box>{DUST_ICON[discriminateDust()]}</Box>
+        <Box>{DUST_RATE[discriminateDust()]}</Box>
       </Flex>
     </DustStateColor>
   );

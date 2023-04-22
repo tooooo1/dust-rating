@@ -1,28 +1,32 @@
 import { Outlet } from 'react-router-dom';
+import { Image } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 const Logo = () => (
   <>
-    <Img
-      onClick={() => window.open('https://tooo1.tistory.com')}
+    <Image
       src="images/il.jpg"
       alt="il"
+      position="absolute"
+      top={4}
+      left={4}
       width={50}
       height={50}
+      borderRadius="50%"
+      cursor="pointer"
+      onClick={() => window.open('https://tooo1.tistory.com')}
     />
-    <main>
+    <Main>
       <Outlet />
-    </main>
+    </Main>
   </>
 );
 
 export default Logo;
 
-export const Img = styled.img`
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 1;
-  border-radius: 100px;
-  cursor: pointer;
+export const Main = styled.main`
+  width: 37.5rem;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;

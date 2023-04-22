@@ -12,7 +12,7 @@ const DustMapPage = () => {
 export default DustMapPage;
 
 const MapContainer = styled.div`
-  max-width: 520px;
+  max-width: 37.5rem;
   width: 100vw;
   height: 100vh;
 `;

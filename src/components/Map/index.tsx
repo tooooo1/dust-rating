@@ -68,16 +68,18 @@ const Map = () => {
 
   useEffect(() => {
     document.querySelectorAll('.dust-info-marker').forEach((city) => {
-      city.addEventListener('click', onOpen);
-      if (city instanceof HTMLElement) {
+      city.addEventListener('click', () => {
         setCity(city.id);
-        city.dataset.finedustscale
-          ? setFineDustScale(+city.dataset.finedustscale)
-          : '';
-        city.dataset.ultrafinedustscale
-          ? setUltraFineDustScale(+city.dataset.ultrafinedustscale)
-          : '';
-      }
+        if (city instanceof HTMLElement) {
+          city.dataset.finedustscale
+            ? setFineDustScale(+city.dataset.finedustscale)
+            : '';
+          city.dataset.ultrafinedustscale
+            ? setUltraFineDustScale(+city.dataset.ultrafinedustscale)
+            : '';
+        }
+        onOpen();
+      });
     });
 
     return () => {

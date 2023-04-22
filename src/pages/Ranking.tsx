@@ -6,7 +6,7 @@ import { DustState } from '@/components/Dust';
 import ProgressBar from '@/components/ProgressBar';
 import SidoRank from '@/components/Ranking/SidoRank';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
-import { getSidoAirQualities, getSidoAirQuality } from '@/api/airQuality';
+import { getSidoAirQualities, getSidoAirQuality } from '@/apis/airQuality';
 
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 

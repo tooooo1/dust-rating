@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, RefObject } from 'react';
 import { INIT_LOCATION, CENTER_LOCATION, SIDO_GROUP } from '@/utils/constants';
-import { RefObject } from 'react';
 
 const INIT_ZOOM_LEVEL = 5;
 const MAX_ZOOM_LEVEL = 8;
@@ -10,7 +9,7 @@ interface useMapProps {
 }
 
 const useMap = ({ mapRef }: useMapProps) => {
-  const [myDeviceLocation, setMyDeviceLocation] = useState(INIT_LOCATION); // 내 디바이스 위치
+  const [myDeviceLocation, setMyDeviceLocation] = useState(INIT_LOCATION);
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [zoomLevel, setZoomLevel] = useState(INIT_ZOOM_LEVEL);
   const [currentCity, setCurrentCity] = useState(SIDO_GROUP[0].sidoName); // 서울

@@ -10,7 +10,7 @@ interface useMapProps {
 }
 
 const useMap = ({ mapRef }: useMapProps) => {
-  const [location, setLocation] = useState(INIT_LOCATION); // 내 디바이스 위치
+  const [myDeviceLocation, setMyDeviceLocation] = useState(INIT_LOCATION); // 내 디바이스 위치
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [zoomLevel, setZoomLevel] = useState(INIT_ZOOM_LEVEL);
   const [currentCity, setCurrentCity] = useState(SIDO_GROUP[0].sidoName); // 서울
@@ -20,6 +20,22 @@ const useMap = ({ mapRef }: useMapProps) => {
     kakao.maps.load(() => {
       const success = (pos: GeolocationPosition) => {
         if (!mapRef.current) return;
+
+        setMyDeviceLocation({
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+        });
+
+        const geocoder = new kakao.maps.services.Geocoder();
+        geocoder.coord2Address(
+          pos.coords.longitude,
+          pos.coords.latitude,
+          (result, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+              setCurrentCity(result[0].address.address_name.split(' ')[0]);
+            }
+          }
+        );
 
         const options = {
           center: new kakao.maps.LatLng(
@@ -104,7 +120,12 @@ const useMap = ({ mapRef }: useMapProps) => {
     if (!map) return;
 
     map.setLevel(INIT_ZOOM_LEVEL, { animate: true });
-    map.setCenter(new kakao.maps.LatLng(location.latitude, location.longitude));
+    map.setCenter(
+      new kakao.maps.LatLng(
+        myDeviceLocation.latitude,
+        myDeviceLocation.longitude
+      )
+    );
   };
 
   const handleZoomIn = () => {

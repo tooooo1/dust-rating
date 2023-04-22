@@ -50,7 +50,11 @@ const DustState = ({ fineDust, ultraFineDust, kindOfDust }: DustStateProps) => {
   return (
     <DustStateColor color={DUST_RATE_COLOR[discriminateDust()]}>
       <Box fontSize={`1.5vh`}>{`${
-        kindOfDust === 'avg' ? `` : `${fineDust}㎍/㎥`
+        kindOfDust === 'avg'
+          ? ``
+          : `${
+              kindOfDust === DUST_KIND.FINE_DUST ? fineDust : ultraFineDust
+            }㎍/㎥`
       }`}</Box>
       <Box display={'flex'} flexDirection={'column'} justifyContent={'center'}>
         {DUST_ICON[discriminateDust()]}

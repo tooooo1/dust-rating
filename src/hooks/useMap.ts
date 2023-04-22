@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { INIT_LOCATION, CENTER_LOCATION } from '@/utils/constants';
+import { INIT_LOCATION, CENTER_LOCATION, SIDO_GROUP } from '@/utils/constants';
 import { RefObject } from 'react';
 
 const INIT_ZOOM_LEVEL = 5;
@@ -13,7 +13,7 @@ const useMap = ({ mapRef }: useMapProps) => {
   const [location, setLocation] = useState(INIT_LOCATION); // 내 디바이스 위치
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [zoomLevel, setZoomLevel] = useState(INIT_ZOOM_LEVEL);
-  const [currentCity, setCurrentCity] = useState('서울');
+  const [currentCity, setCurrentCity] = useState(SIDO_GROUP[0].sidoName); // 서울
   const [currentLocation, setCurrentLocation] = useState(INIT_LOCATION); // 지도를 움직이면 변화하는 위치
 
   useEffect(() => {

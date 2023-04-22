@@ -6,7 +6,12 @@ import {
 } from 'react-router-dom';
 
 import Logo from '@/components/Logo';
-import { ChoicePage, RankingPage, LocalDetailPage, DustMapPage } from '@/pages';
+import {
+  ChoicePage,
+  RankingPage,
+  DustForecastPage,
+  DustMapPage,
+} from '@/pages';
 import { ROUTE } from '@/utils/constants';
 
 const router = createBrowserRouter(
@@ -14,7 +19,7 @@ const router = createBrowserRouter(
     <Route path={ROUTE.HOME} element={<Logo />}>
       <Route index element={<ChoicePage />} />
       <Route path={ROUTE.RANKING} element={<RankingPage />} />
-      <Route path={ROUTE.LOCAL_DETAIL} element={<LocalDetailPage />} />
+      <Route path={ROUTE.DUST_FORECAST} element={<DustForecastPage />} />
       <Route path={ROUTE.DUST_MAP} element={<DustMapPage />} />
     </Route>
   )

@@ -1,6 +1,6 @@
 export const ROUTE = {
   HOME: '/',
   RANKING: '/ranking',
-  LOCAL_DETAIL: '/localdetail',
-  DUST_MAP: '/dustmap',
+  DUST_FORECAST: '/dust-forecast',
+  DUST_MAP: '/dust-map',
 };

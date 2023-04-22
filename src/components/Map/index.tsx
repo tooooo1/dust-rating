@@ -87,7 +87,7 @@ const Map = () => {
         city.removeEventListener('click', onOpen);
       });
     };
-  }, [currentLocation]);
+  }, [currentLocation, zoomLevel]);
 
   useEffect(() => {
     if (!map || !airQualityBySido || !allLocation) return;

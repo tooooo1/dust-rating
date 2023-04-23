@@ -14,12 +14,16 @@ import styled from '@emotion/styled';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
+const options = {
+  responsive: false,
+};
+
 interface DustHistory {
   dataTime: string;
-  fineDustScale: string;
-  fineDustGrade: string;
-  ultraFineDustScale: string;
-  ultraFineDustGrade: string;
+  fineDustScale: number;
+  fineDustGrade: DustGradeType;
+  ultraFineDustScale: number;
+  ultraFineDustGrade: DustGradeType;
 }
 
 interface DustChartProps {
@@ -27,30 +31,24 @@ interface DustChartProps {
 }
 
 const DustChart = ({ history }: DustChartProps) => {
-  const labels = history.map((dust) => dust.dataTime.split(' ')[1]);
-
   const dustData = {
-    labels,
+    labels: history.map((dust) => dust.dataTime.split(' ')[1]),
     datasets: [
       {
         label: FINE_DUST,
         data: history.map((dust) => dust.fineDustScale),
         backgroundColor: history.map(
-          (dust) => DUST_SCALE_COLOR[dust.fineDustGrade as DustGradeType]
+          (dust) => DUST_SCALE_COLOR[dust.fineDustGrade]
         ),
       },
       {
         label: ULTRA_FINE_DUST,
         data: history.map((dust) => dust.ultraFineDustScale),
         backgroundColor: history.map(
-          (dust) => DUST_SCALE_COLOR[dust.ultraFineDustGrade as DustGradeType]
+          (dust) => DUST_SCALE_COLOR[dust.ultraFineDustGrade]
         ),
       },
     ],
-  };
-
-  const options = {
-    responsive: false,
   };
 
   return (

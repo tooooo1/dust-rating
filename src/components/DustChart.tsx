@@ -7,9 +7,9 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { Box } from '@chakra-ui/react';
 import { DUST_SCALE_COLOR } from '@/utils/map';
 import type { DustGradeType } from '@/types/dust';
+import styled from '@emotion/styled';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
@@ -53,10 +53,28 @@ const DustChart = ({ history }: DustChartProps) => {
   };
 
   return (
-    <Box overflowX="auto">
+    <Wrapper>
       <Bar width={1000} height={200} options={options} data={dustData} />
-    </Box>
+    </Wrapper>
   );
 };
 
 export default DustChart;
+
+const Wrapper = styled.div`
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    height: 0.6rem;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    padding: 1rem 0;
+    background-color: #3f435040;
+    border-radius: 0.3rem;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #3f435025;
+    border-radius: 0.3rem;
+  }
+`;

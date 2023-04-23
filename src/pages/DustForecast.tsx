@@ -95,6 +95,25 @@ const DustForecast = () => {
             </Flex>
           </Box>
         </Flex>
+        <Box mb={14}>
+          <Flex direction="column" alignItems="center" mb={4}>
+            <Text as="p" fontSize={22} fontWeight={600} textAlign="center">
+              시간별 미세먼지 농도
+            </Text>
+            <Text
+              as="p"
+              fontSize={16}
+              fontWeight={400}
+              textAlign="center"
+              mt={2}
+              mb={4}
+            >
+              {dataTime.split(' ')[0]}
+            </Text>
+            <AirPollutionLevels direction="row" />
+          </Flex>
+          <DustChart history={dustHistory} />
+        </Box>
         <Flex direction="column" mt={10}>
           <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
             기상 예보

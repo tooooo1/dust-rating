@@ -191,7 +191,7 @@ const Map = () => {
         {zoomLevel === MAX_ZOOM_LEVEL && isLoading && <Spinner />}
       </VStack>
       <Box position="absolute" bottom="1.5rem" zIndex={10}>
-        <AirPollutionLevels />
+        <AirPollutionLevels direction="column" />
       </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

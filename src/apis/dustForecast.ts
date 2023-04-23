@@ -16,13 +16,14 @@ const getTodayDate = () => {
 
 interface DustForcast {
   imageUrl1: string;
+  informCause: string;
   informOverall: string;
 }
 
 export const getDustForcast = async () => {
   try {
     const response = await axios.get(
-      `${VITE_MINU_DUST_FRCST_DSPTH_URL}?searchDate=${getTodayDate()}&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&numOfRows=100&pageNo=1`
+      `${VITE_MINU_DUST_FRCST_DSPTH_URL}?searchDate=${getTodayDate()}&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&numOfRows=10&pageNo=1`
     );
 
     if (response.status !== 200) {
@@ -30,7 +31,8 @@ export const getDustForcast = async () => {
     }
 
     return response.data.response.body.items.find(
-      (forcast: DustForcast) => forcast.imageUrl1 && forcast.informOverall
+      (forcast: DustForcast) =>
+        forcast.imageUrl1 && forcast.informCause && forcast.informOverall
     );
   } catch (error) {
     console.error(error);

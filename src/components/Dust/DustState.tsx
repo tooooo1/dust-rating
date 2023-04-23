@@ -1,78 +1,61 @@
-import { Box, Flex } from '@chakra-ui/react';
-import styled from '@emotion/styled';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import {
   BsEmojiHeartEyes,
   BsEmojiNeutral,
   BsEmojiFrown,
   BsEmojiAngry,
 } from 'react-icons/bs';
+import { DUST_SCALE_COLOR } from '@/utils/map';
 
 interface DustStateProps {
-  fineDust: number;
-  ultraFineDust: number;
-  kindOfDust: string;
+  dustGrade: number;
 }
 
-const DUST_RATE_COLOR = ['#1E64EE', '#00D500', '#F95A20', '#E73532'];
-const DUST_RATE = ['좋음', '보통', '나쁨', '매우 나쁨'];
-const AVERAGE_DUST_DENSITY = [2, 3, 4, 10];
-const FINE_DUST_DENSITY = [80, 150, 300, 1200];
-const ULTRA_FINE_DUST_DENSITY = [15, 35, 75, 1200];
-const DUST_ICON = [
-  <BsEmojiHeartEyes />,
-  <BsEmojiNeutral />,
-  <BsEmojiFrown />,
-  <BsEmojiAngry />,
-];
+type GradeType = 'GOOD' | 'NORMAL' | 'BAD' | 'DANGER';
 
-const DUST_KIND = {
-  AVG: 'avg',
-  FINE_DUST: 'fineDust',
-  ULTRA_FINE_DUST: 'ultraFineDust',
+interface Grade {
+  [key: number]: GradeType;
+}
+
+const DUST_GRADE: Grade = {
+  1: 'GOOD',
+  2: 'NORMAL',
+  3: 'BAD',
+  4: 'DANGER',
 };
 
-const DustState = ({ fineDust, ultraFineDust, kindOfDust }: DustStateProps) => {
-  const dustDensityNumber = (fineDust + ultraFineDust) / 2;
-  if (isNaN(dustDensityNumber))
-    return <DustStateColor style={{ color: '#666666' }}>측정중</DustStateColor>;
+const DUST_STATE = {
+  GOOD: '좋음',
+  NORMAL: '보통',
+  BAD: '나쁨',
+  DANGER: '매우 나쁨',
+};
 
-  const discriminateDust = () => {
-    if (kindOfDust === DUST_KIND.AVG) {
-      return AVERAGE_DUST_DENSITY.findIndex((v) => dustDensityNumber < +v);
-    } else if (kindOfDust === DUST_KIND.FINE_DUST) {
-      return FINE_DUST_DENSITY.findIndex((v) => fineDust < +v);
-    } else if (kindOfDust === DUST_KIND.ULTRA_FINE_DUST) {
-      return ULTRA_FINE_DUST_DENSITY.findIndex((v) => ultraFineDust < +v);
-    }
-    return 0;
-  };
+const DUST_STATE_ICON = {
+  GOOD: <BsEmojiHeartEyes />,
+  NORMAL: <BsEmojiNeutral />,
+  BAD: <BsEmojiFrown />,
+  DANGER: <BsEmojiAngry />,
+};
+
+const DustState = ({ dustGrade }: DustStateProps) => {
+  const state = DUST_GRADE[dustGrade];
 
   return (
-    <DustStateColor color={DUST_RATE_COLOR[discriminateDust()]}>
-      {kindOfDust === 'avg' ? (
-        ''
-      ) : (
-        <Box fontSize={3}>{`${
-          kindOfDust === DUST_KIND.FINE_DUST ? fineDust : ultraFineDust
-        }㎍/㎥`}</Box>
-      )}
-      <Flex flexDirection="column" justifyContent="center">
-        {DUST_ICON[discriminateDust()]}
-        {DUST_RATE[discriminateDust()]}
-      </Flex>
-    </DustStateColor>
+    <Flex flexDirection="column" justifyContent="center" alignItems="center">
+      <Box color={DUST_SCALE_COLOR[state]} mb={1}>
+        {DUST_STATE_ICON[state]}
+      </Box>
+      <Text
+        as="p"
+        fontSize={20}
+        fontWeight={700}
+        color={DUST_SCALE_COLOR[state]}
+      >
+        {DUST_STATE[state]}
+      </Text>
+    </Flex>
   );
 };
 
 export default DustState;
-
-const DustStateColor = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 36%;
-  margin-right: 1rem;
-  font-size: 1.4rem;
-  text-align: center;
-  font-weight: 700;
-  color: ${(props) => props.color};
-`;

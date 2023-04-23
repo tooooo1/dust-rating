@@ -6,6 +6,7 @@ import { DustState } from '@/components/Dust';
 import ProgressBar from '@/components/ProgressBar';
 import SidoRank from '@/components/Ranking/SidoRank';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import { getDustAverageGrade } from '@/utils/dustGrade';
 import { getSidoAirQualities, getSidoAirQuality } from '@/apis/airQuality';
 
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
@@ -60,6 +61,11 @@ const Ranking = () => {
     );
   }
 
+  const dustAverageGrade = getDustAverageGrade(
+    sidoAirQuality.fineDustGrade,
+    sidoAirQuality.ultraFineDustGrade
+  );
+
   return (
     <Box textAlign="center">
       <Text
@@ -90,13 +96,7 @@ const Ranking = () => {
           현재의 대기질 지수는
         </Text>
         <Center my={5}>
-          <DustState
-            dustGrade={Math.floor(
-              (sidoAirQuality.fineDustGrade +
-                sidoAirQuality.ultraFineDustGrade) /
-                2
-            )}
-          />
+          <DustState dustGrade={dustAverageGrade} />
         </Center>
         <ProgressBar id="fineDust" state={sidoAirQuality.fineDustScale}>
           {FINE_DUST}

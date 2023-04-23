@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Flex, Text, Box } from '@chakra-ui/react';
 import DustState from '@/components/Dust/DustState';
 import { FINE_DUST, ROUTE, ULTRA_FINE_DUST } from '@/utils/constants';
+import { getDustAverageGrade } from '@/utils/dustGrade';
 import type { CityAirQuality } from '@/type';
 
 interface RankItemProps extends CityAirQuality {
@@ -18,6 +19,10 @@ const RankItem = ({
   dataTime,
 }: RankItemProps) => {
   const navigate = useNavigate();
+  const dustAverageGrade = getDustAverageGrade(
+    fineDustGrade,
+    ultraFineDustGrade
+  );
 
   const handlePageNavigate = () => {
     navigate(ROUTE.DUST_FORECAST, {
@@ -55,9 +60,7 @@ const RankItem = ({
         {cityName}
       </Text>
       <Box width="26%" mr={8}>
-        <DustState
-          dustGrade={Math.floor((fineDustGrade + ultraFineDustGrade) / 2)}
-        />
+        <DustState dustGrade={dustAverageGrade} />
       </Box>
       <Flex direction="column" justifyContent="center" flexGrow={1}>
         <Flex justifyContent="space-between" py={1}>

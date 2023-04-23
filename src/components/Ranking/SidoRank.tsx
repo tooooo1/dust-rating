@@ -3,6 +3,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { DustState } from '@/components/Dust';
 import CityRank from './CityRank';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import { getDustAverageGrade } from '@/utils/dustGrade';
 
 interface SidoRankProps {
   rank: number;
@@ -22,6 +23,10 @@ const SidoRank = ({
   ultraFineDustGrade,
 }: SidoRankProps) => {
   const [isShow, setIsShow] = useState(false);
+  const dustAverageGrade = getDustAverageGrade(
+    fineDustGrade,
+    ultraFineDustGrade
+  );
 
   const handleSidoClick = () => {
     setIsShow((isShow) => !isShow);
@@ -54,9 +59,7 @@ const SidoRank = ({
           {sidoName}
         </Text>
         <Box width="26%" mr={8}>
-          <DustState
-            dustGrade={Math.floor((fineDustGrade + ultraFineDustGrade) / 2)}
-          />
+          <DustState dustGrade={dustAverageGrade} />
         </Box>
         <Flex direction="column" justifyContent="center" flexGrow={1}>
           <Flex justifyContent="space-between" py={1}>

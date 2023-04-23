@@ -2,9 +2,12 @@ import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Center, Box, Text, Flex, Image } from '@chakra-ui/react';
 import { DustState } from '@/components/Dust';
+import DustChart from '@/components/DustChart';
 import { getDustForcast } from '@/apis/dustForecast';
+import { getDustHistory } from '@/apis/dustHistory';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import type { CityAirQuality } from '@/type';
+import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
 
 const DustForecast = () => {
   const location = useLocation();
@@ -26,7 +29,16 @@ const DustForecast = () => {
     }
   );
 
-  if (!dustForecast) {
+  const { data: dustHistory } = useQuery(
+    ['dust-history', cityName],
+    () => getDustHistory(cityName),
+    {
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: true,
+    }
+  );
+
+  if (!dustForecast || !dustHistory) {
     return (
       <Center height="100vh" fontSize={28} fontWeight={100} color="#ffffff">
         로딩 중...
@@ -50,7 +62,12 @@ const DustForecast = () => {
         {dataTime} 기준
       </Text>
       <Box borderRadius={10} mb={20} py={10} px={8} bg="#ffffff">
-        <Flex alignItems="center" pb={10} borderBottom="1px solid #dfdfdf">
+        <Flex
+          alignItems="center"
+          pb={10}
+          mb={14}
+          borderBottom="1px solid #dfdfdf"
+        >
           <Box flexGrow={1} borderRight="1px solid #dfdfdf">
             <Text as="p" fontSize={22} fontWeight={600} mb={2}>
               {FINE_DUST}

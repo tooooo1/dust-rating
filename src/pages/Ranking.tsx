@@ -91,9 +91,11 @@ const Ranking = () => {
         </Text>
         <Center my={5}>
           <DustState
-            fineDust={sidoAirQuality.fineDustGrade}
-            ultraFineDust={sidoAirQuality.ultraFineDustGrade}
-            kindOfDust="avg"
+            dustGrade={Math.floor(
+              (sidoAirQuality.fineDustGrade +
+                sidoAirQuality.ultraFineDustGrade) /
+                2
+            )}
           />
         </Center>
         <ProgressBar id="fineDust" state={sidoAirQuality.fineDustScale}>

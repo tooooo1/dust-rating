@@ -200,17 +200,9 @@ const Map = () => {
           <ModalCloseButton borderColor={'#ffffff'} />
           <ModalBody>
             {FINE_DUST}
-            <DustState
-              fineDust={fineDustScale}
-              ultraFineDust={ultraFineDustScale}
-              kindOfDust={'fineDust'}
-            />
+            <DustState dustGrade={fineDustScale} />
             {ULTRA_FINE_DUST}
-            <DustState
-              fineDust={fineDustScale}
-              ultraFineDust={ultraFineDustScale}
-              kindOfDust={'ultraFineDust'}
-            />
+            <DustState dustGrade={ultraFineDustScale} />
           </ModalBody>
           <ModalFooter>
             <Button

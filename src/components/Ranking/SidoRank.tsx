@@ -53,11 +53,11 @@ const SidoRank = ({
         >
           {sidoName}
         </Text>
-        <DustState
-          fineDust={fineDustGrade}
-          ultraFineDust={ultraFineDustGrade}
-          kindOfDust="avg"
-        />
+        <Box width="26%" mr={8}>
+          <DustState
+            dustGrade={Math.floor((fineDustGrade + ultraFineDustGrade) / 2)}
+          />
+        </Box>
         <Flex direction="column" justifyContent="center" flexGrow={1}>
           <Flex justifyContent="space-between" py={1}>
             <Text as="p" fontSize={16} fontWeight={500}>

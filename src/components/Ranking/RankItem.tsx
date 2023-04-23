@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex, Text, Box } from '@chakra-ui/react';
 import DustState from '@/components/Dust/DustState';
 import { FINE_DUST, ROUTE, ULTRA_FINE_DUST } from '@/utils/constants';
 import type { CityAirQuality } from '@/type';
@@ -54,11 +54,11 @@ const RankItem = ({
       >
         {cityName}
       </Text>
-      <DustState
-        fineDust={fineDustGrade}
-        ultraFineDust={ultraFineDustGrade}
-        kindOfDust="avg"
-      />
+      <Box width="26%" mr={8}>
+        <DustState
+          dustGrade={Math.floor((fineDustGrade + ultraFineDustGrade) / 2)}
+        />
+      </Box>
       <Flex direction="column" justifyContent="center" flexGrow={1}>
         <Flex justifyContent="space-between" py={1}>
           <Text

@@ -113,7 +113,13 @@ const Map = () => {
     const geocoder = new kakao.maps.services.Geocoder();
 
     airQualityByCity.forEach(
-      async ({ cityName, fineDustScale, ultraFineDustScale }) => {
+      async ({
+        cityName,
+        fineDustScale,
+        ultraFineDustScale,
+        fineDustGrade,
+        ultraFineDustGrade,
+      }) => {
         return new Promise(() => {
           geocoder.addressSearch(cityName, (result, status) => {
             if (status === kakao.maps.services.Status.OK) {
@@ -121,7 +127,7 @@ const Map = () => {
               const longitude = Number(result[0].x);
               const backgroundColor = getDustScaleColor(fineDustScale);
               const template = `
-                <div class="dust-info-marker" id="${cityName}" data-finedustscale="${fineDustScale}" data-ultrafinedustscale="${ultraFineDustScale}" style="background-color: ${backgroundColor};" >
+                <div class="dust-info-marker" id="${cityName}" data-finedustgrade="${fineDustGrade}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};" >
                   <span>${fineDustScale}/${ultraFineDustScale}</span>
                   <p class="city-name">${cityName}</p>
                 </div>`;
@@ -153,11 +159,11 @@ const Map = () => {
       city.addEventListener('click', () => {
         setCity(city.id);
         if (city instanceof HTMLElement) {
-          city.dataset.finedustscale
-            ? setFineDustScale(+city.dataset.finedustscale)
+          city.dataset.finedustgrade
+            ? setFineDustScale(+city.dataset.finedustgrade)
             : '';
-          city.dataset.ultrafinedustscale
-            ? setUltraFineDustScale(+city.dataset.ultrafinedustscale)
+          city.dataset.ultrafinedustgrade
+            ? setUltraFineDustScale(+city.dataset.ultrafinedustgrade)
             : '';
         }
         onOpen();

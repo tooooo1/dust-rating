@@ -22,7 +22,7 @@ import { getSidoAirQualities, getCityAirQualities } from '@/apis/airQuality';
 import { getDustScaleColor } from '@/utils/map';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import useMap from '@/hooks/useMap';
-import type { CityAirQuality } from '@/type';
+import type { CityAirQuality } from '@/types/dust';
 
 declare global {
   interface Window {

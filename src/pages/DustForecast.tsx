@@ -3,11 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Center, Box, Text, Flex, Image } from '@chakra-ui/react';
 import { DustState } from '@/components/Dust';
 import DustChart from '@/components/DustChart';
+import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
 import { getDustForcast } from '@/apis/dustForecast';
 import { getDustHistory } from '@/apis/dustHistory';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
-import type { CityAirQuality } from '@/type';
-import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
+import type { CityAirQuality } from '@/types/dust';
 
 const DustForecast = () => {
   const location = useLocation();

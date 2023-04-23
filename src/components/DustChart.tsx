@@ -9,7 +9,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { Box } from '@chakra-ui/react';
 import { DUST_SCALE_COLOR } from '@/utils/map';
-import { GradeType } from '@/utils/constants/dust';
+import type { DustGradeType } from '@/types/dust';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
@@ -35,14 +35,14 @@ const DustChart = ({ history }: DustChartProps) => {
         label: '미세먼지',
         data: history.map((dust) => dust.fineDustScale),
         backgroundColor: history.map(
-          (dust) => DUST_SCALE_COLOR[dust.fineDustGrade as GradeType]
+          (dust) => DUST_SCALE_COLOR[dust.fineDustGrade as DustGradeType]
         ),
       },
       {
         label: '초미세먼지',
         data: history.map((dust) => dust.ultraFineDustScale),
         backgroundColor: history.map(
-          (dust) => DUST_SCALE_COLOR[dust.ultraFineDustGrade as GradeType]
+          (dust) => DUST_SCALE_COLOR[dust.ultraFineDustGrade as DustGradeType]
         ),
       },
     ],

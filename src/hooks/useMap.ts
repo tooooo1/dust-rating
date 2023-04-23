@@ -1,8 +1,6 @@
 import { useEffect, useState, RefObject } from 'react';
 import { INIT_LOCATION, CENTER_LOCATION, SIDO_GROUP } from '@/utils/constants';
-
-const INIT_ZOOM_LEVEL = 5;
-const MAX_ZOOM_LEVEL = 8;
+import { INIT_ZOOM_LEVEL, MAX_ZOOM_LEVEL } from '@/utils/map';
 
 interface useMapProps {
   mapRef: RefObject<HTMLElement>;
@@ -141,13 +139,21 @@ const useMap = ({ mapRef }: useMapProps) => {
     map.setLevel(zoomLevel + 1, { animate: true });
   };
 
-  const handleFullScreenChange = () => {
+  const handleFullScreenChange = (
+    cityDustInfoMarkers: kakao.maps.CustomOverlay[]
+  ) => {
     if (!map) return;
 
     map.setLevel(MAX_ZOOM_LEVEL, { animate: true });
     map.setCenter(
       new kakao.maps.LatLng(CENTER_LOCATION.latitude, CENTER_LOCATION.longitude)
     );
+
+    if (cityDustInfoMarkers.length) {
+      cityDustInfoMarkers.forEach((marker) => {
+        marker.setMap(null);
+      });
+    }
   };
 
   return {

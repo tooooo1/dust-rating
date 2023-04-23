@@ -23,6 +23,7 @@ import { getDustScaleColor } from '@/utils/map';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import useMap from '@/hooks/useMap';
 import type { CityAirQuality } from '@/type';
+import { MAX_ZOOM_LEVEL } from '@/utils/map';
 
 declare global {
   interface Window {
@@ -30,12 +31,12 @@ declare global {
   }
 }
 
-const MAX_ZOOM_LEVEL = 8;
-
 const Map = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const sidoDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
-  const cityDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
+  const [cityDustInfoMarkers, setCityDustInfoMarkers] = useState<
+    kakao.maps.CustomOverlay[]
+  >([]);
   const [city, setCity] = useState('동네 정보를 받아오지 못했어요');
   const [fineDustScale, setFineDustScale] = useState(0);
   const [ultraFineDustScale, setUltraFineDustScale] = useState(0);
@@ -108,7 +109,7 @@ const Map = () => {
   }, [airQualityBySido, allLocation, sidoDustInfoMarkers]);
 
   useEffect(() => {
-    if (!map || !airQualityByCity) return;
+    if (!map || !airQualityByCity || zoomLevel === MAX_ZOOM_LEVEL) return;
 
     const geocoder = new kakao.maps.services.Geocoder();
 
@@ -138,7 +139,8 @@ const Map = () => {
                 content: template,
               });
 
-              cityDustInfoMarkers.push(marker);
+              const prevCityDustInfoMarkers = [...cityDustInfoMarkers, marker];
+              setCityDustInfoMarkers(prevCityDustInfoMarkers);
             }
           });
         });
@@ -150,6 +152,7 @@ const Map = () => {
         cityDustInfoMarkers.forEach((marker) => {
           marker.setMap(null);
         });
+        setCityDustInfoMarkers([]);
       }
     };
   }, [airQualityByCity]);
@@ -193,7 +196,10 @@ const Map = () => {
         />
         <MapButton type="zoom-in" onClick={handleZoomIn} />
         <MapButton type="zoom-out" onClick={handleZoomOut} />
-        <MapButton type="full-screen" onClick={handleFullScreenChange} />
+        <MapButton
+          type="full-screen"
+          onClick={() => handleFullScreenChange(cityDustInfoMarkers)}
+        />
         {zoomLevel === MAX_ZOOM_LEVEL && isLoading && <Spinner />}
       </VStack>
       <Box position="absolute" bottom="1.5rem" zIndex={10}>

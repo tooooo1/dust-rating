@@ -25,7 +25,7 @@ const DustForecast = () => {
     getDustForcast,
     {
       staleTime: 1000 * 60 * 5,
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
     }
   );
 
@@ -34,7 +34,7 @@ const DustForecast = () => {
     () => getDustHistory(cityName),
     {
       staleTime: 1000 * 60 * 5,
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
     }
   );
 

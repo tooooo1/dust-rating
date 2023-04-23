@@ -7,15 +7,6 @@ export interface CityAirQuality {
   dataTime: string;
 }
 
-export interface LocalDustDetail {
-  stationName: string;
-  fineDustScale: number;
-  fineDustGrade: number;
-  ultraFineDustScale: number;
-  ultraFineDustGrade: number;
-  dataTime: string;
-}
-
 export interface Location {
   latitude: number;
   longitude: number;

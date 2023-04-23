@@ -5,6 +5,6 @@ export const getTodayDate = () => {
   const day = date.getDate();
 
   return `${year}-${month < 10 ? '0' + month : month}-${
-    day < 10 ? '0' + day : day
+    day < 10 ? '0' + day : day - 1
   }`;
 };

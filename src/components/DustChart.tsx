@@ -8,6 +8,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { DUST_SCALE_COLOR } from '@/utils/map';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import type { DustGradeType } from '@/types/dust';
 import styled from '@emotion/styled';
 
@@ -32,14 +33,14 @@ const DustChart = ({ history }: DustChartProps) => {
     labels,
     datasets: [
       {
-        label: '미세먼지',
+        label: FINE_DUST,
         data: history.map((dust) => dust.fineDustScale),
         backgroundColor: history.map(
           (dust) => DUST_SCALE_COLOR[dust.fineDustGrade as DustGradeType]
         ),
       },
       {
-        label: '초미세먼지',
+        label: ULTRA_FINE_DUST,
         data: history.map((dust) => dust.ultraFineDustScale),
         backgroundColor: history.map(
           (dust) => DUST_SCALE_COLOR[dust.ultraFineDustGrade as DustGradeType]

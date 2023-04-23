@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Center, Box } from '@chakra-ui/react';
+import { Center, Box, Text, Flex, Image } from '@chakra-ui/react';
 import { DustState } from '@/components/Dust';
 import { getDustForcast } from '@/apis/dustForecast';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
@@ -35,61 +35,75 @@ const DustForecast = () => {
   }
 
   return (
-    <Box
-      height="100vh"
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-    >
-      <Box
-        alignItems="center"
-        marginTop="8vh"
-        borderRadius="20px"
-        textAlign="center"
-        fontWeight="400"
-        color="white"
-        backgroundColor="#53caf2"
+    <Box textAlign="center">
+      <Text
+        as="h1"
+        fontSize={30}
+        fontWeight={600}
+        color="#ffffff"
+        mt={20}
+        mb={4}
       >
-        {cityName}의 {FINE_DUST} 농도는 다음과 같습니다.
-      </Box>
-      <Box
-        margin="0 0 1.5rem 0"
-        textAlign="center"
-        fontWeight="100"
-        color="white"
-      >
+        {cityName}의 미세먼지 농도는 다음과 같습니다.
+      </Text>
+      <Text as="p" fontSize={20} fontWeight={300} color="#ffffff" mb={6}>
         {dataTime} 기준
-      </Box>
-      <Box width="50%" alignItems="center" backgroundColor="white">
-        <Box
-          marginTop="3rem"
-          marginBottom="3rem"
-          display="flex"
-          flexDirection="row"
-        >
-          <Box padding="0 10% 0 10%" width="100%">
-            <div>{FINE_DUST}</div>
-            <div>{fineDustScale}</div>
-            <DustState
-              fineDust={fineDustGrade}
-              ultraFineDust={ultraFineDustGrade}
-              kindOfDust="fineDust"
-            />
+      </Text>
+      <Box borderRadius={10} mb={20} py={10} px={8} bg="#ffffff">
+        <Flex alignItems="center" pb={10} borderBottom="1px solid #dfdfdf">
+          <Box flexGrow={1} borderRight="1px solid #dfdfdf">
+            <Text as="p" fontSize={22} fontWeight={600} mb={2}>
+              {FINE_DUST}
+            </Text>
+            <Flex justifyContent="center" alignItems="center">
+              <Text as="p" fontSize={48} fontWeight={800} mr={5}>
+                {fineDustScale}
+              </Text>
+              <Box my={3}>
+                <DustState dustGrade={fineDustGrade} />
+              </Box>
+            </Flex>
           </Box>
-          <Box padding="0 10% 0 10%" width="100%">
-            <div>{ULTRA_FINE_DUST}</div>
-            <div>{ultraFineDustScale}</div>
-            <DustState
-              fineDust={fineDustGrade}
-              ultraFineDust={ultraFineDustGrade}
-              kindOfDust="ultraFineDust"
-            />
+          <Box flexGrow={1}>
+            <Text as="p" fontSize={22} fontWeight={600} mb={2}>
+              {ULTRA_FINE_DUST}
+            </Text>
+            <Flex justifyContent="center" alignItems="center">
+              <Text as="p" fontSize={48} fontWeight={800} mr={5}>
+                {ultraFineDustScale}
+              </Text>
+              <Box my={3}>
+                <DustState dustGrade={ultraFineDustGrade} />
+              </Box>
+            </Flex>
           </Box>
-        </Box>
-        <Box padding="10%" display="flex" flexWrap="wrap" alignItems="center">
-          <div>{dustForecast.informOverall}</div>
-          <img src={dustForecast.imageUrl1} alt="기상 이미지를 준비중입니다." />
-        </Box>
+        </Flex>
+        <Flex direction="column" mt={10}>
+          <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
+            기상 예보
+          </Text>
+          <Text
+            fontSize={16}
+            fontWeight={400}
+            textAlign="left"
+            lineHeight={1.4}
+          >
+            {dustForecast.informOverall}
+          </Text>
+          <Text
+            fontSize={16}
+            fontWeight={400}
+            textAlign="left"
+            lineHeight={1.4}
+          >
+            {dustForecast.informCause}
+          </Text>
+          <Image
+            src={dustForecast.imageUrl1}
+            alt="기상 이미지를 준비중입니다."
+            mt={8}
+          />
+        </Flex>
       </Box>
     </Box>
   );

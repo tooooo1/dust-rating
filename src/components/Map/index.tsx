@@ -55,14 +55,21 @@ const Map = () => {
   const { data: airQualityBySido, isLoading: airQualityBySidoIsLoading } =
     useQuery(['air-quality'], getSidoAirQualities, {
       refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
     });
 
   const { data: airQualityByCity, isLoading: airQualityByCityIsLoading } =
-    useQuery<CityAirQuality[]>(['city-air-quality', currentCity], () =>
-      getCityAirQualities(currentCity)
+    useQuery<CityAirQuality[]>(
+      ['city-air-quality', currentCity],
+      () => getCityAirQualities(currentCity),
+      {
+        staleTime: 1000 * 60 * 5,
+      }
     );
 
-  const { data: allLocation } = useQuery(['all-location'], getAllLocation);
+  const { data: allLocation } = useQuery(['all-location'], getAllLocation, {
+    staleTime: 1000 * 60 * 5,
+  });
 
   useEffect(() => {
     if (!map || !airQualityBySido || !allLocation) return;

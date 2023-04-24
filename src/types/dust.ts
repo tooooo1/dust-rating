@@ -1,3 +1,5 @@
+type Flag = null | '통신장애';
+
 export type GradeType = 'GOOD' | 'NORMAL' | 'BAD' | 'DANGER';
 
 export interface DustValues {
@@ -5,12 +7,14 @@ export interface DustValues {
   pm25Value: string;
 }
 
-export interface DustGrades {
-  pm10Grade: string;
-  pm25Grade: string;
+export interface DustScale extends DustValues {
+  pm10Flag: Flag;
+  pm25Flag: Flag;
 }
 
-export interface Dust extends DustValues, DustGrades {
+export interface Dust extends DustValues {
+  pm10Grade: string;
+  pm25Grade: string;
   dataTime: string;
 }
 

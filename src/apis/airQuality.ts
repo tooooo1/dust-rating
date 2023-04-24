@@ -1,16 +1,8 @@
 import axios from 'axios';
 import { SIDO_GROUP } from '@/utils/constants';
-import type { DustValues, Dust } from '@/types/dust';
+import type { DustScale, Dust } from '@/types/dust';
 
 const { VITE_AIR_QUALITY_URL, VITE_AIR_QUALITY_API_KEY } = import.meta.env;
-
-type Flag = null | '통신장애';
-
-interface DustScale extends DustValues {
-  pm10Flag: Flag;
-  pm25Flag: Flag;
-}
-
 interface DustStation extends Dust {
   stationName: string;
 }

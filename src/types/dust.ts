@@ -1,3 +1,5 @@
+export type GradeType = 'GOOD' | 'NORMAL' | 'BAD' | 'DANGER';
+
 export interface DustValues {
   pm10Value: string;
   pm25Value: string;
@@ -15,10 +17,4 @@ export interface CityAirQuality {
   ultraFineDustScale: number;
   ultraFineDustGrade: number;
   dataTime: string;
-}
-
-export type DustGradeType = 'GOOD' | 'NORMAL' | 'BAD' | 'DANGER';
-
-export interface DustGrade {
-  [key: number]: DustGradeType;
 }

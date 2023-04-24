@@ -8,8 +8,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { DUST_SCALE_COLOR } from '@/utils/map';
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
-import type { DustGradeType } from '@/types/dust';
+import { FINE_DUST, ULTRA_FINE_DUST, DUST_GRADE } from '@/utils/constants';
 import styled from '@emotion/styled';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
@@ -21,9 +20,9 @@ const options = {
 interface DustHistory {
   dataTime: string;
   fineDustScale: number;
-  fineDustGrade: DustGradeType;
+  fineDustGrade: number;
   ultraFineDustScale: number;
-  ultraFineDustGrade: DustGradeType;
+  ultraFineDustGrade: number;
 }
 
 interface DustChartProps {
@@ -38,14 +37,14 @@ const DustChart = ({ history }: DustChartProps) => {
         label: FINE_DUST,
         data: history.map((dust) => dust.fineDustScale),
         backgroundColor: history.map(
-          (dust) => DUST_SCALE_COLOR[dust.fineDustGrade]
+          (dust) => DUST_SCALE_COLOR[DUST_GRADE[dust.fineDustGrade]]
         ),
       },
       {
         label: ULTRA_FINE_DUST,
         data: history.map((dust) => dust.ultraFineDustScale),
         backgroundColor: history.map(
-          (dust) => DUST_SCALE_COLOR[dust.ultraFineDustGrade]
+          (dust) => DUST_SCALE_COLOR[DUST_GRADE[dust.ultraFineDustGrade]]
         ),
       },
     ],

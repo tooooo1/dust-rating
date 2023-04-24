@@ -6,23 +6,11 @@ import {
   BsEmojiAngry,
 } from 'react-icons/bs';
 import { DUST_SCALE_COLOR } from '@/utils/map';
+import { DUST_GRADE } from '@/utils/constants';
 
 interface DustStateProps {
   dustGrade: number;
 }
-
-type GradeType = 'GOOD' | 'NORMAL' | 'BAD' | 'DANGER';
-
-interface Grade {
-  [key: number]: GradeType;
-}
-
-const DUST_GRADE: Grade = {
-  1: 'GOOD',
-  2: 'NORMAL',
-  3: 'BAD',
-  4: 'DANGER',
-};
 
 const DUST_STATE = {
   GOOD: '좋음',
@@ -31,7 +19,7 @@ const DUST_STATE = {
   DANGER: '매우 나쁨',
 };
 
-const DUST_STATE_ICON = {
+const DUST_GRADE_ICON = {
   GOOD: <BsEmojiHeartEyes />,
   NORMAL: <BsEmojiNeutral />,
   BAD: <BsEmojiFrown />,
@@ -39,20 +27,20 @@ const DUST_STATE_ICON = {
 };
 
 const DustState = ({ dustGrade }: DustStateProps) => {
-  const state = DUST_GRADE[dustGrade];
+  const grade = DUST_GRADE[dustGrade];
 
   return (
     <Flex flexDirection="column" justifyContent="center" alignItems="center">
-      <Box color={DUST_SCALE_COLOR[state]} mb={1}>
-        {DUST_STATE_ICON[state]}
+      <Box color={DUST_SCALE_COLOR[grade]} mb={1}>
+        {DUST_GRADE_ICON[grade]}
       </Box>
       <Text
         as="p"
         fontSize={20}
         fontWeight={700}
-        color={DUST_SCALE_COLOR[state]}
+        color={DUST_SCALE_COLOR[grade]}
       >
-        {DUST_STATE[state]}
+        {DUST_STATE[grade]}
       </Text>
     </Flex>
   );

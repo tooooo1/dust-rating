@@ -1,18 +1,8 @@
 import axios from 'axios';
+import { getTodayDate } from '@/utils/formaters';
 
 const { VITE_AIR_QUALITY_API_KEY, VITE_MINU_DUST_FRCST_DSPTH_URL } = import.meta
   .env;
-
-const getTodayDate = () => {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-
-  return `${year}-${month < 10 ? '0' + month : month}-${
-    day < 10 ? '0' + day : day
-  }`;
-};
 
 interface DustForcast {
   imageUrl1: string;

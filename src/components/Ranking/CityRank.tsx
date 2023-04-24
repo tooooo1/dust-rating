@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Box } from '@chakra-ui/react';
 import RankItem from './RankItem';
 import { getCityAirQualities } from '@/apis/airQuality';
-import type { CityAirQuality } from '@/type';
+import type { CityAirQuality } from '@/types/dust';
 
 interface CityRankProps {
   sido: string;

@@ -50,7 +50,7 @@ const Map = () => {
     handleZoomIn,
     handleZoomOut,
     handleFullScreenChange,
-  } = useMap({ mapRef });
+  } = useMap({ mapRef, cityDustInfoMarkers });
 
   const { data: airQualityBySido, isLoading: airQualityBySidoIsLoading } =
     useQuery(['air-quality'], getSidoAirQualities, {

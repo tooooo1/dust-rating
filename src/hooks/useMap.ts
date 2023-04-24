@@ -1,12 +1,13 @@
-import { useEffect, useState, RefObject, useCallback, useRef } from 'react';
+import { useEffect, useState, RefObject } from 'react';
 import { INIT_LOCATION, CENTER_LOCATION, SIDO_GROUP } from '@/utils/constants';
-import { INIT_ZOOM_LEVEL, MAX_ZOOM_LEVEL } from '@/utils/map';
+import { INIT_ZOOM_LEVEL, CITY_ZOOM_LEVEL, MAX_ZOOM_LEVEL } from '@/utils/map';
 
 interface useMapProps {
   mapRef: RefObject<HTMLElement>;
+  cityDustInfoMarkers?: kakao.maps.CustomOverlay[];
 }
 
-const useMap = ({ mapRef }: useMapProps) => {
+const useMap = ({ mapRef, cityDustInfoMarkers }: useMapProps) => {
   const [myDeviceLocation, setMyDeviceLocation] = useState(INIT_LOCATION);
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [zoomLevel, setZoomLevel] = useState(INIT_ZOOM_LEVEL);
@@ -112,6 +113,24 @@ const useMap = ({ mapRef }: useMapProps) => {
       );
     });
   }, [map]);
+
+  useEffect(() => {
+    if (!map) return;
+
+    kakao.maps.event.addListener(map, 'zoom_changed', () => {
+      const zoomLevel = map.getLevel();
+      setZoomLevel(zoomLevel);
+      if (CITY_ZOOM_LEVEL <= zoomLevel && zoomLevel <= MAX_ZOOM_LEVEL) {
+        cityDustInfoMarkers?.forEach((value) => {
+          value.setMap(null);
+        });
+      } else {
+        cityDustInfoMarkers?.forEach((value) => {
+          value.setMap(map);
+        });
+      }
+    });
+  }, [cityDustInfoMarkers]);
 
   const handleCurrentLocationChange = () => {
     if (!map) return;

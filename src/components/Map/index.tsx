@@ -117,7 +117,7 @@ const Map = () => {
 
     const geocoder = new kakao.maps.services.Geocoder();
 
-    const result = airQualityByCity.map(
+    airQualityByCity.forEach(
       ({
         cityName,
         fineDustScale,
@@ -125,30 +125,30 @@ const Map = () => {
         fineDustGrade,
         ultraFineDustGrade,
       }) => {
-        return new Promise((resolve, reject) => {
-          geocoder.addressSearch(cityName, (result, status) => {
-            if (status === kakao.maps.services.Status.OK) {
-              const latitude = Number(result[0].y);
-              const longitude = Number(result[0].x);
-              const backgroundColor = getDustScaleColor(fineDustScale);
-              const template = `
+        geocoder.addressSearch(cityName, (result, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            const latitude = Number(result[0].y);
+            const longitude = Number(result[0].x);
+            const backgroundColor = getDustScaleColor(fineDustScale);
+            const template = `
                   <div class="dust-info-marker" id="${cityName}" data-finedustgrade="${fineDustGrade}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};" >
                     <span>${fineDustScale}/${ultraFineDustScale}</span>                  
                     <p class="city-name">${cityName}</p>                  
                   </div>`;
 
-              const marker = new kakao.maps.CustomOverlay({
-                map,
-                position: new kakao.maps.LatLng(latitude, longitude),
-                content: template,
-              });
+            const marker = new kakao.maps.CustomOverlay({
+              map,
+              position: new kakao.maps.LatLng(latitude, longitude),
+              content: template,
+            });
 
-              setCityDustInfoMarkers([...cityDustInfoMarkers, marker]);
-            }
-          });
-
-          resolve(`${cityName} 성공`);
-          reject(`${cityName} 실패`);
+            if (
+              !cityDustInfoMarkers.find(
+                (value) => value.getPosition() === marker.getPosition()
+              )
+            )
+              setCityDustInfoMarkers((prev) => [...prev, marker]);
+          }
         });
       }
     );
@@ -183,7 +183,7 @@ const Map = () => {
         city.removeEventListener('click', onOpen);
       });
     };
-  }, [cityDustInfoMarkers, currentLocation, zoomLevel]);
+  }, [cityDustInfoMarkers, currentLocation]);
 
   return (
     <Box position="relative" width="100%" height="100%">

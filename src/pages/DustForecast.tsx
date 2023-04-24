@@ -56,7 +56,7 @@ const DustForecast = () => {
         mt={20}
         mb={4}
       >
-        {cityName}의 미세먼지 농도는 다음과 같습니다.
+        {cityName}의 {FINE_DUST} 농도는 다음과 같습니다.
       </Text>
       <Text as="p" fontSize={20} fontWeight={300} color="#ffffff" mb={6}>
         {dataTime} 기준
@@ -98,7 +98,7 @@ const DustForecast = () => {
         <Box mb={14}>
           <Flex direction="column" alignItems="center" mb={4}>
             <Text as="p" fontSize={22} fontWeight={600} textAlign="center">
-              시간별 미세먼지 농도
+              시간별 {FINE_DUST} 농도
             </Text>
             <Text
               as="p"

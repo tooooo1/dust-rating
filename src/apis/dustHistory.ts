@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getTodayDate } from '@/utils/formaters';
-import { DUST_GRADE } from '@/utils/constants/dust';
 import type { DustValues, DustGrades } from '@/types/dust';
 
 const { VITE_DUST_HISTORY_URL, VITE_AIR_QUALITY_API_KEY } = import.meta.env;
@@ -28,9 +27,9 @@ export const getDustHistory = async (city: string) => {
       .map((history: DustHistory) => ({
         dataTime: history.dataTime,
         fineDustScale: Number(history.pm10Value),
-        fineDustGrade: DUST_GRADE[Number(history.pm10Grade)],
+        fineDustGrade: Number(history.pm10Grade),
         ultraFineDustScale: Number(history.pm25Value),
-        ultraFineDustGrade: DUST_GRADE[Number(history.pm25Grade)],
+        ultraFineDustGrade: Number(history.pm25Grade),
       }))
       .reverse();
   } catch (error) {

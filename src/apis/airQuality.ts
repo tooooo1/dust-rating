@@ -11,7 +11,7 @@ interface DustScale extends DustValues {
   pm25Flag: Flag;
 }
 
-interface StationDust extends Dust {
+interface DustStation extends Dust {
   stationName: string;
 }
 
@@ -92,7 +92,7 @@ export const getCityAirQualities = async (sido: string) => {
         !scale.pm10Flag && !scale.pm25Flag && scale.pm10Value && scale.pm25Value
     );
 
-    return airQualities.map((airQuality: StationDust) => ({
+    return airQualities.map((airQuality: DustStation) => ({
       cityName: airQuality.stationName,
       fineDustScale: Number(airQuality.pm10Value),
       fineDustGrade: Number(airQuality.pm10Grade),

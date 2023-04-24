@@ -3,6 +3,7 @@ import { SIDO_GROUP } from '@/utils/constants';
 import type { DustScale, Dust } from '@/types/dust';
 
 const { VITE_AIR_QUALITY_URL, VITE_AIR_QUALITY_API_KEY } = import.meta.env;
+
 interface DustStation extends Dust {
   stationName: string;
 }

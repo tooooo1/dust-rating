@@ -1,12 +1,8 @@
 import axios from 'axios';
 import { getTodayDate } from '@/utils/formaters';
-import type { DustValues, DustGrades } from '@/types/dust';
+import type { Dust } from '@/types/dust';
 
 const { VITE_DUST_HISTORY_URL, VITE_AIR_QUALITY_API_KEY } = import.meta.env;
-
-interface DustHistory extends DustValues, DustGrades {
-  dataTime: string;
-}
 
 export const getDustHistory = async (city: string) => {
   try {
@@ -19,12 +15,11 @@ export const getDustHistory = async (city: string) => {
     }
 
     const dustHistories = response.data.response.body.items.filter(
-      (history: DustHistory) =>
-        history.dataTime.split(' ')[0] === getTodayDate()
+      (history: Dust) => history.dataTime.split(' ')[0] === getTodayDate()
     );
 
     return dustHistories
-      .map((history: DustHistory) => {
+      .map((history: Dust) => {
         const time = history.dataTime.split(' ')[1];
         const hour = time.split(':')[0] + '시';
 

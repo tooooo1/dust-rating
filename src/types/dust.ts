@@ -10,6 +10,10 @@ export interface DustGrades {
   pm25Grade: string;
 }
 
+export interface Dust extends DustValues, DustGrades {
+  dataTime: string;
+}
+
 export interface CityAirQuality {
   cityName: string;
   fineDustScale: number;

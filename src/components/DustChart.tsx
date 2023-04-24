@@ -18,7 +18,7 @@ const options = {
 };
 
 interface DustHistory {
-  dataTime: string;
+  hour: string;
   fineDustScale: number;
   fineDustGrade: number;
   ultraFineDustScale: number;
@@ -31,7 +31,7 @@ interface DustChartProps {
 
 const DustChart = ({ history }: DustChartProps) => {
   const dustData = {
-    labels: history.map((dust) => dust.dataTime.split(' ')[1]),
+    labels: history.map((dust) => dust.hour),
     datasets: [
       {
         label: FINE_DUST,

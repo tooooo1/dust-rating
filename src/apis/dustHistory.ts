@@ -24,13 +24,18 @@ export const getDustHistory = async (city: string) => {
     );
 
     return dustHistories
-      .map((history: DustHistory) => ({
-        dataTime: history.dataTime,
-        fineDustScale: Number(history.pm10Value),
-        fineDustGrade: Number(history.pm10Grade),
-        ultraFineDustScale: Number(history.pm25Value),
-        ultraFineDustGrade: Number(history.pm25Grade),
-      }))
+      .map((history: DustHistory) => {
+        const time = history.dataTime.split(' ')[1];
+        const hour = time.split(':')[0] + '시';
+
+        return {
+          hour,
+          fineDustScale: Number(history.pm10Value),
+          fineDustGrade: Number(history.pm10Grade),
+          ultraFineDustScale: Number(history.pm25Value),
+          ultraFineDustGrade: Number(history.pm25Grade),
+        };
+      })
       .reverse();
   } catch (error) {
     console.error(error);

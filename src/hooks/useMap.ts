@@ -1,4 +1,4 @@
-import { useEffect, useState, RefObject } from 'react';
+import { useEffect, useState, RefObject, useCallback, useRef } from 'react';
 import { INIT_LOCATION, CENTER_LOCATION, SIDO_GROUP } from '@/utils/constants';
 import { INIT_ZOOM_LEVEL, MAX_ZOOM_LEVEL } from '@/utils/map';
 
@@ -123,6 +123,10 @@ const useMap = ({ mapRef }: useMapProps) => {
         myDeviceLocation.longitude
       )
     );
+    setCurrentLocation({
+      latitude: myDeviceLocation.latitude,
+      longitude: myDeviceLocation.longitude,
+    });
   };
 
   const handleZoomIn = () => {
@@ -154,6 +158,7 @@ const useMap = ({ mapRef }: useMapProps) => {
         marker.setMap(null);
       });
     }
+    setZoomLevel(MAX_ZOOM_LEVEL);
   };
 
   return {

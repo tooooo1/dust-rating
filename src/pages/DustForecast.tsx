@@ -2,9 +2,12 @@ import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Center, Box, Text, Flex, Image } from '@chakra-ui/react';
 import { DustState } from '@/components/Dust';
+import DustChart from '@/components/DustChart';
+import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
 import { getDustForcast } from '@/apis/dustForecast';
+import { getDustHistory } from '@/apis/dustHistory';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
-import type { CityAirQuality } from '@/type';
+import type { CityAirQuality } from '@/types/dust';
 
 const DustForecast = () => {
   const location = useLocation();
@@ -22,11 +25,20 @@ const DustForecast = () => {
     getDustForcast,
     {
       staleTime: 1000 * 60 * 5,
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
     }
   );
 
-  if (!dustForecast) {
+  const { data: dustHistory } = useQuery(
+    ['dust-history', cityName],
+    () => getDustHistory(cityName),
+    {
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  if (!dustForecast || !dustHistory) {
     return (
       <Center height="100vh" fontSize={28} fontWeight={100} color="#ffffff">
         로딩 중...
@@ -44,13 +56,18 @@ const DustForecast = () => {
         mt={20}
         mb={4}
       >
-        {cityName}의 미세먼지 농도는 다음과 같습니다.
+        {cityName}의 {FINE_DUST} 농도는 다음과 같습니다.
       </Text>
       <Text as="p" fontSize={20} fontWeight={300} color="#ffffff" mb={6}>
         {dataTime} 기준
       </Text>
       <Box borderRadius={10} mb={20} py={10} px={8} bg="#ffffff">
-        <Flex alignItems="center" pb={10} borderBottom="1px solid #dfdfdf">
+        <Flex
+          alignItems="center"
+          pb={10}
+          mb={14}
+          borderBottom="1px solid #dfdfdf"
+        >
           <Box flexGrow={1} borderRight="1px solid #dfdfdf">
             <Text as="p" fontSize={22} fontWeight={600} mb={2}>
               {FINE_DUST}
@@ -78,6 +95,25 @@ const DustForecast = () => {
             </Flex>
           </Box>
         </Flex>
+        <Box mb={14}>
+          <Flex direction="column" alignItems="center" mb={4}>
+            <Text as="p" fontSize={22} fontWeight={600} textAlign="center">
+              시간별 {FINE_DUST} 농도
+            </Text>
+            <Text
+              as="p"
+              fontSize={16}
+              fontWeight={400}
+              textAlign="center"
+              mt={2}
+              mb={4}
+            >
+              {dataTime.split(' ')[0]}
+            </Text>
+            <AirPollutionLevels direction="row" />
+          </Flex>
+          <DustChart history={dustHistory} />
+        </Box>
         <Flex direction="column" mt={10}>
           <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
             기상 예보

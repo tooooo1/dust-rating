@@ -1,48 +1,56 @@
-import { Box } from '@chakra-ui/react';
+import { Flex, Box } from '@chakra-ui/react';
 import { DUST_SCALE_COLOR } from '@/utils/map';
 
-export const AirPollutionLevels = () => {
+interface AirPollutionLevelsProps {
+  direction: 'row' | 'column';
+}
+
+export const AirPollutionLevels = ({
+  direction = 'row',
+}: AirPollutionLevelsProps) => {
   return (
-    <Box
+    <Flex
+      flexDirection={direction}
+      ml={2}
+      fontSize={14}
+      fontWeight={500}
       textAlign="center"
-      marginLeft="0.6rem"
-      fontSize="1rem"
-      minWidth="3rem"
-      minHeight="5rem"
-      display="flex"
-      flexDirection="column"
-      rowGap="1"
       color="#ffffff"
+      gap={1}
     >
       <Box
         backgroundColor={DUST_SCALE_COLOR.DANGER}
-        borderRadius="1rem"
-        padding="0.2rem 0 0.2rem 0"
+        borderRadius={20}
+        p={3}
+        py="0.3rem"
       >
         매우
       </Box>
       <Box
         backgroundColor={DUST_SCALE_COLOR.BAD}
-        borderRadius="1rem"
-        padding="0.2rem 0 0.2rem 0"
+        borderRadius={20}
+        px={3}
+        py="0.3rem"
       >
         나쁨
       </Box>
       <Box
         backgroundColor={DUST_SCALE_COLOR.NORMAL}
-        borderRadius="1rem"
-        padding="0.2rem 0 0.2rem 0"
+        borderRadius={20}
+        px={3}
+        py="0.3rem"
       >
         보통
       </Box>
       <Box
         backgroundColor={DUST_SCALE_COLOR.GOOD}
-        borderRadius="1rem"
-        padding="0.2rem 0 0.2rem 0"
+        borderRadius={20}
+        px={3}
+        py="0.3rem"
       >
         좋음
       </Box>
-    </Box>
+    </Flex>
   );
 };
 

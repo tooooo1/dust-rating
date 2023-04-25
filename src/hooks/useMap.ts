@@ -1,14 +1,13 @@
 import { useEffect, useState, RefObject } from 'react';
 import { INIT_LOCATION, CENTER_LOCATION, SIDO_GROUP } from '@/utils/constants';
-
-const INIT_ZOOM_LEVEL = 5;
-const MAX_ZOOM_LEVEL = 8;
+import { INIT_ZOOM_LEVEL, CITY_ZOOM_LEVEL, MAX_ZOOM_LEVEL } from '@/utils/map';
 
 interface useMapProps {
   mapRef: RefObject<HTMLElement>;
+  cityDustInfoMarkers?: kakao.maps.CustomOverlay[];
 }
 
-const useMap = ({ mapRef }: useMapProps) => {
+const useMap = ({ mapRef, cityDustInfoMarkers }: useMapProps) => {
   const [myDeviceLocation, setMyDeviceLocation] = useState(INIT_LOCATION);
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [zoomLevel, setZoomLevel] = useState(INIT_ZOOM_LEVEL);
@@ -115,6 +114,24 @@ const useMap = ({ mapRef }: useMapProps) => {
     });
   }, [map]);
 
+  useEffect(() => {
+    if (!map) return;
+
+    kakao.maps.event.addListener(map, 'zoom_changed', () => {
+      const zoomLevel = map.getLevel();
+      setZoomLevel(zoomLevel);
+      if (CITY_ZOOM_LEVEL <= zoomLevel && zoomLevel <= MAX_ZOOM_LEVEL) {
+        cityDustInfoMarkers?.forEach((value) => {
+          value.setMap(null);
+        });
+      } else {
+        cityDustInfoMarkers?.forEach((value) => {
+          value.setMap(map);
+        });
+      }
+    });
+  }, [cityDustInfoMarkers]);
+
   const handleCurrentLocationChange = () => {
     if (!map) return;
 
@@ -125,6 +142,10 @@ const useMap = ({ mapRef }: useMapProps) => {
         myDeviceLocation.longitude
       )
     );
+    setCurrentLocation({
+      latitude: myDeviceLocation.latitude,
+      longitude: myDeviceLocation.longitude,
+    });
   };
 
   const handleZoomIn = () => {
@@ -141,13 +162,22 @@ const useMap = ({ mapRef }: useMapProps) => {
     map.setLevel(zoomLevel + 1, { animate: true });
   };
 
-  const handleFullScreenChange = () => {
+  const handleFullScreenChange = (
+    cityDustInfoMarkers: kakao.maps.CustomOverlay[]
+  ) => {
     if (!map) return;
 
     map.setLevel(MAX_ZOOM_LEVEL, { animate: true });
     map.setCenter(
       new kakao.maps.LatLng(CENTER_LOCATION.latitude, CENTER_LOCATION.longitude)
     );
+
+    if (cityDustInfoMarkers.length) {
+      cityDustInfoMarkers.forEach((marker) => {
+        marker.setMap(null);
+      });
+    }
+    setZoomLevel(MAX_ZOOM_LEVEL);
   };
 
   return {

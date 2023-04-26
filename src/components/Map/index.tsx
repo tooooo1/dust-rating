@@ -169,20 +169,22 @@ const Map = () => {
     };
   }, [airQualityByCity]);
 
+  const handleClickMarker = (city: Element) => {
+    setCity(city.id);
+    if (city instanceof HTMLElement) {
+      city.dataset.finedustgrade
+        ? setFineDustScale(+city.dataset.finedustgrade)
+        : '';
+      city.dataset.ultrafinedustgrade
+        ? setUltraFineDustScale(+city.dataset.ultrafinedustgrade)
+        : '';
+    }
+    onOpen();
+  };
+
   useEffect(() => {
     document.querySelectorAll('.dust-info-marker').forEach((city) => {
-      city.addEventListener('click', () => {
-        setCity(city.id);
-        if (city instanceof HTMLElement) {
-          city.dataset.finedustgrade
-            ? setFineDustScale(+city.dataset.finedustgrade)
-            : '';
-          city.dataset.ultrafinedustgrade
-            ? setUltraFineDustScale(+city.dataset.ultrafinedustgrade)
-            : '';
-        }
-        onOpen();
-      });
+      city.addEventListener('click', () => handleClickMarker(city));
     });
 
     return () => {

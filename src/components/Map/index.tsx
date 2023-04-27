@@ -179,18 +179,35 @@ const Map = () => {
         ? setUltraFineDustScale(+city.dataset.ultrafinedustgrade)
         : '';
     }
+
     onOpen();
   };
 
+  const handleMouseOver = (city: HTMLElement) => {
+    if (city.parentElement) city.parentElement.style.zIndex = '100';
+    city.style['color'] = 'yellow';
+  };
+
+  const handleMouseOut = (city: HTMLElement) => {
+    if (city.parentElement) city.parentElement.style.zIndex = '0';
+    city.style['color'] = 'white';
+  };
+
   useEffect(() => {
-    document.querySelectorAll('.dust-info-marker').forEach((city) => {
-      city.addEventListener('click', () => handleClickMarker(city));
-    });
+    document
+      .querySelectorAll<HTMLElement>('.dust-info-marker')
+      .forEach((city) => {
+        city.addEventListener('click', () => handleClickMarker(city));
+        city.addEventListener('mouseover', () => handleMouseOver(city));
+        city.addEventListener('mouseout', () => handleMouseOut(city));
+      });
 
     return () => {
-      document.querySelectorAll('.dust-info-marker').forEach((city) => {
-        city.removeEventListener('click', onOpen);
-      });
+      document
+        .querySelectorAll<HTMLElement>('.dust-info-marker')
+        .forEach((city) => {
+          city.removeEventListener('click', onOpen);
+        });
     };
   }, [cityDustInfoMarkers, currentLocation]);
 

@@ -175,16 +175,14 @@ const Map = () => {
     };
   }, [airQualityByCity]);
 
-  const handleClickMarker = useCallback((city: Element) => {
+  const handleClickMarker = useCallback((city: HTMLElement) => {
     setCity(city.id);
-    if (city instanceof HTMLElement) {
-      city.dataset.finedustgrade
-        ? setFineDustScale(+city.dataset.finedustgrade)
-        : '';
-      city.dataset.ultrafinedustgrade
-        ? setUltraFineDustScale(+city.dataset.ultrafinedustgrade)
-        : '';
-    }
+    city.dataset.finedustgrade
+      ? setFineDustScale(+city.dataset.finedustgrade)
+      : '';
+    city.dataset.ultrafinedustgrade
+      ? setUltraFineDustScale(+city.dataset.ultrafinedustgrade)
+      : '';
     onOpen();
   }, []);
 

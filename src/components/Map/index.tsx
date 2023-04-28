@@ -189,14 +189,16 @@ const Map = () => {
   }, []);
 
   const handleMouseOverMarker = useCallback((city: HTMLElement) => {
-    if (city.parentElement)
+    if (city.parentElement) {
       city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OVER;
+    }
     city.style.color = COLOR_MARKER_MOUSE_OVER;
   }, []);
 
   const handleMouseOutMarker = useCallback((city: HTMLElement) => {
-    if (city.parentElement)
+    if (city.parentElement) {
       city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OUT;
+    }
     city.style.color = COLOR_MARKER_MOUSE_OUT;
   }, []);
 

@@ -202,7 +202,7 @@ const Map = () => {
 
   useEffect(() => {
     document
-      .querySelectorAll<HTMLElement>('.dust-info-marker')
+      .querySelectorAll<HTMLDivElement>('.dust-info-marker')
       .forEach((city) => {
         city.onclick = () => handleClickMarker(city);
         city.onmouseover = () => handleMouseOverMarker(city);
@@ -211,7 +211,7 @@ const Map = () => {
 
     return () => {
       document
-        .querySelectorAll<HTMLElement>('.dust-info-marker')
+        .querySelectorAll<HTMLDivElement>('.dust-info-marker')
         .forEach((city) => {
           city.removeEventListener('click', () => handleClickMarker(city));
           city.removeEventListener('mouseover', () =>

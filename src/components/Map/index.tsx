@@ -177,24 +177,27 @@ const Map = () => {
 
   const handleClickMarker = useCallback((city: HTMLDivElement) => {
     setCity(city.id);
-    city.dataset.finedustgrade && setFineDustScale(+city.dataset.finedustgrade);
-    city.dataset.ultrafinedustgrade &&
+    if (city.dataset.finedustgrade) {
+      setFineDustScale(+city.dataset.finedustgrade);
+    }
+    if (city.dataset.ultrafinedustgrade) {
       setUltraFineDustScale(+city.dataset.ultrafinedustgrade);
+    }
     onOpen();
   }, []);
 
   const handleMouseOverMarker = useCallback((city: HTMLDivElement) => {
+    city.style.color = COLOR_MARKER_MOUSE_OVER;
     if (city.parentElement) {
       city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OVER;
     }
-    city.style.color = COLOR_MARKER_MOUSE_OVER;
   }, []);
 
   const handleMouseOutMarker = useCallback((city: HTMLDivElement) => {
+    city.style.color = COLOR_MARKER_MOUSE_OUT;
     if (city.parentElement) {
       city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OUT;
     }
-    city.style.color = COLOR_MARKER_MOUSE_OUT;
   }, []);
 
   useEffect(() => {

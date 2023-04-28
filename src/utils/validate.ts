@@ -11,5 +11,6 @@ export const dustScaleValidate = (scale: DustValidity) => {
   ) {
     return false;
   }
+
   return true;
 };

@@ -21,6 +21,12 @@ import { getAllLocation } from '@/apis/location';
 import { getSidoAirQualities, getCityAirQualities } from '@/apis/airQuality';
 import { getDustScaleColor } from '@/utils/map';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import {
+  COLOR_MARKER_MOUSE_OUT,
+  COLOR_MARKER_MOUSE_OVER,
+  ZINDEX_MARKER_MOUSE_OUT,
+  ZINDEX_MARKER_MOUSE_OVER,
+} from '@/utils/map';
 import useMap from '@/hooks/useMap';
 import { MAX_ZOOM_LEVEL, CITY_ZOOM_LEVEL } from '@/utils/map';
 import type { CityAirQuality } from '@/types/dust';
@@ -183,13 +189,15 @@ const Map = () => {
   }, []);
 
   const handleMouseOver = useCallback((city: HTMLElement) => {
-    if (city.parentElement) city.parentElement.style.zIndex = '100';
-    city.style['color'] = 'yellow';
+    if (city.parentElement)
+      city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OVER;
+    city.style['color'] = COLOR_MARKER_MOUSE_OVER;
   }, []);
 
   const handleMouseOut = useCallback((city: HTMLElement) => {
-    if (city.parentElement) city.parentElement.style.zIndex = '0';
-    city.style['color'] = 'white';
+    if (city.parentElement)
+      city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OUT;
+    city.style['color'] = COLOR_MARKER_MOUSE_OUT;
   }, []);
 
   useEffect(() => {

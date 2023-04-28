@@ -177,12 +177,9 @@ const Map = () => {
 
   const handleClickMarker = useCallback((city: HTMLElement) => {
     setCity(city.id);
-    city.dataset.finedustgrade
-      ? setFineDustScale(+city.dataset.finedustgrade)
-      : '';
-    city.dataset.ultrafinedustgrade
-      ? setUltraFineDustScale(+city.dataset.ultrafinedustgrade)
-      : '';
+    city.dataset.finedustgrade && setFineDustScale(+city.dataset.finedustgrade);
+    city.dataset.ultrafinedustgrade &&
+      setUltraFineDustScale(+city.dataset.ultrafinedustgrade);
     onOpen();
   }, []);
 
@@ -222,7 +219,7 @@ const Map = () => {
           );
         });
     };
-  }, [cityDustInfoMarkers, currentLocation]);
+  }, [cityDustInfoMarkers, currentLocation, zoomLevel]);
 
   return (
     <Box position="relative" width="100%" height="100%">

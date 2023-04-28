@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import {
   VStack,
   Box,
@@ -169,7 +169,7 @@ const Map = () => {
     };
   }, [airQualityByCity]);
 
-  const handleClickMarker = (city: Element) => {
+  const handleClickMarker = useCallback((city: Element) => {
     setCity(city.id);
     if (city instanceof HTMLElement) {
       city.dataset.finedustgrade
@@ -179,34 +179,35 @@ const Map = () => {
         ? setUltraFineDustScale(+city.dataset.ultrafinedustgrade)
         : '';
     }
-
     onOpen();
-  };
+  }, []);
 
-  const handleMouseOver = (city: HTMLElement) => {
+  const handleMouseOver = useCallback((city: HTMLElement) => {
     if (city.parentElement) city.parentElement.style.zIndex = '100';
     city.style['color'] = 'yellow';
-  };
+  }, []);
 
-  const handleMouseOut = (city: HTMLElement) => {
+  const handleMouseOut = useCallback((city: HTMLElement) => {
     if (city.parentElement) city.parentElement.style.zIndex = '0';
     city.style['color'] = 'white';
-  };
+  }, []);
 
   useEffect(() => {
     document
       .querySelectorAll<HTMLElement>('.dust-info-marker')
       .forEach((city) => {
-        city.addEventListener('click', () => handleClickMarker(city));
-        city.addEventListener('mouseover', () => handleMouseOver(city));
-        city.addEventListener('mouseout', () => handleMouseOut(city));
+        city.onclick = () => handleClickMarker(city);
+        city.onmouseover = () => handleMouseOver(city);
+        city.onmouseout = () => handleMouseOut(city);
       });
 
     return () => {
       document
         .querySelectorAll<HTMLElement>('.dust-info-marker')
         .forEach((city) => {
-          city.removeEventListener('click', onOpen);
+          city.removeEventListener('click', () => handleClickMarker(city));
+          city.removeEventListener('mouseover', () => handleMouseOver(city));
+          city.removeEventListener('mouseout', () => handleMouseOut(city));
         });
     };
   }, [cityDustInfoMarkers, currentLocation]);

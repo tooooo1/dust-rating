@@ -188,13 +188,13 @@ const Map = () => {
     onOpen();
   }, []);
 
-  const handleMouseOver = useCallback((city: HTMLElement) => {
+  const handleMouseOverMarker = useCallback((city: HTMLElement) => {
     if (city.parentElement)
       city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OVER;
     city.style['color'] = COLOR_MARKER_MOUSE_OVER;
   }, []);
 
-  const handleMouseOut = useCallback((city: HTMLElement) => {
+  const handleMouseOutMarker = useCallback((city: HTMLElement) => {
     if (city.parentElement)
       city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OUT;
     city.style['color'] = COLOR_MARKER_MOUSE_OUT;
@@ -205,8 +205,8 @@ const Map = () => {
       .querySelectorAll<HTMLElement>('.dust-info-marker')
       .forEach((city) => {
         city.onclick = () => handleClickMarker(city);
-        city.onmouseover = () => handleMouseOver(city);
-        city.onmouseout = () => handleMouseOut(city);
+        city.onmouseover = () => handleMouseOverMarker(city);
+        city.onmouseout = () => handleMouseOutMarker(city);
       });
 
     return () => {
@@ -214,8 +214,12 @@ const Map = () => {
         .querySelectorAll<HTMLElement>('.dust-info-marker')
         .forEach((city) => {
           city.removeEventListener('click', () => handleClickMarker(city));
-          city.removeEventListener('mouseover', () => handleMouseOver(city));
-          city.removeEventListener('mouseout', () => handleMouseOut(city));
+          city.removeEventListener('mouseover', () =>
+            handleMouseOverMarker(city)
+          );
+          city.removeEventListener('mouseout', () =>
+            handleMouseOutMarker(city)
+          );
         });
     };
   }, [cityDustInfoMarkers, currentLocation]);

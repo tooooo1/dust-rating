@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import {
   VStack,
   Box,
@@ -21,6 +21,12 @@ import { getAllLocation } from '@/apis/location';
 import { getSidoAirQualities, getCityAirQualities } from '@/apis/airQuality';
 import { getDustScaleColor } from '@/utils/map';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import {
+  COLOR_MARKER_MOUSE_OUT,
+  COLOR_MARKER_MOUSE_OVER,
+  ZINDEX_MARKER_MOUSE_OUT,
+  ZINDEX_MARKER_MOUSE_OVER,
+} from '@/utils/map';
 import useMap from '@/hooks/useMap';
 import { MAX_ZOOM_LEVEL, CITY_ZOOM_LEVEL } from '@/utils/map';
 import type { CityAirQuality } from '@/types/dust';
@@ -169,28 +175,54 @@ const Map = () => {
     };
   }, [airQualityByCity]);
 
+  const handleClickMarker = useCallback((city: HTMLDivElement) => {
+    setCity(city.id);
+    if (city.dataset.finedustgrade) {
+      setFineDustScale(+city.dataset.finedustgrade);
+    }
+    if (city.dataset.ultrafinedustgrade) {
+      setUltraFineDustScale(+city.dataset.ultrafinedustgrade);
+    }
+    onOpen();
+  }, []);
+
+  const handleMouseOverMarker = useCallback((city: HTMLDivElement) => {
+    city.style.color = COLOR_MARKER_MOUSE_OVER;
+    if (city.parentElement) {
+      city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OVER;
+    }
+  }, []);
+
+  const handleMouseOutMarker = useCallback((city: HTMLDivElement) => {
+    city.style.color = COLOR_MARKER_MOUSE_OUT;
+    if (city.parentElement) {
+      city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OUT;
+    }
+  }, []);
+
   useEffect(() => {
-    document.querySelectorAll('.dust-info-marker').forEach((city) => {
-      city.addEventListener('click', () => {
-        setCity(city.id);
-        if (city instanceof HTMLElement) {
-          city.dataset.finedustgrade
-            ? setFineDustScale(+city.dataset.finedustgrade)
-            : '';
-          city.dataset.ultrafinedustgrade
-            ? setUltraFineDustScale(+city.dataset.ultrafinedustgrade)
-            : '';
-        }
-        onOpen();
+    document
+      .querySelectorAll<HTMLDivElement>('.dust-info-marker')
+      .forEach((city) => {
+        city.onclick = () => handleClickMarker(city);
+        city.onmouseover = () => handleMouseOverMarker(city);
+        city.onmouseout = () => handleMouseOutMarker(city);
       });
-    });
 
     return () => {
-      document.querySelectorAll('.dust-info-marker').forEach((city) => {
-        city.removeEventListener('click', onOpen);
-      });
+      document
+        .querySelectorAll<HTMLDivElement>('.dust-info-marker')
+        .forEach((city) => {
+          city.removeEventListener('click', () => handleClickMarker(city));
+          city.removeEventListener('mouseover', () =>
+            handleMouseOverMarker(city)
+          );
+          city.removeEventListener('mouseout', () =>
+            handleMouseOutMarker(city)
+          );
+        });
     };
-  }, [cityDustInfoMarkers, currentLocation]);
+  }, [cityDustInfoMarkers, currentLocation, zoomLevel]);
 
   return (
     <Box position="relative" width="100%" height="100%">

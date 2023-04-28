@@ -19,3 +19,8 @@ export const getDustScaleColor = (scale: number) => {
     return DUST_SCALE_COLOR.GOOD;
   }
 };
+
+export const COLOR_MARKER_MOUSE_OVER = 'yellow';
+export const COLOR_MARKER_MOUSE_OUT = 'white';
+export const ZINDEX_MARKER_MOUSE_OVER = '100';
+export const ZINDEX_MARKER_MOUSE_OUT = '0';

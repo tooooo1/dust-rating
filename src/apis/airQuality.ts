@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { SIDO_GROUP } from '@/utils/constants';
+import { dustScaleValidate } from '@/utils/validate';
 import type { DustValidity, Dust } from '@/types/dust';
 
 const { VITE_AIR_QUALITY_URL, VITE_AIR_QUALITY_API_KEY } = import.meta.env;
@@ -21,13 +22,7 @@ export const getSidoAirQualities = async () => {
         }
 
         const airQuality = response.data.response.body.items.find(
-          (scale: DustValidity) =>
-            !scale.pm10Flag &&
-            !scale.pm25Flag &&
-            Number(scale.pm10Value) &&
-            Number(scale.pm25Value) &&
-            Number(scale.pm10Grade) &&
-            Number(scale.pm25Grade)
+          (scale: DustValidity) => dustScaleValidate(scale)
         );
 
         return {
@@ -55,13 +50,7 @@ export const getSidoAirQuality = async (sido: string) => {
     }
 
     const airQuality = response.data.response.body.items.find(
-      (scale: DustValidity) =>
-        !scale.pm10Flag &&
-        !scale.pm25Flag &&
-        Number(scale.pm10Value) &&
-        Number(scale.pm25Value) &&
-        Number(scale.pm10Grade) &&
-        Number(scale.pm25Grade)
+      (scale: DustValidity) => dustScaleValidate(scale)
     );
 
     return {
@@ -88,13 +77,7 @@ export const getCityAirQualities = async (sido: string) => {
     }
 
     const airQualities = response.data.response.body.items.filter(
-      (scale: DustValidity) =>
-        !scale.pm10Flag &&
-        !scale.pm25Flag &&
-        Number(scale.pm10Value) &&
-        Number(scale.pm25Value) &&
-        Number(scale.pm10Grade) &&
-        Number(scale.pm25Grade)
+      (scale: DustValidity) => dustScaleValidate(scale)
     );
 
     return airQualities.map((airQuality: DustStation) => ({

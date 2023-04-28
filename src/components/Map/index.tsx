@@ -175,7 +175,7 @@ const Map = () => {
     };
   }, [airQualityByCity]);
 
-  const handleClickMarker = useCallback((city: HTMLElement) => {
+  const handleClickMarker = useCallback((city: HTMLDivElement) => {
     setCity(city.id);
     city.dataset.finedustgrade && setFineDustScale(+city.dataset.finedustgrade);
     city.dataset.ultrafinedustgrade &&
@@ -183,14 +183,14 @@ const Map = () => {
     onOpen();
   }, []);
 
-  const handleMouseOverMarker = useCallback((city: HTMLElement) => {
+  const handleMouseOverMarker = useCallback((city: HTMLDivElement) => {
     if (city.parentElement) {
       city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OVER;
     }
     city.style.color = COLOR_MARKER_MOUSE_OVER;
   }, []);
 
-  const handleMouseOutMarker = useCallback((city: HTMLElement) => {
+  const handleMouseOutMarker = useCallback((city: HTMLDivElement) => {
     if (city.parentElement) {
       city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OUT;
     }

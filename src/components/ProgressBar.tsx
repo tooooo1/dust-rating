@@ -11,33 +11,38 @@ interface ProgressBarProps {
   state: number;
 }
 
-const ProgressBar = ({ children, id, state }: ProgressBarProps) => (
-  <DustProgressWrapper id={id}>
-    <DustWrapperFlex>
-      <div>{children}</div>
-      <DustFigure>{state}</DustFigure>
-    </DustWrapperFlex>
-    <ProgressWrapper>
-      <Progress
-        percent={+state * (1 / 100) * 100}
-        theme={{
-          success: {
-            symbol: ' ',
-            color: 'rgb(223, 105, 180)',
-          },
-          active: {
-            symbol: ' ',
-            color: '#fbc630',
-          },
-          default: {
-            symbol: ' ',
-            color: '#fbc630',
-          },
-        }}
-      />
-    </ProgressWrapper>
-  </DustProgressWrapper>
-);
+const ProgressBar = ({ children, id, state }: ProgressBarProps) => {
+  const percent = +state * (1 / 100) * 100;
+  const percentOfDustContamination = percent > 100 ? 100 : percent;
+
+  return (
+    <DustProgressWrapper id={id}>
+      <DustWrapperFlex>
+        <div>{children}</div>
+        <DustFigure>{state}</DustFigure>
+      </DustWrapperFlex>
+      <ProgressWrapper>
+        <Progress
+          percent={percentOfDustContamination}
+          theme={{
+            success: {
+              symbol: ' ',
+              color: 'rgb(223, 105, 180)',
+            },
+            active: {
+              symbol: ' ',
+              color: '#fbc630',
+            },
+            default: {
+              symbol: ' ',
+              color: '#fbc630',
+            },
+          }}
+        />
+      </ProgressWrapper>
+    </DustProgressWrapper>
+  );
+};
 
 export default ProgressBar;
 

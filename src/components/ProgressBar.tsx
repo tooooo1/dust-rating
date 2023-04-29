@@ -6,19 +6,19 @@ import { Progress } from 'react-sweet-progress';
 import styled from '@emotion/styled';
 
 interface ProgressBarProps {
-  children: React.ReactNode;
+  kindOfDust: string;
   id: string;
   state: number;
 }
 
-const ProgressBar = ({ children, id, state }: ProgressBarProps) => {
+const ProgressBar = ({ kindOfDust, id, state }: ProgressBarProps) => {
   const percent = +state * (1 / 100) * 100;
   const percentOfDustContamination = percent > 100 ? 100 : percent;
 
   return (
     <DustProgressWrapper id={id}>
       <DustWrapperFlex>
-        <div>{children}</div>
+        <div>{kindOfDust}</div>
         <DustFigure>{state}</DustFigure>
       </DustWrapperFlex>
       <ProgressWrapper>

@@ -1,9 +1,8 @@
 import 'react-sweet-progress/lib/style.css';
-
-import React from 'react';
 // @ts-ignore
 import { Progress } from 'react-sweet-progress';
 import styled from '@emotion/styled';
+import { Flex, useMediaQuery } from '@chakra-ui/react';
 
 interface ProgressBarProps {
   kindOfDust: string;
@@ -14,14 +13,30 @@ interface ProgressBarProps {
 const ProgressBar = ({ kindOfDust, id, state }: ProgressBarProps) => {
   const percent = +state * (1 / 100) * 100;
   const percentOfDustContamination = percent > 100 ? 100 : percent;
+  const [isLargerThan768] = useMediaQuery('min-width: 768px');
 
   return (
     <DustProgressWrapper id={id}>
-      <DustWrapperFlex>
+      <Flex
+        display="flex"
+        width="30%"
+        fontSize={isLargerThan768 ? '3vw' : '18px'}
+        alignItems="center"
+        fontWeight="500"
+        justifyContent="space-between"
+        margin={isLargerThan768 ? ' 0 30px' : '0 0.5rem'}
+      >
         <div>{kindOfDust}</div>
-        <DustFigure>{state}</DustFigure>
-      </DustWrapperFlex>
-      <ProgressWrapper>
+        <Flex
+          display="flex"
+          marginLeft={isLargerThan768 ? '20px' : '2vw'}
+          fontWeight="800"
+          fontSize={isLargerThan768 ? 'md' : '18px'}
+        >
+          {state}
+        </Flex>
+      </Flex>
+      <Flex width="60%" fontSize={isLargerThan768 ? '20px' : 'md'}>
         <Progress
           percent={percentOfDustContamination}
           theme={{
@@ -39,43 +54,12 @@ const ProgressBar = ({ kindOfDust, id, state }: ProgressBarProps) => {
             },
           }}
         />
-      </ProgressWrapper>
+      </Flex>
     </DustProgressWrapper>
   );
 };
 
 export default ProgressBar;
-
-const DustWrapperFlex = styled.div`
-  display: flex;
-  width: 30%;
-  font-size: 3vw;
-  align-items: center;
-  font-weight: 500;
-  justify-content: space-between;
-  margin: 0 0.5rem;
-  @media only screen and (min-width: 768px) {
-    font-size: 18px;
-    margin: 0 30px;
-  }
-`;
-const DustFigure = styled.div`
-  display: flex;
-  margin-left: 2vw;
-  font-weight: 800;
-  @media only screen and (min-width: 768px) {
-    font-size: 18px;
-    margin-left: 20px;
-  }
-`;
-
-const ProgressWrapper = styled.div`
-  display: flex;
-  width: 60%;
-  @media only screen and (min-width: 768px) {
-    font-size: 20px;
-  }
-`;
 
 const DustProgressWrapper = styled.div`
   display: flex;

@@ -11,7 +11,7 @@ interface ProgressBarProps {
 }
 
 const ProgressBar = ({ kindOfDust, id, state }: ProgressBarProps) => {
-  const percent = +state * (1 / 100) * 100;
+  const percent = state * (1 / 100) * 100;
   const percentOfDustContamination = percent > 100 ? 100 : percent;
   const [isLargerThan768] = useMediaQuery('min-width: 768px');
 

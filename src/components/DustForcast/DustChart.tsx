@@ -8,10 +8,11 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { Center } from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/react';
 import { getDustHistory } from '@/apis/dustHistory';
 import { DUST_SCALE_COLOR } from '@/utils/map';
 import { FINE_DUST, ULTRA_FINE_DUST, DUST_GRADE } from '@/utils/constants';
+import type { DustHistory } from '@/types/dust';
 import styled from '@emotion/styled';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
@@ -19,14 +20,6 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 const options = {
   responsive: false,
 };
-
-interface DustHistory {
-  hour: string;
-  fineDustScale: number;
-  fineDustGrade: number;
-  ultraFineDustScale: number;
-  ultraFineDustGrade: number;
-}
 
 interface DustChartProps {
   cityName: string;
@@ -43,7 +36,7 @@ const DustChart = ({ cityName }: DustChartProps) => {
   );
 
   if (!dustHistory) {
-    return <Center my={10}>미세먼지 데이터를 불러오지 못했어요.</Center>;
+    return <Spinner my={10} />;
   }
 
   const dustData = {

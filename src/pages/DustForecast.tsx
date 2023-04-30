@@ -1,10 +1,8 @@
 import { useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { Center, Box, Text, Flex } from '@chakra-ui/react';
+import { Box, Text, Flex } from '@chakra-ui/react';
 import { DustState } from '@/components/Dust';
-import DustChart from '@/components/DustChart';
+import DustChart from '@/components/DustForcast/DustChart';
 import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
-import { getDustHistory } from '@/apis/dustHistory';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import type { CityAirQuality } from '@/types/dust';
 import ForcastInfo from '@/components/DustForcast/ForcastInfo';
@@ -19,23 +17,6 @@ const DustForecast = () => {
     ultraFineDustGrade,
     dataTime,
   }: CityAirQuality = location.state;
-
-  const { data: dustHistory } = useQuery(
-    ['dust-history', cityName],
-    () => getDustHistory(cityName),
-    {
-      staleTime: 1000 * 60 * 5,
-      refetchOnWindowFocus: false,
-    }
-  );
-
-  if (!dustHistory) {
-    return (
-      <Center height="100vh" fontSize={28} fontWeight={100} color="#ffffff">
-        로딩 중...
-      </Center>
-    );
-  }
 
   return (
     <Box textAlign="center">
@@ -103,7 +84,7 @@ const DustForecast = () => {
             </Text>
             <AirPollutionLevels direction="row" />
           </Flex>
-          <DustChart history={dustHistory} />
+          <DustChart cityName={cityName} />
         </Box>
         <ForcastInfo cityName={cityName} />
       </Box>

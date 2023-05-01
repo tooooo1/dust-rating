@@ -6,15 +6,16 @@ import { Flex, Box } from '@chakra-ui/react';
 
 interface ProgressBarProps {
   kindOfDust: string;
+  id: string;
   state: number;
 }
 
-const ProgressBar = ({ kindOfDust, state }: ProgressBarProps) => {
+const ProgressBar = ({ kindOfDust, id, state }: ProgressBarProps) => {
   const percent = state * (1 / 100) * 100;
   const percentOfDustContamination = percent > 100 ? 100 : percent;
 
   return (
-    <DustProgressWrapper>
+    <DustProgressWrapper id={id}>
       <Flex
         justifyContent="space-between"
         alignItems="center"

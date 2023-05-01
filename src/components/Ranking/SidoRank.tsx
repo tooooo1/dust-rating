@@ -4,14 +4,11 @@ import { DustState } from '@/components/Dust';
 import CityRank from './CityRank';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
+import type { DustFigures } from '@/types/dust';
 
-interface SidoRankProps {
+interface SidoRankProps extends DustFigures {
   rank: number;
   sidoName: string;
-  fineDustScale: number;
-  ultraFineDustScale: number;
-  fineDustGrade: number;
-  ultraFineDustGrade: number;
 }
 
 const SidoRank = ({

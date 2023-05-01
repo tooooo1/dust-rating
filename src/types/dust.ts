@@ -18,11 +18,18 @@ export interface Dust extends DustScale {
   dataTime: string;
 }
 
-export interface CityAirQuality {
-  cityName: string;
+export interface DustFigures {
   fineDustScale: number;
   fineDustGrade: number;
   ultraFineDustScale: number;
   ultraFineDustGrade: number;
+}
+
+export interface CityAirQuality extends DustFigures {
+  cityName: string;
   dataTime: string;
+}
+
+export interface DustHistory extends DustFigures {
+  hour: string;
 }

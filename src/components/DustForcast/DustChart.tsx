@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -7,8 +8,11 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { Spinner } from '@chakra-ui/react';
+import { getDustHistory } from '@/apis/dustHistory';
 import { DUST_SCALE_COLOR } from '@/utils/map';
 import { FINE_DUST, ULTRA_FINE_DUST, DUST_GRADE } from '@/utils/constants';
+import type { DustHistory } from '@/types/dust';
 import styled from '@emotion/styled';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
@@ -17,34 +21,39 @@ const options = {
   responsive: false,
 };
 
-interface DustHistory {
-  hour: string;
-  fineDustScale: number;
-  fineDustGrade: number;
-  ultraFineDustScale: number;
-  ultraFineDustGrade: number;
-}
-
 interface DustChartProps {
-  history: DustHistory[];
+  cityName: string;
 }
 
-const DustChart = ({ history }: DustChartProps) => {
+const DustChart = ({ cityName }: DustChartProps) => {
+  const { data: dustHistories } = useQuery<DustHistory[]>(
+    ['dust-history', cityName],
+    () => getDustHistory(cityName),
+    {
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  if (!dustHistories) {
+    return <Spinner my={10} />;
+  }
+
   const dustData = {
-    labels: history.map((dust) => dust.hour),
+    labels: dustHistories.map((history) => history.hour),
     datasets: [
       {
         label: FINE_DUST,
-        data: history.map((dust) => dust.fineDustScale),
-        backgroundColor: history.map(
-          (dust) => DUST_SCALE_COLOR[DUST_GRADE[dust.fineDustGrade]]
+        data: dustHistories.map((history) => history.fineDustScale),
+        backgroundColor: dustHistories.map(
+          (history) => DUST_SCALE_COLOR[DUST_GRADE[history.fineDustGrade]]
         ),
       },
       {
         label: ULTRA_FINE_DUST,
-        data: history.map((dust) => dust.ultraFineDustScale),
-        backgroundColor: history.map(
-          (dust) => DUST_SCALE_COLOR[DUST_GRADE[dust.ultraFineDustGrade]]
+        data: dustHistories.map((history) => history.ultraFineDustScale),
+        backgroundColor: dustHistories.map(
+          (history) => DUST_SCALE_COLOR[DUST_GRADE[history.ultraFineDustGrade]]
         ),
       },
     ],

@@ -98,15 +98,16 @@ const Ranking = () => {
         <Center my={5}>
           <DustState dustGrade={dustAverageGrade} />
         </Center>
-        <ProgressBar id="fineDust" state={sidoAirQuality.fineDustScale}>
-          {FINE_DUST}
-        </ProgressBar>
         <ProgressBar
+          kindOfDust={FINE_DUST}
+          id="fineDust"
+          state={sidoAirQuality.fineDustScale}
+        />
+        <ProgressBar
+          kindOfDust={ULTRA_FINE_DUST}
           id="ultraFineDust"
           state={sidoAirQuality.ultraFineDustScale}
-        >
-          {ULTRA_FINE_DUST}
-        </ProgressBar>
+        />
       </Box>
       <Flex
         direction="column"

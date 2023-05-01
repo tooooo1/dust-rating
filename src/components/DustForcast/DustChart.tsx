@@ -26,7 +26,7 @@ interface DustChartProps {
 }
 
 const DustChart = ({ cityName }: DustChartProps) => {
-  const { data: dustHistory } = useQuery<DustHistory[]>(
+  const { data: dustHistories } = useQuery<DustHistory[]>(
     ['dust-history', cityName],
     () => getDustHistory(cityName),
     {
@@ -35,25 +35,25 @@ const DustChart = ({ cityName }: DustChartProps) => {
     }
   );
 
-  if (!dustHistory) {
+  if (!dustHistories) {
     return <Spinner my={10} />;
   }
 
   const dustData = {
-    labels: dustHistory.map((dust) => dust.hour),
+    labels: dustHistories.map((history) => history.hour),
     datasets: [
       {
         label: FINE_DUST,
-        data: dustHistory.map((dust) => dust.fineDustScale),
-        backgroundColor: dustHistory.map(
-          (dust) => DUST_SCALE_COLOR[DUST_GRADE[dust.fineDustGrade]]
+        data: dustHistories.map((history) => history.fineDustScale),
+        backgroundColor: dustHistories.map(
+          (history) => DUST_SCALE_COLOR[DUST_GRADE[history.fineDustGrade]]
         ),
       },
       {
         label: ULTRA_FINE_DUST,
-        data: dustHistory.map((dust) => dust.ultraFineDustScale),
-        backgroundColor: dustHistory.map(
-          (dust) => DUST_SCALE_COLOR[DUST_GRADE[dust.ultraFineDustGrade]]
+        data: dustHistories.map((history) => history.ultraFineDustScale),
+        backgroundColor: dustHistories.map(
+          (history) => DUST_SCALE_COLOR[DUST_GRADE[history.ultraFineDustGrade]]
         ),
       },
     ],

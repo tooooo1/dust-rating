@@ -2,41 +2,37 @@ import 'react-sweet-progress/lib/style.css';
 // @ts-ignore
 import { Progress } from 'react-sweet-progress';
 import styled from '@emotion/styled';
-import { Flex, useMediaQuery } from '@chakra-ui/react';
+import { Flex, Box } from '@chakra-ui/react';
 
 interface ProgressBarProps {
   kindOfDust: string;
-  id: string;
   state: number;
 }
 
-const ProgressBar = ({ kindOfDust, id, state }: ProgressBarProps) => {
+const ProgressBar = ({ kindOfDust, state }: ProgressBarProps) => {
   const percent = state * (1 / 100) * 100;
   const percentOfDustContamination = percent > 100 ? 100 : percent;
-  const [isLargerThan768] = useMediaQuery('min-width: 768px');
 
   return (
-    <DustProgressWrapper id={id}>
+    <DustProgressWrapper>
       <Flex
-        display="flex"
-        width="30%"
-        fontSize={isLargerThan768 ? '3vw' : '18px'}
-        alignItems="center"
-        fontWeight="500"
         justifyContent="space-between"
-        margin={isLargerThan768 ? ' 0 30px' : '0 0.5rem'}
+        alignItems="center"
+        width="30%"
+        fontSize={{ base: '3vw', md: '1.125rem' }}
+        margin={{ base: '0 1.875rem', md: '0 0.5rem' }}
+        fontWeight="500"
       >
-        <div>{kindOfDust}</div>
+        <Box>{kindOfDust}</Box>
         <Flex
-          display="flex"
-          marginLeft={isLargerThan768 ? '20px' : '2vw'}
+          marginLeft={{ base: '1.25rem', md: '2vw' }}
           fontWeight="800"
-          fontSize={isLargerThan768 ? 'md' : '18px'}
+          fontSize={{ base: 'md', md: '1.125rem' }}
         >
           {state}
         </Flex>
       </Flex>
-      <Flex width="60%" fontSize={isLargerThan768 ? '20px' : 'md'}>
+      <Flex width="60%" fontSize={{ base: '1.25rem', md: 'md' }}>
         <Progress
           percent={percentOfDustContamination}
           theme={{

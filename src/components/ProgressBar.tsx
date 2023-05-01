@@ -62,7 +62,7 @@ const DustProgressWrapper = styled.div`
   justify-content: space-between;
   margin-left: 7vw;
   font-size: 3vw;
-  padding-bottom: 5px;
+  padding-bottom: 0.3125rem;
   &#first {
     padding-top: 2vh;
   }
@@ -70,7 +70,7 @@ const DustProgressWrapper = styled.div`
     padding-bottom: 2.5vh;
   }
   @media only screen and (min-width: 768px) {
-    font-size: 18px;
-    margin-left: 15px;
+    font-size: 1.125rem;
+    margin-left: 0.9375rem;
   }
 `;

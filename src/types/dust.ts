@@ -25,7 +25,7 @@ export interface DustFigures {
   ultraFineDustGrade: number;
 }
 
-export interface CityAirQuality extends DustFigures {
+export interface CityDustInfo extends DustFigures {
   cityName: string;
   dataTime: string;
 }

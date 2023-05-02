@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { SIDO_GROUP } from '@/utils/constants';
 
-const { VITE_KAKAO_API_KEY, VITE_KAKAO_MAP_URL } = import.meta.env;
+const { VITE_KAKAO_MAP_URL, VITE_KAKAO_API_KEY } = import.meta.env;
 
 export const getAllLocation = async () => {
   try {

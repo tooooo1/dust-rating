@@ -18,7 +18,7 @@ import MapButton from './MapButton';
 import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
 import DustState from '@/components/Dust/DustState';
 import { getAllLocation } from '@/apis/location';
-import { getSidoAirQualities, getCityAirQualities } from '@/apis/airQuality';
+import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
 import { getDustScaleColor } from '@/utils/map';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import {
@@ -29,7 +29,7 @@ import {
 } from '@/utils/map';
 import useMap from '@/hooks/useMap';
 import { MAX_ZOOM_LEVEL, CITY_ZOOM_LEVEL } from '@/utils/map';
-import type { CityAirQuality } from '@/types/dust';
+import type { CityDustInfo } from '@/types/dust';
 
 declare global {
   interface Window {
@@ -58,36 +58,35 @@ const Map = () => {
     handleFullScreenChange,
   } = useMap({ mapRef, cityDustInfoMarkers });
 
-  const { data: airQualityBySido, isLoading: airQualityBySidoIsLoading } =
-    useQuery(['air-quality'], getSidoAirQualities, {
+  const { data: sidoDustInfos, isLoading: sidoDustInfosIsLoading } = useQuery(
+    ['sido-dust-infos'],
+    getSidoDustInfos,
+    {
       refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5,
-    });
+    }
+  );
 
-  const { data: airQualityByCity, isLoading: airQualityByCityIsLoading } =
-    useQuery<CityAirQuality[]>(
-      ['city-air-quality', currentCity],
-      () => getCityAirQualities(currentCity),
-      {
-        staleTime: 1000 * 60 * 5,
-      }
-    );
+  const { data: cityDustInfos, isLoading: cityDustInfosIsLoading } = useQuery<
+    CityDustInfo[]
+  >(['city-dust-infos', currentCity], () => getCityDustInfos(currentCity), {
+    staleTime: 1000 * 60 * 5,
+  });
 
   const { data: allLocation } = useQuery(['all-location'], getAllLocation, {
     staleTime: 1000 * 60 * 5,
   });
 
   useEffect(() => {
-    if (!map || !airQualityBySido || !allLocation) return;
+    if (!map || !sidoDustInfos || !allLocation) return;
 
-    airQualityBySido.forEach(
-      ({ sidoName, fineDustScale, ultraFineDustScale }) => {
-        const { latitude, longitude } = allLocation.filter(
-          (scale) => scale.sidoName === sidoName
-        )[0];
+    sidoDustInfos.forEach(({ sidoName, fineDustScale, ultraFineDustScale }) => {
+      const { latitude, longitude } = allLocation.filter(
+        (scale) => scale.sidoName === sidoName
+      )[0];
 
-        const backgroundColor = getDustScaleColor(fineDustScale);
-        const template = `
+      const backgroundColor = getDustScaleColor(fineDustScale);
+      const template = `
           <div class="dust-info-marker" style="background-color: ${backgroundColor};">
             <p class="city-name">${sidoName}</p>
             <div class="dust-info">
@@ -97,15 +96,15 @@ const Map = () => {
             </div>
           </div>`;
 
-        const marker = new kakao.maps.CustomOverlay({
-          clickable: true,
-          position: new kakao.maps.LatLng(latitude, longitude),
-          content: template,
-        });
+      const marker = new kakao.maps.CustomOverlay({
+        clickable: true,
+        position: new kakao.maps.LatLng(latitude, longitude),
+        content: template,
+      });
 
-        sidoDustInfoMarkers.push(marker);
-      }
-    );
+      sidoDustInfoMarkers.push(marker);
+    });
+
     sidoDustInfoMarkers.forEach((marker) => {
       marker.setMap(map);
     });
@@ -117,20 +116,20 @@ const Map = () => {
         });
       }
     };
-  }, [airQualityBySido, allLocation, sidoDustInfoMarkers]);
+  }, [sidoDustInfos, allLocation, sidoDustInfoMarkers]);
 
   useEffect(() => {
     if (
       !map ||
-      !airQualityByCity ||
-      airQualityByCityIsLoading ||
+      !cityDustInfos ||
+      cityDustInfosIsLoading ||
       (CITY_ZOOM_LEVEL <= zoomLevel && zoomLevel <= MAX_ZOOM_LEVEL)
     )
       return;
 
     const geocoder = new kakao.maps.services.Geocoder();
 
-    airQualityByCity.forEach(
+    cityDustInfos.forEach(
       ({
         cityName,
         fineDustScale,
@@ -173,7 +172,7 @@ const Map = () => {
         });
       }
     };
-  }, [airQualityByCity]);
+  }, [cityDustInfos]);
 
   const handleClickMarker = useCallback((city: HTMLDivElement) => {
     setCity(city.id);
@@ -244,11 +243,9 @@ const Map = () => {
           type="full-screen"
           onClick={() => handleFullScreenChange(cityDustInfoMarkers)}
         />
-        {zoomLevel === MAX_ZOOM_LEVEL && airQualityBySidoIsLoading && (
-          <Spinner />
-        )}
+        {zoomLevel === MAX_ZOOM_LEVEL && sidoDustInfosIsLoading && <Spinner />}
       </VStack>
-      {airQualityByCityIsLoading ? <Spinner zIndex={10} /> : ''}
+      {cityDustInfosIsLoading ? <Spinner zIndex={10} /> : ''}
       <Box position="absolute" bottom="1.5rem" zIndex={10}>
         <AirPollutionLevels direction="column" />
       </Box>

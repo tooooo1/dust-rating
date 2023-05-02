@@ -3,9 +3,9 @@ import { Flex, Text, Box } from '@chakra-ui/react';
 import DustState from '@/components/Dust/DustState';
 import { FINE_DUST, ROUTE, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
-import type { CityAirQuality } from '@/types/dust';
+import type { CityDustInfo } from '@/types/dust';
 
-interface RankItemProps extends CityAirQuality {
+interface RankItemProps extends CityDustInfo {
   rank: number;
 }
 

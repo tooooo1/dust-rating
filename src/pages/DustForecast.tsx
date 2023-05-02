@@ -3,7 +3,7 @@ import { Box, Text, Flex } from '@chakra-ui/react';
 import DustState from '@/components/common/DustState';
 import DustChart from '@/components/DustForcast/DustChart';
 import ForcastInfo from '@/components/DustForcast/ForcastInfo';
-import AirPollutionLevels from '@/components/common/DustLevel';
+import DustLevel from '@/components/common/DustLevel';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import type { CityDustInfo } from '@/types/dust';
 
@@ -82,7 +82,7 @@ const DustForecast = () => {
             >
               {dataTime.split(' ')[0]}
             </Text>
-            <AirPollutionLevels direction="row" />
+            <DustLevel direction="row" />
           </Flex>
           <DustChart cityName={cityName} />
         </Box>

@@ -14,8 +14,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import MapButton from './MapButton';
-import AirPollutionLevels from '@/components/common/DustLevel';
+import ControlButton from './ControlButton';
+import DustLevel from '@/components/common/DustLevel';
 import DustState from '@/components/common/DustState';
 import { getAllLocation } from '@/apis/location';
 import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
@@ -233,13 +233,13 @@ const Map = () => {
         }}
       />
       <VStack position="absolute" top="1rem" right="1rem" zIndex={10}>
-        <MapButton
+        <ControlButton
           type="current-location"
           onClick={handleCurrentLocationChange}
         />
-        <MapButton type="zoom-in" onClick={handleZoomIn} />
-        <MapButton type="zoom-out" onClick={handleZoomOut} />
-        <MapButton
+        <ControlButton type="zoom-in" onClick={handleZoomIn} />
+        <ControlButton type="zoom-out" onClick={handleZoomOut} />
+        <ControlButton
           type="full-screen"
           onClick={() => handleFullScreenChange(cityDustInfoMarkers)}
         />
@@ -247,7 +247,7 @@ const Map = () => {
       </VStack>
       {cityDustInfosIsLoading ? <Spinner zIndex={10} /> : ''}
       <Box position="absolute" bottom="1.5rem" zIndex={10}>
-        <AirPollutionLevels direction="column" />
+        <DustLevel direction="column" />
       </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

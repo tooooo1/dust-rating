@@ -10,8 +10,12 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { Spinner } from '@chakra-ui/react';
 import { getDustHistory } from '@/apis/dustHistory';
-import { DUST_SCALE_COLOR } from '@/utils/map';
-import { FINE_DUST, ULTRA_FINE_DUST, DUST_GRADE } from '@/utils/constants';
+import {
+  FINE_DUST,
+  ULTRA_FINE_DUST,
+  DUST_GRADE,
+  DUST_SCALE_COLOR,
+} from '@/utils/constants';
 import type { DustHistory } from '@/types/dust';
 import styled from '@emotion/styled';
 

@@ -1,5 +1,5 @@
 import { Flex, Box } from '@chakra-ui/react';
-import { DUST_SCALE_COLOR } from '@/utils/map';
+import { DUST_SCALE_COLOR } from '@/utils/constants';
 
 interface DustLevelProps {
   direction: 'row' | 'column';

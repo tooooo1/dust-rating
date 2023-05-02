@@ -1,6 +1,12 @@
 import { useEffect, useState, RefObject } from 'react';
-import { INIT_LOCATION, CENTER_LOCATION, SIDO_GROUP } from '@/utils/constants';
-import { INIT_ZOOM_LEVEL, CITY_ZOOM_LEVEL, MAX_ZOOM_LEVEL } from '@/utils/map';
+import {
+  INIT_LOCATION,
+  CENTER_LOCATION,
+  SIDO_GROUP,
+  INIT_ZOOM_LEVEL,
+  CITY_ZOOM_LEVEL,
+  MAX_ZOOM_LEVEL,
+} from '@/utils/constants';
 
 interface useMapProps {
   mapRef: RefObject<HTMLElement>;

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { Box } from '@chakra-ui/react';
 import RankItem from './RankItem';
-import { getCityAirQualities } from '@/apis/airQuality';
-import type { CityAirQuality } from '@/types/dust';
+import { getCityDustInfos } from '@/apis/dustInfo';
+import type { CityDustInfo } from '@/types/dust';
 
 interface CityRankProps {
   sido: string;
@@ -10,9 +10,9 @@ interface CityRankProps {
 }
 
 const CityRank = ({ sido, isShow }: CityRankProps) => {
-  const { data: cityAirQualities } = useQuery<CityAirQuality[]>(
-    ['city-air-qualities', sido],
-    () => getCityAirQualities(sido),
+  const { data: cityDustInfos } = useQuery<CityDustInfo[]>(
+    ['city-dust-infos', sido],
+    () => getCityDustInfos(sido),
     {
       refetchOnWindowFocus: false,
     }
@@ -28,8 +28,8 @@ const CityRank = ({ sido, isShow }: CityRankProps) => {
       cursor="pointer"
     >
       {isShow &&
-        cityAirQualities &&
-        cityAirQualities.map((city, cityIndex) => (
+        cityDustInfos &&
+        cityDustInfos.map((city, cityIndex) => (
           <RankItem
             key={city.cityName}
             cityName={city.cityName}

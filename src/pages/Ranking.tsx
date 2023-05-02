@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Flex, Box, Text, Center, Select } from '@chakra-ui/react';
-import { DustState } from '@/components/Dust';
+import DustState from '@/components/common/DustState';
 import ProgressBar from '@/components/ProgressBar';
 import SidoRank from '@/components/Ranking/SidoRank';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';

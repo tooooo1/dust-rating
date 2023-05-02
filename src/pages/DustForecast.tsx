@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { Box, Text, Flex } from '@chakra-ui/react';
-import { DustState } from '@/components/Dust';
+import DustState from '@/components/common/DustState';
 import DustChart from '@/components/DustForcast/DustChart';
 import ForcastInfo from '@/components/DustForcast/ForcastInfo';
 import AirPollutionLevels from '@/components/common/DustLevel';

@@ -1,13 +1,11 @@
 import { Flex, Box } from '@chakra-ui/react';
-import { DUST_SCALE_COLOR } from '@/utils/map';
+import { DUST_SCALE_COLOR } from '@/utils/constants';
 
-interface AirPollutionLevelsProps {
+interface DustLevelProps {
   direction: 'row' | 'column';
 }
 
-export const AirPollutionLevels = ({
-  direction = 'row',
-}: AirPollutionLevelsProps) => {
+export const DustLevel = ({ direction = 'row' }: DustLevelProps) => {
   return (
     <Flex
       flexDirection={direction}
@@ -54,4 +52,4 @@ export const AirPollutionLevels = ({
   );
 };
 
-export default AirPollutionLevels;
+export default DustLevel;

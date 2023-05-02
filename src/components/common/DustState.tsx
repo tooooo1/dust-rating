@@ -5,8 +5,7 @@ import {
   BsEmojiFrown,
   BsEmojiAngry,
 } from 'react-icons/bs';
-import { DUST_SCALE_COLOR } from '@/utils/map';
-import { DUST_GRADE } from '@/utils/constants';
+import { DUST_GRADE, DUST_SCALE_COLOR } from '@/utils/constants';
 
 interface DustStateProps {
   dustGrade: number;

@@ -10,12 +10,12 @@ const icons = {
 };
 
 type iconType = keyof typeof icons;
-interface MapButtonProps {
+interface ControlButtonProps {
   type: iconType;
   onClick: () => void;
 }
 
-const MapButton = ({ type, onClick }: MapButtonProps) => {
+const ControlButton = ({ type, onClick }: ControlButtonProps) => {
   return (
     <IconButton
       aria-label={type}
@@ -27,4 +27,4 @@ const MapButton = ({ type, onClick }: MapButtonProps) => {
   );
 };
 
-export default MapButton;
+export default ControlButton;

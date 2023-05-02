@@ -14,22 +14,26 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import MapButton from './MapButton';
-import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
-import DustState from '@/components/Dust/DustState';
+import ControlButton from './ControlButton';
+import DustLevel from '@/components/common/DustLevel';
+import DustState from '@/components/common/DustState';
 import { getAllLocation } from '@/apis/location';
 import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
-import { getDustScaleColor } from '@/utils/map';
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import {
-  COLOR_MARKER_MOUSE_OUT,
+  FINE_DUST,
+  ULTRA_FINE_DUST,
+  DUST_GRADE,
+  DUST_SCALE_COLOR,
+  CITY_ZOOM_LEVEL,
+  MAX_ZOOM_LEVEL,
   COLOR_MARKER_MOUSE_OVER,
-  ZINDEX_MARKER_MOUSE_OUT,
+  COLOR_MARKER_MOUSE_OUT,
   ZINDEX_MARKER_MOUSE_OVER,
-} from '@/utils/map';
+  ZINDEX_MARKER_MOUSE_OUT,
+} from '@/utils/constants';
 import useMap from '@/hooks/useMap';
-import { MAX_ZOOM_LEVEL, CITY_ZOOM_LEVEL } from '@/utils/map';
 import type { CityDustInfo } from '@/types/dust';
+import { getDustAverageGrade } from '@/utils/dustGrade';
 
 declare global {
   interface Window {
@@ -80,13 +84,24 @@ const Map = () => {
   useEffect(() => {
     if (!map || !sidoDustInfos || !allLocation) return;
 
-    sidoDustInfos.forEach(({ sidoName, fineDustScale, ultraFineDustScale }) => {
-      const { latitude, longitude } = allLocation.filter(
-        (scale) => scale.sidoName === sidoName
-      )[0];
+    sidoDustInfos.forEach(
+      ({
+        sidoName,
+        fineDustScale,
+        fineDustGrade,
+        ultraFineDustScale,
+        ultraFineDustGrade,
+      }) => {
+        const { latitude, longitude } = allLocation.filter(
+          (scale) => scale.sidoName === sidoName
+        )[0];
 
-      const backgroundColor = getDustScaleColor(fineDustScale);
-      const template = `
+        const averageGrade = getDustAverageGrade(
+          fineDustGrade,
+          ultraFineDustGrade
+        );
+        const backgroundColor = DUST_SCALE_COLOR[DUST_GRADE[averageGrade]];
+        const template = `
           <div class="dust-info-marker" style="background-color: ${backgroundColor};">
             <p class="city-name">${sidoName}</p>
             <div class="dust-info">
@@ -96,14 +111,15 @@ const Map = () => {
             </div>
           </div>`;
 
-      const marker = new kakao.maps.CustomOverlay({
-        clickable: true,
-        position: new kakao.maps.LatLng(latitude, longitude),
-        content: template,
-      });
+        const marker = new kakao.maps.CustomOverlay({
+          clickable: true,
+          position: new kakao.maps.LatLng(latitude, longitude),
+          content: template,
+        });
 
-      sidoDustInfoMarkers.push(marker);
-    });
+        sidoDustInfoMarkers.push(marker);
+      }
+    );
 
     sidoDustInfoMarkers.forEach((marker) => {
       marker.setMap(map);
@@ -133,15 +149,20 @@ const Map = () => {
       ({
         cityName,
         fineDustScale,
-        ultraFineDustScale,
         fineDustGrade,
+        ultraFineDustScale,
         ultraFineDustGrade,
       }) => {
         geocoder.addressSearch(cityName, (result, status) => {
           if (status === kakao.maps.services.Status.OK) {
             const latitude = Number(result[0].y);
             const longitude = Number(result[0].x);
-            const backgroundColor = getDustScaleColor(fineDustScale);
+
+            const averageGrade = getDustAverageGrade(
+              fineDustGrade,
+              ultraFineDustGrade
+            );
+            const backgroundColor = DUST_SCALE_COLOR[DUST_GRADE[averageGrade]];
             const template = `
                   <div class="dust-info-marker" id="${cityName}" data-finedustgrade="${fineDustGrade}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};" >
                     <span>${fineDustScale}/${ultraFineDustScale}</span>                  
@@ -233,13 +254,13 @@ const Map = () => {
         }}
       />
       <VStack position="absolute" top="1rem" right="1rem" zIndex={10}>
-        <MapButton
+        <ControlButton
           type="current-location"
           onClick={handleCurrentLocationChange}
         />
-        <MapButton type="zoom-in" onClick={handleZoomIn} />
-        <MapButton type="zoom-out" onClick={handleZoomOut} />
-        <MapButton
+        <ControlButton type="zoom-in" onClick={handleZoomIn} />
+        <ControlButton type="zoom-out" onClick={handleZoomOut} />
+        <ControlButton
           type="full-screen"
           onClick={() => handleFullScreenChange(cityDustInfoMarkers)}
         />
@@ -247,7 +268,7 @@ const Map = () => {
       </VStack>
       {cityDustInfosIsLoading ? <Spinner zIndex={10} /> : ''}
       <Box position="absolute" bottom="1.5rem" zIndex={10}>
-        <AirPollutionLevels direction="column" />
+        <DustLevel direction="column" />
       </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { DustState } from '@/components/Dust';
 import CityRank from './CityRank';
+import DustState from '@/components/common/DustState';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
 import type { DustFigures } from '@/types/dust';

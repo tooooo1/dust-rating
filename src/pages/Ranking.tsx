@@ -7,7 +7,7 @@ import ProgressBar from '@/components/ProgressBar';
 import SidoRank from '@/components/Ranking/SidoRank';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
-import { getSidoAirQualities, getSidoAirQuality } from '@/apis/airQuality';
+import { getSidoDustInfos, getSidoDustInfo } from '@/apis/dustInfo';
 
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
@@ -15,18 +15,18 @@ const Ranking = () => {
   const { state: selectedSido } = useLocation();
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
 
-  const { data: sidoAirQuality } = useQuery(
-    ['sido-air-quality', selectedSido],
-    () => getSidoAirQuality(selectedSido),
+  const { data: sidoDustInfo } = useQuery(
+    ['sido-dust-info', selectedSido],
+    () => getSidoDustInfo(selectedSido),
     {
       refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5,
     }
   );
 
-  const { data: sidoAirQualities } = useQuery(
-    ['sido-air-qualities', selectedSortKey],
-    getSidoAirQualities,
+  const { data: sidoDustInfos } = useQuery(
+    ['sido-dust-infos', selectedSortKey],
+    getSidoDustInfos,
     {
       select: (data) => {
         if (selectedSortKey === FINE_DUST) {
@@ -53,7 +53,7 @@ const Ranking = () => {
       : setSelectedSortKey(ULTRA_FINE_DUST);
   };
 
-  if (!sidoAirQuality) {
+  if (!sidoDustInfo) {
     return (
       <Center height="100vh" fontSize={28} fontWeight={100} color="#ffffff">
         로딩 중...
@@ -62,8 +62,8 @@ const Ranking = () => {
   }
 
   const dustAverageGrade = getDustAverageGrade(
-    sidoAirQuality.fineDustGrade,
-    sidoAirQuality.ultraFineDustGrade
+    sidoDustInfo.fineDustGrade,
+    sidoDustInfo.ultraFineDustGrade
   );
 
   return (
@@ -79,7 +79,7 @@ const Ranking = () => {
         전국 미세 먼지 농도는 다음과 같습니다
       </Text>
       <Text as="p" fontSize={20} fontWeight={300} color="#ffffff" mb={6}>
-        {sidoAirQuality.dataTime} 기준
+        {sidoDustInfo.dataTime} 기준
       </Text>
       <Box
         w="80%"
@@ -101,12 +101,12 @@ const Ranking = () => {
         <ProgressBar
           kindOfDust={FINE_DUST}
           id="fineDust"
-          state={sidoAirQuality.fineDustScale}
+          state={sidoDustInfo.fineDustScale}
         />
         <ProgressBar
           kindOfDust={ULTRA_FINE_DUST}
           id="ultraFineDust"
-          state={sidoAirQuality.ultraFineDustScale}
+          state={sidoDustInfo.ultraFineDustScale}
         />
       </Box>
       <Flex
@@ -142,7 +142,7 @@ const Ranking = () => {
           <option>{FINE_DUST}</option>
           <option>{ULTRA_FINE_DUST}</option>
         </Select>
-        {sidoAirQualities?.map((sido, sidoIndex) => (
+        {sidoDustInfos?.map((sido, sidoIndex) => (
           <SidoRank
             key={sido.sidoName}
             rank={sidoIndex + 1}

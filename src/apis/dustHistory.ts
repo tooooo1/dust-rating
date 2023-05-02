@@ -3,7 +3,7 @@ import { getTodayDate } from '@/utils/formaters';
 import { dustScaleValidate } from '@/utils/validate';
 import type { Dust, DustValidity } from '@/types/dust';
 
-const { VITE_DUST_HISTORY_URL, VITE_AIR_QUALITY_API_KEY } = import.meta.env;
+const { VITE_DUST_HISTORY_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
 
 interface DustHistory extends DustValidity {
   dataTime: string;
@@ -12,7 +12,7 @@ interface DustHistory extends DustValidity {
 export const getDustHistory = async (city: string) => {
   try {
     const response = await axios.get(
-      `${VITE_DUST_HISTORY_URL}?stationName=${city}&dataTerm=DAILY&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&ver=1.3`
+      `${VITE_DUST_HISTORY_URL}?stationName=${city}&dataTerm=DAILY&pageNo=1&numOfRows=100&returnType=json&serviceKey=${VITE_DUST_INFO_API_KEY}&ver=1.3`
     );
 
     if (response.status !== 200) {

@@ -2,10 +2,10 @@ import { useLocation } from 'react-router-dom';
 import { Box, Text, Flex } from '@chakra-ui/react';
 import { DustState } from '@/components/Dust';
 import DustChart from '@/components/DustForcast/DustChart';
+import ForcastInfo from '@/components/DustForcast/ForcastInfo';
 import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
-import type { CityAirQuality } from '@/types/dust';
-import ForcastInfo from '@/components/DustForcast/ForcastInfo';
+import type { CityDustInfo } from '@/types/dust';
 
 const DustForecast = () => {
   const location = useLocation();
@@ -16,7 +16,7 @@ const DustForecast = () => {
     ultraFineDustScale,
     ultraFineDustGrade,
     dataTime,
-  }: CityAirQuality = location.state;
+  }: CityDustInfo = location.state;
 
   return (
     <Box textAlign="center">

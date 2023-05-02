@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { getTodayDate } from '@/utils/formaters';
 
-const { VITE_AIR_QUALITY_API_KEY, VITE_MINU_DUST_FRCST_DSPTH_URL } = import.meta
-  .env;
+const { VITE_DUST_FORCAST_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
 
 interface DustForcast {
   imageUrl1: string;
@@ -13,7 +12,7 @@ interface DustForcast {
 export const getDustForcast = async () => {
   try {
     const response = await axios.get(
-      `${VITE_MINU_DUST_FRCST_DSPTH_URL}?searchDate=${getTodayDate()}&returnType=json&serviceKey=${VITE_AIR_QUALITY_API_KEY}&numOfRows=10&pageNo=1`
+      `${VITE_DUST_FORCAST_URL}?searchDate=${getTodayDate()}&returnType=json&serviceKey=${VITE_DUST_INFO_API_KEY}&numOfRows=10&pageNo=1`
     );
 
     if (response.status !== 200) {

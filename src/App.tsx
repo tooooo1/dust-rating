@@ -11,12 +11,13 @@ import {
   RankingPage,
   DustForecastPage,
   DustMapPage,
+  ErrorPage,
 } from '@/pages';
 import { ROUTE } from '@/utils/constants';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path={ROUTE.HOME} element={<Logo />}>
+    <Route path={ROUTE.HOME} element={<Logo />} errorElement={<ErrorPage />}>
       <Route index element={<ChoicePage />} />
       <Route path={ROUTE.RANKING} element={<RankingPage />} />
       <Route path={ROUTE.DUST_FORECAST} element={<DustForecastPage />} />

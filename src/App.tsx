@@ -3,6 +3,7 @@ import {
   createRoutesFromElements,
   Route,
   RouterProvider,
+  Navigate,
 } from 'react-router-dom';
 
 import Logo from '@/components/Logo';
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
       <Route path={ROUTE.RANKING} element={<RankingPage />} />
       <Route path={ROUTE.DUST_FORECAST} element={<DustForecastPage />} />
       <Route path={ROUTE.DUST_MAP} element={<DustMapPage />} />
+      <Route path="*" element={<Navigate replace to={ROUTE.HOME} />} />
     </Route>
   )
 );

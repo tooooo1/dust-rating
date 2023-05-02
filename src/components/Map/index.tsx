@@ -15,8 +15,8 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import MapButton from './MapButton';
-import AirPollutionLevels from '@/components/Map/AirPollutionLevels';
-import DustState from '@/components/Dust/DustState';
+import AirPollutionLevels from '@/components/common/DustLevel';
+import DustState from '@/components/common/DustState';
 import { getAllLocation } from '@/apis/location';
 import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
 import { getDustScaleColor } from '@/utils/map';

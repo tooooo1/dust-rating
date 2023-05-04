@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Flex, Text, Select, Button } from '@chakra-ui/react';
+import { Flex, Text, Select, Button, Image } from '@chakra-ui/react';
 import { HiArrowRight } from 'react-icons/hi';
 import { FINE_DUST, SIDO_GROUP, ROUTE } from '@/utils/constants';
 
@@ -29,7 +29,7 @@ const Choice = () => {
       color="#ffffff"
       textAlign="center"
     >
-      <img src="images/location.png" alt="location" width={30} height={30} />
+      <Image src="images/location.png" alt="location" width={30} height={30} />
       <Text as="span" fontSize={18} fontWeight={400} mt={4}>
         한 눈에 확인하는
       </Text>

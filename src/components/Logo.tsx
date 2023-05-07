@@ -1,6 +1,6 @@
 import { Image } from '@chakra-ui/react';
-import styled from '@emotion/styled';
 import { Outlet } from 'react-router-dom';
+import { Box } from '@chakra-ui/react';
 
 const Logo = () => (
   <>
@@ -16,17 +16,10 @@ const Logo = () => (
       cursor="pointer"
       onClick={() => window.open('https://tooo1.tistory.com')}
     />
-    <Main>
+    <Box width={{ base: '100%', md: '37.5rem' }}>
       <Outlet />
-    </Main>
+    </Box>
   </>
 );
 
 export default Logo;
-
-export const Main = styled.main`
-  width: 37.5rem;
-  @media screen and (max-width: 767px) {
-    width: 100%;
-  }
-`;

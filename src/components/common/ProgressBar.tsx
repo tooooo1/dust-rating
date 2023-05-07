@@ -1,77 +1,45 @@
-import 'react-sweet-progress/lib/style.css';
-import { Flex, Box } from '@chakra-ui/react';
-import styled from '@emotion/styled';
-// @ts-ignore
-import { Progress } from 'react-sweet-progress';
+import { Flex, Text, Progress } from '@chakra-ui/react';
+import { DUST_GRADE } from '@/utils/constants';
+
+export const DUST_GRADE_COLOR = {
+  DANGER: 'red',
+  BAD: 'yellow',
+  NORMAL: 'green',
+  GOOD: 'blue',
+};
 
 interface ProgressBarProps {
   kindOfDust: string;
-  id: string;
-  state: number;
+  scale: number;
+  grade: number;
 }
 
-const ProgressBar = ({ kindOfDust, id, state }: ProgressBarProps) => {
-  const percent = state * (1 / 100) * 100;
+const ProgressBar = ({ kindOfDust, scale, grade }: ProgressBarProps) => {
+  const percent = scale * (1 / 100) * 100;
   const percentOfDustContamination = percent > 100 ? 100 : percent;
+  const color = DUST_GRADE_COLOR[DUST_GRADE[grade]];
 
   return (
-    <DustProgressWrapper id={id}>
+    <Flex justifyContent="center" alignItems="center" m={2}>
       <Flex
         justifyContent="space-between"
-        alignItems="center"
-        width="30%"
-        fontSize={{ base: '3vw', md: '1.125rem' }}
-        margin={{ base: '0 1.875rem', md: '0 0.5rem' }}
-        fontWeight="500"
+        width={{ base: '40%', sm: '30%' }}
+        fontSize={{ base: 14, sm: 16 }}
+        mr={{ base: 4, sm: 4, md: 6 }}
       >
-        <Box>{kindOfDust}</Box>
-        <Flex
-          marginLeft={{ base: '1.25rem', md: '2vw' }}
-          fontWeight="800"
-          fontSize={{ base: 'md', md: '1.125rem' }}
-        >
-          {state}
-        </Flex>
+        <Text fontWeight="500">{kindOfDust}</Text>
+        <Text fontWeight="800">{scale}</Text>
       </Flex>
-      <Flex width="60%" fontSize={{ base: '1.25rem', md: 'md' }}>
-        <Progress
-          percent={percentOfDustContamination}
-          theme={{
-            success: {
-              symbol: ' ',
-              color: 'rgb(223, 105, 180)',
-            },
-            active: {
-              symbol: ' ',
-              color: '#fbc630',
-            },
-            default: {
-              symbol: ' ',
-              color: '#fbc630',
-            },
-          }}
-        />
-      </Flex>
-    </DustProgressWrapper>
+      <Progress
+        width={{ base: '60%', sm: '70%' }}
+        value={percentOfDustContamination}
+        colorScheme={color}
+        borderRadius={8}
+        hasStripe
+        isAnimated
+      />
+    </Flex>
   );
 };
 
 export default ProgressBar;
-
-const DustProgressWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-left: 7vw;
-  font-size: 3vw;
-  padding-bottom: 0.3125rem;
-  &#first {
-    padding-top: 2vh;
-  }
-  &#last {
-    padding-bottom: 2.5vh;
-  }
-  @media only screen and (min-width: 768px) {
-    font-size: 1.125rem;
-    margin-left: 0.9375rem;
-  }
-`;

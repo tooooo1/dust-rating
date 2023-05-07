@@ -1,7 +1,7 @@
 import axios from 'axios';
+import type { DustValidity, Dust } from '@/types/dust';
 import { SIDO_GROUP } from '@/utils/constants';
 import { dustScaleValidate } from '@/utils/validate';
-import type { DustValidity, Dust } from '@/types/dust';
 
 const { VITE_DUST_INFO_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
 
@@ -35,6 +35,7 @@ export const getSidoDustInfos = async () => {
       })
     );
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
   }
 };
@@ -62,6 +63,7 @@ export const getSidoDustInfo = async (sido: string) => {
       dataTime: dustInfo.dataTime,
     };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
   }
 };
@@ -89,6 +91,7 @@ export const getCityDustInfos = async (sido: string) => {
       dataTime: dustInfo.dataTime,
     }));
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
   }
 };

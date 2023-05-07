@@ -1,7 +1,7 @@
 import axios from 'axios';
+import type { Dust, DustValidity } from '@/types/dust';
 import { getTodayDate } from '@/utils/formaters';
 import { dustScaleValidate } from '@/utils/validate';
-import type { Dust, DustValidity } from '@/types/dust';
 
 const { VITE_DUST_HISTORY_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
 
@@ -40,6 +40,7 @@ export const getDustHistory = async (city: string) => {
       })
       .reverse();
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
   }
 };

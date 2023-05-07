@@ -1,5 +1,5 @@
-import Map from '@/components/Map';
 import styled from '@emotion/styled';
+import Map from '@/components/Map';
 
 const DustMapPage = () => {
   return (

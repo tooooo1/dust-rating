@@ -23,6 +23,7 @@ export const getAllLocation = async () => {
 
     return result;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
   }
 };
@@ -39,6 +40,7 @@ export const getLocation = async (city: string) => {
 
     return { latitude: Number(result.x), longitude: Number(result.y) };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
   }
 };

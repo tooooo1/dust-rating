@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+/* global kakao */
 import {
   VStack,
   Box,
@@ -14,11 +14,13 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import ControlButton from './ControlButton';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
+import { getAllLocation } from '@/apis/location';
 import DustLevel from '@/components/common/DustLevel';
 import DustState from '@/components/common/DustState';
-import { getAllLocation } from '@/apis/location';
-import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
+import useMap from '@/hooks/useMap';
+import type { CityDustInfo } from '@/types/dust';
 import {
   FINE_DUST,
   ULTRA_FINE_DUST,
@@ -31,15 +33,8 @@ import {
   ZINDEX_MARKER_MOUSE_OVER,
   ZINDEX_MARKER_MOUSE_OUT,
 } from '@/utils/constants';
-import useMap from '@/hooks/useMap';
-import type { CityDustInfo } from '@/types/dust';
 import { getDustAverageGrade } from '@/utils/dustGrade';
-
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
+import ControlButton from './ControlButton';
 
 const Map = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);

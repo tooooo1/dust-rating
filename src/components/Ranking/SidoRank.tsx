@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
-import CityRank from './CityRank';
+import { useState } from 'react';
 import DustState from '@/components/common/DustState';
+import type { DustFigures } from '@/types/dust';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
-import type { DustFigures } from '@/types/dust';
+import CityRank from './CityRank';
 
 interface SidoRankProps extends DustFigures {
   rank: number;

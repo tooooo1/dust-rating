@@ -1,8 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
 import { Box } from '@chakra-ui/react';
-import RankItem from './RankItem';
+import { useQuery } from '@tanstack/react-query';
 import { getCityDustInfos } from '@/apis/dustInfo';
 import type { CityDustInfo } from '@/types/dust';
+import RankItem from './RankItem';
 
 interface CityRankProps {
   sido: string;

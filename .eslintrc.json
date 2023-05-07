@@ -25,6 +25,7 @@
   },
   "rules": {
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "no-console": "error",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "import/no-named-as-default": "off",

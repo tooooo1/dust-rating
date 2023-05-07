@@ -1,3 +1,5 @@
+import { Spinner } from '@chakra-ui/react';
+import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import {
   Chart as ChartJS,
@@ -8,16 +10,14 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { Spinner } from '@chakra-ui/react';
 import { getDustHistory } from '@/apis/dustHistory';
+import type { DustHistory } from '@/types/dust';
 import {
   FINE_DUST,
   ULTRA_FINE_DUST,
   DUST_GRADE,
   DUST_SCALE_COLOR,
 } from '@/utils/constants';
-import type { DustHistory } from '@/types/dust';
-import styled from '@emotion/styled';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 

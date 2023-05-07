@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
 import { Flex, Text, Box } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import DustState from '@/components/common/DustState';
+import type { CityDustInfo } from '@/types/dust';
 import { FINE_DUST, ROUTE, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
-import type { CityDustInfo } from '@/types/dust';
 
 interface RankItemProps extends CityDustInfo {
   rank: number;

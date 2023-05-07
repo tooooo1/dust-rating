@@ -1,8 +1,8 @@
 import 'react-sweet-progress/lib/style.css';
+import { Flex, Box } from '@chakra-ui/react';
+import styled from '@emotion/styled';
 // @ts-ignore
 import { Progress } from 'react-sweet-progress';
-import styled from '@emotion/styled';
-import { Flex, Box } from '@chakra-ui/react';
 
 interface ProgressBarProps {
   kindOfDust: string;

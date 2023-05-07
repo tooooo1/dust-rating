@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
 import { Flex, Text, Image } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
 import { getDustForcast } from '@/apis/dustForecast';
-import AlertBox from '../common/AlertBox';
+import AlertBox from '@/components/common/AlertBox';
 
 interface ForcastInfoProps {
   cityName: string;

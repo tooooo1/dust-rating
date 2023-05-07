@@ -1,3 +1,4 @@
+/* global kakao, GeolocationPosition */
 import { useEffect, useState, RefObject } from 'react';
 import {
   INIT_LOCATION,
@@ -17,8 +18,8 @@ const useMap = ({ mapRef, cityDustInfoMarkers }: useMapProps) => {
   const [myDeviceLocation, setMyDeviceLocation] = useState(INIT_LOCATION);
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [zoomLevel, setZoomLevel] = useState(INIT_ZOOM_LEVEL);
-  const [currentCity, setCurrentCity] = useState(SIDO_GROUP[0].sidoName); // 서울
-  const [currentLocation, setCurrentLocation] = useState(INIT_LOCATION); // 지도를 움직이면 변화하는 위치
+  const [currentCity, setCurrentCity] = useState(SIDO_GROUP[0].sidoName);
+  const [currentLocation, setCurrentLocation] = useState(INIT_LOCATION);
 
   useEffect(() => {
     kakao.maps.load(() => {

@@ -1,6 +1,6 @@
 import { IconButton } from '@chakra-ui/react';
-import { BiTargetLock, BiPlus, BiMinus } from 'react-icons/bi';
 import { AiOutlineFullscreenExit } from 'react-icons/ai';
+import { BiTargetLock, BiPlus, BiMinus } from 'react-icons/bi';
 
 const icons = {
   'current-location': <BiTargetLock />,

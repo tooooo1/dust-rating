@@ -23,7 +23,7 @@ const AlertBox = ({ title, description }: AlertBoxProps) => {
       py={6}
     >
       <AlertIcon boxSize={6} mb={3} />
-      <AlertTitle fontSize={18}>{title}</AlertTitle>
+      <AlertTitle fontSize={{ base: 16, sm: 18 }}>{title}</AlertTitle>
       <AlertDescription fontSize={16} fontWeight={400}>
         {description}
       </AlertDescription>

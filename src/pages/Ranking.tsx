@@ -2,10 +2,10 @@ import { Flex, Box, Text, Center, Select } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getSidoDustInfos, getSidoDustInfo } from '@/apis/dustInfo';
+import { getSidoDustInfo } from '@/apis/dustInfo';
 import DustState from '@/components/common/DustState';
 import ProgressBar from '@/components/common/ProgressBar';
-import SidoRank from '@/components/Ranking/SidoRank';
+import SidoRankList from '@/components/Ranking/SidoRankList';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
 
@@ -20,28 +20,6 @@ const Ranking = () => {
     () => getSidoDustInfo(selectedSido),
     {
       refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
-
-  const { data: sidoDustInfos } = useQuery(
-    ['sido-dust-infos', selectedSortKey],
-    getSidoDustInfos,
-    {
-      select: (data) => {
-        if (selectedSortKey === FINE_DUST) {
-          return data?.sort(
-            (prev, cur) => prev.fineDustScale - cur.fineDustScale
-          );
-        }
-        if (selectedSortKey === ULTRA_FINE_DUST) {
-          return data?.sort(
-            (prev, cur) => prev.ultraFineDustScale - cur.ultraFineDustScale
-          );
-        }
-      },
-      refetchOnWindowFocus: false,
-      keepPreviousData: true,
       staleTime: 1000 * 60 * 5,
     }
   );
@@ -70,15 +48,21 @@ const Ranking = () => {
     <Box textAlign="center">
       <Text
         as="h1"
-        fontSize={30}
+        fontSize={{ base: 18, sm: 20, md: 24 }}
         fontWeight={600}
         color="#ffffff"
         mt={20}
-        mb={4}
+        mb={{ base: 2, sm: 3, md: 4 }}
       >
         전국 미세 먼지 농도는 다음과 같습니다
       </Text>
-      <Text as="p" fontSize={20} fontWeight={300} color="#ffffff" mb={6}>
+      <Text
+        as="p"
+        fontSize={{ base: 14, sm: 18, md: 20 }}
+        fontWeight={300}
+        color="#ffffff"
+        mb={6}
+      >
         {sidoDustInfo.dataTime} 기준
       </Text>
       <Box
@@ -86,13 +70,21 @@ const Ranking = () => {
         margin="0 auto"
         borderTopRadius={10}
         textAlign="center"
-        bg="#ffffff"
+        bg="rgba(255, 255, 255, 0.6)"
+        boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
+        backdropFilter="blur(7px)"
+        px={{ base: 3, sm: 6 }}
         py={8}
       >
-        <Text as="p" fontSize={30} fontWeight={700} mb={4}>
+        <Text
+          as="p"
+          fontSize={{ base: 22, sm: 24, md: 28 }}
+          fontWeight={700}
+          mb={4}
+        >
           {selectedSido}
         </Text>
-        <Text as="span" fontSize={18} color="#9dadb6">
+        <Text as="span" fontSize={{ base: 16, sm: 18 }} color="#4d4d4d">
           현재의 대기질 지수는
         </Text>
         <Center my={5}>
@@ -100,13 +92,13 @@ const Ranking = () => {
         </Center>
         <ProgressBar
           kindOfDust={FINE_DUST}
-          id="fineDust"
-          state={sidoDustInfo.fineDustScale}
+          scale={sidoDustInfo.fineDustScale}
+          grade={sidoDustInfo.fineDustGrade}
         />
         <ProgressBar
           kindOfDust={ULTRA_FINE_DUST}
-          id="ultraFineDust"
-          state={sidoDustInfo.ultraFineDustScale}
+          scale={sidoDustInfo.ultraFineDustScale}
+          grade={sidoDustInfo.ultraFineDustGrade}
         />
       </Box>
       <Flex
@@ -116,12 +108,12 @@ const Ranking = () => {
         borderRadius={20}
         bg="#f6f6f6"
         mb={20}
-        px={20}
+        px={{ base: 6, sm: 14, md: 20 }}
         py={10}
       >
         <Text
           as="p"
-          fontSize={20}
+          fontSize={{ base: 16, sm: 18 }}
           fontWeight={400}
           margin="0 auto"
           px={8}
@@ -136,23 +128,14 @@ const Ranking = () => {
           color="#3a9cbd"
           borderColor="#3a9cbd"
           borderWidth={2}
-          my={4}
+          fontSize={{ base: 14, sm: 16 }}
+          my={6}
           onChange={handleSortKeyChange}
         >
           <option>{FINE_DUST}</option>
           <option>{ULTRA_FINE_DUST}</option>
         </Select>
-        {sidoDustInfos?.map((sido, sidoIndex) => (
-          <SidoRank
-            key={sido.sidoName}
-            rank={sidoIndex + 1}
-            sidoName={sido.sidoName}
-            fineDustScale={sido.fineDustScale}
-            ultraFineDustScale={sido.ultraFineDustScale}
-            fineDustGrade={sido.fineDustGrade}
-            ultraFineDustGrade={sido.ultraFineDustGrade}
-          />
-        ))}
+        <SidoRankList sortType={selectedSortKey} />
       </Flex>
     </Box>
   );

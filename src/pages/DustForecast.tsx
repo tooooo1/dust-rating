@@ -44,31 +44,24 @@ const DustForecast = () => {
         {dataTime} 기준
       </Text>
       <Box borderRadius={10} mb={20} py={10} px={8} bg="#ffffff">
-        {isLargerThan480 ? (
-          <Flex
-            alignItems="center"
-            pb={10}
-            mb={14}
-            borderBottom="1px solid #dfdfdf"
-          >
-            <CurrentDustInfo
-              kindOfDust={FINE_DUST}
-              dustScale={fineDustScale}
-              dustGrade={fineDustGrade}
-            />
-            <CurrentDustInfo
-              kindOfDust={ULTRA_FINE_DUST}
-              dustScale={ultraFineDustScale}
-              dustGrade={ultraFineDustGrade}
-            />
-          </Flex>
-        ) : (
+        <Flex
+          alignItems="center"
+          pb={10}
+          mb={14}
+          borderBottom="1px solid #dfdfdf"
+        >
           <CurrentDustInfo
             kindOfDust={FINE_DUST}
             dustScale={fineDustScale}
             dustGrade={fineDustGrade}
           />
-        )}
+          <CurrentDustInfo
+            kindOfDust={ULTRA_FINE_DUST}
+            dustScale={ultraFineDustScale}
+            dustGrade={ultraFineDustGrade}
+          />
+        </Flex>
+
         <Box mb={14}>
           {isLargerThan480 ? (
             <Flex direction="column" alignItems="center" mb={4}>

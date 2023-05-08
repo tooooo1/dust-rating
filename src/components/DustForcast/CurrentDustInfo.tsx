@@ -13,12 +13,12 @@ export const CurrentDustInfo = ({
   dustGrade,
 }: CurrentDustInfoProps) => {
   return (
-    <Box flexGrow={1} borderRight="1px solid #dfdfdf">
-      <Text as="p" fontSize={22} fontWeight={600} mb={2}>
+    <Box flexGrow={1} borderX={{ base: 'none', sm: '1px solid #dfdfdf' }}>
+      <Text as="p" fontSize={{ base: 16, sm: 22 }} fontWeight={600} mb={2}>
         {kindOfDust}
       </Text>
       <Flex justifyContent="center" alignItems="center">
-        <Text as="p" fontSize={48} fontWeight={800} mr={5}>
+        <Text as="p" fontSize={{ base: 24, sm: 48 }} fontWeight={800} mr={5}>
           {dustScale}
         </Text>
         <Box my={3}>

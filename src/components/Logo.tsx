@@ -10,8 +10,8 @@ const Logo = () => (
       position="absolute"
       top={4}
       left={4}
-      width={50}
-      height={50}
+      width={{ base: 10, sm: 12, md: 50 }}
+      height={{ base: 10, sm: 12, md: 50 }}
       borderRadius="50%"
       cursor="pointer"
       onClick={() => window.open('https://tooo1.tistory.com')}

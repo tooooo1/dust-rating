@@ -35,7 +35,7 @@ const DustState = ({ dustGrade }: DustStateProps) => {
       </Box>
       <Text
         as="p"
-        fontSize={20}
+        fontSize={{ base: 16, sm: 20 }}
         fontWeight={700}
         color={DUST_SCALE_COLOR[grade]}
       >

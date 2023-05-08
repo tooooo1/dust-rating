@@ -2,14 +2,14 @@ import { Box } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { getCityDustInfos } from '@/apis/dustInfo';
 import type { CityDustInfo } from '@/types/dust';
-import RankItem from './RankItem';
+import CityRankItem from './CityRankItem';
 
-interface CityRankProps {
+interface CityRankListProps {
   sido: string;
   isShow: boolean;
 }
 
-const CityRank = ({ sido, isShow }: CityRankProps) => {
+const CityRankList = ({ sido, isShow }: CityRankListProps) => {
   const { data: cityDustInfos } = useQuery<CityDustInfo[]>(
     ['city-dust-infos', sido],
     () => getCityDustInfos(sido),
@@ -20,17 +20,17 @@ const CityRank = ({ sido, isShow }: CityRankProps) => {
 
   return (
     <Box
-      width="98%"
-      margin="0 auto"
+      flex="1"
       bg="#dfdfdf"
       borderRadius={10}
-      px={4}
+      my={isShow ? 4 : 0}
+      px={{ base: 3, sm: 4 }}
       cursor="pointer"
     >
       {isShow &&
         cityDustInfos &&
         cityDustInfos.map((city, cityIndex) => (
-          <RankItem
+          <CityRankItem
             key={city.cityName}
             cityName={city.cityName}
             rank={cityIndex + 1}
@@ -45,4 +45,4 @@ const CityRank = ({ sido, isShow }: CityRankProps) => {
   );
 };
 
-export default CityRank;
+export default CityRankList;

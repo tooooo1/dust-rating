@@ -1,6 +1,5 @@
 import { Image } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
-import { Box } from '@chakra-ui/react';
 
 const Logo = () => (
   <>
@@ -16,9 +15,9 @@ const Logo = () => (
       cursor="pointer"
       onClick={() => window.open('https://tooo1.tistory.com')}
     />
-    <Box width={{ base: '100%', md: '37.5rem' }}>
+    <main>
       <Outlet />
-    </Box>
+    </main>
   </>
 );
 

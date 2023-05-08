@@ -1,13 +1,23 @@
-import { Flex, Box, Text, Center, Select } from '@chakra-ui/react';
+import { Flex, Box, Text, Center, Select, keyframes } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
 import { ChangeEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import DustState from '@/components/common/DustState';
 import ProgressBar from '@/components/common/ProgressBar';
 import SidoRankList from '@/components/Ranking/SidoRankList';
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import theme from '@/styles/theme';
+import { DUST_GRADE, FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
+
+const animationKeyframes = keyframes`
+  0% { background-position: 0 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+`;
+
+const animation = `${animationKeyframes} 6s ease infinite`;
 
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
@@ -45,7 +55,14 @@ const Ranking = () => {
   );
 
   return (
-    <Box textAlign="center">
+    <Flex
+      direction="column"
+      as={motion.div}
+      animation={animation}
+      bgGradient={theme.backgroundColors[DUST_GRADE[dustAverageGrade]]}
+      textAlign="center"
+      backgroundSize="200% 200%"
+    >
       <Text
         as="h1"
         fontSize={{ base: 18, sm: 20, md: 24 }}
@@ -66,21 +83,21 @@ const Ranking = () => {
         {sidoDustInfo.dataTime} 기준
       </Text>
       <Box
-        w="80%"
+        width={{ base: '80%', sm: '80%', md: '60%', lg: '50%', xl: '40%' }}
         margin="0 auto"
         borderTopRadius={10}
         textAlign="center"
         bg="rgba(255, 255, 255, 0.6)"
         boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
         backdropFilter="blur(7px)"
-        px={{ base: 3, sm: 6 }}
-        py={8}
+        px={{ base: 4, sm: 6 }}
+        py={{ base: 6, sm: 8 }}
       >
         <Text
           as="p"
           fontSize={{ base: 22, sm: 24, md: 28 }}
           fontWeight={700}
-          mb={4}
+          mb={{ base: 2, sm: 4 }}
         >
           {selectedSido}
         </Text>
@@ -105,6 +122,8 @@ const Ranking = () => {
         direction="column"
         justifyContent="center"
         alignItems="center"
+        width={{ base: '100%', sm: '100%', md: '70%', lg: '60%', xl: '50%' }}
+        margin="0 auto"
         borderRadius={20}
         bg="#f6f6f6"
         mb={20}
@@ -120,16 +139,17 @@ const Ranking = () => {
           py={3}
           borderRadius={25}
           color="#ffffff"
-          bg="#44b7f7"
+          bg={theme.colors[DUST_GRADE[dustAverageGrade]]}
         >
           지역별 미세 먼지 농도 순위
         </Text>
         <Select
-          color="#3a9cbd"
-          borderColor="#3a9cbd"
+          color="#4d4d4d"
+          borderColor="#7f7f7f"
           borderWidth={2}
           fontSize={{ base: 14, sm: 16 }}
           my={6}
+          _focus={{ borderColor: 'none' }}
           onChange={handleSortKeyChange}
         >
           <option>{FINE_DUST}</option>
@@ -137,7 +157,7 @@ const Ranking = () => {
         </Select>
         <SidoRankList sortType={selectedSortKey} />
       </Flex>
-    </Box>
+    </Flex>
   );
 };
 

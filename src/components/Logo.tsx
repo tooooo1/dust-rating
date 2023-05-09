@@ -1,4 +1,4 @@
-import { Image } from '@chakra-ui/react';
+import { Image, Box } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
 
 const Logo = () => (
@@ -15,9 +15,9 @@ const Logo = () => (
       cursor="pointer"
       onClick={() => window.open('https://tooo1.tistory.com')}
     />
-    <main>
+    <Box>
       <Outlet />
-    </main>
+    </Box>
   </>
 );
 

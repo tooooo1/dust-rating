@@ -84,7 +84,7 @@ const Ranking = () => {
       </Text>
       <Box
         maxWidth="37.5rem"
-        width={{ base: '80%', sm: '80%', md: '70%' }}
+        width={{ base: '80%', sm: '80%' }}
         margin="0 auto"
         borderTopRadius={10}
         textAlign="center"

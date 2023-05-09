@@ -83,7 +83,8 @@ const Ranking = () => {
         {sidoDustInfo.dataTime} 기준
       </Text>
       <Box
-        width={{ base: '80%', sm: '80%', md: '60%', lg: '50%', xl: '40%' }}
+        maxWidth="37.5rem"
+        width={{ base: '80%', sm: '80%', md: '70%' }}
         margin="0 auto"
         borderTopRadius={10}
         textAlign="center"
@@ -122,7 +123,8 @@ const Ranking = () => {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        width={{ base: '100%', sm: '100%', md: '70%', lg: '60%', xl: '50%' }}
+        maxWidth="47.5rem"
+        width={{ base: '100%', sm: '100%' }}
         margin="0 auto"
         borderRadius={20}
         bg="#f6f6f6"

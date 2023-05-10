@@ -5,7 +5,8 @@ import {
   BsEmojiFrown,
   BsEmojiAngry,
 } from 'react-icons/bs';
-import { DUST_GRADE, DUST_SCALE_COLOR } from '@/utils/constants';
+import theme from '@/styles/theme';
+import { DUST_GRADE } from '@/utils/constants';
 
 interface DustStateProps {
   dustGrade: number;
@@ -30,14 +31,14 @@ const DustState = ({ dustGrade }: DustStateProps) => {
 
   return (
     <Flex flexDirection="column" justifyContent="center" alignItems="center">
-      <Box color={DUST_SCALE_COLOR[grade]} mb={1}>
+      <Box color={theme.colors[grade]} mb={1}>
         {DUST_GRADE_ICON[grade]}
       </Box>
       <Text
         as="p"
         fontSize={{ base: 16, sm: 20 }}
         fontWeight={700}
-        color={DUST_SCALE_COLOR[grade]}
+        color={theme.colors[grade]}
       >
         {DUST_STATE[grade]}
       </Text>

@@ -1,3 +1,4 @@
+import { ChakraProvider } from '@chakra-ui/react';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -5,7 +6,6 @@ import {
   RouterProvider,
   Navigate,
 } from 'react-router-dom';
-
 import Logo from '@/components/Logo';
 import {
   ChoicePage,
@@ -14,6 +14,7 @@ import {
   DustMapPage,
 } from '@/pages';
 import { ROUTE } from '@/utils/constants';
+import theme from './styles/theme';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,7 +29,11 @@ const router = createBrowserRouter(
 );
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <ChakraProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ChakraProvider>
+  );
 };
 
 export default App;

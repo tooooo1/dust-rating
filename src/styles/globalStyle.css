@@ -8,11 +8,8 @@
 }
 
 #root {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-weight: 600;
+  background-color: #53caf2;
+  line-height: 1;
 }
 
 .circle-marker {

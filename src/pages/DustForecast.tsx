@@ -62,28 +62,29 @@ const DustForecast = () => {
         </Flex>
 
         <Box mb={14}>
-          {isLargerThan480 ? (
-            <Flex direction="column" alignItems="center" mb={4}>
-              <Text as="p" fontSize={22} fontWeight={600} textAlign="center">
-                시간별 {FINE_DUST} 농도
-              </Text>
-              <Text
-                as="p"
-                fontSize={16}
-                fontWeight={400}
-                textAlign="center"
-                mt={2}
-                mb={4}
-              >
-                {dataTime.split(' ')[0]}
-              </Text>
-              <DustLevel direction="row" />
-            </Flex>
-          ) : (
-            <Flex direction="column" alignItems="center" mt={10}>
-              <DustLevel direction="row" />
-            </Flex>
-          )}
+          <Flex direction="column" alignItems="center" mb={4}>
+            <Text
+              display={isLargerThan480 ? 'block' : 'none'}
+              as="p"
+              fontSize={22}
+              fontWeight={600}
+              textAlign="center"
+            >
+              시간별 {FINE_DUST} 농도
+            </Text>
+            <Text
+              display={isLargerThan480 ? 'block' : 'none'}
+              as="p"
+              fontSize={16}
+              fontWeight={400}
+              textAlign="center"
+              mt={2}
+              mb={4}
+            >
+              {dataTime.split(' ')[0]}
+            </Text>
+            <DustLevel direction="row" />
+          </Flex>
           <DustChart cityName={cityName} />
         </Box>
         <ForcastInfo cityName={cityName} />

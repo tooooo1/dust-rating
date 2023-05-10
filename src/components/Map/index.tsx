@@ -92,7 +92,7 @@ const Map = () => {
             <p class="city-name">${name}</p>
             <div class="dust-info">
               <div>${fineDustScale}</div>
-              <span class="divider">&sol;</span>
+              <span class="divider">/</span>
               <div>${ultraFineDustScale}</div>  
             </div>
           </div>

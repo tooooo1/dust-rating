@@ -1,5 +1,5 @@
 import { Flex, Box } from '@chakra-ui/react';
-import { DUST_SCALE_COLOR } from '@/utils/constants';
+import theme from '@/styles/theme';
 
 interface DustLevelProps {
   direction: 'row' | 'column';
@@ -17,7 +17,7 @@ export const DustLevel = ({ direction = 'row' }: DustLevelProps) => {
       gap={1}
     >
       <Box
-        backgroundColor={DUST_SCALE_COLOR.DANGER}
+        backgroundColor={theme.colors.DANGER}
         borderRadius={20}
         p={3}
         py="0.3rem"
@@ -25,7 +25,7 @@ export const DustLevel = ({ direction = 'row' }: DustLevelProps) => {
         매우
       </Box>
       <Box
-        backgroundColor={DUST_SCALE_COLOR.BAD}
+        backgroundColor={theme.colors.BAD}
         borderRadius={20}
         px={3}
         py="0.3rem"
@@ -33,7 +33,7 @@ export const DustLevel = ({ direction = 'row' }: DustLevelProps) => {
         나쁨
       </Box>
       <Box
-        backgroundColor={DUST_SCALE_COLOR.NORMAL}
+        backgroundColor={theme.colors.NORMAL}
         borderRadius={20}
         px={3}
         py="0.3rem"
@@ -41,7 +41,7 @@ export const DustLevel = ({ direction = 'row' }: DustLevelProps) => {
         보통
       </Box>
       <Box
-        backgroundColor={DUST_SCALE_COLOR.GOOD}
+        backgroundColor={theme.colors.GOOD}
         borderRadius={20}
         px={3}
         py="0.3rem"

@@ -24,8 +24,8 @@ const Choice = () => {
     <Flex
       height="100vh"
       direction="column"
-      justify="center"
-      align="center"
+      justifyContent="center"
+      alignItems="center"
       color="#ffffff"
       textAlign="center"
     >

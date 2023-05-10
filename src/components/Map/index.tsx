@@ -20,8 +20,8 @@ import { getAllLocation } from '@/apis/location';
 import DustLevel from '@/components/common/DustLevel';
 import DustState from '@/components/common/DustState';
 import useMap from '@/hooks/useMap';
-import theme from '@/styles/theme';
-import type { CityDustInfo } from '@/types/dust';
+import type { CityDustInfo, MarkerInfo } from '@/types/dust';
+import type { MapAndMakers } from '@/types/map';
 import {
   FINE_DUST,
   ULTRA_FINE_DUST,
@@ -35,6 +35,7 @@ import {
 } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
 import ControlButton from './ControlButton';
+import theme from '@/styles/theme';
 
 const Map = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -76,6 +77,36 @@ const Map = () => {
     staleTime: 1000 * 60 * 5,
   });
 
+  const makeMarkerTemplate = ({
+    name,
+    fineDustScale,
+    fineDustGrade,
+    ultraFineDustScale,
+    ultraFineDustGrade,
+  }: MarkerInfo) => {
+    const averageGrade = getDustAverageGrade(fineDustGrade, ultraFineDustGrade);
+    const backgroundColor = theme.colors[DUST_GRADE[averageGrade]];
+
+    return `
+          <div class="dust-info-marker" id="${name}" data-finedustgrade="${fineDustGrade}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};">
+            <p class="city-name">${name}</p>
+            <div class="dust-info">
+              <div>${fineDustScale}</div>
+              <span class="divider">/</span>
+              <div>${ultraFineDustScale}</div>  
+            </div>
+          </div>
+    `;
+  };
+
+  const setMakerToNull = ({ map, markers }: MapAndMakers) => {
+    if (map && markers.length) {
+      markers.forEach((marker) => {
+        marker.setMap(null);
+      });
+    }
+  };
+
   useEffect(() => {
     if (!map || !sidoDustInfos || !allLocation) return;
 
@@ -87,24 +118,17 @@ const Map = () => {
         ultraFineDustScale,
         ultraFineDustGrade,
       }) => {
-        const { latitude, longitude } = allLocation.filter(
+        const { latitude, longitude } = allLocation.find(
           (scale) => scale.sidoName === sidoName
-        )[0];
+        ) || { latitude: 0, longitude: 0 };
 
-        const averageGrade = getDustAverageGrade(
+        const template = makeMarkerTemplate({
+          name: sidoName,
+          fineDustScale,
           fineDustGrade,
-          ultraFineDustGrade
-        );
-        const backgroundColor = theme.colors[DUST_GRADE[averageGrade]];
-        const template = `
-          <div class="dust-info-marker" style="background-color: ${backgroundColor};">
-            <p class="city-name">${sidoName}</p>
-            <div class="dust-info">
-              <div>${fineDustScale}</div>
-              <span class="divider">&sol;</span>
-              <div>${ultraFineDustScale}</div>  
-            </div>
-          </div>`;
+          ultraFineDustScale,
+          ultraFineDustGrade,
+        });
 
         const marker = new kakao.maps.CustomOverlay({
           clickable: true,
@@ -121,11 +145,7 @@ const Map = () => {
     });
 
     return () => {
-      if (map && sidoDustInfoMarkers.length) {
-        sidoDustInfoMarkers.forEach((marker) => {
-          marker.setMap(null);
-        });
-      }
+      setMakerToNull({ map, markers: sidoDustInfoMarkers });
     };
   }, [sidoDustInfos, allLocation, sidoDustInfoMarkers]);
 
@@ -153,16 +173,13 @@ const Map = () => {
             const latitude = Number(result[0].y);
             const longitude = Number(result[0].x);
 
-            const averageGrade = getDustAverageGrade(
+            const template = makeMarkerTemplate({
+              name: cityName,
+              fineDustScale,
               fineDustGrade,
-              ultraFineDustGrade
-            );
-            const backgroundColor = theme.colors[DUST_GRADE[averageGrade]];
-            const template = `
-                  <div class="dust-info-marker" id="${cityName}" data-finedustgrade="${fineDustGrade}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};" >
-                    <span>${fineDustScale}/${ultraFineDustScale}</span>                  
-                    <p class="city-name">${cityName}</p>                  
-                  </div>`;
+              ultraFineDustScale,
+              ultraFineDustGrade,
+            });
 
             const marker = new kakao.maps.CustomOverlay({
               map,
@@ -182,11 +199,7 @@ const Map = () => {
     );
 
     return () => {
-      if (map && cityDustInfoMarkers.length) {
-        cityDustInfoMarkers.forEach((marker) => {
-          marker.setMap(null);
-        });
-      }
+      setMakerToNull({ map, markers: cityDustInfoMarkers });
     };
   }, [cityDustInfos]);
 

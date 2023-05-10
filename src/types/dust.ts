@@ -25,6 +25,10 @@ export interface DustFigures {
   ultraFineDustGrade: number;
 }
 
+export interface MarkerInfo extends DustFigures {
+  name: string;
+}
+
 export interface CityDustInfo extends DustFigures {
   cityName: string;
   dataTime: string;

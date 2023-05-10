@@ -118,9 +118,9 @@ const Map = () => {
         ultraFineDustScale,
         ultraFineDustGrade,
       }) => {
-        const { latitude, longitude } = allLocation.filter(
+        const { latitude, longitude } = allLocation.find(
           (scale) => scale.sidoName === sidoName
-        )[0];
+        ) || { latitude: 0, longitude: 0 };
 
         const template = makeMarkerTemplate({
           name: sidoName,

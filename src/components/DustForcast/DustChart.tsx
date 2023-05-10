@@ -11,13 +11,9 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { getDustHistory } from '@/apis/dustHistory';
+import theme from '@/styles/theme';
 import type { DustHistory } from '@/types/dust';
-import {
-  FINE_DUST,
-  ULTRA_FINE_DUST,
-  DUST_GRADE,
-  DUST_SCALE_COLOR,
-} from '@/utils/constants';
+import { FINE_DUST, ULTRA_FINE_DUST, DUST_GRADE } from '@/utils/constants';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
@@ -50,14 +46,14 @@ const DustChart = ({ cityName }: DustChartProps) => {
         label: FINE_DUST,
         data: dustHistories.map((history) => history.fineDustScale),
         backgroundColor: dustHistories.map(
-          (history) => DUST_SCALE_COLOR[DUST_GRADE[history.fineDustGrade]]
+          (history) => theme.colors[DUST_GRADE[history.fineDustGrade]]
         ),
       },
       {
         label: ULTRA_FINE_DUST,
         data: dustHistories.map((history) => history.ultraFineDustScale),
         backgroundColor: dustHistories.map(
-          (history) => DUST_SCALE_COLOR[DUST_GRADE[history.ultraFineDustGrade]]
+          (history) => theme.colors[DUST_GRADE[history.ultraFineDustGrade]]
         ),
       },
     ],

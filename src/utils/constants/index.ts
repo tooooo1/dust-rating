@@ -10,5 +10,4 @@ export {
   COLOR_MARKER_MOUSE_OUT,
   ZINDEX_MARKER_MOUSE_OVER,
   ZINDEX_MARKER_MOUSE_OUT,
-  DUST_SCALE_COLOR,
 } from '@/utils/constants/map';

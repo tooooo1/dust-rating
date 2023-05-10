@@ -20,12 +20,12 @@ import { getAllLocation } from '@/apis/location';
 import DustLevel from '@/components/common/DustLevel';
 import DustState from '@/components/common/DustState';
 import useMap from '@/hooks/useMap';
+import theme from '@/styles/theme';
 import type { CityDustInfo } from '@/types/dust';
 import {
   FINE_DUST,
   ULTRA_FINE_DUST,
   DUST_GRADE,
-  DUST_SCALE_COLOR,
   CITY_ZOOM_LEVEL,
   MAX_ZOOM_LEVEL,
   COLOR_MARKER_MOUSE_OVER,
@@ -95,7 +95,7 @@ const Map = () => {
           fineDustGrade,
           ultraFineDustGrade
         );
-        const backgroundColor = DUST_SCALE_COLOR[DUST_GRADE[averageGrade]];
+        const backgroundColor = theme.colors[DUST_GRADE[averageGrade]];
         const template = `
           <div class="dust-info-marker" style="background-color: ${backgroundColor};">
             <p class="city-name">${sidoName}</p>
@@ -157,7 +157,7 @@ const Map = () => {
               fineDustGrade,
               ultraFineDustGrade
             );
-            const backgroundColor = DUST_SCALE_COLOR[DUST_GRADE[averageGrade]];
+            const backgroundColor = theme.colors[DUST_GRADE[averageGrade]];
             const template = `
                   <div class="dust-info-marker" id="${cityName}" data-finedustgrade="${fineDustGrade}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};" >
                     <span>${fineDustScale}/${ultraFineDustScale}</span>                  

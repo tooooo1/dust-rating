@@ -1,11 +1,11 @@
-import { Box, Text, Flex } from '@chakra-ui/react';
+import { Box, Text, Flex, useMediaQuery } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
 import DustLevel from '@/components/common/DustLevel';
-import DustState from '@/components/common/DustState';
 import DustChart from '@/components/DustForcast/DustChart';
 import ForcastInfo from '@/components/DustForcast/ForcastInfo';
 import type { CityDustInfo } from '@/types/dust';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import CurrentDustInfo from '@/components/DustForcast/CurrentDustInfo';
 
 const DustForecast = () => {
   const location = useLocation();
@@ -18,19 +18,28 @@ const DustForecast = () => {
     dataTime,
   }: CityDustInfo = location.state;
 
+  const [isLargerThan480] = useMediaQuery('(min-width: 480px)');
+
   return (
-    <Box textAlign="center">
+    <Flex direction="column" textAlign="center">
       <Text
         as="h1"
-        fontSize={30}
+        fontSize={{ base: 32, sm: 28 }}
         fontWeight={600}
         color="#ffffff"
         mt={20}
         mb={4}
       >
-        {cityName}의 {FINE_DUST} 농도는 다음과 같습니다.
+        {cityName +
+          (isLargerThan480 ? `의 ${FINE_DUST} 농도는 다음과 같습니다.` : null)}
       </Text>
-      <Text as="p" fontSize={20} fontWeight={300} color="#ffffff" mb={6}>
+      <Text
+        as="p"
+        fontSize={{ base: 16, sm: 20 }}
+        fontWeight={300}
+        color="#ffffff"
+        mb={6}
+      >
         {dataTime} 기준
       </Text>
       <Box borderRadius={10} mb={20} py={10} px={8} bg="#ffffff">
@@ -40,39 +49,31 @@ const DustForecast = () => {
           mb={14}
           borderBottom="1px solid #dfdfdf"
         >
-          <Box flexGrow={1} borderRight="1px solid #dfdfdf">
-            <Text as="p" fontSize={22} fontWeight={600} mb={2}>
-              {FINE_DUST}
-            </Text>
-            <Flex justifyContent="center" alignItems="center">
-              <Text as="p" fontSize={48} fontWeight={800} mr={5}>
-                {fineDustScale}
-              </Text>
-              <Box my={3}>
-                <DustState dustGrade={fineDustGrade} />
-              </Box>
-            </Flex>
-          </Box>
-          <Box flexGrow={1}>
-            <Text as="p" fontSize={22} fontWeight={600} mb={2}>
-              {ULTRA_FINE_DUST}
-            </Text>
-            <Flex justifyContent="center" alignItems="center">
-              <Text as="p" fontSize={48} fontWeight={800} mr={5}>
-                {ultraFineDustScale}
-              </Text>
-              <Box my={3}>
-                <DustState dustGrade={ultraFineDustGrade} />
-              </Box>
-            </Flex>
-          </Box>
+          <CurrentDustInfo
+            kindOfDust={FINE_DUST}
+            dustScale={fineDustScale}
+            dustGrade={fineDustGrade}
+          />
+          <CurrentDustInfo
+            kindOfDust={ULTRA_FINE_DUST}
+            dustScale={ultraFineDustScale}
+            dustGrade={ultraFineDustGrade}
+          />
         </Flex>
+
         <Box mb={14}>
           <Flex direction="column" alignItems="center" mb={4}>
-            <Text as="p" fontSize={22} fontWeight={600} textAlign="center">
+            <Text
+              display={isLargerThan480 ? 'block' : 'none'}
+              as="p"
+              fontSize={22}
+              fontWeight={600}
+              textAlign="center"
+            >
               시간별 {FINE_DUST} 농도
             </Text>
             <Text
+              display={isLargerThan480 ? 'block' : 'none'}
               as="p"
               fontSize={16}
               fontWeight={400}
@@ -88,7 +89,7 @@ const DustForecast = () => {
         </Box>
         <ForcastInfo cityName={cityName} />
       </Box>
-    </Box>
+    </Flex>
   );
 };
 

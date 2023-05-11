@@ -1,4 +1,12 @@
-import { Flex, Box, Text, Center, Select, keyframes } from '@chakra-ui/react';
+import {
+  Flex,
+  Box,
+  Text,
+  Center,
+  Select,
+  keyframes,
+  Spinner,
+} from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState } from 'react';
@@ -44,7 +52,7 @@ const Ranking = () => {
   if (!sidoDustInfo) {
     return (
       <Center height="100vh" fontSize={28} fontWeight={100} color="#ffffff">
-        로딩 중...
+        <Spinner />
       </Center>
     );
   }
@@ -56,6 +64,7 @@ const Ranking = () => {
 
   return (
     <Flex
+      minHeight="100vh"
       direction="column"
       as={motion.div}
       animation={animation}

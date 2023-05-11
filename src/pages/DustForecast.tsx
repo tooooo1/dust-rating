@@ -31,7 +31,7 @@ const DustForecast = () => {
         mb={4}
       >
         {cityName +
-          (isLargerThan480 ? `의 ${FINE_DUST} 농도는 다음과 같습니다.` : '')}
+          (isLargerThan480 ? `의 ${FINE_DUST} 농도는 다음과 같습니다.` : null)}
       </Text>
       <Text
         as="p"

@@ -16,8 +16,14 @@ import DustState from '@/components/common/DustState';
 import ProgressBar from '@/components/common/ProgressBar';
 import SidoRankList from '@/components/Ranking/SidoRankList';
 import theme from '@/styles/theme';
-import { DUST_GRADE, FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import {
+  DUST_GRADE,
+  FINE_DUST,
+  ULTRA_FINE_DUST,
+  SIDO_GROUP,
+} from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
+import SidoList from '@/components/Ranking/SelectList';
 
 const animationKeyframes = keyframes`
   0% { background-position: 0 50%; }
@@ -30,8 +36,11 @@ const animation = `${animationKeyframes} 6s ease infinite`;
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
 const Ranking = () => {
-  const { state: selectedSido } = useLocation();
+  const { state: initSelectedSido } = useLocation();
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
+  const [selectedSido, setSelectedSido] = useState(initSelectedSido);
+  const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
+  const sidoNames = SIDO_GROUP.map((sido) => sido.sidoName);
 
   const { data: sidoDustInfo } = useQuery(
     ['sido-dust-info', selectedSido],
@@ -47,6 +56,11 @@ const Ranking = () => {
     target.value === FINE_DUST
       ? setSelectedSortKey(FINE_DUST)
       : setSelectedSortKey(ULTRA_FINE_DUST);
+  };
+
+  const handleChangeSelectedSido = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { target } = e;
+    setSelectedSido(target.value);
   };
 
   if (!sidoDustInfo) {
@@ -154,18 +168,14 @@ const Ranking = () => {
         >
           지역별 미세 먼지 농도 순위
         </Text>
-        <Select
-          color="#4d4d4d"
-          borderColor="#7f7f7f"
-          borderWidth={2}
-          fontSize={{ base: 14, sm: 16 }}
-          my={6}
-          _focus={{ borderColor: 'none' }}
-          onChange={handleSortKeyChange}
-        >
-          <option>{FINE_DUST}</option>
-          <option>{ULTRA_FINE_DUST}</option>
-        </Select>
+        <SidoList
+          handleChange={handleSortKeyChange}
+          selectOptions={kindOfDust}
+        />
+        <SidoList
+          handleChange={handleChangeSelectedSido}
+          selectOptions={sidoNames}
+        />
         <SidoRankList sortType={selectedSortKey} />
       </Flex>
     </Flex>

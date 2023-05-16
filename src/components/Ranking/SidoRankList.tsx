@@ -24,7 +24,6 @@ const SidoRankList = ({ sortType }: SidoRankListProps) => {
           );
         }
       },
-      refetchOnWindowFocus: false,
       keepPreviousData: true,
       staleTime: 1000 * 60 * 5,
       suspense: true,
@@ -33,18 +32,17 @@ const SidoRankList = ({ sortType }: SidoRankListProps) => {
 
   return (
     <>
-      {sidoDustInfos &&
-        sidoDustInfos.map((sido, sidoIndex) => (
-          <SidoRankItem
-            key={sido.sidoName}
-            rank={sidoIndex + 1}
-            sidoName={sido.sidoName}
-            fineDustScale={sido.fineDustScale}
-            ultraFineDustScale={sido.ultraFineDustScale}
-            fineDustGrade={sido.fineDustGrade}
-            ultraFineDustGrade={sido.ultraFineDustGrade}
-          />
-        ))}
+      {sidoDustInfos?.map((sido, sidoIndex) => (
+        <SidoRankItem
+          key={sido.sidoName}
+          rank={sidoIndex + 1}
+          sidoName={sido.sidoName}
+          fineDustScale={sido.fineDustScale}
+          ultraFineDustScale={sido.ultraFineDustScale}
+          fineDustGrade={sido.fineDustGrade}
+          ultraFineDustGrade={sido.ultraFineDustGrade}
+        />
+      ))}
     </>
   );
 };

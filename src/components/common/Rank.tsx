@@ -4,24 +4,17 @@ import type { DustFigures } from '@/types/dust';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
 
-interface RankProps extends DustFigures {
+interface RankProps {
   type: 'sido' | 'city';
   rank: number;
-  cityName: string;
+  title: string;
+  dustFigures: DustFigures;
 }
 
-const Rank = ({
-  type,
-  rank,
-  cityName,
-  fineDustScale,
-  fineDustGrade,
-  ultraFineDustScale,
-  ultraFineDustGrade,
-}: RankProps) => {
+const Rank = ({ type, rank, title, dustFigures }: RankProps) => {
   const dustAverageGrade = getDustAverageGrade(
-    fineDustGrade,
-    ultraFineDustGrade
+    dustFigures.fineDustGrade,
+    dustFigures.ultraFineDustGrade
   );
 
   return (
@@ -44,7 +37,7 @@ const Rank = ({
         whiteSpace="nowrap"
         textOverflow="ellipsis"
       >
-        {cityName}
+        {title}
       </Text>
       <Box width={type === 'sido' ? '26%' : '28%'} mr={8}>
         <DustState dustGrade={dustAverageGrade} />
@@ -71,7 +64,7 @@ const Rank = ({
             }
             fontWeight={800}
           >
-            {fineDustScale}
+            {dustFigures.fineDustScale}
           </Text>
         </Flex>
         <Flex justifyContent="space-between" alignItems="center" py={1}>
@@ -95,7 +88,7 @@ const Rank = ({
             }
             fontWeight={800}
           >
-            {ultraFineDustScale}
+            {dustFigures.ultraFineDustScale}
           </Text>
         </Flex>
       </Flex>

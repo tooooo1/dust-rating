@@ -1,4 +1,3 @@
-import { Spinner } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { getSidoDustInfos } from '@/apis/dustInfo';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
@@ -25,27 +24,17 @@ const SidoRankList = ({ sortType }: SidoRankListProps) => {
           );
         }
       },
-      refetchOnWindowFocus: false,
       keepPreviousData: true,
       staleTime: 1000 * 60 * 5,
+      suspense: true,
     }
   );
 
   return (
     <>
-      {!sidoDustInfos && <Spinner />}
-      {sidoDustInfos &&
-        sidoDustInfos.map((sido, sidoIndex) => (
-          <SidoRankItem
-            key={sido.sidoName}
-            rank={sidoIndex + 1}
-            sidoName={sido.sidoName}
-            fineDustScale={sido.fineDustScale}
-            ultraFineDustScale={sido.ultraFineDustScale}
-            fineDustGrade={sido.fineDustGrade}
-            ultraFineDustGrade={sido.ultraFineDustGrade}
-          />
-        ))}
+      {sidoDustInfos?.map((sido, sidoIndex) => (
+        <SidoRankItem key={sido.sidoName} rank={sidoIndex + 1} sido={sido} />
+      ))}
     </>
   );
 };

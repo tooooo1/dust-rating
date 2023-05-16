@@ -29,6 +29,10 @@ export interface MarkerInfo extends DustFigures {
   name: string;
 }
 
+export interface SidoDustInfo extends DustFigures {
+  sidoName: string;
+}
+
 export interface CityDustInfo extends DustFigures {
   cityName: string;
   dataTime: string;

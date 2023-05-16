@@ -4,15 +4,18 @@ import {
   AlertTitle,
   AlertDescription,
 } from '@chakra-ui/react';
-import { ReactNode } from 'react';
+import { PropsWithChildren } from 'react';
 
 interface AlertBoxProps {
-  children?: ReactNode;
   title: string;
   description?: string;
 }
 
-const AlertBox = ({ children, title, description }: AlertBoxProps) => {
+const AlertBox = ({
+  children,
+  title,
+  description,
+}: PropsWithChildren<AlertBoxProps>) => {
   return (
     <Alert
       status="warning"

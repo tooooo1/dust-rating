@@ -151,6 +151,14 @@ const Ranking = () => {
         px={{ base: 6, sm: 14, md: 20 }}
         py={10}
       >
+        <Button
+          alignItems="center"
+          width="10%"
+          sx={{ position: 'sticky', top: '0', left: '0' }}
+          onClick={handleGoTopButtonClick}
+        >
+          테스트
+        </Button>
         <Text
           as="p"
           fontSize={{ base: 16, sm: 18 }}
@@ -191,13 +199,6 @@ const Ranking = () => {
             <SidoRankList sortType={selectedSortKey} />
           </Suspense>
         </ErrorBoundary>
-        <Button
-          display="block"
-          sx={{ position: 'sticky', bottom: '0', left: '-90' }}
-          onClick={handleGoTopButtonClick}
-        >
-          테스트
-        </Button>
       </Flex>
     </Flex>
   );

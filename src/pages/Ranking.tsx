@@ -56,7 +56,7 @@ const Ranking = () => {
       : setSelectedSortKey(ULTRA_FINE_DUST);
   };
 
-  const handleChangeSelectedSido = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectedSidoChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { target } = e;
     setSelectedSido(target.value);
   };
@@ -170,7 +170,7 @@ const Ranking = () => {
           지역별 미세 먼지 농도 순위
         </Text>
         <SidoList
-          handleChange={handleChangeSelectedSido}
+          handleChange={handleSelectedSidoChange}
           selectOptions={sidoNames}
         />
         <SidoList

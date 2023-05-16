@@ -17,3 +17,12 @@ export const DEFAULT_SIDO_DUST_INFO = {
   ultraFineDustScale: 9999,
   ultraFineDustGrade: 9999,
 };
+
+export const DEFAULT_CITY_DUST_INFO = {
+  cityName: '정보를 불러오지 못했어요',
+  fineDustScale: 9999,
+  fineDustGrade: 9999,
+  ultraFineDustScale: 9999,
+  ultraFineDustGrade: 9999,
+  dataTime: '0000-00-00 00:00',
+};

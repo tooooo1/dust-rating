@@ -10,15 +10,13 @@ export const MoveTopButton = () => {
   };
 
   const handleMoveScroll = () => {
-    if ((scrollY / innerHeight) * 100 >= 60) {
-      document
-        .querySelector('#goTop')
-        ?.setAttribute('style', 'visibility:visible');
-    } else {
-      document
-        .querySelector('#goTop')
-        ?.setAttribute('style', 'visibility:hidden');
-    }
+    (scrollY / innerHeight) * 100 >= 60
+      ? document
+          .querySelector('#goTop')
+          ?.setAttribute('style', 'visibility:visible')
+      : document
+          .querySelector('#goTop')
+          ?.setAttribute('style', 'visibility:hidden');
   };
 
   useEffect(() => {

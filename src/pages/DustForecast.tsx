@@ -118,7 +118,7 @@ const DustForecast = () => {
           </Flex>
           <DustChart cityName={cityName} />
         </Box>
-        <Flex direction="column" mt={10}>
+        <Flex direction="column" alignItems="center" mt={10}>
           <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
             대기질 예보
           </Text>

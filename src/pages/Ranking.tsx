@@ -7,7 +7,6 @@ import {
   keyframes,
   Spinner,
   Skeleton,
-  Button,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -69,6 +68,7 @@ const Ranking = () => {
 
   return (
     <Flex
+      id="Ranking"
       minHeight="100vh"
       direction="column"
       as={motion.div}

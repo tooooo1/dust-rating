@@ -1,4 +1,5 @@
 import { Button } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 
 export const MoveTopButton = () => {
@@ -8,11 +9,28 @@ export const MoveTopButton = () => {
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const handleMoveScroll = () => {
+    if ((scrollY / innerHeight) * 100 >= 60) {
+      document
+        .querySelector('#goTop')
+        ?.setAttribute('style', 'visibility:visible');
+    } else {
+      document
+        .querySelector('#goTop')
+        ?.setAttribute('style', 'visibility:hidden');
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => handleMoveScroll());
+    return window.removeEventListener('scroll', handleMoveScroll);
+  }, []);
+
   return (
     <Button
+      id="goTop"
       width="10%"
       sx={{ position: 'sticky', zIndex: '9', top: '90%', left: '3%' }}
-      backgroundColor="transparent"
       onClick={handleGoTopButtonClick}
       _hover={{
         backgroundColor: '#dfdfdf',

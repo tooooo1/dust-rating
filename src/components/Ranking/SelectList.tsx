@@ -13,7 +13,7 @@ export const SidoList = ({ handleChange, selectOptions }: SidoListProps) => {
       borderColor="#7f7f7f"
       borderWidth={2}
       fontSize={{ base: 14, sm: 16 }}
-      my={6}
+      mt={6}
       _focus={{ borderColor: 'none' }}
       onChange={handleChange}
     >

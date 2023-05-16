@@ -170,12 +170,12 @@ const Ranking = () => {
           지역별 미세 먼지 농도 순위
         </Text>
         <SidoList
-          handleChange={handleSortKeyChange}
-          selectOptions={kindOfDust}
-        />
-        <SidoList
           handleChange={handleChangeSelectedSido}
           selectOptions={sidoNames}
+        />
+        <SidoList
+          handleChange={handleSortKeyChange}
+          selectOptions={kindOfDust}
         />
         <SidoRankList sortType={selectedSortKey} />
       </Flex>

@@ -30,16 +30,7 @@ const CityRankList = ({ sido, isShow }: CityRankListProps) => {
       {isShow &&
         cityDustInfos &&
         cityDustInfos.map((city, cityIndex) => (
-          <CityRankItem
-            key={city.cityName}
-            cityName={city.cityName}
-            rank={cityIndex + 1}
-            fineDustScale={city.fineDustScale}
-            fineDustGrade={city.fineDustGrade}
-            ultraFineDustScale={city.ultraFineDustScale}
-            ultraFineDustGrade={city.ultraFineDustGrade}
-            dataTime={city.dataTime}
-          />
+          <CityRankItem key={city.cityName} rank={cityIndex + 1} city={city} />
         ))}
     </Box>
   );

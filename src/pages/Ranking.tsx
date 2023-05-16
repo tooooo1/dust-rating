@@ -1,10 +1,21 @@
-import { Flex, Box, Text, Center, keyframes, Spinner } from '@chakra-ui/react';
+import {
+  Flex,
+  Box,
+  Text,
+  Center,
+  Select,
+  keyframes,
+  Spinner,
+  Skeleton,
+} from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState, Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import DustState from '@/components/common/DustState';
+import ErrorFallback from '@/components/common/Fallback/ErrorFallback';
 import ProgressBar from '@/components/common/ProgressBar';
 import SidoRankList from '@/components/Ranking/SidoRankList';
 import theme from '@/styles/theme';
@@ -70,8 +81,8 @@ const Ranking = () => {
 
   return (
     <Flex
-      minHeight="100vh"
       direction="column"
+      minHeight="100vh"
       as={motion.div}
       animation={animation}
       bgGradient={theme.backgroundColors[DUST_GRADE[dustAverageGrade]]}
@@ -166,17 +177,42 @@ const Ranking = () => {
         >
           지역별 미세 먼지 농도 순위
         </Text>
-        <SelectList
-          handleChange={handleSelectedSidoChange}
-          selectOptions={sidoNames}
-          defaultValue={selectedSido}
-        />
-        <SelectList
-          handleChange={handleSortKeyChange}
-          selectOptions={kindOfDust}
-          defaultValue={selectedSortKey}
-        />
-        <SidoRankList sortType={selectedSortKey} />
+        <Select
+          color="#4d4d4d"
+          borderColor="#7f7f7f"
+          borderWidth={2}
+          fontSize={{ base: 14, sm: 16 }}
+          my={6}
+          _focus={{ borderColor: 'none' }}
+          onChange={handleSortKeyChange}
+        >
+          <option>{FINE_DUST}</option>
+          <option>{ULTRA_FINE_DUST}</option>
+        </Select>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Suspense
+            fallback={[...Array(10).keys()].map((i) => (
+              <Skeleton
+                key={i}
+                width="100%"
+                height="3rem"
+                my={3}
+                endColor="#dfdfdf"
+              />
+            ))}
+          >
+            <SelectList
+              handleChange={handleSelectedSidoChange}
+              selectOptions={sidoNames}
+              defaultValue={selectedSido}
+            />
+            <SelectList
+              handleChange={handleSortKeyChange}
+              selectOptions={kindOfDust}
+              defaultValue={selectedSortKey}
+            />
+          </Suspense>
+        </ErrorBoundary>
       </Flex>
     </Flex>
   );

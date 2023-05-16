@@ -6,10 +6,11 @@ import {
   Select,
   keyframes,
   Spinner,
+  Skeleton,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, Suspense } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import DustState from '@/components/common/DustState';
@@ -166,7 +167,19 @@ const Ranking = () => {
           <option>{FINE_DUST}</option>
           <option>{ULTRA_FINE_DUST}</option>
         </Select>
-        <SidoRankList sortType={selectedSortKey} />
+        <Suspense
+          fallback={[...Array(10).keys()].map((i) => (
+            <Skeleton
+              key={i}
+              width="100%"
+              height="3rem"
+              my={3}
+              endColor="#dfdfdf"
+            />
+          ))}
+        >
+          <SidoRankList sortType={selectedSortKey} />
+        </Suspense>
       </Flex>
     </Flex>
   );

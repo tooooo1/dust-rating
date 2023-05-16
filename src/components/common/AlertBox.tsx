@@ -29,7 +29,11 @@ const AlertBox = ({
     >
       <AlertIcon boxSize={6} mb={3} />
       <AlertTitle fontSize={{ base: 16, sm: 18 }}>{title}</AlertTitle>
-      {description ? <AlertDescription fontSize={16} fontWeight={400} /> : null}
+      {description ? (
+        <AlertDescription fontSize={16} fontWeight={400}>
+          {description}
+        </AlertDescription>
+      ) : null}
       {children}
     </Alert>
   );

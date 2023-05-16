@@ -15,7 +15,10 @@ export const getDustForcast = async () => {
       `${VITE_DUST_FORCAST_URL}?searchDate=${getTodayDate()}&returnType=json&serviceKey=${VITE_DUST_INFO_API_KEY}&numOfRows=10&pageNo=1`
     );
 
-    if (response.status !== 200) {
+    if (
+      response.status !== 200 ||
+      response.data.response.body.items.length === 0
+    ) {
       throw new Error('API 에러');
     }
 

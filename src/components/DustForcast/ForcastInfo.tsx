@@ -1,7 +1,6 @@
-import { Flex, Text, Image } from '@chakra-ui/react';
+import { Text, Image } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { getDustForcast } from '@/apis/dustForecast';
-import AlertBox from '@/components/common/AlertBox';
 
 interface ForcastInfoProps {
   cityName: string;
@@ -13,43 +12,20 @@ const ForcastInfo = ({ cityName }: ForcastInfoProps) => {
     getDustForcast,
     {
       staleTime: 1000 * 60 * 5,
-      refetchOnWindowFocus: false,
+      suspense: true,
     }
   );
 
   return (
-    <Flex direction="column" mt={10}>
-      <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
-        대기질 예보
+    <>
+      <Text fontSize={16} fontWeight={400} textAlign="left" lineHeight={1.4}>
+        {dustForecast.informOverall}
       </Text>
-      {!dustForecast && (
-        <AlertBox
-          title="대기질 예보 정보를 불러오지 못했어요."
-          description="(매일 5, 11, 17, 23시에 업데이트)"
-        />
-      )}
-      {dustForecast && (
-        <>
-          <Text
-            fontSize={16}
-            fontWeight={400}
-            textAlign="left"
-            lineHeight={1.4}
-          >
-            {dustForecast.informOverall}
-          </Text>
-          <Text
-            fontSize={16}
-            fontWeight={400}
-            textAlign="left"
-            lineHeight={1.4}
-          >
-            {dustForecast.informCause}
-          </Text>
-          <Image src={dustForecast.imageUrl1} alt="대기질 예보 이미지" mt={8} />
-        </>
-      )}
-    </Flex>
+      <Text fontSize={16} fontWeight={400} textAlign="left" lineHeight={1.4}>
+        {dustForecast.informCause}
+      </Text>
+      <Image src={dustForecast.imageUrl1} alt="대기질 예보 이미지" mt={8} />
+    </>
   );
 };
 

@@ -1,6 +1,16 @@
-import { Box, Text, Flex, keyframes, useMediaQuery } from '@chakra-ui/react';
+import {
+  Box,
+  Text,
+  Flex,
+  keyframes,
+  useMediaQuery,
+  Spinner,
+} from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation } from 'react-router-dom';
+import AlertBox from '@/components/common/AlertBox';
 import DustLevel from '@/components/common/DustLevel';
 import CurrentDustInfo from '@/components/DustForcast/CurrentDustInfo';
 import DustChart from '@/components/DustForcast/DustChart';
@@ -108,7 +118,23 @@ const DustForecast = () => {
           </Flex>
           <DustChart cityName={cityName} />
         </Box>
-        <ForcastInfo cityName={cityName} />
+        <Flex direction="column" mt={10}>
+          <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
+            대기질 예보
+          </Text>
+          <ErrorBoundary
+            fallback={
+              <AlertBox
+                title="대기질 예보 정보를 불러오지 못했어요."
+                description="(매일 5, 11, 17, 23시에 업데이트)"
+              />
+            }
+          >
+            <Suspense fallback={<Spinner />}>
+              <ForcastInfo cityName={cityName} />
+            </Suspense>
+          </ErrorBoundary>
+        </Flex>
       </Box>
     </Flex>
   );

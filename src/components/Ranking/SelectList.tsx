@@ -1,12 +1,17 @@
 import { Select } from '@chakra-ui/react';
 import { ChangeEvent } from 'react';
 
-interface SidoListProps {
+interface SelectListProps {
   handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   selectOptions: string[];
+  defaultValue: string;
 }
 
-export const SidoList = ({ handleChange, selectOptions }: SidoListProps) => {
+export const SelectList = ({
+  handleChange,
+  selectOptions,
+  defaultValue,
+}: SelectListProps) => {
   return (
     <Select
       color="#4d4d4d"
@@ -16,12 +21,15 @@ export const SidoList = ({ handleChange, selectOptions }: SidoListProps) => {
       mt={6}
       _focus={{ borderColor: 'none' }}
       onChange={handleChange}
+      value={defaultValue}
     >
       {selectOptions.map((selectOption) => (
-        <option key={selectOption}>{selectOption}</option>
+        <option value={selectOption} key={selectOption}>
+          {selectOption}
+        </option>
       ))}
     </Select>
   );
 };
 
-export default SidoList;
+export default SelectList;

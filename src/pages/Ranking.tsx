@@ -15,7 +15,7 @@ import {
   SIDO_GROUP,
 } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
-import SidoList from '@/components/Ranking/SelectList';
+import SelectList from '@/components/Ranking/SelectList';
 
 const animationKeyframes = keyframes`
   0% { background-position: 0 50%; }
@@ -35,12 +35,7 @@ const Ranking = () => {
   const [selectedSido, setSelectedSido] = useState(place);
   const [dustAverageGrade, setDustAverageGrade] = useState(0);
   const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
-  const sidoNames = [
-    selectedSido,
-    ...SIDO_GROUP.map((sido) => sido.sidoName).filter(
-      (sidoName) => sidoName !== selectedSido
-    ),
-  ];
+  const sidoNames = SIDO_GROUP.map((sido) => sido.sidoName);
 
   const { data: sidoDustInfo } = useQuery(
     ['sido-dust-info', selectedSido],
@@ -171,13 +166,15 @@ const Ranking = () => {
         >
           지역별 미세 먼지 농도 순위
         </Text>
-        <SidoList
+        <SelectList
           handleChange={handleSelectedSidoChange}
           selectOptions={sidoNames}
+          defaultValue={selectedSido}
         />
-        <SidoList
+        <SelectList
           handleChange={handleSortKeyChange}
           selectOptions={kindOfDust}
+          defaultValue={selectedSortKey}
         />
         <SidoRankList sortType={selectedSortKey} />
       </Flex>

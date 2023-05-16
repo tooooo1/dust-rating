@@ -2,6 +2,7 @@ import axios from 'axios';
 import type { DustValidity, Dust } from '@/types/dust';
 import { SIDO_GROUP } from '@/utils/constants';
 import { dustScaleValidate } from '@/utils/validate';
+import { DEFAULT_SIDO_DUST_INFO } from '@/utils/constants/dust';
 
 const { VITE_DUST_INFO_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
 
@@ -34,13 +35,7 @@ export const getSidoDustInfos = async () => {
         };
       } catch (error) {
         console.error(error);
-        return {
-          sidoName: sido.sidoName,
-          fineDustScale: 9999,
-          fineDustGrade: 9999,
-          ultraFineDustScale: 9999,
-          ultraFineDustGrade: 9999,
-        };
+        return DEFAULT_SIDO_DUST_INFO;
       }
     })
   );

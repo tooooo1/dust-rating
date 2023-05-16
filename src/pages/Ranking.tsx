@@ -1,7 +1,7 @@
 import { Flex, Box, Text, Center, Select, keyframes } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, Suspense } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import DustState from '@/components/common/DustState';

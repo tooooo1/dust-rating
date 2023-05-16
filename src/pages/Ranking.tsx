@@ -169,10 +169,7 @@ const Ranking = () => {
           <option>{FINE_DUST}</option>
           <option>{ULTRA_FINE_DUST}</option>
         </Select>
-        <ErrorBoundary
-          FallbackComponent={ErrorFallback}
-          onReset={() => setSelectedSortKey(FINE_DUST)}
-        >
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense
             fallback={[...Array(10).keys()].map((i) => (
               <Skeleton

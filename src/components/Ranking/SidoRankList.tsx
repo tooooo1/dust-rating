@@ -33,15 +33,7 @@ const SidoRankList = ({ sortType }: SidoRankListProps) => {
   return (
     <>
       {sidoDustInfos?.map((sido, sidoIndex) => (
-        <SidoRankItem
-          key={sido.sidoName}
-          rank={sidoIndex + 1}
-          sidoName={sido.sidoName}
-          fineDustScale={sido.fineDustScale}
-          ultraFineDustScale={sido.ultraFineDustScale}
-          fineDustGrade={sido.fineDustGrade}
-          ultraFineDustGrade={sido.ultraFineDustGrade}
-        />
+        <SidoRankItem key={sido.sidoName} rank={sidoIndex + 1} sido={sido} />
       ))}
     </>
   );

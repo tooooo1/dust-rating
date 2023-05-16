@@ -22,6 +22,7 @@ import SidoRankList from '@/components/Ranking/SidoRankList';
 import theme from '@/styles/theme';
 import { DUST_GRADE, FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
+import MoveTopButton from '@/components/Ranking/MoveTopButton';
 
 const animationKeyframes = keyframes`
   0% { background-position: 0 50%; }
@@ -53,12 +54,6 @@ const Ranking = () => {
       : setSelectedSortKey(ULTRA_FINE_DUST);
   };
 
-  const handleGoTopButtonClick = () => {
-    document
-      .getElementById('root')
-      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
   if (!sidoDustInfo) {
     return (
       <Center height="100vh" fontSize={28} fontWeight={100} color="#ffffff">
@@ -82,6 +77,7 @@ const Ranking = () => {
       textAlign="center"
       backgroundSize="200% 200%"
     >
+      <MoveTopButton />
       <Text
         as="h1"
         fontSize={{ base: 18, sm: 20, md: 24 }}
@@ -141,7 +137,6 @@ const Ranking = () => {
       <Flex
         direction="column"
         justifyContent="center"
-        alignItems="center"
         maxWidth="47.5rem"
         width={{ base: '100%', sm: '100%' }}
         margin="0 auto"
@@ -151,14 +146,6 @@ const Ranking = () => {
         px={{ base: 6, sm: 14, md: 20 }}
         py={10}
       >
-        <Button
-          alignItems="center"
-          width="10%"
-          sx={{ position: 'sticky', top: '0', left: '0' }}
-          onClick={handleGoTopButtonClick}
-        >
-          테스트
-        </Button>
         <Text
           as="p"
           fontSize={{ base: 16, sm: 18 }}

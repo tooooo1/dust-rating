@@ -40,7 +40,12 @@ const Ranking = () => {
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
   const [selectedSido, setSelectedSido] = useState(initSelectedSido);
   const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
-  const sidoNames = SIDO_GROUP.map((sido) => sido.sidoName);
+  const sidoNames = [
+    selectedSido,
+    ...SIDO_GROUP.map((sido) => sido.sidoName).filter(
+      (sidoName) => sidoName !== selectedSido
+    ),
+  ];
 
   const { data: sidoDustInfo } = useQuery(
     ['sido-dust-info', selectedSido],

@@ -26,6 +26,7 @@ import {
 } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
 import SelectList from '@/components/Ranking/SelectList';
+import SidoRankList from '@/components/Ranking/SidoRankList';
 
 const animationKeyframes = keyframes`
   0% { background-position: 0 50%; }
@@ -128,7 +129,7 @@ const Ranking = () => {
           {selectedSido}
         </Text>
         <Text as="span" fontSize={{ base: 16, sm: 18 }} color="#4d4d4d">
-          f 현재의 대기질 지수는
+          현재의 대기질 지수는
         </Text>
         <Center my={5}>
           <DustState dustGrade={dustAverageGrade} />
@@ -176,18 +177,16 @@ const Ranking = () => {
         >
           지역별 미세 먼지 농도 순위
         </Text>
-        <Select
-          color="#4d4d4d"
-          borderColor="#7f7f7f"
-          borderWidth={2}
-          fontSize={{ base: 14, sm: 16 }}
-          my={6}
-          _focus={{ borderColor: 'none' }}
-          onChange={handleSortKeyChange}
-        >
-          <option>{FINE_DUST}</option>
-          <option>{ULTRA_FINE_DUST}</option>
-        </Select>
+        <SelectList
+          handleChange={handleSelectedSidoChange}
+          selectOptions={sidoNames}
+          defaultValue={selectedSido}
+        />
+        <SelectList
+          handleChange={handleSortKeyChange}
+          selectOptions={kindOfDust}
+          defaultValue={selectedSortKey}
+        />
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Suspense
             fallback={[...Array(10).keys()].map((i) => (
@@ -200,16 +199,7 @@ const Ranking = () => {
               />
             ))}
           >
-            <SelectList
-              handleChange={handleSelectedSidoChange}
-              selectOptions={sidoNames}
-              defaultValue={selectedSido}
-            />
-            <SelectList
-              handleChange={handleSortKeyChange}
-              selectOptions={kindOfDust}
-              defaultValue={selectedSortKey}
-            />
+            <SidoRankList sortType={selectedSortKey} />
           </Suspense>
         </ErrorBoundary>
       </Flex>

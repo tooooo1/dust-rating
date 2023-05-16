@@ -10,14 +10,13 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, useState, Suspense } from 'react';
+import { ChangeEvent, useState, useEffect, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import DustState from '@/components/common/DustState';
 import ErrorFallback from '@/components/common/Fallback/ErrorFallback';
 import ProgressBar from '@/components/common/ProgressBar';
-import SidoRankList from '@/components/Ranking/SidoRankList';
 import theme from '@/styles/theme';
 import {
   DUST_GRADE,

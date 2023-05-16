@@ -28,9 +28,11 @@ const animation = `${animationKeyframes} 6s ease infinite`;
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
 const Ranking = () => {
-  const { state: initSelectedSido } = useLocation();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(decodeURIComponent(location.search));
+  const place = searchParams.get('place') || '서울';
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
-  const [selectedSido, setSelectedSido] = useState<string>(initSelectedSido);
+  const [selectedSido, setSelectedSido] = useState(place);
   const [dustAverageGrade, setDustAverageGrade] = useState(0);
   const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
   const sidoNames = [

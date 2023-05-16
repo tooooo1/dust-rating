@@ -4,30 +4,23 @@ import type { CityDustInfo } from '@/types/dust';
 import { ROUTE } from '@/utils/constants';
 import Rank from '../common/Rank';
 
-interface CityRankItemProps extends CityDustInfo {
+interface CityRankItemProps {
   rank: number;
+  city: CityDustInfo;
 }
 
-const CityRankItem = ({
-  rank,
-  cityName,
-  fineDustScale,
-  fineDustGrade,
-  ultraFineDustScale,
-  ultraFineDustGrade,
-  dataTime,
-}: CityRankItemProps) => {
+const CityRankItem = ({ rank, city }: CityRankItemProps) => {
   const navigate = useNavigate();
 
   const handlePageNavigate = () => {
     navigate(ROUTE.DUST_FORECAST, {
       state: {
-        cityName,
-        fineDustScale,
-        fineDustGrade,
-        ultraFineDustScale,
-        ultraFineDustGrade,
-        dataTime,
+        cityName: city.cityName,
+        fineDustScale: city.fineDustScale,
+        fineDustGrade: city.fineDustGrade,
+        ultraFineDustScale: city.ultraFineDustScale,
+        ultraFineDustGrade: city.ultraFineDustGrade,
+        dataTime: city.dataTime,
       },
     });
   };
@@ -39,15 +32,7 @@ const CityRankItem = ({
       py={3}
       onClick={handlePageNavigate}
     >
-      <Rank
-        type="city"
-        rank={rank}
-        cityName={cityName}
-        fineDustScale={fineDustScale}
-        fineDustGrade={fineDustGrade}
-        ultraFineDustScale={ultraFineDustScale}
-        ultraFineDustGrade={ultraFineDustGrade}
-      />
+      <Rank type="city" rank={rank} title={city.cityName} dustFigures={city} />
     </Flex>
   );
 };

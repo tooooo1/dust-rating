@@ -4,13 +4,15 @@ import {
   AlertTitle,
   AlertDescription,
 } from '@chakra-ui/react';
+import { ReactNode } from 'react';
 
 interface AlertBoxProps {
+  children?: ReactNode;
   title: string;
-  description: string;
+  description?: string;
 }
 
-const AlertBox = ({ title, description }: AlertBoxProps) => {
+const AlertBox = ({ children, title, description }: AlertBoxProps) => {
   return (
     <Alert
       status="warning"
@@ -24,9 +26,8 @@ const AlertBox = ({ title, description }: AlertBoxProps) => {
     >
       <AlertIcon boxSize={6} mb={3} />
       <AlertTitle fontSize={{ base: 16, sm: 18 }}>{title}</AlertTitle>
-      <AlertDescription fontSize={16} fontWeight={400}>
-        {description}
-      </AlertDescription>
+      {description && <AlertDescription fontSize={16} fontWeight={400} />}
+      {children}
     </Alert>
   );
 };

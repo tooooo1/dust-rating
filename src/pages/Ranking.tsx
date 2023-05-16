@@ -13,7 +13,7 @@ import { motion } from 'framer-motion';
 import { ChangeEvent, useState, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation } from 'react-router-dom';
-import { getSidoDustInfo } from '@/apis/dustInfo';
+import { getSidoDustInfo, getSidoDustInfos } from '@/apis/dustInfo';
 import DustState from '@/components/common/DustState';
 import ErrorFallback from '@/components/common/Fallback/ErrorFallback';
 import ProgressBar from '@/components/common/ProgressBar';
@@ -115,7 +115,7 @@ const Ranking = () => {
           {selectedSido}
         </Text>
         <Text as="span" fontSize={{ base: 16, sm: 18 }} color="#4d4d4d">
-          현재의 대기질 지수는
+          f 현재의 대기질 지수는
         </Text>
         <Center my={5}>
           <DustState dustGrade={dustAverageGrade} />

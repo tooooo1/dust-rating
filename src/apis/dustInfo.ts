@@ -2,6 +2,10 @@ import axios from 'axios';
 import type { DustValidity, Dust } from '@/types/dust';
 import { SIDO_GROUP } from '@/utils/constants';
 import { dustScaleValidate } from '@/utils/validate';
+import {
+  INIT_SIDO_DUST_INFO,
+  INIT_CITY_DUST_INFO,
+} from '@/utils/constants/dust';
 
 const { VITE_DUST_INFO_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
 
@@ -10,15 +14,15 @@ interface DustStation extends Dust {
 }
 
 export const getSidoDustInfos = async () => {
-  try {
-    return await Promise.all(
-      SIDO_GROUP.map(async (sido) => {
+  return await Promise.all(
+    SIDO_GROUP.map(async (sido) => {
+      try {
         const response = await axios.get(
           `${VITE_DUST_INFO_URL}?sidoName=${sido.sidoName}&pageNo=1&numOfRows=10&returnType=json&serviceKey=${VITE_DUST_INFO_API_KEY}&ver=1.0`
         );
 
-        if (response.status !== 200) {
-          throw new Error('API 에러');
+        if (response.status !== 200 || !response.data.response) {
+          throw new Error('getSidoDustInfos API 에러');
         }
 
         const dustInfo = response.data.response.body.items.find(
@@ -32,12 +36,11 @@ export const getSidoDustInfos = async () => {
           ultraFineDustScale: Number(dustInfo.pm25Value),
           ultraFineDustGrade: Number(dustInfo.pm25Grade),
         };
-      })
-    );
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-  }
+      } catch (error) {
+        return INIT_SIDO_DUST_INFO;
+      }
+    })
+  );
 };
 
 export const getSidoDustInfo = async (sido: string) => {
@@ -46,8 +49,8 @@ export const getSidoDustInfo = async (sido: string) => {
       `${VITE_DUST_INFO_URL}?sidoName=${sido}&pageNo=1&numOfRows=10&returnType=json&serviceKey=${VITE_DUST_INFO_API_KEY}&ver=1.0`
     );
 
-    if (response.status !== 200) {
-      throw new Error('API 에러');
+    if (response.status !== 200 || !response.data.response) {
+      throw new Error('getSidoDustInfo API 에러');
     }
 
     const dustInfo = response.data.response.body.items.find(
@@ -63,8 +66,7 @@ export const getSidoDustInfo = async (sido: string) => {
       dataTime: dustInfo.dataTime,
     };
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
+    return INIT_CITY_DUST_INFO;
   }
 };
 
@@ -74,8 +76,8 @@ export const getCityDustInfos = async (sido: string) => {
       `${VITE_DUST_INFO_URL}?sidoName=${sido}&pageNo=1&numOfRows=250&returnType=json&serviceKey=${VITE_DUST_INFO_API_KEY}&ver=1.0`
     );
 
-    if (response.status !== 200) {
-      throw new Error('API 에러');
+    if (response.status !== 200 || !response.data.response) {
+      throw new Error('getCityDustInfos API 에러');
     }
 
     const dustInfos = response.data.response.body.items.filter(
@@ -91,7 +93,6 @@ export const getCityDustInfos = async (sido: string) => {
       dataTime: dustInfo.dataTime,
     }));
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
+    return INIT_CITY_DUST_INFO;
   }
 };

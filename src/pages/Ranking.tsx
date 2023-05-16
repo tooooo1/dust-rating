@@ -7,6 +7,7 @@ import {
   keyframes,
   Spinner,
   Skeleton,
+  Button,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -50,6 +51,12 @@ const Ranking = () => {
     target.value === FINE_DUST
       ? setSelectedSortKey(FINE_DUST)
       : setSelectedSortKey(ULTRA_FINE_DUST);
+  };
+
+  const handleGoTopButtonClick = () => {
+    document
+      .getElementById('root')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   if (!sidoDustInfo) {
@@ -184,6 +191,13 @@ const Ranking = () => {
             <SidoRankList sortType={selectedSortKey} />
           </Suspense>
         </ErrorBoundary>
+        <Button
+          display="block"
+          sx={{ position: 'sticky', bottom: '0', left: '-90' }}
+          onClick={handleGoTopButtonClick}
+        >
+          테스트
+        </Button>
       </Flex>
     </Flex>
   );

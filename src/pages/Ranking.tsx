@@ -1,15 +1,7 @@
-import {
-  Flex,
-  Box,
-  Text,
-  Center,
-  Select,
-  keyframes,
-  Spinner,
-} from '@chakra-ui/react';
+import { Flex, Box, Text, Center, keyframes, Spinner } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import DustState from '@/components/common/DustState';
@@ -38,7 +30,8 @@ type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 const Ranking = () => {
   const { state: initSelectedSido } = useLocation();
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
-  const [selectedSido, setSelectedSido] = useState(initSelectedSido);
+  const [selectedSido, setSelectedSido] = useState<string>(initSelectedSido);
+  const [dustAverageGrade, setDustAverageGrade] = useState(0);
   const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
   const sidoNames = [
     selectedSido,
@@ -68,18 +61,15 @@ const Ranking = () => {
     setSelectedSido(target.value);
   };
 
-  if (!sidoDustInfo) {
-    return (
-      <Center height="100vh" fontSize={28} fontWeight={100} color="#ffffff">
-        <Spinner />
-      </Center>
-    );
-  }
-
-  const dustAverageGrade = getDustAverageGrade(
-    sidoDustInfo.fineDustGrade,
-    sidoDustInfo.ultraFineDustGrade
-  );
+  useEffect(() => {
+    sidoDustInfo &&
+      setDustAverageGrade(
+        getDustAverageGrade(
+          sidoDustInfo.fineDustGrade,
+          sidoDustInfo.ultraFineDustGrade
+        )
+      );
+  }, [sidoDustInfo]);
 
   return (
     <Flex
@@ -108,7 +98,7 @@ const Ranking = () => {
         color="#ffffff"
         mb={6}
       >
-        {sidoDustInfo.dataTime} 기준
+        {sidoDustInfo ? sidoDustInfo.dataTime : '0000-00-00 00:00'} 기준
       </Text>
       <Box
         maxWidth="37.5rem"
@@ -136,16 +126,22 @@ const Ranking = () => {
         <Center my={5}>
           <DustState dustGrade={dustAverageGrade} />
         </Center>
-        <ProgressBar
-          kindOfDust={FINE_DUST}
-          scale={sidoDustInfo.fineDustScale}
-          grade={sidoDustInfo.fineDustGrade}
-        />
-        <ProgressBar
-          kindOfDust={ULTRA_FINE_DUST}
-          scale={sidoDustInfo.ultraFineDustScale}
-          grade={sidoDustInfo.ultraFineDustGrade}
-        />
+        {sidoDustInfo ? (
+          <>
+            <ProgressBar
+              kindOfDust={FINE_DUST}
+              scale={sidoDustInfo.fineDustScale}
+              grade={sidoDustInfo.fineDustGrade}
+            />
+            <ProgressBar
+              kindOfDust={ULTRA_FINE_DUST}
+              scale={sidoDustInfo.ultraFineDustScale}
+              grade={sidoDustInfo.ultraFineDustGrade}
+            />
+          </>
+        ) : (
+          <Spinner />
+        )}
       </Box>
       <Flex
         direction="column"

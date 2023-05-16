@@ -17,9 +17,9 @@ export const SidoList = ({ handleChange, selectOptions }: SidoListProps) => {
       _focus={{ borderColor: 'none' }}
       onChange={handleChange}
     >
-      {selectOptions.map((selectOption) => {
-        return <option key={selectOption}>{selectOption}</option>;
-      })}
+      {selectOptions.map((selectOption) => (
+        <option key={selectOption}>{selectOption}</option>
+      ))}
     </Select>
   );
 };

@@ -20,6 +20,7 @@ import { getAllLocation } from '@/apis/location';
 import DustLevel from '@/components/common/DustLevel';
 import DustState from '@/components/common/DustState';
 import useMap from '@/hooks/useMap';
+import theme from '@/styles/theme';
 import type { CityDustInfo, MarkerInfo } from '@/types/dust';
 import type { MapAndMakers } from '@/types/map';
 import {
@@ -35,7 +36,6 @@ import {
 } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
 import ControlButton from './ControlButton';
-import theme from '@/styles/theme';
 
 const Map = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);

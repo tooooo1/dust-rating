@@ -3,8 +3,8 @@ import type { DustValidity, Dust } from '@/types/dust';
 import { SIDO_GROUP } from '@/utils/constants';
 import { dustScaleValidate } from '@/utils/validate';
 import {
-  DEFAULT_SIDO_DUST_INFO,
-  DEFAULT_CITY_DUST_INFO,
+  INIT_SIDO_DUST_INFO,
+  INIT_CITY_DUST_INFO,
 } from '@/utils/constants/dust';
 
 const { VITE_DUST_INFO_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
@@ -37,8 +37,7 @@ export const getSidoDustInfos = async () => {
           ultraFineDustGrade: Number(dustInfo.pm25Grade),
         };
       } catch (error) {
-        console.error(error);
-        return DEFAULT_SIDO_DUST_INFO;
+        return INIT_SIDO_DUST_INFO;
       }
     })
   );
@@ -67,9 +66,7 @@ export const getSidoDustInfo = async (sido: string) => {
       dataTime: dustInfo.dataTime,
     };
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-    return DEFAULT_CITY_DUST_INFO;
+    return INIT_CITY_DUST_INFO;
   }
 };
 
@@ -96,8 +93,6 @@ export const getCityDustInfos = async (sido: string) => {
       dataTime: dustInfo.dataTime,
     }));
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-    return DEFAULT_CITY_DUST_INFO;
+    return INIT_CITY_DUST_INFO;
   }
 };

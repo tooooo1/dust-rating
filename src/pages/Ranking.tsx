@@ -11,9 +11,11 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState, Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import DustState from '@/components/common/DustState';
+import ErrorFallback from '@/components/common/Fallback/ErrorFallback';
 import ProgressBar from '@/components/common/ProgressBar';
 import SidoRankList from '@/components/Ranking/SidoRankList';
 import theme from '@/styles/theme';
@@ -167,19 +169,24 @@ const Ranking = () => {
           <option>{FINE_DUST}</option>
           <option>{ULTRA_FINE_DUST}</option>
         </Select>
-        <Suspense
-          fallback={[...Array(10).keys()].map((i) => (
-            <Skeleton
-              key={i}
-              width="100%"
-              height="3rem"
-              my={3}
-              endColor="#dfdfdf"
-            />
-          ))}
+        <ErrorBoundary
+          FallbackComponent={ErrorFallback}
+          onReset={() => setSelectedSortKey(FINE_DUST)}
         >
-          <SidoRankList sortType={selectedSortKey} />
-        </Suspense>
+          <Suspense
+            fallback={[...Array(10).keys()].map((i) => (
+              <Skeleton
+                key={i}
+                width="100%"
+                height="3rem"
+                my={3}
+                endColor="#dfdfdf"
+              />
+            ))}
+          >
+            <SidoRankList sortType={selectedSortKey} />
+          </Suspense>
+        </ErrorBoundary>
       </Flex>
     </Flex>
   );

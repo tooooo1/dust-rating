@@ -9,7 +9,7 @@ const Choice = () => {
   const [place, setPlace] = useState(SIDO_GROUP[0].sidoName);
 
   const handleResultPageNavigate = () => {
-    navigate(`${ROUTE.RANKING}/?place=${encodeURIComponent(place)}`);
+    navigate(`${ROUTE.RANKING}?place=${encodeURIComponent(place)}`);
   };
 
   const handleMapPageNavigate = () => {

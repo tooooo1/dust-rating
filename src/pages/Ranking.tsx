@@ -64,8 +64,8 @@ const Ranking = () => {
 
   return (
     <Flex
-      minHeight="100vh"
       direction="column"
+      minHeight="100vh"
       as={motion.div}
       animation={animation}
       bgGradient={theme.backgroundColors[DUST_GRADE[dustAverageGrade]]}

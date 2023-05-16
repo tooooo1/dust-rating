@@ -1,9 +1,17 @@
-import { Flex, Box, Text, Center, Select, keyframes } from '@chakra-ui/react';
+import {
+  Flex,
+  Box,
+  Text,
+  Center,
+  Select,
+  keyframes,
+  Spinner,
+} from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getSidoDustInfo } from '@/apis/dustInfo';
+import { getSidoDustInfo, getSidoDustInfos } from '@/apis/dustInfo';
 import DustState from '@/components/common/DustState';
 import ProgressBar from '@/components/common/ProgressBar';
 import SidoRankList from '@/components/Ranking/SidoRankList';
@@ -44,7 +52,7 @@ const Ranking = () => {
   if (!sidoDustInfo) {
     return (
       <Center height="100vh" fontSize={28} fontWeight={100} color="#ffffff">
-        로딩 중...
+        <Spinner />
       </Center>
     );
   }

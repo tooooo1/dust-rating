@@ -29,7 +29,10 @@ const CityRankItem = ({ rank, city }: CityRankItemProps) => {
     <Flex
       justifyContent="center"
       alignItems="center"
-      py={3}
+      padding={3}
+      borderRadius={6}
+      transition="all 100ms ease-out"
+      _hover={{ bg: '#dadada' }}
       onClick={handlePageNavigate}
     >
       <Rank type="city" rank={rank} title={city.cityName} dustFigures={city} />

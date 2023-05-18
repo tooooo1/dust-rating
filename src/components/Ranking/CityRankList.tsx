@@ -21,7 +21,7 @@ const CityRankList = ({ sido, isShow }: CityRankListProps) => {
   return (
     <Box
       flex="1"
-      bg="#dfdfdf"
+      bg="#e8e8e8"
       borderRadius={10}
       my={isShow ? 4 : 0}
       px={{ base: 3, sm: 4 }}

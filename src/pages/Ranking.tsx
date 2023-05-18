@@ -3,7 +3,6 @@ import {
   Box,
   Text,
   Center,
-  Select,
   keyframes,
   Spinner,
   Skeleton,
@@ -13,10 +12,12 @@ import { motion } from 'framer-motion';
 import { ChangeEvent, useState, useEffect, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation } from 'react-router-dom';
-import { getSidoDustInfo, getSidoDustInfos } from '@/apis/dustInfo';
+import { getSidoDustInfo } from '@/apis/dustInfo';
 import DustState from '@/components/common/DustState';
 import ErrorFallback from '@/components/common/Fallback/ErrorFallback';
 import ProgressBar from '@/components/common/ProgressBar';
+import SelectList from '@/components/Ranking/SelectList';
+import SidoRankList from '@/components/Ranking/SidoRankList';
 import theme from '@/styles/theme';
 import {
   DUST_GRADE,
@@ -25,8 +26,6 @@ import {
   SIDO_GROUP,
 } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
-import SelectList from '@/components/Ranking/SelectList';
-import SidoRankList from '@/components/Ranking/SidoRankList';
 
 const animationKeyframes = keyframes`
   0% { background-position: 0 50%; }
@@ -52,7 +51,6 @@ const Ranking = () => {
     ['sido-dust-info', selectedSido],
     () => getSidoDustInfo(selectedSido),
     {
-      refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5,
     }
   );

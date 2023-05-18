@@ -30,7 +30,12 @@ const CityRankList = ({ sido, isShow }: CityRankListProps) => {
       {isShow &&
         cityDustInfos &&
         cityDustInfos.map((city, cityIndex) => (
-          <CityRankItem key={city.cityName} rank={cityIndex + 1} city={city} />
+          <CityRankItem
+            key={city.cityName}
+            rank={cityIndex + 1}
+            sido={sido}
+            city={city}
+          />
         ))}
     </Box>
   );

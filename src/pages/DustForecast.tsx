@@ -5,11 +5,14 @@ import {
   keyframes,
   useMediaQuery,
   Spinner,
+  Center,
 } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import { getCityDustInfos } from '@/apis/dustInfo';
 import AlertBox from '@/components/common/AlertBox';
 import DustLevel from '@/components/common/DustLevel';
 import CurrentDustInfo from '@/components/DustForcast/CurrentDustInfo';
@@ -27,22 +30,37 @@ const animationKeyframes = keyframes`
 `;
 const animation = `${animationKeyframes} 6s ease infinite`;
 
+const INIT_SEARCHED_SIDO = '서울';
+
 const DustForecast = () => {
-  const location = useLocation();
-  const {
-    cityName,
-    fineDustScale,
-    fineDustGrade,
-    ultraFineDustScale,
-    ultraFineDustGrade,
-    dataTime,
-  }: CityDustInfo = location.state;
+  const [searchParams] = useSearchParams();
+  const searchedSido = searchParams.get('sido') || INIT_SEARCHED_SIDO;
+  const searchedCity = searchParams.get('city');
 
   const [isLargerThan480] = useMediaQuery('(min-width: 480px)');
 
+  const { data: cityDustInfos } = useQuery<CityDustInfo[]>(
+    ['city-dust-infos', searchedSido],
+    () => getCityDustInfos(searchedSido),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  if (!cityDustInfos)
+    return (
+      <Center height="100vh">
+        <Spinner />
+      </Center>
+    );
+
+  const dustInfo = cityDustInfos.find(
+    (cityDustInfo) => cityDustInfo.cityName === searchedCity
+  ) as CityDustInfo;
+
   const dustAverageGrade = getDustAverageGrade(
-    fineDustGrade,
-    ultraFineDustGrade
+    dustInfo.fineDustGrade,
+    dustInfo.ultraFineDustGrade
   );
 
   return (
@@ -63,7 +81,7 @@ const DustForecast = () => {
         mt={20}
         mb={{ base: 2, sm: 3, md: 4 }}
       >
-        {cityName}
+        {dustInfo.cityName}
         {isLargerThan480 && `의 ${FINE_DUST} 농도는 다음과 같습니다.`}
       </Text>
       <Text
@@ -73,7 +91,7 @@ const DustForecast = () => {
         color="#ffffff"
         mb={6}
       >
-        {dataTime} 기준
+        {dustInfo.dataTime} 기준
       </Text>
       <Box
         maxWidth="47.5rem"
@@ -93,13 +111,13 @@ const DustForecast = () => {
         >
           <CurrentDustInfo
             kindOfDust={FINE_DUST}
-            dustScale={fineDustScale}
-            dustGrade={fineDustGrade}
+            dustScale={dustInfo.fineDustScale}
+            dustGrade={dustInfo.fineDustGrade}
           />
           <CurrentDustInfo
             kindOfDust={ULTRA_FINE_DUST}
-            dustScale={ultraFineDustScale}
-            dustGrade={ultraFineDustGrade}
+            dustScale={dustInfo.ultraFineDustScale}
+            dustGrade={dustInfo.ultraFineDustGrade}
           />
         </Flex>
         <Box mb={14}>
@@ -116,7 +134,7 @@ const DustForecast = () => {
             </Text>
             <DustLevel direction="row" />
           </Flex>
-          <DustChart cityName={cityName} />
+          <DustChart cityName={dustInfo.cityName} />
         </Box>
         <Flex direction="column" alignItems="center" mt={10}>
           <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
@@ -131,7 +149,7 @@ const DustForecast = () => {
             }
           >
             <Suspense fallback={<Spinner />}>
-              <ForcastInfo cityName={cityName} />
+              <ForcastInfo cityName={dustInfo.cityName} />
             </Suspense>
           </ErrorBoundary>
         </Flex>

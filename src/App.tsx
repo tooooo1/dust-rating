@@ -1,4 +1,4 @@
-import { Center, ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   createBrowserRouter,
@@ -7,7 +7,6 @@ import {
   RouterProvider,
   Navigate,
 } from 'react-router-dom';
-import AlertBox from '@/components/common/AlertBox';
 import Logo from '@/components/Logo';
 import {
   ChoicePage,
@@ -16,6 +15,7 @@ import {
   DustMapPage,
 } from '@/pages';
 import { ROUTE } from '@/utils/constants';
+import ErrorFallback from './components/common/Fallback/ErrorFallback';
 import theme from './styles/theme';
 
 const router = createBrowserRouter(
@@ -28,9 +28,10 @@ const router = createBrowserRouter(
         element={
           <ErrorBoundary
             fallback={
-              <Center height="100%">
-                <AlertBox title="예보 정보를 불러오지 못했어요." />
-              </Center>
+              <ErrorFallback
+                title="해당 지역의 예보 정보를 불러오지 못했어요."
+                isCenter={true}
+              />
             }
           >
             <DustForecastPage />

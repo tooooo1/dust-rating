@@ -185,7 +185,11 @@ const Ranking = () => {
           selectOptions={kindOfDust}
           defaultValue={selectedSortKey}
         />
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <ErrorBoundary
+          fallback={
+            <ErrorFallback title="지역별 미세먼지 정보를 불러오지 못했어요." />
+          }
+        >
           <Suspense
             fallback={[...Array(10).keys()].map((i) => (
               <Skeleton

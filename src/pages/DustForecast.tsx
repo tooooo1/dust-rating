@@ -13,8 +13,8 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useSearchParams } from 'react-router-dom';
 import { getCityDustInfos } from '@/apis/dustInfo';
-import AlertBox from '@/components/common/AlertBox';
 import DustLevel from '@/components/common/DustLevel';
+import ErrorFallback from '@/components/common/Fallback/ErrorFallback';
 import CurrentDustInfo from '@/components/DustForcast/CurrentDustInfo';
 import DustChart from '@/components/DustForcast/DustChart';
 import ForcastInfo from '@/components/DustForcast/ForcastInfo';
@@ -31,11 +31,12 @@ const animationKeyframes = keyframes`
 const animation = `${animationKeyframes} 6s ease infinite`;
 
 const INIT_SEARCHED_SIDO = '서울';
+const INIT_SEARCHED_CITY = '강남구';
 
 const DustForecast = () => {
   const [searchParams] = useSearchParams();
   const searchedSido = searchParams.get('sido') || INIT_SEARCHED_SIDO;
-  const searchedCity = searchParams.get('city');
+  const searchedCity = searchParams.get('city') || INIT_SEARCHED_CITY;
 
   const [isLargerThan480] = useMediaQuery('(min-width: 480px)');
 
@@ -142,7 +143,7 @@ const DustForecast = () => {
           </Text>
           <ErrorBoundary
             fallback={
-              <AlertBox
+              <ErrorFallback
                 title="대기질 예보 정보를 불러오지 못했어요."
                 description="(매일 5, 11, 17, 23시에 업데이트)"
               />

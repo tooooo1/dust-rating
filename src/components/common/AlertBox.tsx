@@ -27,8 +27,10 @@ const AlertBox = ({
       borderRadius={8}
       py={6}
     >
-      <AlertIcon boxSize={6} mb={3} />
-      <AlertTitle fontSize={{ base: 16, sm: 18 }}>{title}</AlertTitle>
+      <AlertIcon boxSize={6} m={0} />
+      <AlertTitle fontSize={{ base: 16, sm: 18 }} mt={4} mr={0}>
+        {title}
+      </AlertTitle>
       {description ? (
         <AlertDescription fontSize={16} fontWeight={400}>
           {description}

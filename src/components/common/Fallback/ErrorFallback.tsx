@@ -3,11 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import AlertBox from '@/components/common/AlertBox';
 import { ROUTE } from '@/utils/constants';
 
-const ErrorFallback = () => {
+interface ErrorFallbackProps {
+  title: string;
+  description?: string;
+}
+
+const ErrorFallback = ({ title, description }: ErrorFallbackProps) => {
   const navigate = useNavigate();
 
   return (
-    <AlertBox title="랭킹 먼지 정보를 불러오지 못했어요.">
+    <AlertBox title={title} description={description}>
       <Button onClick={() => navigate(ROUTE.HOME)} mt={4}>
         메인으로 돌아가기
       </Button>

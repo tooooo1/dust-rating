@@ -15,7 +15,7 @@ const Logo = () => (
       cursor="pointer"
       onClick={() => window.open('https://tooo1.tistory.com')}
     />
-    <Box height="100vh">
+    <Box height="100%">
       <Outlet />
     </Box>
   </>

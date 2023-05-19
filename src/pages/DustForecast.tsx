@@ -1,19 +1,10 @@
-import {
-  Box,
-  Text,
-  Flex,
-  keyframes,
-  useMediaQuery,
-  Spinner,
-} from '@chakra-ui/react';
+import { Box, Text, Flex, keyframes, useMediaQuery } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import { useSearchParams } from 'react-router-dom';
 import { getCityDustInfos } from '@/apis/dustInfo';
+import AsyncBoundary from '@/components/common/AsyncBoundary';
 import DustLevel from '@/components/common/DustLevel';
-import ErrorFallback from '@/components/common/Fallback/ErrorFallback';
 import CurrentDustInfo from '@/components/DustForcast/CurrentDustInfo';
 import DustChart from '@/components/DustForcast/DustChart';
 import ForcastInfo from '@/components/DustForcast/ForcastInfo';
@@ -134,18 +125,12 @@ const DustForecast = () => {
           <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
             대기질 예보
           </Text>
-          <ErrorBoundary
-            fallback={
-              <ErrorFallback
-                title="대기질 예보 정보를 불러오지 못했어요."
-                description="(매일 5, 11, 17, 23시에 업데이트)"
-              />
-            }
+          <AsyncBoundary
+            title="대기질 예보 정보를 불러오지 못했어요."
+            description="(매일 5, 11, 17, 23시에 업데이트)"
           >
-            <Suspense fallback={<Spinner />}>
-              <ForcastInfo cityName={dustInfo.cityName} />
-            </Suspense>
-          </ErrorBoundary>
+            <ForcastInfo cityName={dustInfo.cityName} />
+          </AsyncBoundary>
         </Flex>
       </Box>
     </Flex>

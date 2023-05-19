@@ -9,12 +9,11 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, useState, useEffect, Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
+import AsyncBoundary from '@/components/common/AsyncBoundary';
 import DustState from '@/components/common/DustState';
-import ErrorFallback from '@/components/common/Fallback/ErrorFallback';
 import ProgressBar from '@/components/common/ProgressBar';
 import SelectList from '@/components/Ranking/SelectList';
 import SidoRankList from '@/components/Ranking/SidoRankList';
@@ -185,25 +184,20 @@ const Ranking = () => {
           selectOptions={kindOfDust}
           defaultValue={selectedSortKey}
         />
-        <ErrorBoundary
-          fallback={
-            <ErrorFallback title="지역별 미세먼지 정보를 불러오지 못했어요." />
-          }
+        <AsyncBoundary
+          title="지역별 미세먼지 정보를 불러오지 못했어요."
+          suspenseFallback={[...Array(10).keys()].map((i) => (
+            <Skeleton
+              key={i}
+              width="100%"
+              height="3rem"
+              my={3}
+              endColor="#dfdfdf"
+            />
+          ))}
         >
-          <Suspense
-            fallback={[...Array(10).keys()].map((i) => (
-              <Skeleton
-                key={i}
-                width="100%"
-                height="3rem"
-                my={3}
-                endColor="#dfdfdf"
-              />
-            ))}
-          >
-            <SidoRankList sortType={selectedSortKey} />
-          </Suspense>
-        </ErrorBoundary>
+          <SidoRankList sortType={selectedSortKey} />
+        </AsyncBoundary>
       </Flex>
     </Flex>
   );

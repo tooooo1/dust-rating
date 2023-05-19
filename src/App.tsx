@@ -1,6 +1,4 @@
-import { Center, Spinner, ChakraProvider } from '@chakra-ui/react';
-import { Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { ChakraProvider } from '@chakra-ui/react';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -16,7 +14,7 @@ import {
   DustMapPage,
 } from '@/pages';
 import { ROUTE } from '@/utils/constants';
-import ErrorFallback from './components/common/Fallback/ErrorFallback';
+import AsyncBoundary from './components/common/AsyncBoundary';
 import theme from './styles/theme';
 
 const router = createBrowserRouter(
@@ -27,24 +25,12 @@ const router = createBrowserRouter(
       <Route
         path={ROUTE.DUST_FORECAST}
         element={
-          <ErrorBoundary
-            fallback={
-              <ErrorFallback
-                title="해당 지역의 예보 정보를 불러오지 못했어요."
-                isCenter={true}
-              />
-            }
+          <AsyncBoundary
+            title="해당 지역의 예보 정보를 불러오지 못했어요."
+            isCenter={true}
           >
-            <Suspense
-              fallback={
-                <Center height="100vh">
-                  <Spinner />
-                </Center>
-              }
-            >
-              <DustForecastPage />
-            </Suspense>
-          </ErrorBoundary>
+            <DustForecastPage />
+          </AsyncBoundary>
         }
       />
       <Route path={ROUTE.DUST_MAP} element={<DustMapPage />} />

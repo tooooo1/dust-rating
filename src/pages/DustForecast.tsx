@@ -10,7 +10,13 @@ import DustChart from '@/components/DustForcast/DustChart';
 import ForcastInfo from '@/components/DustForcast/ForcastInfo';
 import theme from '@/styles/theme';
 import type { CityDustInfo } from '@/types/dust';
-import { DUST_GRADE, FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import {
+  FINE_DUST,
+  ULTRA_FINE_DUST,
+  DUST_GRADE,
+  INIT_SIDO,
+  INIT_CITY,
+} from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
 
 const animationKeyframes = keyframes`
@@ -18,15 +24,13 @@ const animationKeyframes = keyframes`
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 `;
-const animation = `${animationKeyframes} 6s ease infinite`;
 
-const INIT_SEARCHED_SIDO = '서울';
-const INIT_SEARCHED_CITY = '강남구';
+const animation = `${animationKeyframes} 6s ease infinite`;
 
 const DustForecast = () => {
   const [searchParams] = useSearchParams();
-  const searchedSido = searchParams.get('sido') || INIT_SEARCHED_SIDO;
-  const searchedCity = searchParams.get('city') || INIT_SEARCHED_CITY;
+  const searchedSido = searchParams.get('sido') || INIT_SIDO;
+  const searchedCity = searchParams.get('city') || INIT_CITY;
 
   const [isLargerThan480] = useMediaQuery('(min-width: 480px)');
 

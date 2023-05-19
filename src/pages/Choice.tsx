@@ -2,11 +2,11 @@ import { Flex, Text, Select, Button, Image } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
 import { HiArrowRight } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
-import { FINE_DUST, SIDO_GROUP, ROUTE } from '@/utils/constants';
+import { FINE_DUST, SIDO_GROUP, INIT_SIDO, ROUTE } from '@/utils/constants';
 
 const Choice = () => {
   const navigate = useNavigate();
-  const [place, setPlace] = useState(SIDO_GROUP[0].sidoName);
+  const [place, setPlace] = useState(INIT_SIDO);
 
   const handleResultPageNavigate = () => {
     navigate(`${ROUTE.RANKING}?place=${encodeURIComponent(place)}`);

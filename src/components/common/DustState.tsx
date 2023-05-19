@@ -9,10 +9,11 @@ import theme from '@/styles/theme';
 import { DUST_GRADE } from '@/utils/constants';
 
 interface DustStateProps {
-  dustGrade: number;
+  dustGrade?: number;
 }
 
 const DUST_STATE = {
+  NONE: '측정중',
   GOOD: '좋음',
   NORMAL: '보통',
   BAD: '나쁨',
@@ -20,17 +21,23 @@ const DUST_STATE = {
 };
 
 const DUST_GRADE_ICON = {
+  NONE: <BsEmojiHeartEyes />,
   GOOD: <BsEmojiHeartEyes />,
   NORMAL: <BsEmojiNeutral />,
   BAD: <BsEmojiFrown />,
   DANGER: <BsEmojiAngry />,
 };
 
-const DustState = ({ dustGrade }: DustStateProps) => {
+const DustState = ({ dustGrade = 0 }: DustStateProps) => {
   const grade = DUST_GRADE[dustGrade];
 
   return (
-    <Flex flexDirection="column" justifyContent="center" alignItems="center">
+    <Flex
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="2.5rem"
+    >
       <Box color={theme.colors[grade]} mb={1}>
         {DUST_GRADE_ICON[grade]}
       </Box>

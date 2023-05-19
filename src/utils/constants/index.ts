@@ -1,4 +1,4 @@
-export { SIDO_GROUP } from '@/utils/constants/city';
+export { SIDO_GROUP, INIT_SIDO, INIT_CITY } from '@/utils/constants/city';
 export { INIT_LOCATION, CENTER_LOCATION } from '@/utils/constants/location';
 export { FINE_DUST, ULTRA_FINE_DUST, DUST_GRADE } from '@/utils/constants/dust';
 export { ROUTE } from '@/utils/constants/route';

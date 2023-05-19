@@ -1,11 +1,11 @@
 import axios from 'axios';
 import type { DustValidity, Dust } from '@/types/dust';
 import { SIDO_GROUP } from '@/utils/constants';
-import { dustScaleValidate } from '@/utils/validate';
 import {
   INIT_SIDO_DUST_INFO,
   INIT_CITY_DUST_INFO,
 } from '@/utils/constants/dust';
+import { dustScaleValidate } from '@/utils/validate';
 
 const { VITE_DUST_INFO_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
 

@@ -3,20 +3,20 @@ import {
   Box,
   Text,
   Center,
-  Select,
   keyframes,
   Spinner,
   Skeleton,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, useState, useEffect, Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getSidoDustInfo, getSidoDustInfos } from '@/apis/dustInfo';
+import { getSidoDustInfo } from '@/apis/dustInfo';
+import AsyncBoundary from '@/components/common/AsyncBoundary';
 import DustState from '@/components/common/DustState';
-import ErrorFallback from '@/components/common/Fallback/ErrorFallback';
 import ProgressBar from '@/components/common/ProgressBar';
+import SelectList from '@/components/Ranking/SelectList';
+import SidoRankList from '@/components/Ranking/SidoRankList';
 import theme from '@/styles/theme';
 import {
   DUST_GRADE,
@@ -25,8 +25,6 @@ import {
   SIDO_GROUP,
 } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
-import SelectList from '@/components/Ranking/SelectList';
-import SidoRankList from '@/components/Ranking/SidoRankList';
 
 const animationKeyframes = keyframes`
   0% { background-position: 0 50%; }
@@ -52,7 +50,6 @@ const Ranking = () => {
     ['sido-dust-info', selectedSido],
     () => getSidoDustInfo(selectedSido),
     {
-      refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5,
     }
   );
@@ -187,21 +184,20 @@ const Ranking = () => {
           selectOptions={kindOfDust}
           defaultValue={selectedSortKey}
         />
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Suspense
-            fallback={[...Array(10).keys()].map((i) => (
-              <Skeleton
-                key={i}
-                width="100%"
-                height="3rem"
-                my={3}
-                endColor="#dfdfdf"
-              />
-            ))}
-          >
-            <SidoRankList sortType={selectedSortKey} />
-          </Suspense>
-        </ErrorBoundary>
+        <AsyncBoundary
+          title="지역별 미세먼지 정보를 불러오지 못했어요."
+          suspenseFallback={[...Array(10).keys()].map((i) => (
+            <Skeleton
+              key={i}
+              width="100%"
+              height="3rem"
+              my={3}
+              endColor="#dfdfdf"
+            />
+          ))}
+        >
+          <SidoRankList sortType={selectedSortKey} />
+        </AsyncBoundary>
       </Flex>
     </Flex>
   );

@@ -1,12 +1,4 @@
-import {
-  Flex,
-  Box,
-  Text,
-  Center,
-  keyframes,
-  Spinner,
-  Skeleton,
-} from '@chakra-ui/react';
+import { Flex, Box, Text, Center, keyframes, Skeleton } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState, useEffect } from 'react';
@@ -129,24 +121,18 @@ const Ranking = () => {
           현재의 대기질 지수는
         </Text>
         <Center my={5}>
-          <DustState dustGrade={dustAverageGrade} />
+          <DustState dustGrade={sidoDustInfo ? dustAverageGrade : 0} />
         </Center>
-        {sidoDustInfo ? (
-          <>
-            <ProgressBar
-              kindOfDust={FINE_DUST}
-              scale={sidoDustInfo.fineDustScale}
-              grade={sidoDustInfo.fineDustGrade}
-            />
-            <ProgressBar
-              kindOfDust={ULTRA_FINE_DUST}
-              scale={sidoDustInfo.ultraFineDustScale}
-              grade={sidoDustInfo.ultraFineDustGrade}
-            />
-          </>
-        ) : (
-          <Spinner />
-        )}
+        <ProgressBar
+          kindOfDust={FINE_DUST}
+          scale={sidoDustInfo?.fineDustScale}
+          grade={sidoDustInfo?.fineDustGrade}
+        />
+        <ProgressBar
+          kindOfDust={ULTRA_FINE_DUST}
+          scale={sidoDustInfo?.ultraFineDustScale}
+          grade={sidoDustInfo?.ultraFineDustGrade}
+        />
       </Box>
       <Flex
         direction="column"
@@ -170,7 +156,12 @@ const Ranking = () => {
           py={3}
           borderRadius={25}
           color="#ffffff"
-          bg={theme.colors[DUST_GRADE[dustAverageGrade]]}
+          bg={
+            dustAverageGrade
+              ? theme.colors[DUST_GRADE[dustAverageGrade]]
+              : 'gray'
+          }
+          transition="all 100ms ease-in-out"
         >
           지역별 미세 먼지 농도 순위
         </Text>
@@ -186,12 +177,12 @@ const Ranking = () => {
         />
         <AsyncBoundary
           title="지역별 미세먼지 정보를 불러오지 못했어요."
-          suspenseFallback={[...Array(10).keys()].map((i) => (
+          suspenseFallback={[...Array(17).keys()].map((i) => (
             <Skeleton
               key={i}
               width="100%"
               height="3rem"
-              my={3}
+              my="1.55rem"
               endColor="#dfdfdf"
             />
           ))}

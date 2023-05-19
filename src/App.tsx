@@ -1,4 +1,5 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { Center, Spinner, ChakraProvider } from '@chakra-ui/react';
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   createBrowserRouter,
@@ -34,7 +35,15 @@ const router = createBrowserRouter(
               />
             }
           >
-            <DustForecastPage />
+            <Suspense
+              fallback={
+                <Center height="100vh">
+                  <Spinner />
+                </Center>
+              }
+            >
+              <DustForecastPage />
+            </Suspense>
           </ErrorBoundary>
         }
       />

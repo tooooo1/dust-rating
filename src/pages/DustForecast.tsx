@@ -5,7 +5,6 @@ import {
   keyframes,
   useMediaQuery,
   Spinner,
-  Center,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -45,17 +44,11 @@ const DustForecast = () => {
     () => getCityDustInfos(searchedSido),
     {
       refetchOnWindowFocus: false,
+      suspense: true,
     }
   );
 
-  if (!cityDustInfos)
-    return (
-      <Center height="100vh">
-        <Spinner />
-      </Center>
-    );
-
-  const dustInfo = cityDustInfos.find(
+  const dustInfo = cityDustInfos?.find(
     (cityDustInfo) => cityDustInfo.cityName === searchedCity
   ) as CityDustInfo;
 

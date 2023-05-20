@@ -18,7 +18,7 @@ const useMap = ({ mapRef, cityDustInfoMarkers }: useMapProps) => {
   const [myDeviceLocation, setMyDeviceLocation] = useState(INIT_LOCATION);
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [zoomLevel, setZoomLevel] = useState(INIT_ZOOM_LEVEL);
-  const [currentCity, setCurrentCity] = useState(SIDO_GROUP[0].sidoName);
+  const [currentSido, setcurrentSido] = useState(SIDO_GROUP[0].sidoName);
   const [currentLocation, setCurrentLocation] = useState(INIT_LOCATION);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const useMap = ({ mapRef, cityDustInfoMarkers }: useMapProps) => {
           pos.coords.latitude,
           (result, status) => {
             if (status === kakao.maps.services.Status.OK) {
-              setCurrentCity(result[0].address.address_name.split(' ')[0]);
+              setcurrentSido(result[0].address.address_name.split(' ')[0]);
             }
           }
         );
@@ -114,7 +114,7 @@ const useMap = ({ mapRef, cityDustInfoMarkers }: useMapProps) => {
         coords.getLat(),
         (result, status) => {
           if (status === kakao.maps.services.Status.OK) {
-            setCurrentCity(result[0].address.address_name.split(' ')[0]);
+            setcurrentSido(result[0].address.address_name.split(' ')[0]);
           }
         }
       );
@@ -190,7 +190,7 @@ const useMap = ({ mapRef, cityDustInfoMarkers }: useMapProps) => {
   return {
     map,
     zoomLevel,
-    currentCity,
+    currentSido,
     currentLocation,
     handleCurrentLocationChange,
     handleZoomIn,

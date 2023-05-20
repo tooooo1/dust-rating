@@ -52,7 +52,7 @@ const Map = () => {
   const {
     map,
     zoomLevel,
-    currentCity,
+    currentSido,
     currentLocation,
     handleCurrentLocationChange,
     handleZoomIn,
@@ -72,7 +72,7 @@ const Map = () => {
 
   const { data: cityDustInfos, isLoading: cityDustInfosIsLoading } = useQuery<
     CityDustInfo[]
-  >(['city-dust-infos', currentCity], () => getCityDustInfos(currentCity), {
+  >(['city-dust-infos', currentSido], () => getCityDustInfos(currentSido), {
     staleTime: 1000 * 60 * 5,
   });
 
@@ -234,7 +234,7 @@ const Map = () => {
   const handleClickForeCastButton = () => {
     navigate(
       `${ROUTE.DUST_FORECAST}?sido=${encodeURIComponent(
-        currentCity
+        currentSido
       )}&city=${encodeURIComponent(city)}`
     );
   };

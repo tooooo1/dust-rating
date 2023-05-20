@@ -15,6 +15,7 @@ import { getSidoDustInfo } from '@/apis/dustInfo';
 import AsyncBoundary from '@/components/common/AsyncBoundary';
 import DustState from '@/components/common/DustState';
 import ProgressBar from '@/components/common/ProgressBar';
+import MoveTopButton from '@/components/Ranking/MoveTopButton';
 import SelectList from '@/components/Ranking/SelectList';
 import SidoRankList from '@/components/Ranking/SidoRankList';
 import theme from '@/styles/theme';
@@ -25,7 +26,6 @@ import {
   SIDO_GROUP,
 } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
-import MoveTopButton from '@/components/Ranking/MoveTopButton';
 
 const animationKeyframes = keyframes`
   0% { background-position: 0 50%; }
@@ -87,7 +87,6 @@ const Ranking = () => {
       textAlign="center"
       backgroundSize="200% 200%"
     >
-      <MoveTopButton />
       <Text
         as="h1"
         fontSize={{ base: 18, sm: 20, md: 24 }}
@@ -162,6 +161,7 @@ const Ranking = () => {
         px={{ base: 6, sm: 14, md: 20 }}
         py={10}
       >
+        <MoveTopButton />
         <Text
           as="p"
           fontSize={{ base: 16, sm: 18 }}

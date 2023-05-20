@@ -27,8 +27,16 @@ export const MoveTopButton = () => {
   return (
     <Button
       id="goTop"
-      width="10%"
-      sx={{ position: 'sticky', zIndex: '9', top: '90%', left: '97%' }}
+      maxWidth="3%"
+      mx={{ base: 0, sm: '-10%' }}
+      my={{ base: '-12%', sm: 0 }}
+      sx={{
+        position: 'sticky',
+        zIndex: '9',
+        top: '90%',
+        left: '100%',
+      }}
+      borderRadius="50%"
       onClick={handleGoTopButtonClick}
       _hover={{
         backgroundColor: '#dfdfdf',

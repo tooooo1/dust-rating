@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
 import { getAllLocation } from '@/apis/location';
 import DustLevel from '@/components/common/DustLevel';
@@ -33,6 +34,7 @@ import {
   COLOR_MARKER_MOUSE_OUT,
   ZINDEX_MARKER_MOUSE_OVER,
   ZINDEX_MARKER_MOUSE_OUT,
+  ROUTE,
 } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
 import ControlButton from './ControlButton';
@@ -57,6 +59,7 @@ const Map = () => {
     handleZoomOut,
     handleFullScreenChange,
   } = useMap({ mapRef, cityDustInfoMarkers });
+  const navigate = useNavigate();
 
   const { data: sidoDustInfos, isLoading: sidoDustInfosIsLoading } = useQuery(
     ['sido-dust-infos'],
@@ -94,7 +97,7 @@ const Map = () => {
               <div>${fineDustScale}</div>
               <span class="divider">/</span>
               <div>${ultraFineDustScale}</div>  
-            </div>
+            </div>            
           </div>
     `;
   };
@@ -228,6 +231,14 @@ const Map = () => {
     }
   }, []);
 
+  const handleClickForeCastButton = () => {
+    navigate(
+      `${ROUTE.DUST_FORECAST}?sido=${encodeURIComponent(
+        currentCity
+      )}&city=${encodeURIComponent(city)}`
+    );
+  };
+
   useEffect(() => {
     document
       .querySelectorAll<HTMLDivElement>('.dust-info-marker')
@@ -293,10 +304,18 @@ const Map = () => {
             <Button
               colorScheme="blue"
               mr={3}
+              onClick={handleClickForeCastButton}
+              backgroundColor="#53caf2"
+            >
+              예보 페이지로 이동하기
+            </Button>
+            <Button
+              colorScheme="blue"
+              mr={3}
               onClick={onClose}
               backgroundColor="#53caf2"
             >
-              Close
+              닫기
             </Button>
           </ModalFooter>
         </ModalContent>

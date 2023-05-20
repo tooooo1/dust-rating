@@ -14,7 +14,7 @@ export const CurrentDustInfo = ({
 }: CurrentDustInfoProps) => {
   return (
     <Box flexGrow={1} borderX={{ base: 'none', sm: '1px solid #dfdfdf' }}>
-      <Text as="p" fontSize={{ base: 24, sm: 22 }} fontWeight={600} mb={2}>
+      <Text as="p" fontSize={{ base: 20, sm: 22 }} fontWeight={600} mb={2}>
         {kindOfDust}
       </Text>
       <Flex justifyContent="center" alignItems="center">

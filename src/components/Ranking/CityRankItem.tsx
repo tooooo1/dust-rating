@@ -1,35 +1,34 @@
 import { Flex } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import Rank from '@/components/common/Rank';
 import type { CityDustInfo } from '@/types/dust';
 import { ROUTE } from '@/utils/constants';
-import Rank from '../common/Rank';
 
 interface CityRankItemProps {
   rank: number;
+  sido: string;
   city: CityDustInfo;
 }
 
-const CityRankItem = ({ rank, city }: CityRankItemProps) => {
+const CityRankItem = ({ rank, sido, city }: CityRankItemProps) => {
   const navigate = useNavigate();
 
   const handlePageNavigate = () => {
-    navigate(ROUTE.DUST_FORECAST, {
-      state: {
-        cityName: city.cityName,
-        fineDustScale: city.fineDustScale,
-        fineDustGrade: city.fineDustGrade,
-        ultraFineDustScale: city.ultraFineDustScale,
-        ultraFineDustGrade: city.ultraFineDustGrade,
-        dataTime: city.dataTime,
-      },
-    });
+    navigate(
+      `${ROUTE.DUST_FORECAST}?sido=${encodeURIComponent(
+        sido
+      )}&city=${encodeURIComponent(city.cityName)}`
+    );
   };
 
   return (
     <Flex
       justifyContent="center"
       alignItems="center"
-      py={3}
+      padding={3}
+      borderRadius={6}
+      transition="all 100ms ease-out"
+      _hover={{ bg: '#dadada' }}
       onClick={handlePageNavigate}
     >
       <Rank type="city" rank={rank} title={city.cityName} dustFigures={city} />

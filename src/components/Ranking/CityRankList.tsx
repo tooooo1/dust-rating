@@ -21,17 +21,22 @@ const CityRankList = ({ sido, isShow }: CityRankListProps) => {
   return (
     <Box
       flex="1"
-      bg="#dfdfdf"
+      bg="#e8e8e8"
       borderRadius={10}
       my={isShow ? 4 : 0}
       px={{ base: 3, sm: 4 }}
       cursor="pointer"
     >
-      {isShow &&
-        cityDustInfos &&
-        cityDustInfos.map((city, cityIndex) => (
-          <CityRankItem key={city.cityName} rank={cityIndex + 1} city={city} />
-        ))}
+      {isShow
+        ? cityDustInfos?.map((city, cityIndex) => (
+            <CityRankItem
+              key={city.cityName}
+              rank={cityIndex + 1}
+              sido={sido}
+              city={city}
+            />
+          ))
+        : null}
     </Box>
   );
 };

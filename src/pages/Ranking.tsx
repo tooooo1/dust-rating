@@ -3,23 +3,27 @@ import {
   Box,
   Text,
   Center,
-  Select,
   keyframes,
   Spinner,
   Skeleton,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, useState, Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
+import AsyncBoundary from '@/components/common/AsyncBoundary';
 import DustState from '@/components/common/DustState';
-import ErrorFallback from '@/components/common/Fallback/ErrorFallback';
 import ProgressBar from '@/components/common/ProgressBar';
+import SelectList from '@/components/Ranking/SelectList';
 import SidoRankList from '@/components/Ranking/SidoRankList';
 import theme from '@/styles/theme';
-import { DUST_GRADE, FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import {
+  DUST_GRADE,
+  FINE_DUST,
+  ULTRA_FINE_DUST,
+  SIDO_GROUP,
+} from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';
 import MoveTopButton from '@/components/Ranking/MoveTopButton';
 
@@ -34,14 +38,19 @@ const animation = `${animationKeyframes} 6s ease infinite`;
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
 const Ranking = () => {
-  const { state: selectedSido } = useLocation();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(decodeURIComponent(location.search));
+  const place = searchParams.get('place') || '서울';
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
+  const [selectedSido, setSelectedSido] = useState(place);
+  const [dustAverageGrade, setDustAverageGrade] = useState(0);
+  const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
+  const sidoNames = SIDO_GROUP.map((sido) => sido.sidoName);
 
   const { data: sidoDustInfo } = useQuery(
     ['sido-dust-info', selectedSido],
     () => getSidoDustInfo(selectedSido),
     {
-      refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5,
     }
   );
@@ -53,24 +62,25 @@ const Ranking = () => {
       : setSelectedSortKey(ULTRA_FINE_DUST);
   };
 
-  if (!sidoDustInfo) {
-    return (
-      <Center height="100vh" fontSize={28} fontWeight={100} color="#ffffff">
-        <Spinner />
-      </Center>
-    );
-  }
+  const handleSelectedSidoChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { target } = e;
+    setSelectedSido(target.value);
+  };
 
-  const dustAverageGrade = getDustAverageGrade(
-    sidoDustInfo.fineDustGrade,
-    sidoDustInfo.ultraFineDustGrade
-  );
+  useEffect(() => {
+    sidoDustInfo &&
+      setDustAverageGrade(
+        getDustAverageGrade(
+          sidoDustInfo.fineDustGrade,
+          sidoDustInfo.ultraFineDustGrade
+        )
+      );
+  }, [sidoDustInfo]);
 
   return (
     <Flex
-      id="Ranking"
-      minHeight="100vh"
       direction="column"
+      minHeight="100vh"
       as={motion.div}
       animation={animation}
       bgGradient={theme.backgroundColors[DUST_GRADE[dustAverageGrade]]}
@@ -95,7 +105,7 @@ const Ranking = () => {
         color="#ffffff"
         mb={6}
       >
-        {sidoDustInfo.dataTime} 기준
+        {sidoDustInfo ? sidoDustInfo.dataTime : '0000-00-00 00:00'} 기준
       </Text>
       <Box
         maxWidth="37.5rem"
@@ -123,16 +133,22 @@ const Ranking = () => {
         <Center my={5}>
           <DustState dustGrade={dustAverageGrade} />
         </Center>
-        <ProgressBar
-          kindOfDust={FINE_DUST}
-          scale={sidoDustInfo.fineDustScale}
-          grade={sidoDustInfo.fineDustGrade}
-        />
-        <ProgressBar
-          kindOfDust={ULTRA_FINE_DUST}
-          scale={sidoDustInfo.ultraFineDustScale}
-          grade={sidoDustInfo.ultraFineDustGrade}
-        />
+        {sidoDustInfo ? (
+          <>
+            <ProgressBar
+              kindOfDust={FINE_DUST}
+              scale={sidoDustInfo.fineDustScale}
+              grade={sidoDustInfo.fineDustGrade}
+            />
+            <ProgressBar
+              kindOfDust={ULTRA_FINE_DUST}
+              scale={sidoDustInfo.ultraFineDustScale}
+              grade={sidoDustInfo.ultraFineDustGrade}
+            />
+          </>
+        ) : (
+          <Spinner />
+        )}
       </Box>
       <Flex
         direction="column"
@@ -159,33 +175,30 @@ const Ranking = () => {
         >
           지역별 미세 먼지 농도 순위
         </Text>
-        <Select
-          color="#4d4d4d"
-          borderColor="#7f7f7f"
-          borderWidth={2}
-          fontSize={{ base: 14, sm: 16 }}
-          my={6}
-          _focus={{ borderColor: 'none' }}
-          onChange={handleSortKeyChange}
+        <SelectList
+          handleChange={handleSelectedSidoChange}
+          selectOptions={sidoNames}
+          defaultValue={selectedSido}
+        />
+        <SelectList
+          handleChange={handleSortKeyChange}
+          selectOptions={kindOfDust}
+          defaultValue={selectedSortKey}
+        />
+        <AsyncBoundary
+          title="지역별 미세먼지 정보를 불러오지 못했어요."
+          suspenseFallback={[...Array(10).keys()].map((i) => (
+            <Skeleton
+              key={i}
+              width="100%"
+              height="3rem"
+              my={3}
+              endColor="#dfdfdf"
+            />
+          ))}
         >
-          <option>{FINE_DUST}</option>
-          <option>{ULTRA_FINE_DUST}</option>
-        </Select>
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Suspense
-            fallback={[...Array(10).keys()].map((i) => (
-              <Skeleton
-                key={i}
-                width="100%"
-                height="3rem"
-                my={3}
-                endColor="#dfdfdf"
-              />
-            ))}
-          >
-            <SidoRankList sortType={selectedSortKey} />
-          </Suspense>
-        </ErrorBoundary>
+          <SidoRankList sortType={selectedSortKey} />
+        </AsyncBoundary>
       </Flex>
     </Flex>
   );

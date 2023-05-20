@@ -22,13 +22,12 @@ const SidoRankItem = ({ rank, sido }: SidoRankItemProps) => {
       direction="column"
       borderRadius={10}
       py={3}
-      borderBottom="1px solid #dfdfdf"
+      borderBottom="1px solid #dadada"
       transition="all 100ms ease-in"
       cursor="pointer"
       _hover={{
-        backgroundColor: '#dfdfdf',
-        paddingX: '0.8rem',
-        opacity: 0.8,
+        backgroundColor: '#e8e8e8',
+        paddingX: '0.6rem',
       }}
       onClick={handleSidoClick}
     >

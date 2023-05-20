@@ -28,7 +28,7 @@ export const MoveTopButton = () => {
     <Button
       id="goTop"
       width="10%"
-      sx={{ position: 'sticky', zIndex: '9', top: '90%', left: '3%' }}
+      sx={{ position: 'sticky', zIndex: '9', top: '90%', left: '97%' }}
       onClick={handleGoTopButtonClick}
       _hover={{
         backgroundColor: '#dfdfdf',
@@ -37,7 +37,6 @@ export const MoveTopButton = () => {
       }}
     >
       <AiOutlineArrowUp />
-      위로
     </Button>
   );
 };

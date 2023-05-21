@@ -15,8 +15,6 @@ export const MarkerModalDustInfo = ({
   dustScale,
   dustGrade,
 }: MarkerModalDustInfoProps) => {
-  console.log(kindOfDust, dustGradeAVG, dustScale, dustGrade);
-
   return (
     <Flex flexDirection="column">
       <DustState dustGrade={dustGradeAVG} />

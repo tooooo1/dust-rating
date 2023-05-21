@@ -1,11 +1,14 @@
 import { Button } from '@chakra-ui/react';
 
-interface MarkerModalProps {
+interface MarkerModalButtonProps {
   handleClick: () => void;
   content: string;
 }
 
-export const MarkerModal = ({ handleClick, content }: MarkerModalProps) => {
+export const MarkerModalButton = ({
+  handleClick,
+  content,
+}: MarkerModalButtonProps) => {
   return (
     <Button
       colorScheme="blue"
@@ -18,4 +21,4 @@ export const MarkerModal = ({ handleClick, content }: MarkerModalProps) => {
   );
 };
 
-export default MarkerModal;
+export default MarkerModalButton;

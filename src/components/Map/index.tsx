@@ -18,8 +18,9 @@ import { useNavigate } from 'react-router-dom';
 import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
 import { getAllLocation } from '@/apis/location';
 import DustLevel from '@/components/common/DustLevel';
-import DustState from '@/components/common/DustState';
-import MarkerModal from '@/components/Map/MarkerModal';
+
+import MarkerModalButton from '@/components/Map/MarkerModalButton';
+import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
 import useMap from '@/hooks/useMap';
 import theme from '@/styles/theme';
 import type { CityDustInfo, MarkerInfo } from '@/types/dust';
@@ -46,8 +47,15 @@ const Map = () => {
     kakao.maps.CustomOverlay[]
   >([]);
   const [city, setCity] = useState('동네 정보를 받아오지 못했어요');
-  const [fineDustScale, setFineDustScale] = useState(0);
-  const [ultraFineDustScale, setUltraFineDustScale] = useState(0);
+  const [dustInfo, setDustInfo] = useState({
+    fineDustScale: 0,
+    fineDustGrade: 0,
+    ultraFineDustScale: 0,
+    ultraFineDustGrade: 0,
+  });
+  const dustAverageGrade = Math.floor(
+    (dustInfo.fineDustGrade + dustInfo.ultraFineDustGrade) / 2
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     map,
@@ -91,7 +99,8 @@ const Map = () => {
     const backgroundColor = theme.colors[DUST_GRADE[averageGrade]];
 
     return `
-          <div class="dust-info-marker" id="${name}" data-finedustgrade="${fineDustGrade}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};">
+          <div class="dust-info-marker" id="${name}" 
+          data-finedustscale="${fineDustScale} "data-finedustgrade="${fineDustGrade}" data-ultrafinedustscale="${ultraFineDustScale}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};">
             <p class="city-name">${name}</p>
             <div class="dust-info">
               <div>${fineDustScale}</div>
@@ -208,12 +217,15 @@ const Map = () => {
 
   const handleClickMarker = useCallback((city: HTMLDivElement) => {
     setCity(city.id);
-    if (city.dataset.finedustgrade) {
-      setFineDustScale(+city.dataset.finedustgrade);
-    }
-    if (city.dataset.ultrafinedustgrade) {
-      setUltraFineDustScale(+city.dataset.ultrafinedustgrade);
-    }
+
+    const nextDustInfo = {
+      fineDustScale: Number(city.dataset.finedustscale || 1),
+      fineDustGrade: Number(city.dataset.finedustgrade || 1),
+      ultraFineDustScale: Number(city.dataset.ultrafinedustscale || 1),
+      ultraFineDustGrade: Number(city.dataset.ultrafinedustgrade || 1),
+    };
+
+    setDustInfo(nextDustInfo);
     onOpen();
   }, []);
 
@@ -292,20 +304,28 @@ const Map = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{city}</ModalHeader>
+          <ModalHeader textAlign="center">{city}</ModalHeader>
           <ModalCloseButton borderColor={'#ffffff'} />
           <ModalBody>
-            {FINE_DUST}
-            <DustState dustGrade={fineDustScale} />
-            {ULTRA_FINE_DUST}
-            <DustState dustGrade={ultraFineDustScale} />
+            <MarkerModalDustInfo
+              kindOfDust={FINE_DUST}
+              dustGradeAVG={dustAverageGrade}
+              dustScale={dustInfo.fineDustScale}
+              dustGrade={dustInfo.fineDustGrade}
+            />
+            <MarkerModalDustInfo
+              kindOfDust={ULTRA_FINE_DUST}
+              dustGradeAVG={dustAverageGrade}
+              dustScale={dustInfo.ultraFineDustScale}
+              dustGrade={dustInfo.ultraFineDustGrade}
+            />
           </ModalBody>
-          <ModalFooter>
-            <MarkerModal
+          <ModalFooter display="flex" justifyContent="space-around">
+            <MarkerModalButton
               handleClick={handleClickForeCastButton}
               content={'예보 페이지로 이동하기'}
             />
-            <MarkerModal handleClick={onClose} content={'닫기'} />
+            <MarkerModalButton handleClick={onClose} content={'닫기'} />
           </ModalFooter>
         </ModalContent>
       </Modal>

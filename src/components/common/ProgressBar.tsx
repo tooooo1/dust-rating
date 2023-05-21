@@ -15,7 +15,7 @@ interface ProgressBarProps {
 }
 
 const ProgressBar = ({ kindOfDust, scale, grade }: ProgressBarProps) => {
-  const percent = scale * (1 / 100) * 100;
+  const percent = scale * (1 / 500) * 100;
   const percentOfDustContamination = percent > 100 ? 100 : percent;
   const color = DUST_GRADE_COLOR[DUST_GRADE[grade]];
 

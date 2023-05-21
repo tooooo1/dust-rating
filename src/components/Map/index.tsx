@@ -10,7 +10,6 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
-  Button,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
@@ -20,6 +19,7 @@ import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
 import { getAllLocation } from '@/apis/location';
 import DustLevel from '@/components/common/DustLevel';
 import DustState from '@/components/common/DustState';
+import MarkerModal from '@/components/Map/MarkerModal';
 import useMap from '@/hooks/useMap';
 import theme from '@/styles/theme';
 import type { CityDustInfo, MarkerInfo } from '@/types/dust';
@@ -301,22 +301,11 @@ const Map = () => {
             <DustState dustGrade={ultraFineDustScale} />
           </ModalBody>
           <ModalFooter>
-            <Button
-              colorScheme="blue"
-              mr={3}
-              onClick={handleClickForeCastButton}
-              backgroundColor="#53caf2"
-            >
-              예보 페이지로 이동하기
-            </Button>
-            <Button
-              colorScheme="blue"
-              mr={3}
-              onClick={onClose}
-              backgroundColor="#53caf2"
-            >
-              닫기
-            </Button>
+            <MarkerModal
+              handleClick={handleClickForeCastButton}
+              content={'예보 페이지로 이동하기'}
+            />
+            <MarkerModal handleClick={onClose} content={'닫기'} />
           </ModalFooter>
         </ModalContent>
       </Modal>

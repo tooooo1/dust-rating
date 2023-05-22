@@ -1,4 +1,4 @@
-import { DustValidity } from '@/types/dust';
+import type { DustValidity } from '@/types/dust';
 
 export const dustScaleValidate = (scale: DustValidity) => {
   if (

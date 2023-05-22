@@ -1,4 +1,8 @@
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+
 type Flag = null | '통신장애';
+
+export type SortType = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
 export type GradeType = 'NONE' | 'GOOD' | 'NORMAL' | 'BAD' | 'DANGER';
 

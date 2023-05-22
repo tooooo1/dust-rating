@@ -1,4 +1,4 @@
-export const getTodayDate = (standard: number = 0) => {
+export const getTodayDate = (standard = 0) => {
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;

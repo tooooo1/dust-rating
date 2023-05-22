@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import { getCityDustInfos } from '@/apis/dustInfo';
 import { AsyncBoundary, DustLevel } from '@/components/common';
-import CurrentDustInfo from '@/components/DustForcast/CurrentDustInfo';
-import DustChart from '@/components/DustForcast/DustChart';
-import ForcastInfo from '@/components/DustForcast/ForcastInfo';
+import {
+  CurrentDustInfo,
+  DustChart,
+  ForcastInfo,
+} from '@/components/DustForcast';
 import theme from '@/styles/theme';
 import type { CityDustInfo } from '@/types/dust';
 import {

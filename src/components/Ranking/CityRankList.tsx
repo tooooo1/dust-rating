@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getCityDustInfos } from '@/apis/dustInfo';
 import type { CityDustInfo, SortType } from '@/types/dust';
 import { FINE_DUST } from '@/utils/constants';
-import { sortDustList } from '@/utils/constants/sortDustList';
+import { sortDustList } from '@/utils/sortDustList';
 import CityRankItem from './CityRankItem';
 
 interface CityRankListProps {

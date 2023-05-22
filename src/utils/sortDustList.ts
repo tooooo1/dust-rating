@@ -1,5 +1,5 @@
 import { CityDustInfo, SidoDustInfo, SortType } from '@/types/dust';
-import { FINE_DUST, ULTRA_FINE_DUST } from './dust';
+import { FINE_DUST, ULTRA_FINE_DUST } from './constants/dust';
 
 export const sortDustList = <T extends SidoDustInfo | CityDustInfo>(
   sortType: SortType,

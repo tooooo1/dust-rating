@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getSidoDustInfos } from '@/apis/dustInfo';
 import { SidoDustInfo, SortType } from '@/types/dust';
-import { sortDustList } from '@/utils/constants/sortDustList';
+import { sortDustList } from '@/utils/sortDustList';
 import SidoRankItem from './SidoRankItem';
 
 interface SidoRankListProps {

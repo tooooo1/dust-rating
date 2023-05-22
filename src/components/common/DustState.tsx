@@ -38,7 +38,11 @@ const DustState = ({ dustGrade = 0 }: DustStateProps) => {
       alignItems="center"
       minHeight="2.5rem"
     >
-      <Box color={theme.colors[grade]} mb={1}>
+      <Box
+        color={theme.colors[grade]}
+        mb={1}
+        transition="all 500ms ease-in-out"
+      >
         {DUST_GRADE_ICON[grade]}
       </Box>
       <Text
@@ -46,6 +50,7 @@ const DustState = ({ dustGrade = 0 }: DustStateProps) => {
         fontSize={{ base: 16, sm: 20 }}
         fontWeight={700}
         color={theme.colors[grade]}
+        transition="all 500ms ease-in-out"
       >
         {DUST_STATE[grade]}
       </Text>

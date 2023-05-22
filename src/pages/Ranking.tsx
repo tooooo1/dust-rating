@@ -161,7 +161,7 @@ const Ranking = () => {
               ? theme.colors[DUST_GRADE[dustAverageGrade]]
               : 'gray'
           }
-          transition="all 100ms ease-in-out"
+          transition="all 500ms ease-in-out"
         >
           지역별 미세 먼지 농도 순위
         </Text>

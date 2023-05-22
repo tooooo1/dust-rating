@@ -2,7 +2,6 @@ import { Flex, Text, Box } from '@chakra-ui/react';
 import { DustState } from '@/components/common';
 import type { DustFigures } from '@/types/dust';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
-import { getDustAverageGrade } from '@/utils/dustGrade';
 
 interface RankProps {
   type: 'sido' | 'city';
@@ -12,11 +11,6 @@ interface RankProps {
 }
 
 const Rank = ({ type, rank, title, dustFigures }: RankProps) => {
-  const dustAverageGrade = getDustAverageGrade(
-    dustFigures.fineDustGrade,
-    dustFigures.ultraFineDustGrade
-  );
-
   return (
     <Flex flex={1} alignItems="center">
       <Text
@@ -40,7 +34,7 @@ const Rank = ({ type, rank, title, dustFigures }: RankProps) => {
         {title}
       </Text>
       <Box width={type === 'sido' ? '26%' : '28%'} mr={8}>
-        <DustState dustGrade={dustAverageGrade} />
+        <DustState dustGrade={dustFigures.fineDustGrade} />
       </Box>
       <Flex direction="column" justifyContent="center" flexGrow={1}>
         <Flex justifyContent="space-between" alignItems="center" py={1}>

@@ -18,7 +18,6 @@ import {
   INIT_SIDO,
   INIT_CITY,
 } from '@/utils/constants';
-import { getDustAverageGrade } from '@/utils/dustGrade';
 
 const animationKeyframes = keyframes`
   0% { background-position: 0 50%; }
@@ -48,18 +47,13 @@ const DustForecast = () => {
     (cityDustInfo) => cityDustInfo.cityName === searchedCity
   ) as CityDustInfo;
 
-  const dustAverageGrade = getDustAverageGrade(
-    dustInfo.fineDustGrade,
-    dustInfo.ultraFineDustGrade
-  );
-
   return (
     <Flex
       direction="column"
       minHeight="100vh"
       as={motion.div}
       animation={animation}
-      bgGradient={theme.backgroundColors[DUST_GRADE[dustAverageGrade]]}
+      bgGradient={theme.backgroundColors[DUST_GRADE[dustInfo.fineDustGrade]]}
       textAlign="center"
       backgroundSize="200% 200%"
     >

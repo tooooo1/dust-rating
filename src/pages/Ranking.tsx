@@ -1,7 +1,7 @@
 import { Flex, Box, Text, Center, keyframes, Skeleton } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import { AsyncBoundary, DustFigureBar, DustState } from '@/components/common';
@@ -13,7 +13,6 @@ import {
   ULTRA_FINE_DUST,
   SIDO_GROUP,
 } from '@/utils/constants';
-import { getDustAverageGrade } from '@/utils/dustGrade';
 
 const animationKeyframes = keyframes`
   0% { background-position: 0 50%; }
@@ -30,7 +29,7 @@ const Ranking = () => {
   const place = serachParams.get('place') || '서울';
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
   const [selectedSido, setSelectedSido] = useState(place);
-  const [dustAverageGrade, setDustAverageGrade] = useState(0);
+
   const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
   const sidoNames = SIDO_GROUP.map((sido) => sido.sidoName);
 
@@ -55,15 +54,7 @@ const Ranking = () => {
     setSelectedSido(nextSido);
   };
 
-  useEffect(() => {
-    sidoDustInfo &&
-      setDustAverageGrade(
-        getDustAverageGrade(
-          sidoDustInfo.fineDustGrade,
-          sidoDustInfo.ultraFineDustGrade
-        )
-      );
-  }, [sidoDustInfo]);
+  if (!sidoDustInfo) return <></>;
 
   return (
     <Flex
@@ -71,7 +62,9 @@ const Ranking = () => {
       minHeight="100vh"
       as={motion.div}
       animation={animation}
-      bgGradient={theme.backgroundColors[DUST_GRADE[dustAverageGrade]]}
+      bgGradient={
+        theme.backgroundColors[DUST_GRADE[sidoDustInfo.fineDustGrade]]
+      }
       textAlign="center"
       backgroundSize="200% 200%"
     >
@@ -120,7 +113,9 @@ const Ranking = () => {
           현재의 대기질 지수는
         </Text>
         <Center my={5}>
-          <DustState dustGrade={sidoDustInfo ? dustAverageGrade : 0} />
+          <DustState
+            dustGrade={sidoDustInfo ? sidoDustInfo.fineDustGrade : 0}
+          />
         </Center>
         <DustFigureBar
           kindOfDust={FINE_DUST}
@@ -155,11 +150,7 @@ const Ranking = () => {
           py={3}
           borderRadius={25}
           color="#ffffff"
-          bg={
-            dustAverageGrade
-              ? theme.colors[DUST_GRADE[dustAverageGrade]]
-              : 'gray'
-          }
+          bg={theme.colors[DUST_GRADE[sidoDustInfo.fineDustGrade]] ?? 'gray'}
           transition="all 500ms ease-in-out"
         >
           지역별 미세 먼지 농도 순위

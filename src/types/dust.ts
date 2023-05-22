@@ -1,6 +1,6 @@
 type Flag = null | '통신장애';
 
-export type GradeType = 'GOOD' | 'NORMAL' | 'BAD' | 'DANGER';
+export type GradeType = 'NONE' | 'GOOD' | 'NORMAL' | 'BAD' | 'DANGER';
 
 export interface DustScale {
   pm10Value: string;

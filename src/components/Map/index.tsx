@@ -17,8 +17,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
 import { getAllLocation } from '@/apis/location';
-import DustLevel from '@/components/common/DustLevel';
-
+import { DustLevel } from '@/components/common';
 import MarkerModalButton from '@/components/Map/MarkerModalButton';
 import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
 import useMap from '@/hooks/useMap';

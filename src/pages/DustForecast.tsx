@@ -3,11 +3,12 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import { getCityDustInfos } from '@/apis/dustInfo';
-import AsyncBoundary from '@/components/common/AsyncBoundary';
-import DustLevel from '@/components/common/DustLevel';
-import CurrentDustInfo from '@/components/DustForcast/CurrentDustInfo';
-import DustChart from '@/components/DustForcast/DustChart';
-import ForcastInfo from '@/components/DustForcast/ForcastInfo';
+import { AsyncBoundary, DustLevel } from '@/components/common';
+import {
+  CurrentDustInfo,
+  DustChart,
+  ForcastInfo,
+} from '@/components/DustForcast';
 import theme from '@/styles/theme';
 import type { CityDustInfo } from '@/types/dust';
 import {

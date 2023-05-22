@@ -1,8 +1,8 @@
-import { Image, Box } from '@chakra-ui/react';
+import { Box, Image } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
 
 const Logo = () => (
-  <>
+  <Box position="relative" bg="#53caf2">
     <Image
       src="images/il.jpg"
       alt="il"
@@ -15,10 +15,8 @@ const Logo = () => (
       cursor="pointer"
       onClick={() => window.open('https://tooo1.tistory.com')}
     />
-    <Box height="100vh">
-      <Outlet />
-    </Box>
-  </>
+    <Outlet />
+  </Box>
 );
 
 export default Logo;

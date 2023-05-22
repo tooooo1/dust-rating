@@ -2,7 +2,7 @@ import { Center, Spinner } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { PropsWithChildren, Suspense, ReactNode } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import ErrorFallback from './Fallback/ErrorFallback';
+import ErrorFallback from './ErrorFallback';
 
 interface AsyncBoundaryProps {
   title: string;

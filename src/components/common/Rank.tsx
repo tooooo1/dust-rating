@@ -1,5 +1,5 @@
 import { Flex, Text, Box } from '@chakra-ui/react';
-import DustState from '@/components/common/DustState';
+import { DustState } from '@/components/common';
 import type { DustFigures } from '@/types/dust';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import { getDustAverageGrade } from '@/utils/dustGrade';

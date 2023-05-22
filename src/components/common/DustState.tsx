@@ -13,6 +13,7 @@ interface DustStateProps {
 }
 
 const DUST_STATE = {
+  NONE: '측정중',
   GOOD: '좋음',
   NORMAL: '보통',
   BAD: '나쁨',
@@ -20,18 +21,28 @@ const DUST_STATE = {
 };
 
 const DUST_GRADE_ICON = {
+  NONE: <BsEmojiHeartEyes />,
   GOOD: <BsEmojiHeartEyes />,
   NORMAL: <BsEmojiNeutral />,
   BAD: <BsEmojiFrown />,
   DANGER: <BsEmojiAngry />,
 };
 
-const DustState = ({ dustGrade }: DustStateProps) => {
+const DustState = ({ dustGrade = 0 }: DustStateProps) => {
   const grade = DUST_GRADE[dustGrade];
 
   return (
-    <Flex flexDirection="column" justifyContent="center" alignItems="center">
-      <Box color={theme.colors[grade]} mb={1}>
+    <Flex
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="2.5rem"
+    >
+      <Box
+        color={theme.colors[grade]}
+        mb={1}
+        transition="all 500ms ease-in-out"
+      >
         {DUST_GRADE_ICON[grade]}
       </Box>
       <Text
@@ -39,6 +50,7 @@ const DustState = ({ dustGrade }: DustStateProps) => {
         fontSize={{ base: 16, sm: 20 }}
         fontWeight={700}
         color={theme.colors[grade]}
+        transition="all 500ms ease-in-out"
       >
         {DUST_STATE[grade]}
       </Text>

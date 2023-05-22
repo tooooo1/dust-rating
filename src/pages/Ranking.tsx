@@ -12,6 +12,7 @@ import {
   FINE_DUST,
   ULTRA_FINE_DUST,
   SIDO_GROUP,
+  INIT_SIDO,
 } from '@/utils/constants';
 
 const animationKeyframes = keyframes`
@@ -26,7 +27,7 @@ type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
 const Ranking = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const place = searchParams.get('place') || '서울';
+  const place = searchParams.get('place') || INIT_SIDO;
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
   const [selectedSido, setSelectedSido] = useState(place);
   const [bgcolor, setBgcolor] = useState(theme.backgroundColors[DUST_GRADE[0]]);

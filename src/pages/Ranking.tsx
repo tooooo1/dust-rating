@@ -54,8 +54,6 @@ const Ranking = () => {
     setSelectedSido(nextSido);
   };
 
-  if (!sidoDustInfo) return <></>;
-
   return (
     <Flex
       direction="column"
@@ -63,7 +61,9 @@ const Ranking = () => {
       as={motion.div}
       animation={animation}
       bgGradient={
-        theme.backgroundColors[DUST_GRADE[sidoDustInfo.fineDustGrade]]
+        sidoDustInfo
+          ? theme.backgroundColors[DUST_GRADE[sidoDustInfo.fineDustGrade]]
+          : theme.backgroundColors[DUST_GRADE[0]]
       }
       textAlign="center"
       backgroundSize="200% 200%"
@@ -150,7 +150,11 @@ const Ranking = () => {
           py={3}
           borderRadius={25}
           color="#ffffff"
-          bg={theme.colors[DUST_GRADE[sidoDustInfo.fineDustGrade]] ?? 'gray'}
+          bg={
+            sidoDustInfo
+              ? theme.backgroundColors[DUST_GRADE[sidoDustInfo.fineDustGrade]]
+              : theme.backgroundColors[DUST_GRADE[0]]
+          }
           transition="all 500ms ease-in-out"
         >
           지역별 미세 먼지 농도 순위

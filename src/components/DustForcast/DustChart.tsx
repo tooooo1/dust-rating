@@ -38,7 +38,7 @@ const DustChart = ({ cityName }: DustChartProps) => {
   if (!dustHistories) {
     return (
       <Center height={200}>
-        <Spinner my={10} />
+        <Spinner my={15} />
       </Center>
     );
   }

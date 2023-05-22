@@ -5,8 +5,8 @@ import { ChangeEvent, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import AsyncBoundary from '@/components/common/AsyncBoundary';
+import DustFigureBar from '@/components/common/DustFigureBar';
 import DustState from '@/components/common/DustState';
-import ProgressBar from '@/components/common/ProgressBar';
 import SelectList from '@/components/Ranking/SelectList';
 import SidoRankList from '@/components/Ranking/SidoRankList';
 import theme from '@/styles/theme';
@@ -123,12 +123,12 @@ const Ranking = () => {
         <Center my={5}>
           <DustState dustGrade={sidoDustInfo ? dustAverageGrade : 0} />
         </Center>
-        <ProgressBar
+        <DustFigureBar
           kindOfDust={FINE_DUST}
           scale={sidoDustInfo?.fineDustScale}
           grade={sidoDustInfo?.fineDustGrade}
         />
-        <ProgressBar
+        <DustFigureBar
           kindOfDust={ULTRA_FINE_DUST}
           scale={sidoDustInfo?.ultraFineDustScale}
           grade={sidoDustInfo?.ultraFineDustGrade}

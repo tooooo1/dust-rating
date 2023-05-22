@@ -9,17 +9,17 @@ export const DUST_GRADE_COLOR = {
   GOOD: 'blue',
 };
 
-interface ProgressBarProps {
+interface DustFigureBarProps {
   kindOfDust: typeof FINE_DUST | typeof ULTRA_FINE_DUST;
   scale?: number;
   grade?: number;
 }
 
-const ProgressBar = ({
+const DustFigureBar = ({
   kindOfDust,
   scale = 0,
   grade = 0,
-}: ProgressBarProps) => {
+}: DustFigureBarProps) => {
   const percent = scale * (1 / 100) * 100;
   const percentOfDustContamination = percent > 100 ? 100 : percent;
   const color = DUST_GRADE_COLOR[DUST_GRADE[grade]];
@@ -47,4 +47,4 @@ const ProgressBar = ({
   );
 };
 
-export default ProgressBar;
+export default DustFigureBar;

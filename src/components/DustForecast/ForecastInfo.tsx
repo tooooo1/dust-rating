@@ -1,6 +1,6 @@
 import { Text, Stack, Skeleton } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { getDustForecast } from '@/apis/dustForecast';
+import { getDustForecast } from '@/apis/dustForcast';
 import { ErrorFallback } from '@/components/common';
 import ForecastImages from './ForecastImages';
 

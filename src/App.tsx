@@ -11,7 +11,7 @@ import {
   ChoicePage,
   CityRankingPage,
   SidoRankingPage,
-  DustForecastPage,
+  DustForcastPage,
   DustMapPage,
 } from '@/pages';
 import { ROUTE } from '@/utils/constants';
@@ -25,10 +25,10 @@ const router = createBrowserRouter(
       <Route path={ROUTE.SIDO_RANKING} element={<SidoRankingPage />} />
       <Route path={ROUTE.CITY_RANKING} element={<CityRankingPage />} />
       <Route
-        path={ROUTE.DUST_FORECAST}
+        path={ROUTE.DUST_FORCAST}
         element={
           <AsyncBoundary title="해당 지역의 예보 정보를 불러오지 못했어요.">
-            <DustForecastPage />
+            <DustForcastPage />
           </AsyncBoundary>
         }
       />

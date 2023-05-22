@@ -28,7 +28,7 @@ const animationKeyframes = keyframes`
 
 const animation = `${animationKeyframes} 6s ease infinite`;
 
-const DustForecast = () => {
+const DustForcast = () => {
   const [searchParams] = useSearchParams();
   const searchedSido = searchParams.get('sido') || INIT_SIDO;
   const searchedCity = searchParams.get('city') || INIT_CITY;
@@ -139,4 +139,4 @@ const DustForecast = () => {
   );
 };
 
-export default DustForecast;
+export default DustForcast;

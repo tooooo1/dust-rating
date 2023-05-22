@@ -17,7 +17,7 @@ const ForecastImages = ({ dustForecast }: ForecastImageProps) => {
 
   return (
     <Box
-      className="forecast-img"
+      className="forcast-img"
       width="100%"
       height={800}
       position="relative"
@@ -34,7 +34,7 @@ const ForecastImages = ({ dustForecast }: ForecastImageProps) => {
         fontSize={50}
         transition="all 100ms ease-in-out"
         sx={{
-          '.forecast-img:hover &': {
+          '.forcast-img:hover &': {
             opacity: '1',
           },
         }}

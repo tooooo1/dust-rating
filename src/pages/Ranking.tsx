@@ -29,7 +29,7 @@ const Ranking = () => {
   const place = serachParams.get('place') || '서울';
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
   const [selectedSido, setSelectedSido] = useState(place);
-
+  const [bgcolor, setBgcolor] = useState('white');
   const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
   const sidoNames = SIDO_GROUP.map((sido) => sido.sidoName);
 
@@ -50,8 +50,11 @@ const Ranking = () => {
 
   const handleSelectedSidoChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const nextSido = e.target.value;
-    setSearchParams({ place: nextSido }, { replace: true });
     setSelectedSido(nextSido);
+    setSearchParams({ place: nextSido }, { replace: true });
+    setBgcolor(
+      theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade ?? 0]]
+    );
   };
 
   return (
@@ -61,10 +64,11 @@ const Ranking = () => {
       as={motion.div}
       animation={animation}
       bgGradient={
-        theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade ?? 0]]
+        sidoDustInfo
+          ? theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade]]
+          : bgcolor
       }
       textAlign="center"
-      backgroundSize="200% 200%"
     >
       <Text
         as="h1"

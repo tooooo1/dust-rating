@@ -132,12 +132,7 @@ const DustForecast = () => {
           <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
             대기질 예보
           </Text>
-          <AsyncBoundary
-            title="대기질 예보 정보를 불러오지 못했어요."
-            description="(매일 5, 11, 17, 23시에 업데이트)"
-          >
-            <ForcastInfo cityName={dustInfo.cityName} />
-          </AsyncBoundary>
+          <ForcastInfo cityName={dustInfo.cityName} />
         </Flex>
       </Box>
     </Flex>

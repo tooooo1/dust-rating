@@ -40,17 +40,15 @@ const CityRanking = () => {
   );
 
   const handleSortKeyChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const { target } = e;
-
-    target.value === FINE_DUST
+    e.target.value === FINE_DUST
       ? setSelectedSortType(FINE_DUST)
       : setSelectedSortType(ULTRA_FINE_DUST);
   };
 
   const handleSelectedSidoChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    navigate(`${ROUTE.RANKING}/${e.target.value}`);
-
     setSelectedSortType(FINE_DUST);
+
+    navigate(`${ROUTE.RANKING}/${e.target.value}`);
   };
 
   return (
@@ -60,7 +58,7 @@ const CityRanking = () => {
       as={motion.div}
       animation={BACKGROUND_ANIMATION}
       bgGradient={
-        theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade ?? 0]]
+        theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade || 0]]
       }
       textAlign="center"
       backgroundSize="200% 200%"
@@ -82,7 +80,7 @@ const CityRanking = () => {
         color="#ffffff"
         mb={6}
       >
-        {sidoDustInfo ? sidoDustInfo.dataTime : '0000-00-00 00:00'} 기준
+        {sidoDustInfo?.dataTime || '0000-00-00 00:00'} 기준
       </Text>
       <Box
         maxWidth="37.5rem"
@@ -110,9 +108,7 @@ const CityRanking = () => {
           현재의 대기질 지수는
         </Text>
         <Center my={5}>
-          <DustState
-            dustGrade={sidoDustInfo ? sidoDustInfo.fineDustGrade : 0}
-          />
+          <DustState dustGrade={sidoDustInfo?.fineDustGrade || 0} />
         </Center>
         <DustFigureBar
           kindOfDust={FINE_DUST}
@@ -148,7 +144,7 @@ const CityRanking = () => {
           borderRadius={25}
           color="#ffffff"
           bg={
-            theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade ?? 0]]
+            theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade || 0]]
           }
           transition="all 500ms ease-in-out"
         >

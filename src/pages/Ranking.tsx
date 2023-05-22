@@ -29,7 +29,7 @@ const Ranking = () => {
   const place = serachParams.get('place') || '서울';
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
   const [selectedSido, setSelectedSido] = useState(place);
-  const [bgcolor, setBgcolor] = useState('white');
+  const [bgcolor, setBgcolor] = useState(theme.backgroundColors[DUST_GRADE[0]]);
   const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
   const sidoNames = SIDO_GROUP.map((sido) => sido.sidoName);
 

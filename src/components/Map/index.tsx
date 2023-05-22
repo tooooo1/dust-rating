@@ -33,7 +33,6 @@ import {
   ZINDEX_MARKER_MOUSE_OVER,
   ZINDEX_MARKER_MOUSE_OUT,
 } from '@/utils/constants';
-import { getDustAverageGrade } from '@/utils/dustGrade';
 import ControlButton from './ControlButton';
 
 const Map = () => {
@@ -83,8 +82,7 @@ const Map = () => {
     ultraFineDustScale,
     ultraFineDustGrade,
   }: MarkerInfo) => {
-    const averageGrade = getDustAverageGrade(fineDustGrade, ultraFineDustGrade);
-    const backgroundColor = theme.colors[DUST_GRADE[averageGrade]];
+    const backgroundColor = theme.colors[DUST_GRADE[fineDustGrade]];
 
     return `
           <div class="dust-info-marker" id="${name}" data-finedustgrade="${fineDustGrade}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};">

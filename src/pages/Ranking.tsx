@@ -106,15 +106,17 @@ const Ranking = () => {
         px={{ base: 4, sm: 6 }}
         py={{ base: 6, sm: 8 }}
       >
+        <SelectList
+          handleChange={handleSelectedSidoChange}
+          selectOptions={sidoNames}
+          defaultValue={selectedSido}
+        />
         <Text
-          as="p"
-          fontSize={{ base: 22, sm: 24, md: 28 }}
-          fontWeight={700}
-          mb={{ base: 2, sm: 4 }}
+          as="div"
+          mt="1rem"
+          fontSize={{ base: 16, sm: 18 }}
+          color="#4d4d4d"
         >
-          {selectedSido}
-        </Text>
-        <Text as="span" fontSize={{ base: 16, sm: 18 }} color="#4d4d4d">
           현재의 대기질 지수는
         </Text>
         <Center my={5}>
@@ -162,11 +164,6 @@ const Ranking = () => {
         >
           지역별 미세 먼지 농도 순위
         </Text>
-        <SelectList
-          handleChange={handleSelectedSidoChange}
-          selectOptions={sidoNames}
-          defaultValue={selectedSido}
-        />
         <SelectList
           handleChange={handleSortKeyChange}
           selectOptions={kindOfDust}

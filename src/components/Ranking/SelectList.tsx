@@ -18,6 +18,7 @@ export const SelectList = ({
       borderColor="#7f7f7f"
       borderWidth={2}
       fontSize={{ base: 14, sm: 16 }}
+      textAlign="center"
       mt={6}
       _focus={{ borderColor: 'none' }}
       onChange={handleChange}

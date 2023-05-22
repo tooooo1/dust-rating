@@ -14,11 +14,7 @@ const CityRankItem = ({ rank, sido, city }: CityRankItemProps) => {
   const navigate = useNavigate();
 
   const handlePageNavigate = () => {
-    navigate(
-      `${ROUTE.DUST_FORECAST}?sido=${encodeURIComponent(
-        sido
-      )}&city=${encodeURIComponent(city.cityName)}`
-    );
+    navigate(`${ROUTE.DUST_FORECAST}?sido=${sido}&city=${city.cityName}`);
   };
 
   return (
@@ -31,7 +27,7 @@ const CityRankItem = ({ rank, sido, city }: CityRankItemProps) => {
       _hover={{ bg: '#dadada' }}
       onClick={handlePageNavigate}
     >
-      <Rank type="city" rank={rank} title={city.cityName} dustFigures={city} />
+      <Rank rank={rank} title={city.cityName} dustFigures={city} />
     </Flex>
   );
 };

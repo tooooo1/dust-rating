@@ -10,7 +10,7 @@ import {
   DustState,
   ListFallback,
 } from '@/components/common';
-import { SelectList, CityRankList } from '@/components/Ranking';
+import { SelectList, SidoRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import {
   DUST_GRADE,
@@ -170,7 +170,7 @@ const Ranking = () => {
           title="지역별 미세먼지 정보를 불러오지 못했어요."
           suspenseFallback={<ListFallback />}
         >
-          <CityRankList sido={selectedSido} />
+          <SidoRankList sortType={selectedSortKey} />
         </AsyncBoundary>
       </Flex>
     </Flex>

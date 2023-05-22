@@ -1,4 +1,4 @@
-import { GradeType } from '@/types/dust';
+import type { GradeType } from '@/types/dust';
 
 export const FINE_DUST = '미세먼지';
 export const ULTRA_FINE_DUST = '초미세먼지';

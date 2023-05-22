@@ -31,7 +31,7 @@ const SidoRankItem = ({ rank, sido }: SidoRankItemProps) => {
       }}
       onClick={handleSidoClick}
     >
-      <Rank type="sido" rank={rank} title={sido.sidoName} dustFigures={sido} />
+      <Rank rank={rank} title={sido.sidoName} dustFigures={sido} />
       <CityRankList sido={sido.sidoName} isShow={isShow} />
     </Flex>
   );

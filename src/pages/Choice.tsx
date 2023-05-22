@@ -28,6 +28,7 @@ const Choice = () => {
       alignItems="center"
       color="#ffffff"
       textAlign="center"
+      backgroundColor="#53caf2"
     >
       <Image src="images/location.png" alt="location" width={30} height={30} />
       <Text as="span" fontSize={18} fontWeight={400} mt={4}>

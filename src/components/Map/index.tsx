@@ -10,14 +10,16 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
-  Button,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
 import { getAllLocation } from '@/apis/location';
-import { DustLevel, DustState } from '@/components/common';
+import { DustLevel } from '@/components/common';
+import MarkerModalButton from '@/components/Map/MarkerModalButton';
+import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
 import useMap from '@/hooks/useMap';
 import theme from '@/styles/theme';
 import type { CityDustInfo, MarkerInfo } from '@/types/dust';
@@ -32,6 +34,7 @@ import {
   COLOR_MARKER_MOUSE_OUT,
   ZINDEX_MARKER_MOUSE_OVER,
   ZINDEX_MARKER_MOUSE_OUT,
+  ROUTE,
 } from '@/utils/constants';
 import ControlButton from './ControlButton';
 
@@ -42,19 +45,27 @@ const Map = () => {
     kakao.maps.CustomOverlay[]
   >([]);
   const [city, setCity] = useState('동네 정보를 받아오지 못했어요');
-  const [fineDustScale, setFineDustScale] = useState(0);
-  const [ultraFineDustScale, setUltraFineDustScale] = useState(0);
+  const [dustInfo, setDustInfo] = useState({
+    fineDustScale: 0,
+    fineDustGrade: 0,
+    ultraFineDustScale: 0,
+    ultraFineDustGrade: 0,
+  });
+  const dustAverageGrade = Math.floor(
+    (dustInfo.fineDustGrade + dustInfo.ultraFineDustGrade) / 2
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     map,
     zoomLevel,
-    currentCity,
+    currentSido,
     currentLocation,
     handleCurrentLocationChange,
     handleZoomIn,
     handleZoomOut,
     handleFullScreenChange,
   } = useMap({ mapRef, cityDustInfoMarkers });
+  const navigate = useNavigate();
 
   const { data: sidoDustInfos, isLoading: sidoDustInfosIsLoading } = useQuery(
     ['sido-dust-infos'],
@@ -67,7 +78,7 @@ const Map = () => {
 
   const { data: cityDustInfos, isLoading: cityDustInfosIsLoading } = useQuery<
     CityDustInfo[]
-  >(['city-dust-infos', currentCity], () => getCityDustInfos(currentCity), {
+  >(['city-dust-infos', currentSido], () => getCityDustInfos(currentSido), {
     staleTime: 1000 * 60 * 5,
   });
 
@@ -85,7 +96,8 @@ const Map = () => {
     const backgroundColor = theme.colors[DUST_GRADE[fineDustGrade]];
 
     return `
-          <div class="dust-info-marker" id="${name}" data-finedustgrade="${fineDustGrade}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};">
+          <div class="dust-info-marker" id="${name}" 
+          data-finedustscale="${fineDustScale} "data-finedustgrade="${fineDustGrade}" data-ultrafinedustscale="${ultraFineDustScale}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};">
             <p class="city-name">${name}</p>
             <div class="dust-info">
               <div>${fineDustScale}</div>
@@ -202,12 +214,15 @@ const Map = () => {
 
   const handleClickMarker = useCallback((city: HTMLDivElement) => {
     setCity(city.id);
-    if (city.dataset.finedustgrade) {
-      setFineDustScale(+city.dataset.finedustgrade);
-    }
-    if (city.dataset.ultrafinedustgrade) {
-      setUltraFineDustScale(+city.dataset.ultrafinedustgrade);
-    }
+
+    const nextDustInfo = {
+      fineDustScale: Number(city.dataset.finedustscale || 1),
+      fineDustGrade: Number(city.dataset.finedustgrade || 1),
+      ultraFineDustScale: Number(city.dataset.ultrafinedustscale || 1),
+      ultraFineDustGrade: Number(city.dataset.ultrafinedustgrade || 1),
+    };
+
+    setDustInfo(nextDustInfo);
     onOpen();
   }, []);
 
@@ -224,6 +239,14 @@ const Map = () => {
       city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OUT;
     }
   }, []);
+
+  const handleClickForeCastButton = () => {
+    navigate(
+      `${ROUTE.DUST_FORECAST}?sido=${encodeURIComponent(
+        currentSido
+      )}&city=${encodeURIComponent(city)}`
+    );
+  };
 
   useEffect(() => {
     document
@@ -278,23 +301,27 @@ const Map = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{city}</ModalHeader>
+          <ModalHeader textAlign="center">{city}</ModalHeader>
           <ModalCloseButton borderColor={'#ffffff'} />
           <ModalBody>
-            {FINE_DUST}
-            <DustState dustGrade={fineDustScale} />
-            {ULTRA_FINE_DUST}
-            <DustState dustGrade={ultraFineDustScale} />
+            <MarkerModalDustInfo
+              kindOfDust={FINE_DUST}
+              dustGradeAVG={dustAverageGrade}
+              dustScale={dustInfo.fineDustScale}
+              dustGrade={dustInfo.fineDustGrade}
+            />
+            <MarkerModalDustInfo
+              kindOfDust={ULTRA_FINE_DUST}
+              dustGradeAVG={dustAverageGrade}
+              dustScale={dustInfo.ultraFineDustScale}
+              dustGrade={dustInfo.ultraFineDustGrade}
+            />
           </ModalBody>
-          <ModalFooter>
-            <Button
-              colorScheme="blue"
-              mr={3}
-              onClick={onClose}
-              backgroundColor="#53caf2"
-            >
-              Close
-            </Button>
+          <ModalFooter display="flex" justifyContent="space-around">
+            <MarkerModalButton handleClick={handleClickForeCastButton}>
+              예보 페이지로 이동하기
+            </MarkerModalButton>
+            <MarkerModalButton handleClick={onClose}>닫기</MarkerModalButton>
           </ModalFooter>
         </ModalContent>
       </Modal>

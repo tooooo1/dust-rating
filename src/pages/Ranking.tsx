@@ -65,7 +65,7 @@ const Ranking = () => {
       animation={animation}
       bgGradient={
         sidoDustInfo
-          ? theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade]]
+          ? theme.backgroundColors[DUST_GRADE[sidoDustInfo.fineDustGrade]]
           : bgcolor
       }
       textAlign="center"

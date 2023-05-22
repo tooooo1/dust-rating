@@ -320,11 +320,10 @@ const Map = () => {
             />
           </ModalBody>
           <ModalFooter display="flex" justifyContent="space-around">
-            <MarkerModalButton
-              handleClick={handleClickForeCastButton}
-              content={'예보 페이지로 이동하기'}
-            />
-            <MarkerModalButton handleClick={onClose} content={'닫기'} />
+            <MarkerModalButton handleClick={handleClickForeCastButton}>
+              예보 페이지로 이동하기
+            </MarkerModalButton>
+            <MarkerModalButton handleClick={onClose}>닫기</MarkerModalButton>
           </ModalFooter>
         </ModalContent>
       </Modal>

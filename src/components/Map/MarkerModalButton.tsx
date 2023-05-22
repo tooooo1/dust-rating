@@ -1,13 +1,14 @@
 import { Button } from '@chakra-ui/react';
+import { ReactNode } from 'react';
 
 interface MarkerModalButtonProps {
   handleClick: () => void;
-  content: string;
+  children: ReactNode;
 }
 
 export const MarkerModalButton = ({
   handleClick,
-  content,
+  children,
 }: MarkerModalButtonProps) => {
   return (
     <Button
@@ -16,7 +17,7 @@ export const MarkerModalButton = ({
       onClick={handleClick}
       backgroundColor="#53caf2"
     >
-      {content}
+      {children}
     </Button>
   );
 };

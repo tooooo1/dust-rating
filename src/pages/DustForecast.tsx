@@ -17,6 +17,7 @@ import {
   DUST_GRADE,
   INIT_SIDO,
   INIT_CITY,
+  INIT_DATATIME,
 } from '@/utils/constants';
 
 const animationKeyframes = keyframes`
@@ -83,7 +84,7 @@ const DustForecast = () => {
         color="#ffffff"
         mb={6}
       >
-        {dustInfo.dataTime} 기준
+        {dustInfo.dataTime || INIT_DATATIME} 기준
       </Text>
       <Box
         maxWidth="47.5rem"
@@ -115,7 +116,6 @@ const DustForecast = () => {
         <Box mb={14}>
           <Flex direction="column" alignItems="center" mb={4}>
             <Text
-              display={isLargerThan480 ? 'block' : 'none'}
               as="p"
               fontSize={22}
               fontWeight={600}

@@ -10,6 +10,7 @@ import {
   FINE_DUST,
   ULTRA_FINE_DUST,
   INIT_SIDO,
+  INIT_DATATIME,
   BACKGROUND_ANIMATION,
   KIND_OF_DUST,
 } from '@/utils/constants';
@@ -67,7 +68,7 @@ const SidoRanking = () => {
         color="#ffffff"
         mb={6}
       >
-        {sidoDustInfo?.dataTime || '0000-00-00 00:00'} 기준
+        {sidoDustInfo?.dataTime || INIT_DATATIME} 기준
       </Text>
       <Flex
         direction="column"

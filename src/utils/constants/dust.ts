@@ -4,6 +4,8 @@ export const FINE_DUST = '미세먼지';
 export const ULTRA_FINE_DUST = '초미세먼지';
 export const KIND_OF_DUST = [FINE_DUST, ULTRA_FINE_DUST];
 
+export const INIT_DATATIME = '0000-00-00 00:00';
+
 export const DUST_GRADE: { [key: number]: GradeType } = {
   0: 'NONE',
   1: 'GOOD',
@@ -26,5 +28,5 @@ export const INIT_CITY_DUST_INFO = {
   fineDustGrade: 9999,
   ultraFineDustScale: 9999,
   ultraFineDustGrade: 9999,
-  dataTime: '0000-00-00 00:00',
+  dataTime: INIT_DATATIME,
 };

@@ -105,7 +105,7 @@ const Map = () => {
               <div>${fineDustScale}</div>
               <span class="divider">/</span>
               <div>${ultraFineDustScale}</div>  
-            </div>            
+            </div>
           </div>
     `;
   };

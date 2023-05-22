@@ -25,10 +25,7 @@ const router = createBrowserRouter(
       <Route
         path={ROUTE.DUST_FORECAST}
         element={
-          <AsyncBoundary
-            title="해당 지역의 예보 정보를 불러오지 못했어요."
-            isCenter={true}
-          >
+          <AsyncBoundary title="해당 지역의 예보 정보를 불러오지 못했어요.">
             <DustForecastPage />
           </AsyncBoundary>
         }

@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import Rank from '@/components/common/Rank';
+import { Rank } from '@/components/common';
 import type { CityDustInfo } from '@/types/dust';
 import { ROUTE } from '@/utils/constants';
 

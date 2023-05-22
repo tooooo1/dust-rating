@@ -2,7 +2,7 @@ import { Flex, Box, Text, Center, keyframes, Skeleton } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import { AsyncBoundary, DustFigureBar, DustState } from '@/components/common';
 import { SelectList, SidoRankList } from '@/components/Ranking';
@@ -26,9 +26,8 @@ const animation = `${animationKeyframes} 6s ease infinite`;
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
 const Ranking = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(decodeURIComponent(location.search));
-  const place = searchParams.get('place') || '서울';
+  const [serachParams, setSearchParams] = useSearchParams();
+  const place = serachParams.get('place') || '서울';
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
   const [selectedSido, setSelectedSido] = useState(place);
   const [dustAverageGrade, setDustAverageGrade] = useState(0);
@@ -51,8 +50,9 @@ const Ranking = () => {
   };
 
   const handleSelectedSidoChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const { target } = e;
-    setSelectedSido(target.value);
+    const nextSido = e.target.value;
+    setSearchParams({ place: nextSido }, { replace: true });
+    setSelectedSido(nextSido);
   };
 
   useEffect(() => {
@@ -106,15 +106,17 @@ const Ranking = () => {
         px={{ base: 4, sm: 6 }}
         py={{ base: 6, sm: 8 }}
       >
+        <SelectList
+          handleChange={handleSelectedSidoChange}
+          selectOptions={sidoNames}
+          defaultValue={selectedSido}
+        />
         <Text
-          as="p"
-          fontSize={{ base: 22, sm: 24, md: 28 }}
-          fontWeight={700}
-          mb={{ base: 2, sm: 4 }}
+          as="div"
+          mt="1rem"
+          fontSize={{ base: 16, sm: 18 }}
+          color="#4d4d4d"
         >
-          {selectedSido}
-        </Text>
-        <Text as="span" fontSize={{ base: 16, sm: 18 }} color="#4d4d4d">
           현재의 대기질 지수는
         </Text>
         <Center my={5}>
@@ -162,11 +164,6 @@ const Ranking = () => {
         >
           지역별 미세 먼지 농도 순위
         </Text>
-        <SelectList
-          handleChange={handleSelectedSidoChange}
-          selectOptions={sidoNames}
-          defaultValue={selectedSido}
-        />
         <SelectList
           handleChange={handleSortKeyChange}
           selectOptions={kindOfDust}

@@ -1,15 +1,15 @@
 import axios from 'axios';
-import type { DustForcast } from '@/types/dust';
+import type { DustForecast } from '@/types/dust';
 import { getTodayDate } from '@/utils/formaters';
 
-const { VITE_DUST_FORCAST_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
+const { VITE_DUST_FORECAST_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
 
 const STANDARD_HOUR = 5;
 
-export const getDustForcast = async () => {
+export const getDustForecast = async () => {
   try {
     const response = await axios.get(
-      `${VITE_DUST_FORCAST_URL}?searchDate=${getTodayDate(
+      `${VITE_DUST_FORECAST_URL}?searchDate=${getTodayDate(
         STANDARD_HOUR
       )}&returnType=json&serviceKey=${VITE_DUST_INFO_API_KEY}&numOfRows=10&pageNo=1`
     );
@@ -22,12 +22,12 @@ export const getDustForcast = async () => {
     }
 
     return response.data.response.body.items.find(
-      (forcast: DustForcast) =>
-        forcast.imageUrl1 &&
-        forcast.imageUrl2 &&
-        forcast.imageUrl3 &&
-        forcast.informCause &&
-        forcast.informOverall
+      (forecast: DustForecast) =>
+        forecast.imageUrl1 &&
+        forecast.imageUrl2 &&
+        forecast.imageUrl3 &&
+        forecast.informCause &&
+        forecast.informOverall
     );
   } catch (error) {
     // eslint-disable-next-line no-console

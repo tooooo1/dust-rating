@@ -7,8 +7,8 @@ import { AsyncBoundary, DustLevel, NaviButton } from '@/components/common';
 import {
   CurrentDustInfo,
   DustChart,
-  ForcastInfo,
-} from '@/components/DustForcast';
+  ForecastInfo,
+} from '@/components/DustForecast';
 import theme from '@/styles/theme';
 import type { CityDustInfo } from '@/types/dust';
 import {
@@ -128,11 +128,11 @@ const DustForecast = () => {
           </Flex>
           <DustChart cityName={dustInfo.cityName} />
         </Box>
-        <Flex direction="column" alignItems="center" mt={10}>
+        <Flex direction="column" alignItems="center" width="100%" mt={10}>
           <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
             대기질 예보
           </Text>
-          <ForcastInfo cityName={dustInfo.cityName} />
+          <ForecastInfo cityName={dustInfo.cityName} />
         </Flex>
       </Box>
     </Flex>

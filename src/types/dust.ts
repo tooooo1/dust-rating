@@ -46,7 +46,7 @@ export interface DustHistory extends DustFigures {
   hour: string;
 }
 
-export interface DustForcast {
+export interface DustForecast {
   imageUrl1: string;
   imageUrl2: string;
   imageUrl3: string;

@@ -1,17 +1,17 @@
 import { Text, Stack, Skeleton } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { getDustForcast } from '@/apis/dustForecast';
+import { getDustForecast } from '@/apis/dustForecast';
 import { ErrorFallback } from '@/components/common';
-import ForcastImages from './ForcastImages';
+import ForecastImages from './ForecastImages';
 
-interface ForcastInfoProps {
+interface ForecastInfoProps {
   cityName: string;
 }
 
-const ForcastInfo = ({ cityName }: ForcastInfoProps) => {
-  const { data: dustForcast, isError } = useQuery(
-    ['dust-forcast', cityName],
-    getDustForcast,
+const ForecastInfo = ({ cityName }: ForecastInfoProps) => {
+  const { data: dustForecast, isError } = useQuery(
+    ['dust-forecast', cityName],
+    getDustForecast,
     {
       staleTime: 1000 * 60 * 5,
     }
@@ -23,7 +23,7 @@ const ForcastInfo = ({ cityName }: ForcastInfoProps) => {
 
   return (
     <>
-      {dustForcast ? (
+      {dustForecast ? (
         <>
           <Text
             fontSize={16}
@@ -31,7 +31,7 @@ const ForcastInfo = ({ cityName }: ForcastInfoProps) => {
             textAlign="left"
             lineHeight={1.4}
           >
-            {dustForcast.informOverall}
+            {dustForecast.informOverall}
           </Text>
           <Text
             fontSize={16}
@@ -39,23 +39,23 @@ const ForcastInfo = ({ cityName }: ForcastInfoProps) => {
             textAlign="left"
             lineHeight={1.4}
           >
-            {dustForcast.informCause}
+            {dustForecast.informCause}
           </Text>
         </>
       ) : (
-        <Stack>
+        <Stack width="100%">
           {[...Array(5).keys()].map((i) => (
             <Skeleton key={i} height={4} endColor="#dfdfdf" />
           ))}
         </Stack>
       )}
-      {dustForcast ? (
-        <ForcastImages dustForcast={dustForcast} />
+      {dustForecast ? (
+        <ForecastImages dustForecast={dustForecast} />
       ) : (
-        <Skeleton height={800} mt={8} endColor="#dfdfdf" />
+        <Skeleton width="100%" height={800} mt={8} endColor="#dfdfdf" />
       )}
     </>
   );
 };
 
-export default ForcastInfo;
+export default ForecastInfo;

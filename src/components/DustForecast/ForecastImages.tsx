@@ -1,16 +1,16 @@
 import { Box, keyframes } from '@chakra-ui/react';
 import { AiFillPauseCircle } from 'react-icons/ai';
-import { DustForcast } from '@/types/dust';
+import { DustForecast } from '@/types/dust';
 
-interface ForcastImageProps {
-  dustForcast: DustForcast;
+interface ForecastImageProps {
+  dustForecast: DustForecast;
 }
 
-const ForcastImages = ({ dustForcast }: ForcastImageProps) => {
+const ForecastImages = ({ dustForecast }: ForecastImageProps) => {
   const animationKeyframes = keyframes`
-  0% { background-image: url(${dustForcast.imageUrl1}); }
-  50% { background-image: url(${dustForcast.imageUrl2}); }
-  100% { background-image: url(${dustForcast.imageUrl3}); }
+  0% { background-image: url(${dustForecast.imageUrl1}); }
+  50% { background-image: url(${dustForecast.imageUrl2}); }
+  100% { background-image: url(${dustForecast.imageUrl3}); }
 `;
 
   const animation = `${animationKeyframes} 3s ease infinite`;
@@ -49,4 +49,4 @@ const ForcastImages = ({ dustForcast }: ForcastImageProps) => {
   );
 };
 
-export default ForcastImages;
+export default ForecastImages;

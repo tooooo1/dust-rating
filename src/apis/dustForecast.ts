@@ -5,6 +5,8 @@ const { VITE_DUST_FORCAST_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
 
 interface DustForcast {
   imageUrl1: string;
+  imageUrl2: string;
+  imageUrl3: string;
   informCause: string;
   informOverall: string;
 }
@@ -24,7 +26,11 @@ export const getDustForcast = async () => {
 
     return response.data.response.body.items.find(
       (forcast: DustForcast) =>
-        forcast.imageUrl1 && forcast.informCause && forcast.informOverall
+        forcast.imageUrl1 &&
+        forcast.imageUrl2 &&
+        forcast.imageUrl3 &&
+        forcast.informCause &&
+        forcast.informOverall
     );
   } catch (error) {
     // eslint-disable-next-line no-console

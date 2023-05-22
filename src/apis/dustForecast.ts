@@ -1,20 +1,17 @@
 import axios from 'axios';
+import type { DustForcast } from '@/types/dust';
 import { getTodayDate } from '@/utils/formaters';
 
 const { VITE_DUST_FORCAST_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
 
-interface DustForcast {
-  imageUrl1: string;
-  imageUrl2: string;
-  imageUrl3: string;
-  informCause: string;
-  informOverall: string;
-}
+const STANDARD_HOUR = 5;
 
 export const getDustForcast = async () => {
   try {
     const response = await axios.get(
-      `${VITE_DUST_FORCAST_URL}?searchDate=${getTodayDate()}&returnType=json&serviceKey=${VITE_DUST_INFO_API_KEY}&numOfRows=10&pageNo=1`
+      `${VITE_DUST_FORCAST_URL}?searchDate=${getTodayDate(
+        STANDARD_HOUR
+      )}&returnType=json&serviceKey=${VITE_DUST_INFO_API_KEY}&numOfRows=10&pageNo=1`
     );
 
     if (

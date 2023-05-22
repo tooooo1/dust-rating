@@ -45,3 +45,11 @@ export interface CityDustInfo extends DustFigures {
 export interface DustHistory extends DustFigures {
   hour: string;
 }
+
+export interface DustForcast {
+  imageUrl1: string;
+  imageUrl2: string;
+  imageUrl3: string;
+  informCause: string;
+  informOverall: string;
+}

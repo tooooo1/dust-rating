@@ -51,9 +51,6 @@ const Map = () => {
     ultraFineDustScale: 0,
     ultraFineDustGrade: 0,
   });
-  const dustAverageGrade = Math.floor(
-    (dustInfo.fineDustGrade + dustInfo.ultraFineDustGrade) / 2
-  );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     map,
@@ -306,13 +303,11 @@ const Map = () => {
           <ModalBody>
             <MarkerModalDustInfo
               kindOfDust={FINE_DUST}
-              dustGradeAVG={dustAverageGrade}
               dustScale={dustInfo.fineDustScale}
               dustGrade={dustInfo.fineDustGrade}
             />
             <MarkerModalDustInfo
               kindOfDust={ULTRA_FINE_DUST}
-              dustGradeAVG={dustAverageGrade}
               dustScale={dustInfo.ultraFineDustScale}
               dustGrade={dustInfo.ultraFineDustGrade}
             />

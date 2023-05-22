@@ -5,20 +5,18 @@ import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 
 interface MarkerModalDustInfoProps {
   kindOfDust: typeof FINE_DUST | typeof ULTRA_FINE_DUST;
-  dustGradeAVG: number;
   dustScale: number;
   dustGrade: number;
 }
 
 export const MarkerModalDustInfo = ({
   kindOfDust,
-  dustGradeAVG,
   dustScale,
   dustGrade,
 }: MarkerModalDustInfoProps) => {
   return (
     <Flex flexDirection="column">
-      <DustState dustGrade={dustGradeAVG} />
+      <DustState dustGrade={dustGrade} />
       <DustFigureBar
         kindOfDust={kindOfDust}
         scale={dustScale}

@@ -2,7 +2,7 @@ import { Flex, Box, Text, Center } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import {
   AsyncBoundary,
@@ -10,31 +10,30 @@ import {
   DustState,
   ListFallback,
 } from '@/components/common';
-import { SelectList, SidoRankList } from '@/components/Ranking';
+import { SelectList, CityRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
+import type { SortType } from '@/types/dust';
 import {
   DUST_GRADE,
   FINE_DUST,
   ULTRA_FINE_DUST,
   SIDO_GROUP,
   INIT_SIDO,
+  ROUTE,
   BACKGROUND_ANIMATION,
 } from '@/utils/constants';
 
-type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
+const CityRanking = () => {
+  const navigate = useNavigate();
 
-const Ranking = () => {
-  const [serachParams, setSearchParams] = useSearchParams();
-  const place = serachParams.get('place') || INIT_SIDO;
-  const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
-  const [selectedSido, setSelectedSido] = useState(place);
-
+  const { place = INIT_SIDO } = useParams();
+  const [selectedSortType, setSelectedSortType] = useState<SortType>(FINE_DUST);
   const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
   const sidoNames = SIDO_GROUP.map((sido) => sido.sidoName);
 
   const { data: sidoDustInfo } = useQuery(
-    ['sido-dust-info', selectedSido],
-    () => getSidoDustInfo(selectedSido),
+    ['sido-dust-info', place],
+    () => getSidoDustInfo(place),
     {
       staleTime: 1000 * 60 * 5,
     }
@@ -42,14 +41,14 @@ const Ranking = () => {
 
   const handleSortKeyChange = (e: ChangeEvent<HTMLSelectElement>) => {
     e.target.value === FINE_DUST
-      ? setSelectedSortKey(FINE_DUST)
-      : setSelectedSortKey(ULTRA_FINE_DUST);
+      ? setSelectedSortType(FINE_DUST)
+      : setSelectedSortType(ULTRA_FINE_DUST);
   };
 
   const handleSelectedSidoChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const nextSido = e.target.value;
-    setSearchParams({ place: nextSido }, { replace: true });
-    setSelectedSido(nextSido);
+    setSelectedSortType(FINE_DUST);
+
+    navigate(`${ROUTE.RANKING}/${e.target.value}`);
   };
 
   return (
@@ -98,7 +97,7 @@ const Ranking = () => {
         <SelectList
           handleChange={handleSelectedSidoChange}
           selectOptions={sidoNames}
-          defaultValue={selectedSido}
+          defaultValue={place}
         />
         <Text
           as="div"
@@ -154,17 +153,17 @@ const Ranking = () => {
         <SelectList
           handleChange={handleSortKeyChange}
           selectOptions={kindOfDust}
-          defaultValue={selectedSortKey}
+          defaultValue={selectedSortType}
         />
         <AsyncBoundary
           title="지역별 미세먼지 정보를 불러오지 못했어요."
           suspenseFallback={<ListFallback />}
         >
-          <SidoRankList sortType={selectedSortKey} />
+          <CityRankList sido={place} sortType={selectedSortType} />
         </AsyncBoundary>
       </Flex>
     </Flex>
   );
 };
 
-export default Ranking;
+export default CityRanking;

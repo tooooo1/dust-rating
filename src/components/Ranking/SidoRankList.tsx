@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { getSidoDustInfos } from '@/apis/dustInfo';
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import type { SidoDustInfo, SortType } from '@/types/dust';
+import { sortDustList } from '@/utils/sortDustList';
 import SidoRankItem from './SidoRankItem';
 
 interface SidoRankListProps {
-  sortType: string;
+  sortType: SortType;
 }
 
 const SidoRankList = ({ sortType }: SidoRankListProps) => {
@@ -12,18 +13,7 @@ const SidoRankList = ({ sortType }: SidoRankListProps) => {
     ['sido-dust-infos', sortType],
     getSidoDustInfos,
     {
-      select: (data) => {
-        if (sortType === FINE_DUST) {
-          return data?.sort(
-            (prev, cur) => prev.fineDustScale - cur.fineDustScale
-          );
-        }
-        if (sortType === ULTRA_FINE_DUST) {
-          return data?.sort(
-            (prev, cur) => prev.ultraFineDustScale - cur.ultraFineDustScale
-          );
-        }
-      },
+      select: (data) => sortDustList<SidoDustInfo>(sortType, data),
       keepPreviousData: true,
       staleTime: 1000 * 60 * 5,
       suspense: true,

@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 const Logo = () => (
   <Box position="relative" bg="#53caf2">
     <Image
-      src="images/il.jpg"
+      src="/images/il.jpg"
       alt="il"
       position="absolute"
       top={4}

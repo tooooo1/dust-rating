@@ -9,6 +9,7 @@ import {
 import Logo from '@/components/Logo';
 import {
   ChoicePage,
+  CityRankingPage,
   RankingPage,
   DustForecastPage,
   DustMapPage,
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
     <Route path={ROUTE.HOME} element={<Logo />}>
       <Route index element={<ChoicePage />} />
       <Route path={ROUTE.RANKING} element={<RankingPage />} />
+      <Route path={ROUTE.CITY_RANKING} element={<CityRankingPage />} />
       <Route
         path={ROUTE.DUST_FORECAST}
         element={

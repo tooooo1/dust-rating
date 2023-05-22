@@ -25,8 +25,8 @@ const animation = `${animationKeyframes} 6s ease infinite`;
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
 const Ranking = () => {
-  const [serachParams, setSearchParams] = useSearchParams();
-  const place = serachParams.get('place') || '서울';
+  const [searchParams, setSearchParams] = useSearchParams();
+  const place = searchParams.get('place') || '서울';
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
   const [selectedSido, setSelectedSido] = useState(place);
   const [bgcolor, setBgcolor] = useState(theme.backgroundColors[DUST_GRADE[0]]);

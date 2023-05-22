@@ -30,7 +30,7 @@ const Ranking = () => {
   const place = searchParams.get('place') || INIT_SIDO;
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
   const [selectedSido, setSelectedSido] = useState(place);
-  const [bgcolor, setBgcolor] = useState(theme.backgroundColors[DUST_GRADE[0]]);
+  const [bgcolorGrade, setBgcolorGrade] = useState(0);
   const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
   const sidoNames = SIDO_GROUP.map((sido) => sido.sidoName);
 
@@ -53,8 +53,8 @@ const Ranking = () => {
     const nextSido = e.target.value;
     setSelectedSido(nextSido);
     setSearchParams({ place: nextSido }, { replace: true });
-    setBgcolor(
-      theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade ?? 0]]
+    setBgcolorGrade(
+      (prevBgcolor) => sidoDustInfo?.fineDustGrade ?? prevBgcolor
     );
   };
 
@@ -65,9 +65,9 @@ const Ranking = () => {
       as={motion.div}
       animation={animation}
       bgGradient={
-        sidoDustInfo
-          ? theme.backgroundColors[DUST_GRADE[sidoDustInfo.fineDustGrade]]
-          : bgcolor
+        theme.backgroundColors[
+          DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
+        ]
       }
       textAlign="center"
     >
@@ -154,7 +154,9 @@ const Ranking = () => {
           borderRadius={25}
           color="#ffffff"
           bg={
-            theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade ?? 0]]
+            theme.backgroundColors[
+              DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
+            ]
           }
           transition="all 500ms ease-in-out"
         >

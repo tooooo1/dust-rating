@@ -9,7 +9,7 @@ import theme from '@/styles/theme';
 import { DUST_GRADE } from '@/utils/constants';
 
 interface DustStateProps {
-  dustGrade?: number;
+  dustGrade: number;
 }
 
 const DUST_STATE = {

@@ -39,16 +39,15 @@ const ForcastInfo = ({ cityName }: ForcastInfoProps) => {
         </>
       ) : (
         <Stack>
-          {[]}
-          <Skeleton height={1} />
-          <Skeleton height="20px" />
-          <Skeleton height="20px" />
+          {[...Array(5).keys()].map((i) => (
+            <Skeleton key={i} height={4} endColor="#dfdfdf" />
+          ))}
         </Stack>
       )}
       {dustForcast ? (
         <ForcastImages dustForcast={dustForcast} />
       ) : (
-        <Skeleton height={100} />
+        <Skeleton height={800} mt={8} endColor="#dfdfdf" />
       )}
     </>
   );

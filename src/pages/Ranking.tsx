@@ -5,8 +5,7 @@ import { ChangeEvent, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import { AsyncBoundary, DustFigureBar, DustState } from '@/components/common';
-import SelectList from '@/components/Ranking/SelectList';
-import SidoRankList from '@/components/Ranking/SidoRankList';
+import { SelectList, SidoRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import {
   DUST_GRADE,

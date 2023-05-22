@@ -2,7 +2,7 @@ import { Flex, Box, Text, Center, keyframes, Skeleton } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import { AsyncBoundary, DustFigureBar, DustState } from '@/components/common';
 import { SelectList, SidoRankList } from '@/components/Ranking';
@@ -26,9 +26,8 @@ const animation = `${animationKeyframes} 6s ease infinite`;
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
 const Ranking = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(decodeURIComponent(location.search));
-  const place = searchParams.get('place') || '서울';
+  const [serachParams, setSearchParams] = useSearchParams();
+  const place = serachParams.get('place') || '서울';
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
   const [selectedSido, setSelectedSido] = useState(place);
   const [dustAverageGrade, setDustAverageGrade] = useState(0);
@@ -51,8 +50,9 @@ const Ranking = () => {
   };
 
   const handleSelectedSidoChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const { target } = e;
-    setSelectedSido(target.value);
+    const nextSido = e.target.value;
+    setSearchParams({ place: nextSido }, { replace: true });
+    setSelectedSido(nextSido);
   };
 
   useEffect(() => {

@@ -61,9 +61,7 @@ const Ranking = () => {
       as={motion.div}
       animation={animation}
       bgGradient={
-        sidoDustInfo
-          ? theme.backgroundColors[DUST_GRADE[sidoDustInfo.fineDustGrade]]
-          : theme.backgroundColors[DUST_GRADE[0]]
+        theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade ?? 0]]
       }
       textAlign="center"
       backgroundSize="200% 200%"
@@ -151,9 +149,7 @@ const Ranking = () => {
           borderRadius={25}
           color="#ffffff"
           bg={
-            sidoDustInfo
-              ? theme.backgroundColors[DUST_GRADE[sidoDustInfo.fineDustGrade]]
-              : theme.backgroundColors[DUST_GRADE[0]]
+            theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade ?? 0]]
           }
           transition="all 500ms ease-in-out"
         >

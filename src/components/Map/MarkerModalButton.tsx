@@ -14,8 +14,8 @@ export const MarkerModalButton = ({
     <Button
       colorScheme="blue"
       mr={3}
-      onClick={handleClick}
       backgroundColor="#53caf2"
+      onClick={handleClick}
     >
       {children}
     </Button>

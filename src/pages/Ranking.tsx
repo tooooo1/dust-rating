@@ -1,17 +1,23 @@
-import { Flex, Box, Text, Center, keyframes, Skeleton } from '@chakra-ui/react';
+import { Flex, Box, Text, Center, keyframes } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
-import { AsyncBoundary, DustFigureBar, DustState } from '@/components/common';
-import { SelectList, SidoRankList } from '@/components/Ranking';
+import {
+  AsyncBoundary,
+  DustFigureBar,
+  DustState,
+  ListFallback,
+} from '@/components/common';
+import { SelectList, CityRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import {
   DUST_GRADE,
   FINE_DUST,
   ULTRA_FINE_DUST,
   SIDO_GROUP,
+  INIT_SIDO,
 } from '@/utils/constants';
 
 const animationKeyframes = keyframes`
@@ -26,7 +32,7 @@ type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
 const Ranking = () => {
   const [serachParams, setSearchParams] = useSearchParams();
-  const place = serachParams.get('place') || '서울';
+  const place = serachParams.get('place') || INIT_SIDO;
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
   const [selectedSido, setSelectedSido] = useState(place);
 
@@ -162,17 +168,9 @@ const Ranking = () => {
         />
         <AsyncBoundary
           title="지역별 미세먼지 정보를 불러오지 못했어요."
-          suspenseFallback={[...Array(17).keys()].map((i) => (
-            <Skeleton
-              key={i}
-              width="100%"
-              height="3rem"
-              my="1.55rem"
-              endColor="#dfdfdf"
-            />
-          ))}
+          suspenseFallback={<ListFallback />}
         >
-          <SidoRankList sortType={selectedSortKey} />
+          <CityRankList sido={selectedSido} />
         </AsyncBoundary>
       </Flex>
     </Flex>

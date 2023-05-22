@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Center, keyframes } from '@chakra-ui/react';
+import { Flex, Box, Text, Center } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState } from 'react';
@@ -18,15 +18,8 @@ import {
   ULTRA_FINE_DUST,
   SIDO_GROUP,
   INIT_SIDO,
+  BACKGROUND_ANIMATION,
 } from '@/utils/constants';
-
-const animationKeyframes = keyframes`
-  0% { background-position: 0 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-`;
-
-const animation = `${animationKeyframes} 6s ease infinite`;
 
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
@@ -65,7 +58,7 @@ const Ranking = () => {
       direction="column"
       minHeight="100vh"
       as={motion.div}
-      animation={animation}
+      animation={BACKGROUND_ANIMATION}
       bgGradient={
         theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade ?? 0]]
       }

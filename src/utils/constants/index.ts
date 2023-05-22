@@ -11,3 +11,4 @@ export {
   ZINDEX_MARKER_MOUSE_OVER,
   ZINDEX_MARKER_MOUSE_OUT,
 } from '@/utils/constants/map';
+export { BACKGROUND_ANIMATION } from '@/utils/constants/animations';

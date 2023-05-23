@@ -1,8 +1,7 @@
 import { Flex, Text, Box } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
 import { DustState } from '@/components/common';
 import type { DustFigures } from '@/types/dust';
-import { FINE_DUST, ULTRA_FINE_DUST, ROUTE } from '@/utils/constants';
+import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 
 interface RankProps {
   size?: 'small' | 'large';
@@ -12,14 +11,8 @@ interface RankProps {
 }
 
 const Rank = ({ size = 'large', rank, title, dustFigures }: RankProps) => {
-  const navigate = useNavigate();
-
-  const handleClickRank = () => {
-    navigate(`${ROUTE.SIDO_RANKING}/${title}`);
-  };
-
   return (
-    <Flex flex={1} alignItems="center" onClick={handleClickRank}>
+    <Flex flex={1} alignItems="center">
       <Text
         as="span"
         fontSize={{ base: 16, sm: 18 }}

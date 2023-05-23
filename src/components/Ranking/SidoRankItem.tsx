@@ -1,5 +1,7 @@
 import { Flex } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import type { SidoDustInfo } from '@/types/dust';
+import { ROUTE } from '@/utils/constants';
 import Rank from '../common/Rank';
 
 interface SidoRankItemProps {
@@ -8,6 +10,12 @@ interface SidoRankItemProps {
 }
 
 const SidoRankItem = ({ rank, sido }: SidoRankItemProps) => {
+  const navigate = useNavigate();
+
+  const handlePageNavigate = () => {
+    navigate(`${ROUTE.SIDO_RANKING}/${sido.sidoName}`);
+  };
+
   return (
     <Flex
       width="100%"
@@ -21,6 +29,7 @@ const SidoRankItem = ({ rank, sido }: SidoRankItemProps) => {
         backgroundColor: '#e8e8e8',
         paddingX: '0.6rem',
       }}
+      onClick={handlePageNavigate}
     >
       <Rank rank={rank} title={sido.sidoName} dustFigures={sido} />
     </Flex>

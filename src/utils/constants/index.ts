@@ -8,6 +8,8 @@ export { INIT_LOCATION, CENTER_LOCATION } from '@/utils/constants/location';
 export {
   FINE_DUST,
   ULTRA_FINE_DUST,
+  FINE_DUST_CODE,
+  ULTRA_FINE_DUST_CODE,
   DUST_GRADE,
   KIND_OF_DUST,
   INIT_DATATIME,

@@ -1,10 +1,16 @@
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import {
+  FINE_DUST,
+  ULTRA_FINE_DUST,
+  FINE_DUST_CODE,
+  ULTRA_FINE_DUST_CODE,
+} from '@/utils/constants';
 
 type Flag = null | '통신장애';
 
 export type SortType = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
-
 export type GradeType = 'NONE' | 'GOOD' | 'NORMAL' | 'BAD' | 'DANGER';
+
+export type DustCode = typeof FINE_DUST_CODE | typeof ULTRA_FINE_DUST_CODE;
 
 export interface DustScale {
   pm10Value: string;
@@ -47,9 +53,9 @@ export interface DustHistory extends DustFigures {
 }
 
 export interface DustForecast {
-  imageUrl1: string;
-  imageUrl2: string;
-  imageUrl3: string;
+  imageSrc: string;
+  informCode: DustCode;
   informCause: string;
   informOverall: string;
+  informData: string;
 }

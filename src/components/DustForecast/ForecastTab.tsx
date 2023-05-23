@@ -1,4 +1,5 @@
-import { Box, Text, Image } from '@chakra-ui/react';
+import { Flex, Box, Text, Image as ImageBox } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { DustForecast } from '@/types/dust';
 
 interface ForecastTabProps {
@@ -6,10 +7,20 @@ interface ForecastTabProps {
 }
 
 const ForecastTab = ({ dustForecast }: ForecastTabProps) => {
+  const [imgSrc, setImgSrc] = useState(dustForecast.imageSrc);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = dustForecast.gifImageSrc;
+    img.onload = () => {
+      setImgSrc(dustForecast.gifImageSrc);
+    };
+  }, [dustForecast.gifImageSrc]);
+
   return (
     <>
       <Box fontSize={14} fontWeight={500} textAlign="right" mb={4}>
-        {dustForecast.informData} 기준
+        {dustForecast.date} 기준
       </Box>
       <Text fontSize={16} fontWeight={400} textAlign="left" lineHeight={1.4}>
         {dustForecast.informOverall}
@@ -17,9 +28,16 @@ const ForecastTab = ({ dustForecast }: ForecastTabProps) => {
       <Text fontSize={16} fontWeight={400} textAlign="left" lineHeight={1.4}>
         {dustForecast.informCause}
       </Text>
-      <Box width="100%" mt={8}>
-        <Image src={dustForecast.imageSrc} />
-      </Box>
+      <Flex justifyContent="center" width="100%" mt={8}>
+        <ImageBox
+          src={imgSrc}
+          width={imgSrc === dustForecast.imageSrc ? '84%' : '100%'}
+          ml={imgSrc === dustForecast.imageSrc ? '0.1rem' : '0'}
+          mt={imgSrc === dustForecast.imageSrc ? '0.5rem' : '0'}
+          mb={imgSrc === dustForecast.imageSrc ? '0.6rem' : '0'}
+          alt="예보 이미지"
+        />
+      </Flex>
     </>
   );
 };

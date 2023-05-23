@@ -137,8 +137,8 @@ const DustForcast = () => {
           <DustChart cityName={dustInfo.cityName} />
         </Box>
         <Divider borderColor="#dfdfdf" mb={14} />
-        <Box>
-          <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
+        <Box width="100%">
+          <Text as="p" fontSize={22} fontWeight={600} mb={6}>
             대기질 예보
           </Text>
 
@@ -149,7 +149,7 @@ const DustForcast = () => {
             pendingFallback={
               <Skeleton
                 width="100%"
-                height={800}
+                height={860}
                 borderRadius={12}
                 endColor="#dfdfdf"
               />

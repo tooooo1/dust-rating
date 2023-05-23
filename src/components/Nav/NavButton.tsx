@@ -1,7 +1,12 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, useMediaQuery } from '@chakra-ui/react';
 import { MotionStyle, motion } from 'framer-motion';
 import { useState } from 'react';
-import { AiOutlineMenuFold, AiOutlineArrowLeft } from 'react-icons/ai';
+import {
+  AiOutlineMenuFold,
+  AiOutlineArrowLeft,
+  AiOutlineHome,
+} from 'react-icons/ai';
+import { BiMap } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { NavListItem } from '@/components/Nav';
 import { ROUTE } from '@/utils/constants';
@@ -15,6 +20,7 @@ const ICON_SIZE = '2rem';
 export const NavButton = ({ styleProps }: NaviButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const [isLargerThan480] = useMediaQuery('(min-width: 480px)');
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);
@@ -70,14 +76,18 @@ export const NavButton = ({ styleProps }: NaviButtonProps) => {
               duration: 0.7,
               delayChildren: 0.3,
               staggerChildren: 0.05,
+              staggerDirection: -1,
             },
           },
           closed: {
-            clipPath: 'inset(10% 50% 90% 50% round 10px)',
+            clipPath: 'inset(0% 0% 0% 0% round 10px)',
             transition: {
               type: 'spring',
               bounce: 0,
               duration: 0.3,
+              delayChildren: 0.3,
+              staggerChildren: 0.05,
+              staggerDirection: 1,
             },
           },
         }}
@@ -89,16 +99,16 @@ export const NavButton = ({ styleProps }: NaviButtonProps) => {
         }}
       >
         <NavListItem variants={itemVariants} handleClick={handleClickMainPage}>
-          메인 화면
+          {isLargerThan480 ? '메인 화면' : <AiOutlineHome />}
         </NavListItem>
         <NavListItem
           variants={itemVariants}
           handleClick={handleClickSidoRankingPage}
         >
-          전국 랭킹
+          {isLargerThan480 ? '전국 랭킹' : '전국'}
         </NavListItem>
         <NavListItem variants={itemVariants} handleClick={handleClickMapPage}>
-          전국 지도
+          {isLargerThan480 ? '전국 지도' : <BiMap />}
         </NavListItem>
       </motion.ul>
       <motion.button whileTap={{ scale: 0.97 }} onClick={handleClick}>

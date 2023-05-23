@@ -9,11 +9,11 @@ const Choice = () => {
   const [place, setPlace] = useState(INIT_SIDO);
 
   const handleResultPageNavigate = () => {
-    navigate(`${ROUTE.RANKING}/${place}`);
+    navigate(`${ROUTE.SIDO_RANKING}/${place}`);
   };
 
   const handleSidoRankingPageNavigate = () => {
-    navigate(`${ROUTE.RANKING}`);
+    navigate(`${ROUTE.SIDO_RANKING}`);
   };
 
   const handleMapPageNavigate = () => {

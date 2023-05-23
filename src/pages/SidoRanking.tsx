@@ -16,13 +16,12 @@ import {
 
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
-const Ranking = () => {
+const SidoRanking = () => {
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
-  const [selectedSido] = useState(INIT_SIDO);
 
   const { data: sidoDustInfo } = useQuery(
-    ['sido-dust-info', selectedSido],
-    () => getSidoDustInfo(selectedSido),
+    ['sido-dust-info'],
+    () => getSidoDustInfo(INIT_SIDO),
     {
       staleTime: 1000 * 60 * 5,
     }
@@ -105,4 +104,4 @@ const Ranking = () => {
   );
 };
 
-export default Ranking;
+export default SidoRanking;

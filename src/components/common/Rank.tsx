@@ -15,7 +15,7 @@ const Rank = ({ size = 'large', rank, title, dustFigures }: RankProps) => {
   const navigate = useNavigate();
 
   const handleClickRank = () => {
-    navigate(`${ROUTE.RANKING}/${title}`);
+    navigate(`${ROUTE.SIDO_RANKING}/${title}`);
   };
 
   return (

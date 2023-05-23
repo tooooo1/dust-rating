@@ -1,7 +1,7 @@
-import { Button } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import { MotionStyle, motion } from 'framer-motion';
 import { useState } from 'react';
-import { AiOutlineMenuFold } from 'react-icons/ai';
+import { AiOutlineMenuFold, AiOutlineArrowLeft } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '@/utils/constants';
 
@@ -29,6 +29,10 @@ export const NaviButton = ({ sx }: NaviButtonProps) => {
     navigate(ROUTE.DUST_MAP);
   };
 
+  const handleClickGoBack = () => {
+    navigate(-1);
+  };
+
   const itemVariants = {
     open: {
       opacity: 1,
@@ -45,6 +49,9 @@ export const NaviButton = ({ sx }: NaviButtonProps) => {
       className="menu"
       style={{ ...sx }}
     >
+      <Box onClick={handleClickGoBack} cursor="pointer">
+        <AiOutlineArrowLeft size="2rem" color="white" />
+      </Box>
       <motion.ul
         variants={{
           open: {
@@ -84,15 +91,8 @@ export const NaviButton = ({ sx }: NaviButtonProps) => {
         </motion.li>
       </motion.ul>
       <motion.button whileTap={{ scale: 0.97 }} onClick={handleClick}>
-        <motion.div
-          variants={{
-            open: { rotate: 0 },
-            closed: { rotate: 180 },
-          }}
-          transition={{ duration: 0.2 }}
-          style={{ originY: 0.55 }}
-        >
-          <AiOutlineMenuFold />
+        <motion.div>
+          <AiOutlineMenuFold size="2rem" color="white" />
         </motion.div>
       </motion.button>
     </motion.nav>

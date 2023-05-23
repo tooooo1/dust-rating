@@ -1,8 +1,9 @@
-import { Button, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { MotionStyle, motion } from 'framer-motion';
 import { useState } from 'react';
 import { AiOutlineMenuFold, AiOutlineArrowLeft } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
+import { NavListItem } from '@/components/Nav';
 import { ROUTE } from '@/utils/constants';
 
 interface NaviButtonProps {
@@ -11,7 +12,7 @@ interface NaviButtonProps {
 
 const ICON_SIZE = '2rem';
 
-export const NaviButton = ({ styleProps }: NaviButtonProps) => {
+export const NavButton = ({ styleProps }: NaviButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -87,15 +88,18 @@ export const NaviButton = ({ styleProps }: NaviButtonProps) => {
           justifyContent: 'space-around',
         }}
       >
-        <motion.li variants={itemVariants}>
-          <Button onClick={handleClickMainPage}>메인 화면</Button>
-        </motion.li>
-        <motion.li variants={itemVariants}>
-          <Button onClick={handleClickSidoRankingPage}>전국 랭킹</Button>
-        </motion.li>
-        <motion.li variants={itemVariants}>
-          <Button onClick={handleClickMapPage}>전국 지도</Button>
-        </motion.li>
+        <NavListItem variants={itemVariants} handleClick={handleClickMainPage}>
+          메인 화면
+        </NavListItem>
+        <NavListItem
+          variants={itemVariants}
+          handleClick={handleClickSidoRankingPage}
+        >
+          전국 랭킹
+        </NavListItem>
+        <NavListItem variants={itemVariants} handleClick={handleClickMapPage}>
+          전국 지도
+        </NavListItem>
       </motion.ul>
       <motion.button whileTap={{ scale: 0.97 }} onClick={handleClick}>
         <Flex>
@@ -106,4 +110,4 @@ export const NaviButton = ({ styleProps }: NaviButtonProps) => {
   );
 };
 
-export default NaviButton;
+export default NavButton;

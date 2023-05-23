@@ -10,7 +10,7 @@ import {
   DustState,
   ListFallback,
 } from '@/components/common';
-import NaviButton from '@/components/common/NaviButton';
+import NaviButton from '@/components/Nav/NavButton';
 import { SelectList, CityRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import type { SortType } from '@/types/dust';

@@ -2,7 +2,6 @@ import { Flex } from '@chakra-ui/react';
 import { useState } from 'react';
 import type { SidoDustInfo } from '@/types/dust';
 import Rank from '../common/Rank';
-import CityRankList from './CityRankList';
 
 interface SidoRankItemProps {
   rank: number;
@@ -10,11 +9,7 @@ interface SidoRankItemProps {
 }
 
 const SidoRankItem = ({ rank, sido }: SidoRankItemProps) => {
-  const [isShow, setIsShow] = useState(false);
-
-  const handleSidoClick = () => {
-    setIsShow((isShow) => !isShow);
-  };
+  const handleSidoClick = () => {};
 
   return (
     <Flex
@@ -32,7 +27,6 @@ const SidoRankItem = ({ rank, sido }: SidoRankItemProps) => {
       onClick={handleSidoClick}
     >
       <Rank rank={rank} title={sido.sidoName} dustFigures={sido} />
-      <CityRankList sido={sido.sidoName} isShow={isShow} />
     </Flex>
   );
 };

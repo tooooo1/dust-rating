@@ -9,6 +9,11 @@ interface NaviButtonProps {
   sx?: MotionStyle;
 }
 
+const ICON = {
+  SIZE: '2rem',
+  COLOR: '#ffffff',
+};
+
 export const NaviButton = ({ sx }: NaviButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -50,7 +55,7 @@ export const NaviButton = ({ sx }: NaviButtonProps) => {
       style={{ ...sx }}
     >
       <Box onClick={handleClickGoBack} cursor="pointer">
-        <AiOutlineArrowLeft size="2rem" color="white" />
+        <AiOutlineArrowLeft size={ICON.SIZE} color={ICON.COLOR} />
       </Box>
       <motion.ul
         variants={{
@@ -91,9 +96,9 @@ export const NaviButton = ({ sx }: NaviButtonProps) => {
         </motion.li>
       </motion.ul>
       <motion.button whileTap={{ scale: 0.97 }} onClick={handleClick}>
-        <motion.div>
-          <AiOutlineMenuFold size="2rem" color="white" />
-        </motion.div>
+        <Box>
+          <AiOutlineMenuFold size={ICON.SIZE} color={ICON.COLOR} />
+        </Box>
       </motion.button>
     </motion.nav>
   );

@@ -1,7 +1,7 @@
 import { Flex, Box, Text, Center } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import {
@@ -10,7 +10,7 @@ import {
   DustState,
   ListFallback,
 } from '@/components/common';
-import { SelectList, CityRankList } from '@/components/Ranking';
+import { SelectTabList, SelectList, CityRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import type { SortType } from '@/types/dust';
 import {
@@ -39,8 +39,8 @@ const CityRanking = () => {
     }
   );
 
-  const handleSortKeyChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    e.target.value === FINE_DUST
+  const handleSelectSortType = (e: MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.value === FINE_DUST
       ? setSelectedSortType(FINE_DUST)
       : setSelectedSortType(ULTRA_FINE_DUST);
   };
@@ -156,10 +156,14 @@ const CityRanking = () => {
         >
           지역별 미세 먼지 농도 순위
         </Text>
-        <SelectList
-          handleChange={handleSortKeyChange}
-          selectOptions={KIND_OF_DUST}
-          defaultValue={selectedSortType}
+        <SelectTabList
+          handleClick={handleSelectSortType}
+          SelectTabList={KIND_OF_DUST}
+          styleProps={{
+            bg: theme.colors[
+              DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
+            ],
+          }}
         />
         <AsyncBoundary
           title="지역별 미세먼지 정보를 불러오지 못했어요."

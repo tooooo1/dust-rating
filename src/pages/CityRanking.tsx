@@ -166,11 +166,7 @@ const CityRanking = () => {
           py={3}
           borderRadius={25}
           color="#ffffff"
-          bg={
-            theme.backgroundColors[
-              DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
-            ]
-          }
+          bg={theme.colors[DUST_GRADE[sidoDustInfo?.fineDustGrade || 0]]}
           transition="all 500ms ease-in-out"
         >
           지역별 미세 먼지 농도 순위

@@ -17,10 +17,11 @@ import {
   DUST_GRADE,
   FINE_DUST,
   ULTRA_FINE_DUST,
-  SIDO_GROUP,
   INIT_SIDO,
   ROUTE,
   BACKGROUND_ANIMATION,
+  SIDO_NAMES,
+  KIND_OF_DUST,
 } from '@/utils/constants';
 
 const CityRanking = () => {
@@ -28,8 +29,7 @@ const CityRanking = () => {
 
   const { place = INIT_SIDO } = useParams();
   const [selectedSortType, setSelectedSortType] = useState<SortType>(FINE_DUST);
-  const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
-  const sidoNames = SIDO_GROUP.map((sido) => sido.sidoName);
+  const [bgcolorGrade, setBgcolorGrade] = useState(0);
 
   const { data: sidoDustInfo } = useQuery(
     ['sido-dust-info', place],
@@ -47,7 +47,9 @@ const CityRanking = () => {
 
   const handleSelectedSidoChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedSortType(FINE_DUST);
-
+    setBgcolorGrade(
+      (prevBgcolor) => sidoDustInfo?.fineDustGrade ?? prevBgcolor
+    );
     navigate(`${ROUTE.RANKING}/${e.target.value}`);
   };
 
@@ -58,7 +60,9 @@ const CityRanking = () => {
       as={motion.div}
       animation={BACKGROUND_ANIMATION}
       bgGradient={
-        theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade || 0]]
+        theme.backgroundColors[
+          DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
+        ]
       }
       textAlign="center"
       backgroundSize="200% 200%"
@@ -96,7 +100,7 @@ const CityRanking = () => {
       >
         <SelectList
           handleChange={handleSelectedSidoChange}
-          selectOptions={sidoNames}
+          selectOptions={SIDO_NAMES}
           defaultValue={place}
         />
         <Text
@@ -144,7 +148,9 @@ const CityRanking = () => {
           borderRadius={25}
           color="#ffffff"
           bg={
-            theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade || 0]]
+            theme.backgroundColors[
+              DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
+            ]
           }
           transition="all 500ms ease-in-out"
         >
@@ -152,7 +158,7 @@ const CityRanking = () => {
         </Text>
         <SelectList
           handleChange={handleSortKeyChange}
-          selectOptions={kindOfDust}
+          selectOptions={KIND_OF_DUST}
           defaultValue={selectedSortType}
         />
         <AsyncBoundary

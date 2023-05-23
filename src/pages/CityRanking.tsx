@@ -154,7 +154,7 @@ const CityRanking = () => {
           }
           transition="all 500ms ease-in-out"
         >
-          지역별 미세 먼지 농도 순위
+          {`지역별 ${selectedSortType} 농도 순위`}
         </Text>
         <SelectTabList
           handleClick={handleSelectSortType}

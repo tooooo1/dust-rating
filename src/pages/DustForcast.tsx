@@ -1,4 +1,11 @@
-import { Box, Text, Flex, useMediaQuery, Skeleton } from '@chakra-ui/react';
+import {
+  Box,
+  Text,
+  Flex,
+  useMediaQuery,
+  Skeleton,
+  Divider,
+} from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
@@ -129,6 +136,7 @@ const DustForcast = () => {
           </Flex>
           <DustChart cityName={dustInfo.cityName} />
         </Box>
+        <Divider borderColor="#dfdfdf" mb={14} />
         <Box>
           <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
             대기질 예보

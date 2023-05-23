@@ -54,8 +54,8 @@ export interface DustHistory extends DustFigures {
 
 export interface DustForecast {
   imageSrc: string;
-  informCode: DustCode;
+  gifImageSrc: string;
   informCause: string;
   informOverall: string;
-  informData: string;
+  date: string;
 }

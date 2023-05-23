@@ -2,6 +2,7 @@ import type { GradeType } from '@/types/dust';
 
 export const FINE_DUST = '미세먼지';
 export const ULTRA_FINE_DUST = '초미세먼지';
+export const KIND_OF_DUST = [FINE_DUST, ULTRA_FINE_DUST];
 
 export const DUST_GRADE: { [key: number]: GradeType } = {
   0: 'NONE',

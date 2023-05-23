@@ -18,5 +18,7 @@ export const SIDO_GROUP = [
   { sidoName: '세종', cityNumber: 16 },
 ];
 
+export const SIDO_NAMES = SIDO_GROUP.map((sido) => sido.sidoName);
+
 export const INIT_SIDO = '서울';
 export const INIT_CITY = '강남구';

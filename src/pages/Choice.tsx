@@ -12,6 +12,10 @@ const Choice = () => {
     navigate(`${ROUTE.RANKING}/${place}`);
   };
 
+  const handleSidoRankingPageNavigate = () => {
+    navigate(`${ROUTE.RANKING}`);
+  };
+
   const handleMapPageNavigate = () => {
     navigate(ROUTE.DUST_MAP);
   };
@@ -79,6 +83,18 @@ const Choice = () => {
         onClick={handleMapPageNavigate}
       >
         미세먼지 지도
+      </Button>
+      <Button
+        rightIcon={<HiArrowRight />}
+        color="#3a9cbd"
+        borderColor="#3a9cbd"
+        borderWidth={2}
+        bg="#ffffff"
+        opacity={0.8}
+        borderRadius={20}
+        onClick={handleSidoRankingPageNavigate}
+      >
+        전국 미세먼지 순위
       </Button>
     </Flex>
   );

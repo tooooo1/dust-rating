@@ -16,6 +16,7 @@ const theme = extendTheme({
     BAD: '#fda60d',
     NORMAL: '#03c73c',
     GOOD: '#30a2ff',
+    INTI: '#53caf2',
   },
   backgroundColors: {
     DANGER:

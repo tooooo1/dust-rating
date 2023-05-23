@@ -75,7 +75,7 @@ const CityRanking = () => {
         mt={20}
         mb={{ base: 2, sm: 3, md: 4 }}
       >
-        전국 미세 먼지 농도는 다음과 같습니다
+        {`전국 ${selectedSortType} 농도는 다음과 같습니다`}
       </Text>
       <Text
         as="p"

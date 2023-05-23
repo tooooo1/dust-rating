@@ -2,7 +2,7 @@ import { Flex, Text, Select, Button, Image } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ChoiceNavigateButton from '@/components/Choice/ChoiceNavigateButton';
-import { FINE_DUST, SIDO_GROUP, INIT_SIDO, ROUTE } from '@/utils/constants';
+import { FINE_DUST, SIDO_NAMES, INIT_SIDO, ROUTE } from '@/utils/constants';
 
 const Choice = () => {
   const navigate = useNavigate();
@@ -56,9 +56,9 @@ const Choice = () => {
           onChange={handlePlaceChange}
           value={place}
         >
-          {SIDO_GROUP.map((sido) => (
-            <option key={sido.sidoName} value={sido.sidoName}>
-              {sido.sidoName}
+          {SIDO_NAMES.map((sidoName) => (
+            <option key={sidoName} value={sidoName}>
+              {sidoName}
             </option>
           ))}
         </Select>

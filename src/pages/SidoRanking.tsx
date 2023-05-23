@@ -43,7 +43,7 @@ const SidoRanking = () => {
       textAlign="center"
     >
       <NaviButton
-        sx={{
+        styleProps={{
           marginTop: 10,
           display: 'flex',
           justifyContent: 'center',

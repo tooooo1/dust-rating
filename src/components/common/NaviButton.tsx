@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '@/utils/constants';
 
 interface NaviButtonProps {
-  sx?: MotionStyle;
+  styleProps?: MotionStyle;
 }
 
 const ICON = {
@@ -14,7 +14,7 @@ const ICON = {
   COLOR: '#ffffff',
 };
 
-export const NaviButton = ({ sx }: NaviButtonProps) => {
+export const NaviButton = ({ styleProps }: NaviButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -52,7 +52,7 @@ export const NaviButton = ({ sx }: NaviButtonProps) => {
       initial={false}
       animate={isOpen ? 'open' : 'closed'}
       className="menu"
-      style={{ ...sx }}
+      style={{ ...styleProps }}
     >
       <Box onClick={handleClickGoBack} cursor="pointer">
         <AiOutlineArrowLeft size={ICON.SIZE} color={ICON.COLOR} />

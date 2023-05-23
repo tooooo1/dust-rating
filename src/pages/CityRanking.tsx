@@ -69,7 +69,7 @@ const CityRanking = () => {
       backgroundSize="200% 200%"
     >
       <NaviButton
-        sx={{
+        styleProps={{
           marginTop: 10,
           display: 'flex',
           justifyContent: 'center',

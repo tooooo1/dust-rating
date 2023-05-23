@@ -1,9 +1,14 @@
-import { Box, Text, Flex, keyframes, useMediaQuery } from '@chakra-ui/react';
+import { Box, Text, Flex, useMediaQuery, Skeleton } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import { getCityDustInfos } from '@/apis/dustInfo';
-import { AsyncBoundary, DustLevel, NaviButton } from '@/components/common';
+import {
+  AsyncBoundary,
+  DustLevel,
+  NaviButton,
+  ErrorFallback,
+} from '@/components/common';
 import {
   CurrentDustInfo,
   DustChart,
@@ -18,15 +23,10 @@ import {
   INIT_SIDO,
   INIT_CITY,
   INIT_DATATIME,
+  BACKGROUND_ANIMATION,
 } from '@/utils/constants';
 
-const animationKeyframes = keyframes`
-  0% { background-position: 0 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-`;
-
-const animation = `${animationKeyframes} 6s ease infinite`;
+const animation = `${BACKGROUND_ANIMATION} 6s ease infinite`;
 
 const DustForcast = () => {
   const [searchParams] = useSearchParams();
@@ -51,6 +51,7 @@ const DustForcast = () => {
   return (
     <Flex
       direction="column"
+      width="100%"
       minHeight="100vh"
       as={motion.div}
       animation={animation}
@@ -88,7 +89,7 @@ const DustForcast = () => {
       </Text>
       <Box
         maxWidth="47.5rem"
-        width={{ base: '100%', sm: '100%' }}
+        width="100%"
         margin="0 auto"
         borderRadius={10}
         bg="#ffffff"
@@ -128,12 +129,27 @@ const DustForcast = () => {
           </Flex>
           <DustChart cityName={dustInfo.cityName} />
         </Box>
-        <Flex direction="column" alignItems="center" width="100%" mt={10}>
+        <Box>
           <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
             대기질 예보
           </Text>
-          <ForecastInfo cityName={dustInfo.cityName} />
-        </Flex>
+
+          <AsyncBoundary
+            rejectFallback={
+              <ErrorFallback errorMessage="대기질 예보 정보를 불러오지 못했어요." />
+            }
+            pendingFallback={
+              <Skeleton
+                width="100%"
+                height={800}
+                borderRadius={12}
+                endColor="#dfdfdf"
+              />
+            }
+          >
+            <ForecastInfo cityName={dustInfo.cityName} />
+          </AsyncBoundary>
+        </Box>
       </Box>
     </Flex>
   );

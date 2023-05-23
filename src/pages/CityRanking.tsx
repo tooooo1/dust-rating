@@ -11,6 +11,7 @@ import {
   ErrorFallback,
   ListFallback,
 } from '@/components/common';
+import Select from '@/components/common/Select';
 import NaviButton from '@/components/Nav/NavButton';
 import { SelectList, CityRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
@@ -47,12 +48,13 @@ const CityRanking = () => {
       : setSelectedSortType(ULTRA_FINE_DUST);
   };
 
-  const handleSelectedSidoChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectedSidoChange = (place: string) => {
     setSelectedSortType(FINE_DUST);
     setBgcolorGrade(
       (prevBgcolor) => sidoDustInfo?.fineDustGrade ?? prevBgcolor
     );
-    navigate(`${ROUTE.SIDO_RANKING}/${e.target.value}`);
+
+    navigate(`${ROUTE.SIDO_RANKING}/${place}`);
   };
 
   return (
@@ -100,6 +102,7 @@ const CityRanking = () => {
         maxWidth="37.5rem"
         width={{ base: '80%', sm: '80%' }}
         margin="0 auto"
+        position="relative"
         borderTopRadius={10}
         textAlign="center"
         bg="rgba(255, 255, 255, 0.6)"
@@ -108,11 +111,17 @@ const CityRanking = () => {
         px={{ base: 4, sm: 6 }}
         py={{ base: 6, sm: 8 }}
       >
-        <SelectList
-          handleChange={handleSelectedSidoChange}
-          selectOptions={SIDO_NAMES}
-          defaultValue={place}
-        />
+        <Text
+          as="p"
+          fontSize={{ base: 22, sm: 24, md: 28 }}
+          fontWeight={700}
+          mb={{ base: 2, sm: 4 }}
+        >
+          {place}
+        </Text>
+        <Box position="absolute" top={6} left={6}>
+          <Select options={SIDO_NAMES} onClick={handleSelectedSidoChange} />
+        </Box>
         <Text
           as="div"
           mt="1rem"

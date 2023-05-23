@@ -16,9 +16,10 @@ import {
   DUST_GRADE,
   FINE_DUST,
   ULTRA_FINE_DUST,
-  SIDO_GROUP,
   INIT_SIDO,
   BACKGROUND_ANIMATION,
+  KIND_OF_DUST,
+  SIDO_NAMES,
 } from '@/utils/constants';
 
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
@@ -29,8 +30,6 @@ const Ranking = () => {
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
   const [selectedSido, setSelectedSido] = useState(place);
   const [bgcolorGrade, setBgcolorGrade] = useState(0);
-  const kindOfDust = [FINE_DUST, ULTRA_FINE_DUST];
-  const sidoNames = SIDO_GROUP.map((sido) => sido.sidoName);
 
   const { data: sidoDustInfo } = useQuery(
     ['sido-dust-info', selectedSido],
@@ -101,7 +100,7 @@ const Ranking = () => {
       >
         <SelectList
           handleChange={handleSelectedSidoChange}
-          selectOptions={sidoNames}
+          selectOptions={SIDO_NAMES}
           defaultValue={selectedSido}
         />
         <Text
@@ -159,7 +158,7 @@ const Ranking = () => {
         </Text>
         <SelectList
           handleChange={handleSortKeyChange}
-          selectOptions={kindOfDust}
+          selectOptions={KIND_OF_DUST}
           defaultValue={selectedSortKey}
         />
         <AsyncBoundary

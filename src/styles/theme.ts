@@ -16,7 +16,6 @@ const theme = extendTheme({
     BAD: '#fda60d',
     NORMAL: '#03c73c',
     GOOD: '#30a2ff',
-    INTI: '#53caf2',
   },
   backgroundColors: {
     DANGER:
@@ -26,6 +25,7 @@ const theme = extendTheme({
       'linear-gradient(77deg, rgba(255,255,180,1) 0%, rgba(110,226,144,1) 50%, rgba(3,199,60,1) 100%)',
     GOOD: 'linear-gradient(77deg, rgba(255,255,180,1) 0%, rgba(83,202,242,1) 50%, rgba(48,162,255,1) 100%)',
     NONE: '#ffffff8f',
+    INTI: '#53caf2',
   },
 });
 

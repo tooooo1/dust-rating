@@ -111,11 +111,14 @@ export const NavButton = ({ styleProps }: NaviButtonProps) => {
           {isLargerThan480 ? '전국 지도' : <BiMap />}
         </NavListItem>
       </motion.ul>
-      <motion.button whileTap={{ scale: 0.97 }} onClick={handleClick}>
-        <Flex>
-          <AiOutlineMenuFold className="nav-icon" size={ICON_SIZE} />
-        </Flex>
-      </motion.button>
+      <Flex
+        flexDirection="column"
+        justifyContent="center"
+        onClick={handleClick}
+        cursor="pointer"
+      >
+        <AiOutlineMenuFold className="nav-icon" size={ICON_SIZE} />
+      </Flex>
     </motion.nav>
   );
 };

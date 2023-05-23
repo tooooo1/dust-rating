@@ -3,7 +3,12 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState } from 'react';
 import { getSidoDustInfo } from '@/apis/dustInfo';
-import { AsyncBoundary, ListFallback, NaviButton } from '@/components/common';
+import {
+  AsyncBoundary,
+  ErrorFallback,
+  ListFallback,
+  NaviButton,
+} from '@/components/common';
 import { SelectList, SidoRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import {
@@ -103,8 +108,10 @@ const SidoRanking = () => {
           defaultValue={selectedSortKey}
         />
         <AsyncBoundary
-          title="지역별 미세먼지 정보를 불러오지 못했어요."
-          suspenseFallback={<ListFallback />}
+          rejectFallback={
+            <ErrorFallback errorMessage="지역별 미세먼지 정보를 불러오지 못했어요." />
+          }
+          pendingFallback={<ListFallback />}
         >
           <SidoRankList sortType={selectedSortKey} />
         </AsyncBoundary>

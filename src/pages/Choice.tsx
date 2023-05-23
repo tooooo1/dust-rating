@@ -1,7 +1,7 @@
 import { Flex, Text, Select, Button, Image } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
-import { HiArrowRight } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
+import ChoiceNavigateButton from '@/components/Choice/ChoiceNavigateButton';
 import { FINE_DUST, SIDO_GROUP, INIT_SIDO, ROUTE } from '@/utils/constants';
 
 const Choice = () => {
@@ -72,30 +72,12 @@ const Choice = () => {
           검색
         </Button>
       </Flex>
-      <Button
-        rightIcon={<HiArrowRight />}
-        color="#3a9cbd"
-        borderColor="#3a9cbd"
-        borderWidth={2}
-        bg="#ffffff"
-        opacity={0.8}
-        borderRadius={20}
-        onClick={handleMapPageNavigate}
-      >
+      <ChoiceNavigateButton handleClick={handleMapPageNavigate}>
         미세먼지 지도
-      </Button>
-      <Button
-        rightIcon={<HiArrowRight />}
-        color="#3a9cbd"
-        borderColor="#3a9cbd"
-        borderWidth={2}
-        bg="#ffffff"
-        opacity={0.8}
-        borderRadius={20}
-        onClick={handleSidoRankingPageNavigate}
-      >
+      </ChoiceNavigateButton>
+      <ChoiceNavigateButton handleClick={handleSidoRankingPageNavigate}>
         전국 미세먼지 순위
-      </Button>
+      </ChoiceNavigateButton>
     </Flex>
   );
 };

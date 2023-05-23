@@ -20,7 +20,7 @@ const SidoRanking = () => {
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
 
   const { data: sidoDustInfo } = useQuery(
-    ['sido-dust-info'],
+    ['sido-dust-info', INIT_SIDO],
     () => getSidoDustInfo(INIT_SIDO),
     {
       staleTime: 1000 * 60 * 5,

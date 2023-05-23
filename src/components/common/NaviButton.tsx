@@ -1,4 +1,4 @@
-import { Box, Button } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 import { MotionStyle, motion } from 'framer-motion';
 import { useState } from 'react';
 import { AiOutlineMenuFold, AiOutlineArrowLeft } from 'react-icons/ai';
@@ -9,10 +9,7 @@ interface NaviButtonProps {
   styleProps?: MotionStyle;
 }
 
-const ICON = {
-  SIZE: '2rem',
-  COLOR: '#ffffff',
-};
+const ICON_SIZE = '2rem';
 
 export const NaviButton = ({ styleProps }: NaviButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,9 +51,14 @@ export const NaviButton = ({ styleProps }: NaviButtonProps) => {
       className="menu"
       style={{ ...styleProps }}
     >
-      <Box onClick={handleClickGoBack} cursor="pointer">
-        <AiOutlineArrowLeft size={ICON.SIZE} color={ICON.COLOR} />
-      </Box>
+      <Flex
+        flexDirection="column"
+        justifyContent="center"
+        onClick={handleClickGoBack}
+        cursor="pointer"
+      >
+        <AiOutlineArrowLeft className="nav-icon" size={ICON_SIZE} />
+      </Flex>
       <motion.ul
         variants={{
           open: {
@@ -96,9 +98,9 @@ export const NaviButton = ({ styleProps }: NaviButtonProps) => {
         </motion.li>
       </motion.ul>
       <motion.button whileTap={{ scale: 0.97 }} onClick={handleClick}>
-        <Box>
-          <AiOutlineMenuFold size={ICON.SIZE} color={ICON.COLOR} />
-        </Box>
+        <Flex>
+          <AiOutlineMenuFold className="nav-icon" size={ICON_SIZE} />
+        </Flex>
       </motion.button>
     </motion.nav>
   );

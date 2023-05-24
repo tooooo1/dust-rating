@@ -50,7 +50,7 @@ const CityRanking = () => {
     setBgcolorGrade(
       (prevBgcolor) => sidoDustInfo?.fineDustGrade ?? prevBgcolor
     );
-    navigate(`${ROUTE.RANKING}/${e.target.value}`);
+    navigate(`${ROUTE.SIDO_RANKING}/${e.target.value}`);
   };
 
   return (

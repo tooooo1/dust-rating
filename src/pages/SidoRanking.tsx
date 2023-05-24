@@ -1,39 +1,27 @@
-import { Flex, Box, Text, Center } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
-import {
-  AsyncBoundary,
-  DustFigureBar,
-  DustState,
-  ListFallback,
-} from '@/components/common';
+import { AsyncBoundary, ListFallback } from '@/components/common';
 import { SelectList, SidoRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import {
-  DUST_GRADE,
   FINE_DUST,
   ULTRA_FINE_DUST,
   INIT_SIDO,
   BACKGROUND_ANIMATION,
   KIND_OF_DUST,
-  SIDO_NAMES,
 } from '@/utils/constants';
 
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 
-const Ranking = () => {
-  const [serachParams, setSearchParams] = useSearchParams();
-  const place = serachParams.get('place') || INIT_SIDO;
+const SidoRanking = () => {
   const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
-  const [selectedSido, setSelectedSido] = useState(place);
-  const [bgcolorGrade, setBgcolorGrade] = useState(0);
 
   const { data: sidoDustInfo } = useQuery(
-    ['sido-dust-info', selectedSido],
-    () => getSidoDustInfo(selectedSido),
+    ['sido-dust-info', INIT_SIDO],
+    () => getSidoDustInfo(INIT_SIDO),
     {
       staleTime: 1000 * 60 * 5,
     }
@@ -45,26 +33,13 @@ const Ranking = () => {
       : setSelectedSortKey(ULTRA_FINE_DUST);
   };
 
-  const handleSelectedSidoChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const nextSido = e.target.value;
-    setSelectedSido(nextSido);
-    setSearchParams({ place: nextSido }, { replace: true });
-    setBgcolorGrade(
-      (prevBgcolor) => sidoDustInfo?.fineDustGrade ?? prevBgcolor
-    );
-  };
-
   return (
     <Flex
       direction="column"
       minHeight="100vh"
       as={motion.div}
       animation={BACKGROUND_ANIMATION}
-      bgGradient={
-        theme.backgroundColors[
-          DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
-        ]
-      }
+      bgGradient={theme.backgroundColors['INIT']}
       textAlign="center"
     >
       <Text
@@ -86,45 +61,6 @@ const Ranking = () => {
       >
         {sidoDustInfo?.dataTime || '0000-00-00 00:00'} 기준
       </Text>
-      <Box
-        maxWidth="37.5rem"
-        width={{ base: '80%', sm: '80%' }}
-        margin="0 auto"
-        borderTopRadius={10}
-        textAlign="center"
-        bg="rgba(255, 255, 255, 0.6)"
-        boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
-        backdropFilter="blur(7px)"
-        px={{ base: 4, sm: 6 }}
-        py={{ base: 6, sm: 8 }}
-      >
-        <SelectList
-          handleChange={handleSelectedSidoChange}
-          selectOptions={SIDO_NAMES}
-          defaultValue={selectedSido}
-        />
-        <Text
-          as="div"
-          mt="1rem"
-          fontSize={{ base: 16, sm: 18 }}
-          color="#4d4d4d"
-        >
-          현재의 대기질 지수는
-        </Text>
-        <Center my={5}>
-          <DustState dustGrade={sidoDustInfo?.fineDustGrade || 0} />
-        </Center>
-        <DustFigureBar
-          kindOfDust={FINE_DUST}
-          scale={sidoDustInfo?.fineDustScale}
-          grade={sidoDustInfo?.fineDustGrade}
-        />
-        <DustFigureBar
-          kindOfDust={ULTRA_FINE_DUST}
-          scale={sidoDustInfo?.ultraFineDustScale}
-          grade={sidoDustInfo?.ultraFineDustGrade}
-        />
-      </Box>
       <Flex
         direction="column"
         justifyContent="center"
@@ -147,11 +83,7 @@ const Ranking = () => {
           py={3}
           borderRadius={25}
           color="#ffffff"
-          bg={
-            theme.backgroundColors[
-              DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
-            ]
-          }
+          bg={theme.backgroundColors['INIT']}
           transition="all 500ms ease-in-out"
         >
           지역별 미세 먼지 농도 순위
@@ -172,4 +104,4 @@ const Ranking = () => {
   );
 };
 
-export default Ranking;
+export default SidoRanking;

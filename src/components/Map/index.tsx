@@ -237,9 +237,9 @@ const Map = () => {
     }
   }, []);
 
-  const handleClickForCastButton = () => {
+  const handleClickForeCastButton = () => {
     navigate(
-      `${ROUTE.DUST_FORCAST}?sido=${encodeURIComponent(
+      `${ROUTE.DUST_FORECAST}?sido=${encodeURIComponent(
         currentSido
       )}&city=${encodeURIComponent(city)}`
     );
@@ -318,7 +318,7 @@ const Map = () => {
             />
           </ModalBody>
           <ModalFooter display="flex" justifyContent="space-around">
-            <MarkerModalButton handleClick={handleClickForCastButton}>
+            <MarkerModalButton handleClick={handleClickForeCastButton}>
               예보 페이지로 이동하기
             </MarkerModalButton>
             <MarkerModalButton handleClick={onClose}>닫기</MarkerModalButton>

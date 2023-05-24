@@ -14,7 +14,7 @@ const CityRankItem = ({ rank, sido, city }: CityRankItemProps) => {
   const navigate = useNavigate();
 
   const handlePageNavigate = () => {
-    navigate(`${ROUTE.DUST_FORCAST}?sido=${sido}&city=${city.cityName}`);
+    navigate(`${ROUTE.DUST_FORECAST}?sido=${sido}&city=${city.cityName}`);
   };
 
   return (

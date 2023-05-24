@@ -35,7 +35,7 @@ import {
 
 const animation = `${BACKGROUND_ANIMATION} 6s ease infinite`;
 
-const DustForcast = () => {
+const DustForecast = () => {
   const [searchParams] = useSearchParams();
   const searchedSido = searchParams.get('sido') || INIT_SIDO;
   const searchedCity = searchParams.get('city') || INIT_CITY;
@@ -163,4 +163,4 @@ const DustForcast = () => {
   );
 };
 
-export default DustForcast;
+export default DustForecast;

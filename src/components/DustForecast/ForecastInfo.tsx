@@ -1,6 +1,6 @@
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { getDustForecast } from '@/apis/dustForcast';
+import { getDustForecast } from '@/apis/dustForecast';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import ForecastTab from './ForecastTab';
 

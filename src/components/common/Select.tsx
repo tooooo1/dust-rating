@@ -7,6 +7,7 @@ import {
   MenuList,
 } from '@chakra-ui/react';
 import { TiLocationArrow } from 'react-icons/ti';
+import { SCROLL_STYLE } from '@/utils/constants';
 
 interface SelectProps {
   options: string[];
@@ -31,15 +32,7 @@ const Select = ({ options, onClick }: SelectProps) => {
             width: '0.5rem',
             backgroundColor: 'transparent',
           },
-          '::-webkit-scrollbar-thumb': {
-            padding: `1rem 0`,
-            backgroundColor: '#3f435040',
-            borderRadius: '0.3rem',
-          },
-          '::-webkit-scrollbar-track': {
-            backgroundColor: '#3f435025',
-            borderRadius: '0.3rem',
-          },
+          ...SCROLL_STYLE,
         }}
       >
         {options.map((option) => (

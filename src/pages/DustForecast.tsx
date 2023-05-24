@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import { getCityDustInfos } from '@/apis/dustInfo';
-import { AsyncBoundary, DustLevel } from '@/components/common';
+import { AsyncBoundary, DustLevel, NaviButton } from '@/components/common';
 import {
   CurrentDustInfo,
   DustChart,
@@ -57,6 +57,14 @@ const DustForecast = () => {
       textAlign="center"
       backgroundSize="200% 200%"
     >
+      <NaviButton
+        styleProps={{
+          marginTop: 10,
+          display: 'flex',
+          justifyContent: 'center',
+          minWidth: '10%',
+        }}
+      />
       <Text
         as="h1"
         fontSize={{ base: 18, sm: 20, md: 24 }}

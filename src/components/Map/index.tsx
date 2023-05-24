@@ -245,6 +245,10 @@ const Map = () => {
     );
   };
 
+  const handleClickGoBack = () => {
+    navigate(-1);
+  };
+
   useEffect(() => {
     document
       .querySelectorAll<HTMLDivElement>('.dust-info-marker')
@@ -289,6 +293,7 @@ const Map = () => {
           type="full-screen"
           onClick={() => handleFullScreenChange(cityDustInfoMarkers)}
         />
+        <ControlButton type="go-back" onClick={handleClickGoBack} />
         {zoomLevel === MAX_ZOOM_LEVEL && sidoDustInfosIsLoading && <Spinner />}
       </VStack>
       {cityDustInfosIsLoading ? <Spinner zIndex={10} /> : ''}

@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState } from 'react';
 import { getSidoDustInfo } from '@/apis/dustInfo';
-import { AsyncBoundary, ListFallback } from '@/components/common';
+import { AsyncBoundary, ListFallback, NaviButton } from '@/components/common';
 import { SelectList, SidoRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import {
@@ -42,6 +42,14 @@ const SidoRanking = () => {
       bgGradient={theme.backgroundColors['INIT']}
       textAlign="center"
     >
+      <NaviButton
+        styleProps={{
+          marginTop: 10,
+          display: 'flex',
+          justifyContent: 'center',
+          minWidth: '10%',
+        }}
+      />
       <Text
         as="h1"
         fontSize={{ base: 18, sm: 20, md: 24 }}

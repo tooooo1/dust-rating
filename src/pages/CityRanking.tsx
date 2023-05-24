@@ -10,6 +10,7 @@ import {
   DustState,
   ListFallback,
 } from '@/components/common';
+import NaviButton from '@/components/Nav/NavButton';
 import { SelectList, CityRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import type { SortType } from '@/types/dust';
@@ -67,12 +68,20 @@ const CityRanking = () => {
       textAlign="center"
       backgroundSize="200% 200%"
     >
+      <NaviButton
+        styleProps={{
+          marginTop: 10,
+          display: 'flex',
+          justifyContent: 'center',
+          minWidth: '10%',
+        }}
+      />
       <Text
         as="h1"
         fontSize={{ base: 18, sm: 20, md: 24 }}
         fontWeight={600}
         color="#ffffff"
-        mt={20}
+        mt={10}
         mb={{ base: 2, sm: 3, md: 4 }}
       >
         전국 미세 먼지 농도는 다음과 같습니다

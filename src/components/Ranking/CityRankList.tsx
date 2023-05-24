@@ -8,15 +8,10 @@ import CityRankItem from './CityRankItem';
 
 interface CityRankListProps {
   sido: string;
-  isShow?: boolean;
   sortType?: SortType;
 }
 
-const CityRankList = ({
-  sortType = FINE_DUST,
-  sido,
-  isShow = true,
-}: CityRankListProps) => {
+const CityRankList = ({ sortType = FINE_DUST, sido }: CityRankListProps) => {
   const { data: cityDustInfos } = useQuery(
     ['city-dust-infos', sido],
     () => getCityDustInfos(sido),
@@ -29,13 +24,7 @@ const CityRankList = ({
   );
 
   return (
-    <Box
-      flex="1"
-      width="100%"
-      borderRadius={10}
-      my={isShow ? 4 : 0}
-      cursor="pointer"
-    >
+    <Box flex="1" width="100%" borderRadius={10} cursor="pointer">
       {cityDustInfos?.map((city, cityIndex) => (
         <CityRankItem
           key={city.cityName}

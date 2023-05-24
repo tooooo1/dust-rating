@@ -32,8 +32,12 @@ const DustFigureBar = ({
         fontSize={{ base: 14, sm: 16 }}
         mr={{ base: 4, sm: 4, md: 6 }}
       >
-        <Text fontWeight="500">{kindOfDust}</Text>
-        <Text fontWeight="800">{scale}</Text>
+        <Text fontSize={14} fontWeight="500">
+          {kindOfDust}
+        </Text>
+        <Text fontSize={14} fontWeight="800">
+          {scale}
+        </Text>
       </Flex>
       <Progress
         width={{ base: '60%', sm: '70%' }}

@@ -1,7 +1,7 @@
 import { Flex, Box, Text, Center } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import {
@@ -11,9 +11,9 @@ import {
   ErrorFallback,
   ListFallback,
 } from '@/components/common';
-import { SelectTabList, SelectList, CityRankList } from '@/components/Ranking';
 import Select from '@/components/common/Select';
 import NaviButton from '@/components/Nav/NavButton';
+import { SelectTabList, CityRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import type { SortType } from '@/types/dust';
 import {
@@ -81,7 +81,7 @@ const CityRanking = () => {
       />
       <Text
         as="h1"
-        fontSize={{ base: 18, sm: 20, md: 24 }}
+        fontSize={{ base: 16, sm: 18, md: 20 }}
         fontWeight={600}
         color="#ffffff"
         mt={10}
@@ -91,7 +91,7 @@ const CityRanking = () => {
       </Text>
       <Text
         as="p"
-        fontSize={{ base: 14, sm: 18, md: 20 }}
+        fontSize={{ base: 14, sm: 16, md: 18 }}
         fontWeight={300}
         color="#ffffff"
         mb={6}
@@ -99,7 +99,7 @@ const CityRanking = () => {
         {sidoDustInfo?.dataTime || '0000-00-00 00:00'} 기준
       </Text>
       <Box
-        maxWidth="37.5rem"
+        maxWidth="30rem"
         width={{ base: '80%', sm: '80%' }}
         margin="0 auto"
         position="relative"
@@ -108,24 +108,23 @@ const CityRanking = () => {
         bg="rgba(255, 255, 255, 0.6)"
         boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
         backdropFilter="blur(7px)"
-        px={{ base: 4, sm: 6 }}
-        py={{ base: 6, sm: 8 }}
+        p={{ base: 4, sm: 6 }}
       >
         <Text
           as="p"
-          fontSize={{ base: 22, sm: 24, md: 28 }}
+          fontSize={{ base: 20, sm: 22 }}
           fontWeight={700}
           mb={{ base: 2, sm: 4 }}
         >
           {place}
         </Text>
-        <Box position="absolute" top={6} left={6}>
+        <Box position="absolute" top={4} left={4}>
           <Select options={SIDO_NAMES} onClick={handleSelectedSidoChange} />
         </Box>
         <Text
           as="div"
           mt="1rem"
-          fontSize={{ base: 16, sm: 18 }}
+          fontSize={{ base: 14, sm: 15 }}
           color="#4d4d4d"
         >
           현재의 대기질 지수는
@@ -148,19 +147,18 @@ const CityRanking = () => {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        maxWidth="47.5rem"
-        width={{ base: '100%', sm: '100%' }}
+        maxWidth="38rem"
+        width="100%"
         margin="0 auto"
         borderRadius={20}
-        bg="#f6f6f6"
+        bg="#ffffff"
         mb={20}
-        px={{ base: 6, sm: 14, md: 20 }}
+        px={{ base: '1rem', sm: 10, md: 16 }}
         py={10}
       >
         <Text
           as="p"
-          fontSize={{ base: 16, sm: 18 }}
-          fontWeight={400}
+          fontSize={{ base: 12, sm: 14 }}
           margin="0 auto"
           px={8}
           py={3}
@@ -177,12 +175,7 @@ const CityRanking = () => {
         </Text>
         <SelectTabList
           handleClick={handleSelectSortType}
-          SelectTabList={KIND_OF_DUST}
-          styleProps={{
-            bg: theme.colors[
-              DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
-            ],
-          }}
+          selectTabList={KIND_OF_DUST}
         />
         <AsyncBoundary
           rejectFallback={

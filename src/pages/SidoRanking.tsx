@@ -1,7 +1,7 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import {
   AsyncBoundary,
@@ -9,15 +9,15 @@ import {
   ListFallback,
   NaviButton,
 } from '@/components/common';
-import { SelectList, SidoRankList } from '@/components/Ranking';
+import { SelectTabList, SidoRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import {
   FINE_DUST,
   ULTRA_FINE_DUST,
   INIT_SIDO,
   INIT_DATATIME,
-  BACKGROUND_ANIMATION,
   KIND_OF_DUST,
+  DUST_GRADE,
 } from '@/utils/constants';
 
 type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
@@ -33,8 +33,8 @@ const SidoRanking = () => {
     }
   );
 
-  const handleSortKeyChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    e.target.value === FINE_DUST
+  const handleSortKeyChange = (e: MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.value === FINE_DUST
       ? setSelectedSortKey(FINE_DUST)
       : setSelectedSortKey(ULTRA_FINE_DUST);
   };
@@ -44,8 +44,7 @@ const SidoRanking = () => {
       direction="column"
       minHeight="100vh"
       as={motion.div}
-      animation={BACKGROUND_ANIMATION}
-      bgGradient={theme.backgroundColors['INIT']}
+      bg={theme.backgroundColors['INIT']}
       textAlign="center"
     >
       <NaviButton
@@ -58,17 +57,17 @@ const SidoRanking = () => {
       />
       <Text
         as="h1"
-        fontSize={{ base: 18, sm: 20, md: 24 }}
+        fontSize={{ base: 16, sm: 18, md: 20 }}
         fontWeight={600}
         color="#ffffff"
-        mt={20}
+        mt={10}
         mb={{ base: 2, sm: 3, md: 4 }}
       >
-        전국 미세 먼지 농도는 다음과 같습니다
+        전국 {FINE_DUST} 농도는 다음과 같습니다
       </Text>
       <Text
         as="p"
-        fontSize={{ base: 14, sm: 18, md: 20 }}
+        fontSize={{ base: 14, sm: 16, md: 18 }}
         fontWeight={300}
         color="#ffffff"
         mb={6}
@@ -79,18 +78,18 @@ const SidoRanking = () => {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        maxWidth="47.5rem"
-        width={{ base: '100%', sm: '100%' }}
+        maxWidth="38rem"
+        width="100%"
         margin="0 auto"
         borderRadius={20}
-        bg="#f6f6f6"
+        bg="#ffffff"
         mb={20}
-        px={{ base: 6, sm: 14, md: 20 }}
+        px={{ base: '1rem', sm: 10, md: 16 }}
         py={10}
       >
         <Text
           as="p"
-          fontSize={{ base: 16, sm: 18 }}
+          fontSize={{ base: 12, sm: 14 }}
           fontWeight={400}
           margin="0 auto"
           px={8}
@@ -100,12 +99,11 @@ const SidoRanking = () => {
           bg={theme.backgroundColors['INIT']}
           transition="all 500ms ease-in-out"
         >
-          지역별 미세 먼지 농도 순위
+          지역별 {FINE_DUST} 농도 순위
         </Text>
-        <SelectList
-          handleChange={handleSortKeyChange}
-          selectOptions={KIND_OF_DUST}
-          defaultValue={selectedSortKey}
+        <SelectTabList
+          handleClick={handleSortKeyChange}
+          selectTabList={KIND_OF_DUST}
         />
         <AsyncBoundary
           rejectFallback={

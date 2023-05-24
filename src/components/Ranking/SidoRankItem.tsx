@@ -20,14 +20,15 @@ const SidoRankItem = ({ rank, sido }: SidoRankItemProps) => {
     <Flex
       width="100%"
       direction="column"
-      borderRadius={10}
+      px={4}
       py={3}
+      borderRadius={8}
       borderBottom="1px solid #dadada"
       transition="all 100ms ease-in"
       cursor="pointer"
       _hover={{
         backgroundColor: '#e8e8e8',
-        paddingX: '0.6rem',
+        paddingX: '1.4rem',
       }}
       onClick={handlePageNavigate}
     >

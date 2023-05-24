@@ -1,28 +1,33 @@
-import { Tabs, TabList } from '@chakra-ui/react';
+import { Tabs, TabList, Tab } from '@chakra-ui/react';
 import { MouseEvent } from 'react';
-import { SelectTabItem } from '@/components/Ranking';
 
 interface SelectTabListProps {
+  selectTabList: string[];
   handleClick: (e: MouseEvent<HTMLButtonElement>) => void;
-  SelectTabList: string[];
-  styleProps: Record<string, any>;
 }
 
 export const SelectTabList = ({
   handleClick,
-  SelectTabList,
-  styleProps,
+  selectTabList,
 }: SelectTabListProps) => {
   return (
-    <Tabs width="100%" mt="2rem" variant="unstyled">
+    <Tabs
+      width="100%"
+      variant="soft-rounded"
+      colorScheme="gray"
+      my={4}
+      isFitted
+    >
       <TabList>
-        {SelectTabList.map((TabItem) => (
-          <SelectTabItem
-            key={TabItem}
-            handleClick={handleClick}
-            tabValue={TabItem}
-            styleProps={styleProps}
-          />
+        {selectTabList.map((tabItem) => (
+          <Tab
+            key={tabItem}
+            value={tabItem}
+            fontSize={{ base: 14, sm: 16 }}
+            onClick={handleClick}
+          >
+            {tabItem}
+          </Tab>
         ))}
       </TabList>
     </Tabs>

@@ -75,15 +75,17 @@ const Choice = () => {
           검색
         </Button>
       </Flex>
-      <ChoiceNavigateButton
-        icon={<BsMapFill />}
-        handleClick={handleMapPageNavigate}
-      >
-        미세먼지 지도
-      </ChoiceNavigateButton>
-      <ChoiceNavigateButton handleClick={handleSidoRankingPageNavigate}>
-        전국 미세먼지 순위
-      </ChoiceNavigateButton>
+      <Flex gap={2}>
+        <ChoiceNavigateButton handleClick={handleSidoRankingPageNavigate}>
+          전국 미세먼지 순위
+        </ChoiceNavigateButton>
+        <ChoiceNavigateButton
+          icon={<BsMapFill />}
+          handleClick={handleMapPageNavigate}
+        >
+          미세먼지 지도
+        </ChoiceNavigateButton>
+      </Flex>
     </Flex>
   );
 };

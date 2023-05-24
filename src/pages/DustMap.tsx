@@ -3,7 +3,7 @@ import Map from '@/components/Map';
 
 const DustMapPage = () => {
   return (
-    <Box maxWidth="37.5rem" height="100vh" margin="0 auto">
+    <Box maxWidth="30rem" height="100vh" margin="0 auto">
       <Map />
     </Box>
   );

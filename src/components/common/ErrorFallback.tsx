@@ -1,19 +1,12 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Button,
-} from '@chakra-ui/react';
+import { Alert, AlertIcon, AlertTitle, Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '@/utils/constants';
 
 interface ErrorFallbackProps {
-  title: string;
-  description?: string;
+  errorMessage: string;
 }
 
-const ErrorFallback = ({ title, description }: ErrorFallbackProps) => {
+const ErrorFallback = ({ errorMessage }: ErrorFallbackProps) => {
   const navigate = useNavigate();
 
   return (
@@ -29,13 +22,8 @@ const ErrorFallback = ({ title, description }: ErrorFallbackProps) => {
     >
       <AlertIcon boxSize={6} m={0} />
       <AlertTitle fontSize={{ base: 16, sm: 18 }} mt={4} mr={0}>
-        {title}
+        {errorMessage}
       </AlertTitle>
-      {description ? (
-        <AlertDescription fontSize={16} fontWeight={400}>
-          {description}
-        </AlertDescription>
-      ) : null}
       <Button
         colorScheme="yellow"
         variant="outline"

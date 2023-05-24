@@ -1,15 +1,13 @@
-export {
-  SIDO_GROUP,
-  INIT_SIDO,
-  INIT_CITY,
-  SIDO_NAMES,
-} from '@/utils/constants/city';
+export { SIDO_NAMES, INIT_SIDO, INIT_CITY } from '@/utils/constants/city';
 export { INIT_LOCATION, CENTER_LOCATION } from '@/utils/constants/location';
 export {
   FINE_DUST,
   ULTRA_FINE_DUST,
+  FINE_DUST_CODE,
+  ULTRA_FINE_DUST_CODE,
   DUST_GRADE,
   KIND_OF_DUST,
+  INIT_DATATIME,
 } from '@/utils/constants/dust';
 export { ROUTE } from '@/utils/constants/route';
 export {
@@ -21,4 +19,4 @@ export {
   ZINDEX_MARKER_MOUSE_OVER,
   ZINDEX_MARKER_MOUSE_OUT,
 } from '@/utils/constants/map';
-export { BACKGROUND_ANIMATION } from '@/utils/constants/animations';
+export { BACKGROUND_ANIMATION, SCROLL_STYLE } from '@/utils/constants/style';

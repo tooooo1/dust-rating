@@ -1,4 +1,4 @@
-import { Spinner } from '@chakra-ui/react';
+import { Box, Center, Spinner } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -13,7 +13,12 @@ import { Bar } from 'react-chartjs-2';
 import { getDustHistory } from '@/apis/dustHistory';
 import theme from '@/styles/theme';
 import type { DustHistory } from '@/types/dust';
-import { FINE_DUST, ULTRA_FINE_DUST, DUST_GRADE } from '@/utils/constants';
+import {
+  FINE_DUST,
+  ULTRA_FINE_DUST,
+  DUST_GRADE,
+  SCROLL_STYLE,
+} from '@/utils/constants';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
@@ -36,7 +41,11 @@ const DustChart = ({ cityName }: DustChartProps) => {
   );
 
   if (!dustHistories) {
-    return <Spinner my={10} />;
+    return (
+      <Center height={210}>
+        <Spinner />
+      </Center>
+    );
   }
 
   const dustData = {
@@ -60,28 +69,19 @@ const DustChart = ({ cityName }: DustChartProps) => {
   };
 
   return (
-    <Wrapper>
+    <Box
+      sx={{
+        overflowX: 'auto',
+        '::-webkit-scrollbar': {
+          height: '0.6rem',
+          backgroundColor: 'transparent',
+        },
+        ...SCROLL_STYLE,
+      }}
+    >
       <Bar width={1000} height={200} options={options} data={dustData} />
-    </Wrapper>
+    </Box>
   );
 };
 
 export default DustChart;
-
-const Wrapper = styled.div`
-  overflow-x: auto;
-
-  &::-webkit-scrollbar {
-    height: 0.6rem;
-    background-color: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    padding: 1rem 0;
-    background-color: #3f435040;
-    border-radius: 0.3rem;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #3f435025;
-    border-radius: 0.3rem;
-  }
-`;

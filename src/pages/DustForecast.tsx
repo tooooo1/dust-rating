@@ -1,14 +1,26 @@
-import { Box, Text, Flex, keyframes, useMediaQuery } from '@chakra-ui/react';
+import {
+  Box,
+  Text,
+  Flex,
+  useMediaQuery,
+  Skeleton,
+  Divider,
+} from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import { getCityDustInfos } from '@/apis/dustInfo';
-import { AsyncBoundary, DustLevel } from '@/components/common';
+import {
+  AsyncBoundary,
+  DustLevel,
+  NaviButton,
+  ErrorFallback,
+} from '@/components/common';
 import {
   CurrentDustInfo,
   DustChart,
-  ForcastInfo,
-} from '@/components/DustForcast';
+  ForecastInfo,
+} from '@/components/DustForecast';
 import theme from '@/styles/theme';
 import type { CityDustInfo } from '@/types/dust';
 import {
@@ -17,15 +29,11 @@ import {
   DUST_GRADE,
   INIT_SIDO,
   INIT_CITY,
+  INIT_DATATIME,
+  BACKGROUND_ANIMATION,
 } from '@/utils/constants';
 
-const animationKeyframes = keyframes`
-  0% { background-position: 0 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-`;
-
-const animation = `${animationKeyframes} 6s ease infinite`;
+const animation = `${BACKGROUND_ANIMATION} 6s ease infinite`;
 
 const DustForecast = () => {
   const [searchParams] = useSearchParams();
@@ -50,6 +58,7 @@ const DustForecast = () => {
   return (
     <Flex
       direction="column"
+      width="100%"
       minHeight="100vh"
       as={motion.div}
       animation={animation}
@@ -57,6 +66,14 @@ const DustForecast = () => {
       textAlign="center"
       backgroundSize="200% 200%"
     >
+      <NaviButton
+        styleProps={{
+          marginTop: 10,
+          display: 'flex',
+          justifyContent: 'center',
+          minWidth: '10%',
+        }}
+      />
       <Text
         as="h1"
         fontSize={{ base: 18, sm: 20, md: 24 }}
@@ -75,11 +92,11 @@ const DustForecast = () => {
         color="#ffffff"
         mb={6}
       >
-        {dustInfo.dataTime} 기준
+        {dustInfo.dataTime || INIT_DATATIME} 기준
       </Text>
       <Box
         maxWidth="47.5rem"
-        width={{ base: '100%', sm: '100%' }}
+        width="100%"
         margin="0 auto"
         borderRadius={10}
         bg="#ffffff"
@@ -107,7 +124,6 @@ const DustForecast = () => {
         <Box mb={14}>
           <Flex direction="column" alignItems="center" mb={4}>
             <Text
-              display={isLargerThan480 ? 'block' : 'none'}
               as="p"
               fontSize={22}
               fontWeight={600}
@@ -120,17 +136,28 @@ const DustForecast = () => {
           </Flex>
           <DustChart cityName={dustInfo.cityName} />
         </Box>
-        <Flex direction="column" alignItems="center" mt={10}>
-          <Text as="p" fontSize={22} fontWeight={600} textAlign="center" mb={6}>
+        <Divider borderColor="#dfdfdf" mb={14} />
+        <Box width="100%">
+          <Text as="p" fontSize={22} fontWeight={600} mb={6}>
             대기질 예보
           </Text>
+
           <AsyncBoundary
-            title="대기질 예보 정보를 불러오지 못했어요."
-            description="(매일 5, 11, 17, 23시에 업데이트)"
+            rejectFallback={
+              <ErrorFallback errorMessage="대기질 예보 정보를 불러오지 못했어요." />
+            }
+            pendingFallback={
+              <Skeleton
+                width="100%"
+                height={860}
+                borderRadius={12}
+                endColor="#dfdfdf"
+              />
+            }
           >
-            <ForcastInfo cityName={dustInfo.cityName} />
+            <ForecastInfo cityName={dustInfo.cityName} />
           </AsyncBoundary>
-        </Flex>
+        </Box>
       </Box>
     </Flex>
   );

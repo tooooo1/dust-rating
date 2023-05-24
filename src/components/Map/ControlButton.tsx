@@ -1,5 +1,5 @@
 import { IconButton } from '@chakra-ui/react';
-import { AiOutlineFullscreenExit } from 'react-icons/ai';
+import { AiOutlineFullscreenExit, AiOutlineArrowLeft } from 'react-icons/ai';
 import { BiTargetLock, BiPlus, BiMinus } from 'react-icons/bi';
 
 const icons = {
@@ -7,6 +7,7 @@ const icons = {
   'zoom-in': <BiPlus />,
   'zoom-out': <BiMinus />,
   'full-screen': <AiOutlineFullscreenExit />,
+  'go-back': <AiOutlineArrowLeft />,
 };
 
 type iconType = keyof typeof icons;

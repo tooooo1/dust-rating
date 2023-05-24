@@ -48,3 +48,11 @@
   margin-bottom: 0.2rem;
   color: #2a282f;
 }
+
+.nav-icon {
+  color: #ffffff;
+}
+
+.nav-icon:hover {
+  color: #ffffff8f;
+}

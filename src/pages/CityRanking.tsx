@@ -8,9 +8,12 @@ import {
   AsyncBoundary,
   DustFigureBar,
   DustState,
+  ErrorFallback,
   ListFallback,
 } from '@/components/common';
 import { SelectTabList, SelectList, CityRankList } from '@/components/Ranking';
+import Select from '@/components/common/Select';
+import NaviButton from '@/components/Nav/NavButton';
 import theme from '@/styles/theme';
 import type { SortType } from '@/types/dust';
 import {
@@ -45,12 +48,13 @@ const CityRanking = () => {
       : setSelectedSortType(ULTRA_FINE_DUST);
   };
 
-  const handleSelectedSidoChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectedSidoChange = (place: string) => {
     setSelectedSortType(FINE_DUST);
     setBgcolorGrade(
       (prevBgcolor) => sidoDustInfo?.fineDustGrade ?? prevBgcolor
     );
-    navigate(`${ROUTE.RANKING}/${e.target.value}`);
+
+    navigate(`${ROUTE.RANKING}/${place}`);
   };
 
   return (
@@ -67,12 +71,20 @@ const CityRanking = () => {
       textAlign="center"
       backgroundSize="200% 200%"
     >
+      <NaviButton
+        styleProps={{
+          marginTop: 10,
+          display: 'flex',
+          justifyContent: 'center',
+          minWidth: '10%',
+        }}
+      />
       <Text
         as="h1"
         fontSize={{ base: 18, sm: 20, md: 24 }}
         fontWeight={600}
         color="#ffffff"
-        mt={20}
+        mt={10}
         mb={{ base: 2, sm: 3, md: 4 }}
       >
         {`전국 ${selectedSortType} 농도는 다음과 같습니다`}
@@ -90,6 +102,7 @@ const CityRanking = () => {
         maxWidth="37.5rem"
         width={{ base: '80%', sm: '80%' }}
         margin="0 auto"
+        position="relative"
         borderTopRadius={10}
         textAlign="center"
         bg="rgba(255, 255, 255, 0.6)"
@@ -98,11 +111,17 @@ const CityRanking = () => {
         px={{ base: 4, sm: 6 }}
         py={{ base: 6, sm: 8 }}
       >
-        <SelectList
-          handleChange={handleSelectedSidoChange}
-          selectOptions={SIDO_NAMES}
-          defaultValue={place}
-        />
+        <Text
+          as="p"
+          fontSize={{ base: 22, sm: 24, md: 28 }}
+          fontWeight={700}
+          mb={{ base: 2, sm: 4 }}
+        >
+          {place}
+        </Text>
+        <Box position="absolute" top={6} left={6}>
+          <Select options={SIDO_NAMES} onClick={handleSelectedSidoChange} />
+        </Box>
         <Text
           as="div"
           mt="1rem"
@@ -148,8 +167,8 @@ const CityRanking = () => {
           borderRadius={25}
           color="#ffffff"
           bg={
-            theme.backgroundColors[
-              DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
+            theme.colors[
+              DUST_GRADE[sidoDustInfo?.fineDustGrade || bgcolorGrade]
             ]
           }
           transition="all 500ms ease-in-out"
@@ -166,8 +185,10 @@ const CityRanking = () => {
           }}
         />
         <AsyncBoundary
-          title="지역별 미세먼지 정보를 불러오지 못했어요."
-          suspenseFallback={<ListFallback />}
+          rejectFallback={
+            <ErrorFallback errorMessage="지역별 미세먼지 정보를 불러오지 못했어요." />
+          }
+          pendingFallback={<ListFallback />}
         >
           <CityRankList sido={place} sortType={selectedSortType} />
         </AsyncBoundary>

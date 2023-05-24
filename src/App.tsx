@@ -6,28 +6,32 @@ import {
   RouterProvider,
   Navigate,
 } from 'react-router-dom';
+import { AsyncBoundary, ErrorFallback } from '@/components/common';
 import Logo from '@/components/Logo';
 import {
   ChoicePage,
   CityRankingPage,
-  RankingPage,
+  SidoRankingPage,
   DustForecastPage,
   DustMapPage,
 } from '@/pages';
 import { ROUTE } from '@/utils/constants';
-import AsyncBoundary from './components/common/AsyncBoundary';
 import theme from './styles/theme';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path={ROUTE.HOME} element={<Logo />}>
       <Route index element={<ChoicePage />} />
-      <Route path={ROUTE.RANKING} element={<RankingPage />} />
-      <Route path={ROUTE.CITY_RANKING} element={<CityRankingPage />} />
+      <Route path={ROUTE.RANKING} element={<SidoRankingPage />} />
+      <Route path={`${ROUTE.RANKING}/:place`} element={<CityRankingPage />} />
       <Route
         path={ROUTE.DUST_FORECAST}
         element={
-          <AsyncBoundary title="해당 지역의 예보 정보를 불러오지 못했어요.">
+          <AsyncBoundary
+            rejectFallback={
+              <ErrorFallback errorMessage="해당 지역의 예보 정보를 불러오지 못했어요." />
+            }
+          >
             <DustForecastPage />
           </AsyncBoundary>
         }

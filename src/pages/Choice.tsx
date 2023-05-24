@@ -1,8 +1,8 @@
 import { Flex, Text, Select, Button, Image } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
-import { HiArrowRight } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
-import { FINE_DUST, SIDO_GROUP, INIT_SIDO, ROUTE } from '@/utils/constants';
+import ChoiceNavigateButton from '@/components/Choice/ChoiceNavigateButton';
+import { FINE_DUST, SIDO_NAMES, INIT_SIDO, ROUTE } from '@/utils/constants';
 
 const Choice = () => {
   const navigate = useNavigate();
@@ -10,6 +10,10 @@ const Choice = () => {
 
   const handleResultPageNavigate = () => {
     navigate(`${ROUTE.RANKING}/${place}`);
+  };
+
+  const handleSidoRankingPageNavigate = () => {
+    navigate(`${ROUTE.RANKING}`);
   };
 
   const handleMapPageNavigate = () => {
@@ -52,9 +56,9 @@ const Choice = () => {
           onChange={handlePlaceChange}
           value={place}
         >
-          {SIDO_GROUP.map((sido) => (
-            <option key={sido.sidoName} value={sido.sidoName}>
-              {sido.sidoName}
+          {SIDO_NAMES.map((sidoName) => (
+            <option key={sidoName} value={sidoName}>
+              {sidoName}
             </option>
           ))}
         </Select>
@@ -68,18 +72,12 @@ const Choice = () => {
           검색
         </Button>
       </Flex>
-      <Button
-        rightIcon={<HiArrowRight />}
-        color="#3a9cbd"
-        borderColor="#3a9cbd"
-        borderWidth={2}
-        bg="#ffffff"
-        opacity={0.8}
-        borderRadius={20}
-        onClick={handleMapPageNavigate}
-      >
+      <ChoiceNavigateButton handleClick={handleMapPageNavigate}>
         미세먼지 지도
-      </Button>
+      </ChoiceNavigateButton>
+      <ChoiceNavigateButton handleClick={handleSidoRankingPageNavigate}>
+        전국 미세먼지 순위
+      </ChoiceNavigateButton>
     </Flex>
   );
 };

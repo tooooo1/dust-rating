@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { DustValidity, Dust } from '@/types/dust';
-import { SIDO_GROUP } from '@/utils/constants';
+import { SIDO_NAMES } from '@/utils/constants';
 import {
   INIT_SIDO_DUST_INFO,
   INIT_CITY_DUST_INFO,
@@ -15,10 +15,10 @@ interface DustStation extends Dust {
 
 export const getSidoDustInfos = async () => {
   return await Promise.all(
-    SIDO_GROUP.map(async (sido) => {
+    SIDO_NAMES.map(async (sidoName) => {
       try {
         const response = await axios.get(
-          `${VITE_DUST_INFO_URL}?sidoName=${sido.sidoName}&pageNo=1&numOfRows=10&returnType=json&serviceKey=${VITE_DUST_INFO_API_KEY}&ver=1.0`
+          `${VITE_DUST_INFO_URL}?sidoName=${sidoName}&pageNo=1&numOfRows=10&returnType=json&serviceKey=${VITE_DUST_INFO_API_KEY}&ver=1.0`
         );
 
         if (response.status !== 200 || !response.data.response) {
@@ -30,7 +30,7 @@ export const getSidoDustInfos = async () => {
         );
 
         return {
-          sidoName: sido.sidoName,
+          sidoName,
           fineDustScale: Number(dustInfo.pm10Value),
           fineDustGrade: Number(dustInfo.pm10Grade),
           ultraFineDustScale: Number(dustInfo.pm25Value),

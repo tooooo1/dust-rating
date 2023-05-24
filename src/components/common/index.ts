@@ -5,3 +5,4 @@ export { default as DustState } from '@/components/common/DustState';
 export { default as ErrorFallback } from '@/components/common/ErrorFallback';
 export { default as Rank } from '@/components/common/Rank';
 export { default as ListFallback } from '@/components/common/ListFallback';
+export { default as NaviButton } from '@/components/Nav/NavButton';

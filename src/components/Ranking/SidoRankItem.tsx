@@ -1,8 +1,8 @@
 import { Flex } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { SidoDustInfo } from '@/types/dust';
+import { ROUTE } from '@/utils/constants';
 import Rank from '../common/Rank';
-import CityRankList from './CityRankList';
 
 interface SidoRankItemProps {
   rank: number;
@@ -10,10 +10,10 @@ interface SidoRankItemProps {
 }
 
 const SidoRankItem = ({ rank, sido }: SidoRankItemProps) => {
-  const [isShow, setIsShow] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSidoClick = () => {
-    setIsShow((isShow) => !isShow);
+  const handlePageNavigate = () => {
+    navigate(`${ROUTE.RANKING}/${sido.sidoName}`);
   };
 
   return (
@@ -29,10 +29,9 @@ const SidoRankItem = ({ rank, sido }: SidoRankItemProps) => {
         backgroundColor: '#e8e8e8',
         paddingX: '0.6rem',
       }}
-      onClick={handleSidoClick}
+      onClick={handlePageNavigate}
     >
       <Rank rank={rank} title={sido.sidoName} dustFigures={sido} />
-      <CityRankList sido={sido.sidoName} isShow={isShow} />
     </Flex>
   );
 };

@@ -31,7 +31,7 @@ export const NavButton = ({ styleProps }: NaviButtonProps) => {
   };
 
   const handleClickSidoRankingPage = () => {
-    navigate(ROUTE.SIDO_RANKING);
+    navigate(ROUTE.RANKING);
   };
 
   const handleClickMapPage = () => {

@@ -1,4 +1,4 @@
-import { Spinner } from '@chakra-ui/react';
+import { Center, Spinner } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -36,7 +36,11 @@ const DustChart = ({ cityName }: DustChartProps) => {
   );
 
   if (!dustHistories) {
-    return <Spinner my={10} />;
+    return (
+      <Center height={210}>
+        <Spinner />
+      </Center>
+    );
   }
 
   const dustData = {

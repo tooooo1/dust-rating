@@ -8,6 +8,7 @@ import {
   AsyncBoundary,
   DustFigureBar,
   DustState,
+  ErrorFallback,
   ListFallback,
 } from '@/components/common';
 import NaviButton from '@/components/Nav/NavButton';
@@ -171,8 +172,10 @@ const CityRanking = () => {
           defaultValue={selectedSortType}
         />
         <AsyncBoundary
-          title="지역별 미세먼지 정보를 불러오지 못했어요."
-          suspenseFallback={<ListFallback />}
+          rejectFallback={
+            <ErrorFallback errorMessage="지역별 미세먼지 정보를 불러오지 못했어요." />
+          }
+          pendingFallback={<ListFallback />}
         >
           <CityRankList sido={place} sortType={selectedSortType} />
         </AsyncBoundary>

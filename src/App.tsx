@@ -6,6 +6,7 @@ import {
   RouterProvider,
   Navigate,
 } from 'react-router-dom';
+import { AsyncBoundary, ErrorFallback } from '@/components/common';
 import Logo from '@/components/Logo';
 import {
   ChoicePage,
@@ -15,7 +16,6 @@ import {
   DustMapPage,
 } from '@/pages';
 import { ROUTE } from '@/utils/constants';
-import AsyncBoundary from './components/common/AsyncBoundary';
 import theme from './styles/theme';
 
 const router = createBrowserRouter(
@@ -27,7 +27,11 @@ const router = createBrowserRouter(
       <Route
         path={ROUTE.DUST_FORECAST}
         element={
-          <AsyncBoundary title="해당 지역의 예보 정보를 불러오지 못했어요.">
+          <AsyncBoundary
+            rejectFallback={
+              <ErrorFallback errorMessage="해당 지역의 예보 정보를 불러오지 못했어요." />
+            }
+          >
             <DustForecastPage />
           </AsyncBoundary>
         }

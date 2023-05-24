@@ -29,7 +29,13 @@ const CityRankList = ({
   );
 
   return (
-    <Box flex="1" borderRadius={10} my={isShow ? 4 : 0} cursor="pointer">
+    <Box
+      flex="1"
+      width="100%"
+      borderRadius={10}
+      my={isShow ? 4 : 0}
+      cursor="pointer"
+    >
       {cityDustInfos?.map((city, cityIndex) => (
         <CityRankItem
           key={city.cityName}

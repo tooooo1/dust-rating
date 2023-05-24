@@ -3,13 +3,19 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ChangeEvent, useState } from 'react';
 import { getSidoDustInfo } from '@/apis/dustInfo';
-import { AsyncBoundary, ListFallback, NaviButton } from '@/components/common';
+import {
+  AsyncBoundary,
+  ErrorFallback,
+  ListFallback,
+  NaviButton,
+} from '@/components/common';
 import { SelectList, SidoRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import {
   FINE_DUST,
   ULTRA_FINE_DUST,
   INIT_SIDO,
+  INIT_DATATIME,
   BACKGROUND_ANIMATION,
   KIND_OF_DUST,
 } from '@/utils/constants';
@@ -67,7 +73,7 @@ const SidoRanking = () => {
         color="#ffffff"
         mb={6}
       >
-        {sidoDustInfo?.dataTime || '0000-00-00 00:00'} 기준
+        {sidoDustInfo?.dataTime || INIT_DATATIME} 기준
       </Text>
       <Flex
         direction="column"
@@ -102,8 +108,10 @@ const SidoRanking = () => {
           defaultValue={selectedSortKey}
         />
         <AsyncBoundary
-          title="지역별 미세먼지 정보를 불러오지 못했어요."
-          suspenseFallback={<ListFallback />}
+          rejectFallback={
+            <ErrorFallback errorMessage="지역별 미세먼지 정보를 불러오지 못했어요." />
+          }
+          pendingFallback={<ListFallback />}
         >
           <SidoRankList sortType={selectedSortKey} />
         </AsyncBoundary>

@@ -10,7 +10,7 @@ export const DustLevel = ({ direction = 'row' }: DustLevelProps) => {
     <Flex
       flexDirection={direction}
       ml={2}
-      fontSize={14}
+      fontSize={{ base: 12, sm: 14 }}
       fontWeight={500}
       textAlign="center"
       color="#ffffff"

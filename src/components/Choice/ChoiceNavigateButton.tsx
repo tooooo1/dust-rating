@@ -16,6 +16,7 @@ export const ChoiceNavigateButton = ({
       mt="0.5rem"
       color="#3a9cbd"
       borderColor="#3a9cbd"
+      fontSize={14}
       borderWidth={2}
       bg="#ffffff"
       opacity={0.8}

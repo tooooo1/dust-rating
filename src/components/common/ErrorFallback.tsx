@@ -21,7 +21,7 @@ const ErrorFallback = ({ errorMessage }: ErrorFallbackProps) => {
       py={6}
     >
       <AlertIcon boxSize={6} m={0} />
-      <AlertTitle fontSize={{ base: 16, sm: 18 }} mt={4} mr={0}>
+      <AlertTitle fontSize={{ base: 14, sm: 16 }} mt={4} mr={0}>
         {errorMessage}
       </AlertTitle>
       <Button
@@ -31,6 +31,7 @@ const ErrorFallback = ({ errorMessage }: ErrorFallbackProps) => {
         borderWidth={2}
         bg="#ffffff"
         opacity={1}
+        fontSize={14}
         borderRadius={20}
         _hover={{ bg: '#ffffff8f' }}
         onClick={() => navigate(ROUTE.HOME)}

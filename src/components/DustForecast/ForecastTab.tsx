@@ -19,13 +19,28 @@ const ForecastTab = ({ dustForecast }: ForecastTabProps) => {
 
   return (
     <>
-      <Box fontSize={14} fontWeight={500} textAlign="right" mb={4}>
+      <Box
+        fontSize={{ base: 12, sm: 14 }}
+        fontWeight={500}
+        textAlign="right"
+        mb={4}
+      >
         {dustForecast.date} 기준
       </Box>
-      <Text fontSize={16} fontWeight={400} textAlign="left" lineHeight={1.4}>
+      <Text
+        fontSize={{ base: 14, sm: 16 }}
+        fontWeight={400}
+        textAlign="left"
+        lineHeight={1.4}
+      >
         {dustForecast.informOverall}
       </Text>
-      <Text fontSize={16} fontWeight={400} textAlign="left" lineHeight={1.4}>
+      <Text
+        fontSize={{ base: 14, sm: 16 }}
+        fontWeight={400}
+        textAlign="left"
+        lineHeight={1.4}
+      >
         {dustForecast.informCause}
       </Text>
       <Flex justifyContent="center" width="100%" mt={8}>

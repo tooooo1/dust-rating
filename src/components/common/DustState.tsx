@@ -36,7 +36,7 @@ const DustState = ({ dustGrade = 0 }: DustStateProps) => {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      minHeight="2.5rem"
+      minHeight="2rem"
     >
       <Box
         color={theme.colors[grade]}
@@ -47,7 +47,7 @@ const DustState = ({ dustGrade = 0 }: DustStateProps) => {
       </Box>
       <Text
         as="p"
-        fontSize={{ base: 16, sm: 20 }}
+        fontSize={{ base: 14, sm: 16 }}
         fontWeight={700}
         color={theme.colors[grade]}
         transition="all 500ms ease-in-out"

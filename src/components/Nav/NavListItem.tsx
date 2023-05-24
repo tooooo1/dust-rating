@@ -14,7 +14,12 @@ export const NavListItem = ({
 }: PropsWithChildren<NavListItemProps>) => {
   return (
     <motion.li variants={variants}>
-      <Button _hover={{ bg: '#ffffff8f' }} onClick={handleClick}>
+      <Button
+        fontSize={14}
+        height={9}
+        _hover={{ bg: '#ffffff8f' }}
+        onClick={handleClick}
+      >
         {children}
       </Button>
     </motion.li>

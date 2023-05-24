@@ -35,19 +35,20 @@ const Choice = () => {
       backgroundColor="#53caf2"
     >
       <Image src="images/location.png" alt="location" width={30} height={30} />
-      <Text as="span" fontSize={18} fontWeight={400} mt={4}>
+      <Text as="span" fontSize={{ base: 14, sm: 16 }} fontWeight={400} mt={4}>
         한 눈에 확인하는
       </Text>
-      <Text as="h1" fontSize={62} fontWeight={700} my={4}>
+      <Text as="h1" fontSize={{ base: 48, sm: 52 }} fontWeight={700} my={4}>
         랭킹먼지
       </Text>
-      <Text as="span" fontSize={18} fontWeight={400} lineHeight="2rem">
+      <Text as="span" fontSize={14} fontWeight={400}>
         {FINE_DUST} 농도가 궁금한 지역은?
       </Text>
       <Flex gap={4} my={6}>
         <Select
           variant="filled"
-          width={28}
+          width={{ base: 24, sm: 28 }}
+          fontSize={14}
           bg="#ffffff"
           color="#2a282f"
           opacity={0.8}
@@ -66,6 +67,7 @@ const Choice = () => {
           color="#ffffff"
           bg="#3a9cbd"
           px={4}
+          fontSize={14}
           _hover={{ bg: '#2886A6' }}
           onClick={handleResultPageNavigate}
         >

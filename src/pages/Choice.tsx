@@ -1,5 +1,6 @@
 import { Flex, Text, Select, Button, Image } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
+import { BsMapFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import ChoiceNavigateButton from '@/components/Choice/ChoiceNavigateButton';
 import { FINE_DUST, SIDO_NAMES, INIT_SIDO, ROUTE } from '@/utils/constants';
@@ -74,7 +75,10 @@ const Choice = () => {
           검색
         </Button>
       </Flex>
-      <ChoiceNavigateButton handleClick={handleMapPageNavigate}>
+      <ChoiceNavigateButton
+        icon={<BsMapFill />}
+        handleClick={handleMapPageNavigate}
+      >
         미세먼지 지도
       </ChoiceNavigateButton>
       <ChoiceNavigateButton handleClick={handleSidoRankingPageNavigate}>

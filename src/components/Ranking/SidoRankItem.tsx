@@ -13,7 +13,7 @@ const SidoRankItem = ({ rank, sido }: SidoRankItemProps) => {
   const navigate = useNavigate();
 
   const handlePageNavigate = () => {
-    navigate(`${ROUTE.SIDO_RANKING}/${sido.sidoName}`);
+    navigate(`${ROUTE.RANKING}/${sido.sidoName}`);
   };
 
   return (

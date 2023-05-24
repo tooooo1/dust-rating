@@ -22,8 +22,8 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path={ROUTE.HOME} element={<Logo />}>
       <Route index element={<ChoicePage />} />
-      <Route path={ROUTE.SIDO_RANKING} element={<SidoRankingPage />} />
-      <Route path={ROUTE.CITY_RANKING} element={<CityRankingPage />} />
+      <Route path={ROUTE.RANKING} element={<SidoRankingPage />} />
+      <Route path={`${ROUTE.RANKING}/:place`} element={<CityRankingPage />} />
       <Route
         path={ROUTE.DUST_FORECAST}
         element={

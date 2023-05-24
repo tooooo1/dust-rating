@@ -1,7 +1,7 @@
 import { Flex, Box, Text, Center } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import {
@@ -11,9 +11,9 @@ import {
   ErrorFallback,
   ListFallback,
 } from '@/components/common';
+import { SelectTabList, SelectList, CityRankList } from '@/components/Ranking';
 import Select from '@/components/common/Select';
 import NaviButton from '@/components/Nav/NavButton';
-import { SelectList, CityRankList } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import type { SortType } from '@/types/dust';
 import {
@@ -42,8 +42,8 @@ const CityRanking = () => {
     }
   );
 
-  const handleSortKeyChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    e.target.value === FINE_DUST
+  const handleSelectSortType = (e: MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.value === FINE_DUST
       ? setSelectedSortType(FINE_DUST)
       : setSelectedSortType(ULTRA_FINE_DUST);
   };
@@ -87,7 +87,7 @@ const CityRanking = () => {
         mt={10}
         mb={{ base: 2, sm: 3, md: 4 }}
       >
-        전국 미세 먼지 농도는 다음과 같습니다
+        {`전국 ${selectedSortType} 농도는 다음과 같습니다`}
       </Text>
       <Text
         as="p"
@@ -173,12 +173,16 @@ const CityRanking = () => {
           }
           transition="all 500ms ease-in-out"
         >
-          지역별 미세 먼지 농도 순위
+          {`지역별 ${selectedSortType} 농도 순위`}
         </Text>
-        <SelectList
-          handleChange={handleSortKeyChange}
-          selectOptions={KIND_OF_DUST}
-          defaultValue={selectedSortType}
+        <SelectTabList
+          handleClick={handleSelectSortType}
+          SelectTabList={KIND_OF_DUST}
+          styleProps={{
+            bg: theme.colors[
+              DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
+            ],
+          }}
         />
         <AsyncBoundary
           rejectFallback={

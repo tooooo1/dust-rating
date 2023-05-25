@@ -18,6 +18,7 @@ const Rank = ({ rank, title, dustFigures }: RankProps) => {
         fontWeight={400}
         mr={4}
         color="#9dadb6"
+        width="8%"
       >
         {rank}
       </Text>

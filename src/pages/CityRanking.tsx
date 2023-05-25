@@ -1,19 +1,14 @@
 import { Flex, Box, Text, Center } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { MouseEvent, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
-import {
-  AsyncBoundary,
-  DustFigureBar,
-  DustState,
-  ErrorFallback,
-  ListFallback,
-} from '@/components/common';
+import { DustFigureBar, DustState } from '@/components/common';
 import Select from '@/components/common/Select';
 import NaviButton from '@/components/Nav/NavButton';
 import { SelectTabList, CityRankList } from '@/components/Ranking';
+import RankingCard from '@/components/Ranking/RankingCard';
 import theme from '@/styles/theme';
 import type { SortType } from '@/types/dust';
 import {
@@ -24,7 +19,6 @@ import {
   ROUTE,
   BACKGROUND_ANIMATION,
   SIDO_NAMES,
-  KIND_OF_DUST,
 } from '@/utils/constants';
 
 const CityRanking = () => {
@@ -41,12 +35,6 @@ const CityRanking = () => {
       staleTime: 1000 * 60 * 5,
     }
   );
-
-  const handleSelectSortType = (e: MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.value === FINE_DUST
-      ? setSelectedSortType(FINE_DUST)
-      : setSelectedSortType(ULTRA_FINE_DUST);
-  };
 
   const handleSelectedSidoChange = (place: string) => {
     setSelectedSortType(FINE_DUST);
@@ -87,7 +75,7 @@ const CityRanking = () => {
         mt={10}
         mb={{ base: 2, sm: 3, md: 4 }}
       >
-        {`전국 ${selectedSortType} 농도는 다음과 같습니다`}
+        전국 {selectedSortType} 농도는 다음과 같습니다
       </Text>
       <Text
         as="p"
@@ -143,49 +131,13 @@ const CityRanking = () => {
           grade={sidoDustInfo?.ultraFineDustGrade}
         />
       </Box>
-      <Flex
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        maxWidth="38rem"
-        width="100%"
-        margin="0 auto"
-        borderRadius={20}
-        bg="#ffffff"
-        mb={20}
-        px={{ base: '1rem', sm: 10, md: 16 }}
-        py={10}
+      <RankingCard
+        backgroundColor={
+          theme.colors[DUST_GRADE[sidoDustInfo?.fineDustGrade || bgcolorGrade]]
+        }
       >
-        <Text
-          as="p"
-          fontSize={{ base: 12, sm: 14 }}
-          margin="0 auto"
-          px={8}
-          py={3}
-          borderRadius={25}
-          color="#ffffff"
-          bg={
-            theme.colors[
-              DUST_GRADE[sidoDustInfo?.fineDustGrade || bgcolorGrade]
-            ]
-          }
-          transition="all 500ms ease-in-out"
-        >
-          {`지역별 ${selectedSortType} 농도 순위`}
-        </Text>
-        <SelectTabList
-          handleClick={handleSelectSortType}
-          selectTabList={KIND_OF_DUST}
-        />
-        <AsyncBoundary
-          rejectFallback={
-            <ErrorFallback errorMessage="지역별 미세먼지 정보를 불러오지 못했어요." />
-          }
-          pendingFallback={<ListFallback />}
-        >
-          <CityRankList sido={place} sortType={selectedSortType} />
-        </AsyncBoundary>
-      </Flex>
+        <CityRankList sido={place} />
+      </RankingCard>
     </Flex>
   );
 };

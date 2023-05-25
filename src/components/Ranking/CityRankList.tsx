@@ -1,17 +1,18 @@
 import { Box } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { getCityDustInfos } from '@/apis/dustInfo';
-import type { CityDustInfo, SortType } from '@/types/dust';
-import { FINE_DUST } from '@/utils/constants';
+import { useSort } from '@/store/sort';
+import type { CityDustInfo } from '@/types/dust';
 import { sortDustList } from '@/utils/sortDustList';
 import CityRankItem from './CityRankItem';
 
 interface CityRankListProps {
   sido: string;
-  sortType?: SortType;
 }
 
-const CityRankList = ({ sortType = FINE_DUST, sido }: CityRankListProps) => {
+const CityRankList = ({ sido }: CityRankListProps) => {
+  const { sortType } = useSort();
+
   const { data: cityDustInfos } = useQuery(
     ['city-dust-infos', sido],
     () => getCityDustInfos(sido),

@@ -1,30 +1,14 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { MouseEvent, useState } from 'react';
 import { getSidoDustInfo } from '@/apis/dustInfo';
-import {
-  AsyncBoundary,
-  ErrorFallback,
-  ListFallback,
-  NaviButton,
-} from '@/components/common';
-import { SelectTabList, SidoRankList } from '@/components/Ranking';
+import { NaviButton } from '@/components/common';
+import { SidoRankList } from '@/components/Ranking';
+import RankingCard from '@/components/Ranking/RankingCard';
 import theme from '@/styles/theme';
-import {
-  FINE_DUST,
-  ULTRA_FINE_DUST,
-  INIT_SIDO,
-  INIT_DATATIME,
-  KIND_OF_DUST,
-  DUST_GRADE,
-} from '@/utils/constants';
-
-type SortKey = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
+import { FINE_DUST, INIT_SIDO, INIT_DATATIME } from '@/utils/constants';
 
 const SidoRanking = () => {
-  const [selectedSortKey, setSelectedSortKey] = useState<SortKey>(FINE_DUST);
-
   const { data: sidoDustInfo } = useQuery(
     ['sido-dust-info', INIT_SIDO],
     () => getSidoDustInfo(INIT_SIDO),
@@ -32,12 +16,6 @@ const SidoRanking = () => {
       staleTime: 1000 * 60 * 5,
     }
   );
-
-  const handleSortKeyChange = (e: MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.value === FINE_DUST
-      ? setSelectedSortKey(FINE_DUST)
-      : setSelectedSortKey(ULTRA_FINE_DUST);
-  };
 
   return (
     <Flex
@@ -74,46 +52,9 @@ const SidoRanking = () => {
       >
         {sidoDustInfo?.dataTime || INIT_DATATIME} 기준
       </Text>
-      <Flex
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        maxWidth="38rem"
-        width="100%"
-        margin="0 auto"
-        borderRadius={20}
-        bg="#ffffff"
-        mb={20}
-        px={{ base: '1rem', sm: 10, md: 16 }}
-        py={10}
-      >
-        <Text
-          as="p"
-          fontSize={{ base: 12, sm: 14 }}
-          fontWeight={400}
-          margin="0 auto"
-          px={8}
-          py={3}
-          borderRadius={25}
-          color="#ffffff"
-          bg={theme.backgroundColors['INIT']}
-          transition="all 500ms ease-in-out"
-        >
-          지역별 {FINE_DUST} 농도 순위
-        </Text>
-        <SelectTabList
-          handleClick={handleSortKeyChange}
-          selectTabList={KIND_OF_DUST}
-        />
-        <AsyncBoundary
-          rejectFallback={
-            <ErrorFallback errorMessage="지역별 미세먼지 정보를 불러오지 못했어요." />
-          }
-          pendingFallback={<ListFallback />}
-        >
-          <SidoRankList sortType={selectedSortKey} />
-        </AsyncBoundary>
-      </Flex>
+      <RankingCard backgroundColor={theme.backgroundColors['INIT']}>
+        <SidoRankList />
+      </RankingCard>
     </Flex>
   );
 };

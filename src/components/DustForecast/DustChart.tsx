@@ -1,5 +1,4 @@
 import { Box, Center, Spinner } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,9 +8,8 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { getDustHistory } from '@/apis/dustHistory';
+import { useDustHistory } from '@/hooks/useDustHistory';
 import theme from '@/styles/theme';
-import type { DustHistory } from '@/types/dust';
 import {
   FINE_DUST,
   ULTRA_FINE_DUST,
@@ -30,14 +28,7 @@ interface DustChartProps {
 }
 
 const DustChart = ({ location }: DustChartProps) => {
-  const { data: dustHistories } = useQuery<DustHistory[]>(
-    ['dust-history', location],
-    () => getDustHistory(location),
-    {
-      staleTime: 1000 * 60 * 5,
-      refetchOnWindowFocus: false,
-    }
-  );
+  const dustHistories = useDustHistory(location);
 
   if (!dustHistories) {
     return (

@@ -25,7 +25,7 @@ const CityRanking = () => {
 
   const { place = INIT_SIDO } = useParams();
   const [selectedSortType, setSelectedSortType] = useState<SortType>(FINE_DUST);
-  const [bgcolorGrade, setBgcolorGrade] = useState(0);
+  const [grade, setGrade] = useState(0);
 
   const { data: sidoDustInfo } = useQuery(
     ['sido-dust-info', place],
@@ -35,11 +35,9 @@ const CityRanking = () => {
     }
   );
 
-  const handleSelectedSidoChange = (place: string) => {
+  const handleSidoChange = (place: string) => {
     setSelectedSortType(FINE_DUST);
-    setBgcolorGrade(
-      (prevBgcolor) => sidoDustInfo?.fineDustGrade ?? prevBgcolor
-    );
+    setGrade((prevGrade) => sidoDustInfo?.fineDustGrade ?? prevGrade);
 
     navigate(`${ROUTE.RANKING}/${place}`);
   };
@@ -51,9 +49,7 @@ const CityRanking = () => {
       as={motion.div}
       animation={BACKGROUND_ANIMATION}
       bgGradient={
-        theme.backgroundColors[
-          DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
-        ]
+        theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade ?? grade]]
       }
       textAlign="center"
       backgroundSize="200% 200%"
@@ -91,7 +87,7 @@ const CityRanking = () => {
           {place}
         </Text>
         <Box position="absolute" top={4} left={4}>
-          <Select options={SIDO_NAMES} onClick={handleSelectedSidoChange} />
+          <Select options={SIDO_NAMES} onClick={handleSidoChange} />
         </Box>
         <Text
           as="div"
@@ -117,7 +113,7 @@ const CityRanking = () => {
       </Box>
       <RankingCard
         backgroundColor={
-          theme.colors[DUST_GRADE[sidoDustInfo?.fineDustGrade || bgcolorGrade]]
+          theme.colors[DUST_GRADE[sidoDustInfo?.fineDustGrade || grade]]
         }
       >
         <CityRankList sido={place} />

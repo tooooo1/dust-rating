@@ -7,9 +7,7 @@ import { getSidoDustInfo } from '@/apis/dustInfo';
 import { DustFigureBar, DustState } from '@/components/common';
 import Select from '@/components/common/Select';
 import NaviButton from '@/components/Nav/NavButton';
-import { CityRankList } from '@/components/Ranking';
-import RankingCard from '@/components/Ranking/RankingCard';
-import RankingHeader from '@/components/Ranking/RankingHeader';
+import { CityRankList, RankingCard, RankingHeader } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import type { SortType } from '@/types/dust';
 import {

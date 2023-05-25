@@ -3,8 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import { NaviButton } from '@/components/common';
-import { RankingHeader, SidoRankList } from '@/components/Ranking';
-import RankingCard from '@/components/Ranking/RankingCard';
+import { RankingHeader, SidoRankList, RankingCard } from '@/components/Ranking';
 import theme from '@/styles/theme';
 import { FINE_DUST, INIT_SIDO } from '@/utils/constants';
 

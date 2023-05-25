@@ -282,6 +282,9 @@ const Map = () => {
           height: '100%',
         }}
       />
+      <Box position="absolute" top="1rem" left="1rem" zIndex={10}>
+        <ControlButton type="go-back" onClick={handleClickGoBack} />
+      </Box>
       <VStack position="absolute" top="1rem" right="1rem" zIndex={10}>
         <ControlButton
           type="current-location"
@@ -293,7 +296,6 @@ const Map = () => {
           type="full-screen"
           onClick={() => handleFullScreenChange(cityDustInfoMarkers)}
         />
-        <ControlButton type="go-back" onClick={handleClickGoBack} />
         {zoomLevel === MAX_ZOOM_LEVEL && sidoDustInfosIsLoading && <Spinner />}
       </VStack>
       {cityDustInfosIsLoading ? <Spinner zIndex={10} /> : ''}

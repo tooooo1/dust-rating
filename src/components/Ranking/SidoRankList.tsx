@@ -2,8 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 import { getSidoDustInfos } from '@/apis/dustInfo';
 import { useSort } from '@/store/sort';
 import type { SidoDustInfo } from '@/types/dust';
+import { ROUTE } from '@/utils/constants';
 import { sortDustList } from '@/utils/sortDustList';
-import SidoRankItem from './SidoRankItem';
+import RankItem from './RankItem';
 
 const SidoRankList = () => {
   const { sortType } = useSort();
@@ -22,7 +23,13 @@ const SidoRankList = () => {
   return (
     <>
       {sidoDustInfos?.map((sido, sidoIndex) => (
-        <SidoRankItem key={sido.sidoName} rank={sidoIndex + 1} sido={sido} />
+        <RankItem
+          key={sido.sidoName}
+          rankNumber={sidoIndex + 1}
+          rankTitle={sido.sidoName}
+          rankInfo={sido}
+          location={`${ROUTE.RANKING}/${sido.sidoName}`}
+        />
       ))}
     </>
   );

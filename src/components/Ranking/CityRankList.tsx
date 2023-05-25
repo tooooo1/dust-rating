@@ -3,8 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 import { getCityDustInfos } from '@/apis/dustInfo';
 import { useSort } from '@/store/sort';
 import type { CityDustInfo } from '@/types/dust';
+import { ROUTE } from '@/utils/constants';
 import { sortDustList } from '@/utils/sortDustList';
-import CityRankItem from './CityRankItem';
+import RankItem from './RankItem';
 
 interface CityRankListProps {
   sido: string;
@@ -27,11 +28,12 @@ const CityRankList = ({ sido }: CityRankListProps) => {
   return (
     <Box flex="1" width="100%" borderRadius={10} cursor="pointer">
       {cityDustInfos?.map((city, cityIndex) => (
-        <CityRankItem
+        <RankItem
           key={city.cityName}
-          rank={cityIndex + 1}
-          sido={sido}
-          city={city}
+          rankNumber={cityIndex + 1}
+          rankTitle={city.cityName}
+          rankInfo={city}
+          location={`${ROUTE.DUST_FORECAST}?sido=${sido}&city=${city.cityName}`}
         />
       ))}
     </Box>

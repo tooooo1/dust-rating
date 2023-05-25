@@ -1,9 +1,7 @@
 import { Center, Flex, Spinner } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getSidoDustInfo } from '@/apis/dustInfo';
 import { NavButton } from '@/components/Nav/NavButton';
 import {
   CityRankList,
@@ -11,6 +9,7 @@ import {
   RankingHeader,
 } from '@/components/Ranking';
 import RankingDetail from '@/components/Ranking/RankingDetail';
+import { useSidoDustInfo } from '@/hooks/useDustInfo';
 import theme from '@/styles/theme';
 import { DUST_GRADE, INIT_SIDO, BACKGROUND_ANIMATION } from '@/utils/constants';
 
@@ -18,13 +17,7 @@ const CityRanking = () => {
   const { place = INIT_SIDO } = useParams();
   const [grade, setGrade] = useState(0);
 
-  const { data: sidoDustInfo } = useQuery(
-    ['sido-dust-info', place],
-    () => getSidoDustInfo(place),
-    {
-      staleTime: 1000 * 60 * 5,
-    }
-  );
+  const sidoDustInfo = useSidoDustInfo(place);
 
   if (!sidoDustInfo)
     return (

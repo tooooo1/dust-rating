@@ -2,10 +2,10 @@ import { Flex } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { getSidoDustInfo } from '@/apis/dustInfo';
-import { NaviButton } from '@/components/common';
+import { NavButton } from '@/components/Nav';
 import { RankingHeader, SidoRankList, RankingCard } from '@/components/Ranking';
 import theme from '@/styles/theme';
-import { FINE_DUST, INIT_SIDO } from '@/utils/constants';
+import { INIT_SIDO } from '@/utils/constants';
 
 const SidoRanking = () => {
   const { data: sidoDustInfo } = useQuery(
@@ -24,7 +24,7 @@ const SidoRanking = () => {
       bg={theme.backgroundColors['INIT']}
       textAlign="center"
     >
-      <NaviButton
+      <NavButton
         styleProps={{
           marginTop: 10,
           display: 'flex',
@@ -32,7 +32,7 @@ const SidoRanking = () => {
           minWidth: '10%',
         }}
       />
-      <RankingHeader dustType={FINE_DUST} dataTime={sidoDustInfo?.dataTime} />
+      <RankingHeader dataTime={sidoDustInfo?.dataTime} />
       <RankingCard backgroundColor={theme.backgroundColors['INIT']}>
         <SidoRankList />
       </RankingCard>

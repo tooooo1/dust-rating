@@ -10,17 +10,13 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import { getCityDustInfos } from '@/apis/dustInfo';
-import {
-  AsyncBoundary,
-  DustLevel,
-  NaviButton,
-  ErrorFallback,
-} from '@/components/common';
+import { AsyncBoundary, DustLevel, ErrorFallback } from '@/components/common';
 import {
   CurrentDustInfo,
   DustChart,
   ForecastInfo,
 } from '@/components/DustForecast';
+import { NavButton } from '@/components/Nav';
 import theme from '@/styles/theme';
 import type { CityDustInfo } from '@/types/dust';
 import {
@@ -66,7 +62,7 @@ const DustForecast = () => {
       textAlign="center"
       backgroundSize="200% 200%"
     >
-      <NaviButton
+      <NavButton
         styleProps={{
           marginTop: 10,
           display: 'flex',

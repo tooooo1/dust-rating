@@ -9,6 +9,7 @@ import Select from '@/components/common/Select';
 import NaviButton from '@/components/Nav/NavButton';
 import { CityRankList } from '@/components/Ranking';
 import RankingCard from '@/components/Ranking/RankingCard';
+import RankingHeader from '@/components/Ranking/RankingHeader';
 import theme from '@/styles/theme';
 import type { SortType } from '@/types/dust';
 import {
@@ -67,25 +68,10 @@ const CityRanking = () => {
           minWidth: '10%',
         }}
       />
-      <Text
-        as="h1"
-        fontSize={{ base: 16, sm: 18, md: 20 }}
-        fontWeight={600}
-        color="#ffffff"
-        mt={10}
-        mb={{ base: 2, sm: 3, md: 4 }}
-      >
-        전국 {selectedSortType} 농도는 다음과 같습니다
-      </Text>
-      <Text
-        as="p"
-        fontSize={{ base: 14, sm: 16, md: 18 }}
-        fontWeight={300}
-        color="#ffffff"
-        mb={6}
-      >
-        {sidoDustInfo?.dataTime || '0000-00-00 00:00'} 기준
-      </Text>
+      <RankingHeader
+        dustType={selectedSortType}
+        dataTime={sidoDustInfo?.dataTime}
+      />
       <Box
         maxWidth="30rem"
         width={{ base: '80%', sm: '80%' }}

@@ -1,4 +1,4 @@
-import { Flex, useMediaQuery } from '@chakra-ui/react';
+import { Flex, Box, useMediaQuery } from '@chakra-ui/react';
 import { MotionStyle, motion } from 'framer-motion';
 import { useState } from 'react';
 import {
@@ -15,11 +15,9 @@ interface NaviButtonProps {
   styleProps?: MotionStyle;
 }
 
-const ICON_SIZE = '2rem';
-
 export const NavButton = ({ styleProps }: NaviButtonProps) => {
-  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
   const [isLargerThan480] = useMediaQuery('(min-width: 480px)');
 
   const handleClick = () => {
@@ -59,65 +57,64 @@ export const NavButton = ({ styleProps }: NaviButtonProps) => {
       style={{ ...styleProps }}
     >
       <Flex
-        flexDirection="column"
-        justifyContent="center"
-        onClick={handleClickGoBack}
-        cursor="pointer"
+        maxWidth="30rem"
+        width={{ base: '60%', sm: '60%', md: '100%' }}
+        justifyContent="space-between"
+        mt={2}
       >
-        <AiOutlineArrowLeft className="nav-icon" size={ICON_SIZE} />
-      </Flex>
-      <motion.ul
-        variants={{
-          open: {
-            clipPath: 'inset(0% 0% 0% 0% round 10px)',
-            transition: {
-              type: 'spring',
-              bounce: 0,
-              duration: 0.7,
-              delayChildren: 0.3,
-              staggerChildren: 0.05,
-              staggerDirection: -1,
+        <Box onClick={handleClickGoBack} cursor="pointer" mt={1}>
+          <AiOutlineArrowLeft className="nav-icon" fontSize={24} />
+        </Box>
+        <motion.ul
+          variants={{
+            open: {
+              clipPath: 'inset(0% 0% 0% 0% round 10px)',
+              transition: {
+                type: 'spring',
+                bounce: 0,
+                duration: 0.7,
+                delayChildren: 0.3,
+                staggerChildren: 0.05,
+                staggerDirection: -1,
+              },
             },
-          },
-          closed: {
-            clipPath: 'inset(0% 0% 0% 0% round 10px)',
-            transition: {
-              type: 'spring',
-              bounce: 0,
-              duration: 0.3,
-              delayChildren: 0.3,
-              staggerChildren: 0.05,
-              staggerDirection: 1,
+            closed: {
+              clipPath: 'inset(0% 0% 0% 0% round 10px)',
+              transition: {
+                type: 'spring',
+                bounce: 0,
+                duration: 0.3,
+                delayChildren: 0.3,
+                staggerChildren: 0.05,
+                staggerDirection: 1,
+              },
             },
-          },
-        }}
-        style={{
-          pointerEvents: isOpen ? 'auto' : 'none',
-          minWidth: '30%',
-          display: 'flex',
-          justifyContent: 'space-around',
-        }}
-      >
-        <NavListItem variants={itemVariants} handleClick={handleClickMainPage}>
-          {isLargerThan480 ? '메인 화면' : <AiOutlineHome />}
-        </NavListItem>
-        <NavListItem
-          variants={itemVariants}
-          handleClick={handleClickSidoRankingPage}
+          }}
+          style={{
+            pointerEvents: isOpen ? 'auto' : 'none',
+            display: 'flex',
+            gap: '0.4rem',
+          }}
         >
-          {isLargerThan480 ? '전국 랭킹' : '전국'}
-        </NavListItem>
-        <NavListItem variants={itemVariants} handleClick={handleClickMapPage}>
-          {isLargerThan480 ? '전국 지도' : <BiMap />}
-        </NavListItem>
-      </motion.ul>
-      <Flex
-        flexDirection="column"
-        justifyContent="center"
-        onClick={handleClick}
-        cursor="pointer"
-      >
-        <AiOutlineMenuFold className="nav-icon" size={ICON_SIZE} />
+          <NavListItem
+            variants={itemVariants}
+            handleClick={handleClickMainPage}
+          >
+            {isLargerThan480 ? '메인 화면' : <AiOutlineHome />}
+          </NavListItem>
+          <NavListItem
+            variants={itemVariants}
+            handleClick={handleClickSidoRankingPage}
+          >
+            {isLargerThan480 ? '전국 랭킹' : '전국'}
+          </NavListItem>
+          <NavListItem variants={itemVariants} handleClick={handleClickMapPage}>
+            {isLargerThan480 ? '전국 지도' : <BiMap />}
+          </NavListItem>
+        </motion.ul>
+        <Box onClick={handleClick} cursor="pointer" mt={1}>
+          <AiOutlineMenuFold className="nav-icon" fontSize={24} />
+        </Box>
       </Flex>
     </motion.nav>
   );

@@ -20,7 +20,9 @@ const Select = ({ options, onClick }: SelectProps) => {
       <MenuButton
         as={IconButton}
         aria-label="도시 선택"
-        icon={<TiLocationArrow fontSize={22} />}
+        icon={<TiLocationArrow fontSize={20} />}
+        minWidth={8}
+        height={8}
       />
       <MenuList
         minW="0"

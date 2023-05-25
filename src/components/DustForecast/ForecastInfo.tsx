@@ -19,10 +19,10 @@ const ForecastInfo = ({ cityName }: ForecastInfoProps) => {
   );
 
   return (
-    <Tabs variant="soft-rounded" colorScheme="green" isFitted>
+    <Tabs variant="soft-rounded" colorScheme="gray" isFitted>
       <TabList>
-        <Tab>{FINE_DUST}</Tab>
-        <Tab>{ULTRA_FINE_DUST}</Tab>
+        <Tab fontSize={{ base: 14, sm: 16 }}>{FINE_DUST}</Tab>
+        <Tab fontSize={{ base: 14, sm: 16 }}>{ULTRA_FINE_DUST}</Tab>
       </TabList>
       <TabPanels>
         <TabPanel>

@@ -76,10 +76,10 @@ const DustForecast = () => {
       />
       <Text
         as="h1"
-        fontSize={{ base: 18, sm: 20, md: 24 }}
+        fontSize={{ base: 16, sm: 18, md: 20 }}
         fontWeight={600}
         color="#ffffff"
-        mt={20}
+        mt={10}
         mb={{ base: 2, sm: 3, md: 4 }}
       >
         {dustInfo.cityName}
@@ -87,7 +87,7 @@ const DustForecast = () => {
       </Text>
       <Text
         as="p"
-        fontSize={{ base: 14, sm: 18, md: 20 }}
+        fontSize={{ base: 14, sm: 16, md: 18 }}
         fontWeight={300}
         color="#ffffff"
         mb={6}
@@ -95,13 +95,13 @@ const DustForecast = () => {
         {dustInfo.dataTime || INIT_DATATIME} 기준
       </Text>
       <Box
-        maxWidth="47.5rem"
         width="100%"
+        maxWidth="38rem"
         margin="0 auto"
         borderRadius={10}
         bg="#ffffff"
         mb={20}
-        px={{ base: 6, sm: 14, md: 20 }}
+        px={{ base: 6, sm: 14, md: 16 }}
         py={16}
       >
         <Flex
@@ -125,7 +125,7 @@ const DustForecast = () => {
           <Flex direction="column" alignItems="center" mb={4}>
             <Text
               as="p"
-              fontSize={22}
+              fontSize={{ base: 18, sm: 20 }}
               fontWeight={600}
               textAlign="center"
               mb={4}
@@ -138,10 +138,9 @@ const DustForecast = () => {
         </Box>
         <Divider borderColor="#dfdfdf" mb={14} />
         <Box width="100%">
-          <Text as="p" fontSize={22} fontWeight={600} mb={6}>
+          <Text as="p" fontSize={{ base: 18, sm: 20 }} fontWeight={600} mb={6}>
             대기질 예보
           </Text>
-
           <AsyncBoundary
             rejectFallback={
               <ErrorFallback errorMessage="대기질 예보 정보를 불러오지 못했어요." />

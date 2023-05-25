@@ -323,7 +323,6 @@ const Map = () => {
             <MarkerModalButton handleClick={handleClickForeCastButton}>
               예보 페이지로 이동하기
             </MarkerModalButton>
-            <MarkerModalButton handleClick={onClose}>닫기</MarkerModalButton>
           </ModalFooter>
         </ModalContent>
       </Modal>

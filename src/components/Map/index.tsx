@@ -19,7 +19,10 @@ import { getAllLocation } from '@/apis/location';
 import { DustLevel } from '@/components/common';
 import MarkerModalButton from '@/components/Map/MarkerModalButton';
 import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
-import { useCityDustInfoList, useSidoDustInfoList } from '@/hooks/useDustInfo';
+import {
+  useCityDustInfoListQuery,
+  useSidoDustInfoListQuery,
+} from '@/hooks/useDustInfoQuery';
 import useMap from '@/hooks/useMap';
 import theme from '@/styles/theme';
 import type { SidoDustInfo } from '@/types/dust';
@@ -64,11 +67,11 @@ const Map = () => {
   } = useMap({ mapRef, cityDustInfoMarkers });
   const navigate = useNavigate();
 
-  const sidoDustInfoList = useSidoDustInfoList({
+  const sidoDustInfoList = useSidoDustInfoListQuery({
     refetchOnWindowFocus: false,
   });
 
-  const cityDustInfoList = useCityDustInfoList(currentSido);
+  const cityDustInfoList = useCityDustInfoListQuery(currentSido);
 
   const { data: allLocation } = useQuery(['all-location'], getAllLocation, {
     staleTime: 1000 * 60 * 5,

@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useDustHistory } from '@/hooks/useDustHistory';
+import useDustHistoryQuery from '@/hooks/useDustHistoryQuery';
 import theme from '@/styles/theme';
 import {
   FINE_DUST,
@@ -28,7 +28,7 @@ interface DustChartProps {
 }
 
 const DustChart = ({ location }: DustChartProps) => {
-  const dustHistories = useDustHistory(location);
+  const dustHistories = useDustHistoryQuery(location);
 
   if (!dustHistories) {
     return (

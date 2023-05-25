@@ -6,12 +6,12 @@ import {
   SidoRankList,
   RankingContent,
 } from '@/components/Ranking';
-import { useSidoDustInfo } from '@/hooks/useDustInfo';
+import { useSidoDustInfoQuery } from '@/hooks/useDustInfoQuery';
 import theme from '@/styles/theme';
 import { INIT_SIDO } from '@/utils/constants';
 
 const SidoRanking = () => {
-  const sidoDustInfo = useSidoDustInfo(INIT_SIDO);
+  const sidoDustInfo = useSidoDustInfoQuery(INIT_SIDO);
 
   return (
     <Flex

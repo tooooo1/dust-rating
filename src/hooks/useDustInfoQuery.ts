@@ -6,7 +6,7 @@ import {
 } from '@/apis/dustInfo';
 import { CityDustInfo, SidoDustInfo } from '@/types/dust';
 
-export const useSidoDustInfo = (
+export const useSidoDustInfoQuery = (
   place: string,
   options?: UseQueryOptions<CityDustInfo>
 ) => {
@@ -19,11 +19,11 @@ export const useSidoDustInfo = (
   return sidoDustInfo;
 };
 
-export const useSidoDustInfoList = (
+export const useSidoDustInfoListQuery = (
   options?: UseQueryOptions<SidoDustInfo[]>
 ) => {
   const { data: sidoDustInfoList } = useQuery<SidoDustInfo[]>(
-    ['sido-dust-infos'],
+    ['sido-dust-info-list'],
     getSidoDustInfos,
     {
       ...options,
@@ -34,12 +34,12 @@ export const useSidoDustInfoList = (
   return sidoDustInfoList;
 };
 
-export const useCityDustInfoList = (
+export const useCityDustInfoListQuery = (
   place: string,
   options?: UseQueryOptions<CityDustInfo[]>
 ) => {
   const { data: cityDustInfoList } = useQuery<CityDustInfo[]>(
-    ['city-dust-infos', place],
+    ['city-dust-info-list', place],
     () => getCityDustInfos(place),
     {
       ...options,

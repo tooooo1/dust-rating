@@ -1,5 +1,5 @@
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
-import { useDustForecast } from '@/hooks/useDustForecast';
+import useDustForecastQuery from '@/hooks/useDustForecastQuery';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import ForecastTab from './ForecastTab';
 
@@ -8,7 +8,7 @@ interface ForecastInfoProps {
 }
 
 const ForecastInfo = ({ location }: ForecastInfoProps) => {
-  const dustForecast = useDustForecast(location);
+  const dustForecast = useDustForecastQuery(location);
 
   return (
     <Tabs variant="soft-rounded" colorScheme="gray" isFitted>

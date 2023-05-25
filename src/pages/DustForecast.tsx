@@ -15,7 +15,7 @@ import {
   ForecastInfo,
 } from '@/components/DustForecast';
 import { NavButton } from '@/components/Nav';
-import { useCityDustInfoList } from '@/hooks/useDustInfo';
+import { useCityDustInfoListQuery } from '@/hooks/useDustInfoQuery';
 import theme from '@/styles/theme';
 import type { CityDustInfo } from '@/types/dust';
 import {
@@ -35,7 +35,7 @@ const DustForecast = () => {
 
   const [isLargerThan480] = useMediaQuery('(min-width: 480px)');
 
-  const cityDustInfoList = useCityDustInfoList(searchedSido, {
+  const cityDustInfoList = useCityDustInfoListQuery(searchedSido, {
     suspense: true,
   });
 

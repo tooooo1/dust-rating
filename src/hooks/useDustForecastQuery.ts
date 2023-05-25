@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getDustForecast } from '@/apis/dustForecast';
 
-export const useDustForecast = (place: string) => {
+const useDustForecastQuery = (place: string) => {
   const { data: dustForecast } = useQuery(
     ['dust-forecast', place],
     getDustForecast,
@@ -13,3 +13,5 @@ export const useDustForecast = (place: string) => {
 
   return dustForecast;
 };
+
+export default useDustForecastQuery;

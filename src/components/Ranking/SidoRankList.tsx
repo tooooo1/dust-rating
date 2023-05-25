@@ -1,4 +1,4 @@
-import { useSidoDustInfoList } from '@/hooks/useDustInfo';
+import { useSidoDustInfoListQuery } from '@/hooks/useDustInfoQuery';
 import { useSort } from '@/store/sort';
 import type { SidoDustInfo } from '@/types/dust';
 import { sortDustList } from '@/utils/sortDustList';
@@ -7,7 +7,7 @@ import RankItem from './RankItem';
 const SidoRankList = () => {
   const { sortType } = useSort();
 
-  const sidoDustInfoList = useSidoDustInfoList({
+  const sidoDustInfoList = useSidoDustInfoListQuery({
     select: (data) => sortDustList<SidoDustInfo>(sortType, data),
     keepPreviousData: true,
     suspense: true,

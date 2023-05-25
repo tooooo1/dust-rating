@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { useCityDustInfoList } from '@/hooks/useDustInfo';
+import { useCityDustInfoListQuery } from '@/hooks/useDustInfoQuery';
 import { useSort } from '@/store/sort';
 import type { CityDustInfo } from '@/types/dust';
 import { sortDustList } from '@/utils/sortDustList';
@@ -12,7 +12,7 @@ interface CityRankListProps {
 const CityRankList = ({ sido }: CityRankListProps) => {
   const { sortType } = useSort();
 
-  const cityDustInfoList = useCityDustInfoList(sido, {
+  const cityDustInfoList = useCityDustInfoListQuery(sido, {
     select: (data: CityDustInfo[]) =>
       sortDustList<CityDustInfo>(sortType, data),
     suspense: true,

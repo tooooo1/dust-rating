@@ -9,7 +9,7 @@ import {
   RankingHeader,
 } from '@/components/Ranking';
 import RankingDetail from '@/components/Ranking/RankingDetail';
-import { useSidoDustInfo } from '@/hooks/useDustInfo';
+import { useSidoDustInfoQuery } from '@/hooks/useDustInfoQuery';
 import theme from '@/styles/theme';
 import { DUST_GRADE, INIT_SIDO, BACKGROUND_ANIMATION } from '@/utils/constants';
 
@@ -17,7 +17,7 @@ const CityRanking = () => {
   const { place = INIT_SIDO } = useParams();
   const [grade, setGrade] = useState(0);
 
-  const sidoDustInfo = useSidoDustInfo(place);
+  const sidoDustInfo = useSidoDustInfoQuery(place);
 
   if (!sidoDustInfo)
     return (

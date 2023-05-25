@@ -11,11 +11,11 @@ import { useNavigate } from 'react-router-dom';
 import { NavListItem } from '@/components/Nav';
 import { ROUTE } from '@/utils/constants';
 
-interface NaviButtonProps {
+interface NavButtonProps {
   styleProps?: MotionStyle;
 }
 
-export const NavButton = ({ styleProps }: NaviButtonProps) => {
+export const NavButton = ({ styleProps }: NavButtonProps) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
   const [isLargerThan480] = useMediaQuery('(min-width: 480px)');

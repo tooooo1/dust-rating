@@ -30,6 +30,7 @@ const Rank = ({ rank, title, dustFigures }: RankProps) => {
         overflow="hidden"
         whiteSpace="nowrap"
         textOverflow="ellipsis"
+        title={title.length > 7 ? title : ''}
       >
         {title}
       </Text>

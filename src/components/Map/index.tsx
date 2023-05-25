@@ -15,11 +15,12 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
+import { getCityDustInfos } from '@/apis/dustInfo';
 import { getAllLocation } from '@/apis/location';
 import { DustLevel } from '@/components/common';
 import MarkerModalButton from '@/components/Map/MarkerModalButton';
 import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
+import { useSidoDustInfoList } from '@/hooks/useDustInfo';
 import useMap from '@/hooks/useMap';
 import theme from '@/styles/theme';
 import type { CityDustInfo, SidoDustInfo } from '@/types/dust';
@@ -64,14 +65,9 @@ const Map = () => {
   } = useMap({ mapRef, cityDustInfoMarkers });
   const navigate = useNavigate();
 
-  const { data: sidoDustInfos, isLoading: sidoDustInfosIsLoading } = useQuery(
-    ['sido-dust-infos'],
-    getSidoDustInfos,
-    {
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
+  const sidoDustInfoList = useSidoDustInfoList({
+    refetchOnWindowFocus: false,
+  });
 
   const { data: cityDustInfos, isLoading: cityDustInfosIsLoading } = useQuery<
     CityDustInfo[]
@@ -114,9 +110,9 @@ const Map = () => {
   };
 
   useEffect(() => {
-    if (!map || !sidoDustInfos || !allLocation) return;
+    if (!map || !sidoDustInfoList || !allLocation) return;
 
-    sidoDustInfos.forEach(
+    sidoDustInfoList.forEach(
       ({
         location,
         fineDustScale,
@@ -153,7 +149,7 @@ const Map = () => {
     return () => {
       setMakerToNull({ map, markers: sidoDustInfoMarkers });
     };
-  }, [sidoDustInfos, allLocation, sidoDustInfoMarkers]);
+  }, [sidoDustInfoList, allLocation, sidoDustInfoMarkers]);
 
   useEffect(() => {
     if (
@@ -296,7 +292,8 @@ const Map = () => {
           type="full-screen"
           onClick={() => handleFullScreenChange(cityDustInfoMarkers)}
         />
-        {zoomLevel === MAX_ZOOM_LEVEL && sidoDustInfosIsLoading && <Spinner />}
+        <ControlButton type="go-back" onClick={handleClickGoBack} />
+        {zoomLevel === MAX_ZOOM_LEVEL && !sidoDustInfoList && <Spinner />}
       </VStack>
       {cityDustInfosIsLoading ? <Spinner zIndex={10} /> : ''}
       <Box position="absolute" bottom="1.5rem" zIndex={10}>

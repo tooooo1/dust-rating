@@ -4,4 +4,4 @@ export { default as DustLevel } from '@/components/common/DustLevel';
 export { default as DustState } from '@/components/common/DustState';
 export { default as ErrorFallback } from '@/components/common/ErrorFallback';
 export { default as ListFallback } from '@/components/common/ListFallback';
-export { default as NaviButton } from '@/components/Nav/NavButton';
+export { default as Select } from '@/components/common/Select';

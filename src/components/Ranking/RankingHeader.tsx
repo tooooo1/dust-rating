@@ -1,13 +1,14 @@
 import { Text } from '@chakra-ui/react';
-import { SortType } from '@/types/dust';
+import { useSort } from '@/store/sort';
 import { INIT_DATATIME } from '@/utils/constants';
 
 interface RankingHeaderProps {
-  dustType: SortType;
   dataTime: string;
 }
 
-const RankingHeader = ({ dataTime, dustType }: RankingHeaderProps) => {
+const RankingHeader = ({ dataTime }: RankingHeaderProps) => {
+  const { sortType: dustType } = useSort();
+
   return (
     <>
       <Text

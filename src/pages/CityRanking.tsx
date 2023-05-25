@@ -5,7 +5,11 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import { NavButton } from '@/components/Nav/NavButton';
-import { CityRankList, RankingCard, RankingHeader } from '@/components/Ranking';
+import {
+  CityRankList,
+  RankingContent,
+  RankingHeader,
+} from '@/components/Ranking';
 import RankingDetail from '@/components/Ranking/RankingDetail';
 import theme from '@/styles/theme';
 import { DUST_GRADE, INIT_SIDO, BACKGROUND_ANIMATION } from '@/utils/constants';
@@ -55,13 +59,13 @@ const CityRanking = () => {
         setGrade={setGrade}
         dustInfo={sidoDustInfo}
       />
-      <RankingCard
+      <RankingContent
         backgroundColor={
           theme.colors[DUST_GRADE[sidoDustInfo?.fineDustGrade || grade]]
         }
       >
         <CityRankList sido={place} />
-      </RankingCard>
+      </RankingContent>
     </Flex>
   );
 };

@@ -3,7 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { getSidoDustInfo } from '@/apis/dustInfo';
 import { NavButton } from '@/components/Nav';
-import { RankingHeader, SidoRankList, RankingCard } from '@/components/Ranking';
+import {
+  RankingHeader,
+  SidoRankList,
+  RankingContent,
+} from '@/components/Ranking';
 import theme from '@/styles/theme';
 import { INIT_SIDO } from '@/utils/constants';
 
@@ -33,9 +37,9 @@ const SidoRanking = () => {
         }}
       />
       <RankingHeader dataTime={sidoDustInfo?.dataTime} />
-      <RankingCard backgroundColor={theme.backgroundColors['INIT']}>
+      <RankingContent backgroundColor={theme.backgroundColors['INIT']}>
         <SidoRankList />
-      </RankingCard>
+      </RankingContent>
     </Flex>
   );
 };

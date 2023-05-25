@@ -9,14 +9,14 @@ import { useSort } from '@/store/sort';
 import { KIND_OF_DUST } from '@/utils/constants';
 import SelectTabList from './SelectTabList';
 
-interface RankingCardProps {
+interface RankingContentProps {
   backgroundColor: string;
 }
 
-const RankingCard = ({
+const RankingContent = ({
   children,
   backgroundColor,
-}: PropsWithChildren<RankingCardProps>) => {
+}: PropsWithChildren<RankingContentProps>) => {
   const { sortType } = useSort();
 
   return (
@@ -59,4 +59,4 @@ const RankingCard = ({
   );
 };
 
-export default RankingCard;
+export default RankingContent;

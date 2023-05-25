@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { getSidoDustInfos } from '@/apis/dustInfo';
-import { SidoDustInfo } from '@/types/dust';
+import { getCityDustInfos, getSidoDustInfos } from '@/apis/dustInfo';
+import { CityDustInfo, SidoDustInfo } from '@/types/dust';
 
 export const useSidoDustInfoList = (
   options?: UseQueryOptions<SidoDustInfo[]>
@@ -15,4 +15,21 @@ export const useSidoDustInfoList = (
   );
 
   return sidoDustInfoList;
+};
+
+export const useCityDustInfoList = (
+  place: string,
+  options?: UseQueryOptions<CityDustInfo[]>
+) => {
+  const { data: cityDustInfoList } = useQuery<CityDustInfo[]>(
+    ['city-dust-infos', place],
+    () => getCityDustInfos(place),
+    {
+      ...options,
+      refetchOnWindowFocus: false,
+      suspense: true,
+    }
+  );
+
+  return cityDustInfoList;
 };

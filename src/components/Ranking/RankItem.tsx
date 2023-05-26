@@ -57,7 +57,7 @@ const RankItem = ({ rank, info }: RankItemProps) => {
           overflow="hidden"
           whiteSpace="nowrap"
           textOverflow="ellipsis"
-          title={rankTitle.length > 7 ? rankTitle : ''}
+          title={info.location.length > 7 ? info.location : ''}
         >
           {info.location}
         </Text>

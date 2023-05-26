@@ -18,7 +18,9 @@ interface NavButtonProps {
 export const NavButton = ({ styleProps }: NavButtonProps) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
-  const [isLargerThan480] = useMediaQuery('(min-width: 480px)');
+  const [isLargerThan480] = useMediaQuery('(min-width: 480px)', {
+    ssr: false,
+  });
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);
@@ -48,6 +50,8 @@ export const NavButton = ({ styleProps }: NavButtonProps) => {
     },
     closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
   };
+
+  console.log(isLargerThan480);
 
   return (
     <motion.nav

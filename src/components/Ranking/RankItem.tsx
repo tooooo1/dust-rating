@@ -19,9 +19,7 @@ const RankItem = ({
 }: RankItemProps) => {
   const navigate = useNavigate();
 
-  const handlePageNavigate = () => {
-    navigate(location);
-  };
+  const handlePageNavigate = () => navigate(location);
 
   return (
     <Flex

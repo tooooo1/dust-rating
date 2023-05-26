@@ -6,14 +6,11 @@ import {
 } from '@/apis/dustInfo';
 import { CityDustInfo, SidoDustInfo } from '@/types/dust';
 
-export const useSidoDustInfoQuery = (
-  place: string,
-  options?: UseQueryOptions<CityDustInfo>
-) => {
-  const { data: sidoDustInfo } = useQuery<CityDustInfo>(
+export const useSidoDustInfoQuery = (place: string) => {
+  const { data: sidoDustInfo } = useQuery(
     ['sido-dust-info', place],
     () => getSidoDustInfo(place),
-    { ...options, staleTime: 1000 * 60 * 5 }
+    { staleTime: 1000 * 60 * 5 }
   );
 
   return sidoDustInfo;

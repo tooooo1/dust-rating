@@ -1,4 +1,4 @@
-import { Center, Flex, Spinner } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { NavButton } from '@/components/Nav';
 import {
@@ -12,13 +12,6 @@ import { INIT_SIDO } from '@/utils/constants';
 
 const SidoRanking = () => {
   const sidoDustInfo = useSidoDustInfoQuery(INIT_SIDO);
-
-  if (!sidoDustInfo)
-    return (
-      <Center height="100vh">
-        <Spinner />
-      </Center>
-    );
 
   return (
     <Flex

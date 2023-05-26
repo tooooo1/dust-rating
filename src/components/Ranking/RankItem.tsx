@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { DustState } from '@/components/common';
 import { CityDustInfo, SidoDustInfo } from '@/types/dust';
 import { FINE_DUST, ROUTE, ULTRA_FINE_DUST } from '@/utils/constants';

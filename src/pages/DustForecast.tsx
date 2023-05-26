@@ -6,10 +6,8 @@ import {
   Skeleton,
   Divider,
 } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
-import { getCityDustInfos } from '@/apis/dustInfo';
 import { AsyncBoundary, DustLevel, ErrorFallback } from '@/components/common';
 import {
   CurrentDustInfo,
@@ -17,6 +15,7 @@ import {
   ForecastInfo,
 } from '@/components/DustForecast';
 import { NavButton } from '@/components/Nav';
+import { useCityDustInfoListQuery } from '@/hooks/useDustInfoQuery';
 import theme from '@/styles/theme';
 import type { CityDustInfo } from '@/types/dust';
 import {
@@ -29,8 +28,6 @@ import {
   BACKGROUND_ANIMATION,
 } from '@/utils/constants';
 
-const animation = `${BACKGROUND_ANIMATION} 6s ease infinite`;
-
 const DustForecast = () => {
   const [searchParams] = useSearchParams();
   const searchedSido = searchParams.get('sido') || INIT_SIDO;
@@ -38,16 +35,11 @@ const DustForecast = () => {
 
   const [isLargerThan480] = useMediaQuery('(min-width: 480px)');
 
-  const { data: cityDustInfos } = useQuery<CityDustInfo[]>(
-    ['city-dust-infos', searchedSido],
-    () => getCityDustInfos(searchedSido),
-    {
-      refetchOnWindowFocus: false,
-      suspense: true,
-    }
-  );
+  const cityDustInfoList = useCityDustInfoListQuery(searchedSido, {
+    suspense: true,
+  });
 
-  const dustInfo = cityDustInfos?.find(
+  const dustInfo = cityDustInfoList?.find(
     (cityDustInfo) => cityDustInfo.location === searchedCity
   ) as CityDustInfo;
 
@@ -57,7 +49,7 @@ const DustForecast = () => {
       width="100%"
       minHeight="100vh"
       as={motion.div}
-      animation={animation}
+      animation={BACKGROUND_ANIMATION}
       bgGradient={theme.backgroundColors[DUST_GRADE[dustInfo.fineDustGrade]]}
       textAlign="center"
       backgroundSize="200% 200%"

@@ -1,24 +1,24 @@
-import { Flex } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
+import { Center, Flex, Spinner } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { getSidoDustInfo } from '@/apis/dustInfo';
 import { NavButton } from '@/components/Nav';
 import {
   RankingHeader,
   SidoRankList,
   RankingContent,
 } from '@/components/Ranking';
+import { useSidoDustInfoQuery } from '@/hooks/useDustInfoQuery';
 import theme from '@/styles/theme';
 import { INIT_SIDO } from '@/utils/constants';
 
 const SidoRanking = () => {
-  const { data: sidoDustInfo } = useQuery(
-    ['sido-dust-info', INIT_SIDO],
-    () => getSidoDustInfo(INIT_SIDO),
-    {
-      staleTime: 1000 * 60 * 5,
-    }
-  );
+  const sidoDustInfo = useSidoDustInfoQuery(INIT_SIDO);
+
+  if (!sidoDustInfo)
+    return (
+      <Center height="100vh">
+        <Spinner />
+      </Center>
+    );
 
   return (
     <Flex

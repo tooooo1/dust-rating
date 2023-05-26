@@ -15,14 +15,17 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getSidoDustInfos, getCityDustInfos } from '@/apis/dustInfo';
 import { getAllLocation } from '@/apis/location';
 import { DustLevel } from '@/components/common';
 import MarkerModalButton from '@/components/Map/MarkerModalButton';
 import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
+import {
+  useCityDustInfoListQuery,
+  useSidoDustInfoListQuery,
+} from '@/hooks/useDustInfoQuery';
 import useMap from '@/hooks/useMap';
 import theme from '@/styles/theme';
-import type { CityDustInfo, SidoDustInfo } from '@/types/dust';
+import type { SidoDustInfo } from '@/types/dust';
 import type { MapAndMakers } from '@/types/map';
 import {
   FINE_DUST,
@@ -64,20 +67,11 @@ const Map = () => {
   } = useMap({ mapRef, cityDustInfoMarkers });
   const navigate = useNavigate();
 
-  const { data: sidoDustInfos, isLoading: sidoDustInfosIsLoading } = useQuery(
-    ['sido-dust-infos'],
-    getSidoDustInfos,
-    {
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
-
-  const { data: cityDustInfos, isLoading: cityDustInfosIsLoading } = useQuery<
-    CityDustInfo[]
-  >(['city-dust-infos', currentSido], () => getCityDustInfos(currentSido), {
-    staleTime: 1000 * 60 * 5,
+  const sidoDustInfoList = useSidoDustInfoListQuery({
+    refetchOnWindowFocus: false,
   });
+
+  const cityDustInfoList = useCityDustInfoListQuery(currentSido);
 
   const { data: allLocation } = useQuery(['all-location'], getAllLocation, {
     staleTime: 1000 * 60 * 5,
@@ -114,9 +108,9 @@ const Map = () => {
   };
 
   useEffect(() => {
-    if (!map || !sidoDustInfos || !allLocation) return;
+    if (!map || !sidoDustInfoList || !allLocation) return;
 
-    sidoDustInfos.forEach(
+    sidoDustInfoList.forEach(
       ({
         location,
         fineDustScale,
@@ -153,20 +147,19 @@ const Map = () => {
     return () => {
       setMakerToNull({ map, markers: sidoDustInfoMarkers });
     };
-  }, [sidoDustInfos, allLocation, sidoDustInfoMarkers]);
+  }, [sidoDustInfoList, allLocation, sidoDustInfoMarkers]);
 
   useEffect(() => {
     if (
       !map ||
-      !cityDustInfos ||
-      cityDustInfosIsLoading ||
+      !cityDustInfoList ||
       (CITY_ZOOM_LEVEL <= zoomLevel && zoomLevel <= MAX_ZOOM_LEVEL)
     )
       return;
 
     const geocoder = new kakao.maps.services.Geocoder();
 
-    cityDustInfos.forEach(
+    cityDustInfoList.forEach(
       ({
         location,
         fineDustScale,
@@ -207,7 +200,7 @@ const Map = () => {
     return () => {
       setMakerToNull({ map, markers: cityDustInfoMarkers });
     };
-  }, [cityDustInfos]);
+  }, [cityDustInfoList]);
 
   const handleClickMarker = useCallback((city: HTMLDivElement) => {
     setCity(city.id);
@@ -296,9 +289,10 @@ const Map = () => {
           type="full-screen"
           onClick={() => handleFullScreenChange(cityDustInfoMarkers)}
         />
-        {zoomLevel === MAX_ZOOM_LEVEL && sidoDustInfosIsLoading && <Spinner />}
+        <ControlButton type="go-back" onClick={handleClickGoBack} />
+        {zoomLevel === MAX_ZOOM_LEVEL && !sidoDustInfoList && <Spinner />}
       </VStack>
-      {cityDustInfosIsLoading ? <Spinner zIndex={10} /> : ''}
+      {!cityDustInfoList ? <Spinner zIndex={10} /> : ''}
       <Box position="absolute" bottom="1.5rem" zIndex={10}>
         <DustLevel direction="column" />
       </Box>

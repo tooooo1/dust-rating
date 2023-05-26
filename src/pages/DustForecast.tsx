@@ -35,9 +35,7 @@ const DustForecast = () => {
 
   const [isLargerThan480] = useMediaQuery('(min-width: 480px)');
 
-  const cityDustInfoList = useCityDustInfoListQuery(searchedSido, {
-    suspense: true,
-  });
+  const cityDustInfoList = useCityDustInfoListQuery(searchedSido);
 
   const dustInfo = cityDustInfoList?.find(
     (cityDustInfo) => cityDustInfo.location === searchedCity

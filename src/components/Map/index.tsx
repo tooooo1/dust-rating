@@ -274,14 +274,7 @@ const Map = () => {
   }, [cityDustInfoMarkers, currentLocation, zoomLevel]);
 
   return (
-    <Box position="relative" width="100%" height="100%">
-      <div
-        ref={mapRef}
-        style={{
-          width: '100%',
-          height: '100%',
-        }}
-      />
+    <Box position="relative" width="100%" height="100%" ref={mapRef}>
       <Box position="absolute" top="1rem" left="1rem" zIndex={10}>
         <ControlButton type="go-back" onClick={handleClickGoBack} />
       </Box>

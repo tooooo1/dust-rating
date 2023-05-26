@@ -32,6 +32,10 @@
   border-radius: 2rem;
 }
 
+.dust-info-marker:hover {
+  cursor: pointer;
+}
+
 .dust-info {
   display: flex;
   font-size: 0.8rem;

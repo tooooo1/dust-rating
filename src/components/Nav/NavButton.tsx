@@ -17,7 +17,7 @@ interface NaviButtonProps {
 
 export const NavButton = ({ styleProps }: NaviButtonProps) => {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [isLargerThan480] = useMediaQuery('(min-width: 480px)');
 
   const handleClick = () => {

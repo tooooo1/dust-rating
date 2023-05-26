@@ -18,6 +18,7 @@ const Rank = ({ rank, title, dustFigures }: RankProps) => {
         fontWeight={400}
         mr={4}
         color="#9dadb6"
+        width="8%"
       >
         {rank}
       </Text>
@@ -29,6 +30,7 @@ const Rank = ({ rank, title, dustFigures }: RankProps) => {
         overflow="hidden"
         whiteSpace="nowrap"
         textOverflow="ellipsis"
+        title={title.length > 7 ? title : ''}
       >
         {title}
       </Text>

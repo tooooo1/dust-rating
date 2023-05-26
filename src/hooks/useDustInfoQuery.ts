@@ -41,7 +41,6 @@ export const useCityDustInfoListQuery = (
     {
       ...options,
       refetchOnWindowFocus: false,
-      suspense: true,
     }
   );
 

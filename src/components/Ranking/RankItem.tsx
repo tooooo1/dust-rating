@@ -1,25 +1,26 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { DustState } from '@/components/common';
 import { CityDustInfo, SidoDustInfo } from '@/types/dust';
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import { FINE_DUST, ROUTE, ULTRA_FINE_DUST } from '@/utils/constants';
 
 interface RankItemProps {
-  rankNumber: number;
-  rankTitle: string;
-  rankInfo: SidoDustInfo | CityDustInfo;
-  location: string;
+  rank: number;
+  info: SidoDustInfo | CityDustInfo;
 }
 
-const RankItem = ({
-  rankNumber,
-  rankTitle,
-  rankInfo,
-  location,
-}: RankItemProps) => {
+const RankItem = ({ rank, info }: RankItemProps) => {
   const navigate = useNavigate();
+  const { place: sido } = useParams();
 
-  const handlePageNavigate = () => navigate(location);
+  const handlePageNavigate = () => {
+    if (sido) {
+      navigate(`${ROUTE.DUST_FORECAST}?sido=${sido}&city=${info.location}`);
+      return;
+    }
+
+    navigate(`${ROUTE.RANKING}/${info.location}`);
+  };
 
   return (
     <Flex
@@ -46,7 +47,7 @@ const RankItem = ({
           color="#9dadb6"
           width="8%"
         >
-          {rankNumber}
+          {rank}
         </Text>
         <Text
           as="p"
@@ -58,10 +59,10 @@ const RankItem = ({
           textOverflow="ellipsis"
           title={rankTitle.length > 7 ? rankTitle : ''}
         >
-          {rankTitle}
+          {info.location}
         </Text>
         <Box width="26%" mr={8}>
-          <DustState dustGrade={rankInfo.fineDustGrade} />
+          <DustState dustGrade={info.fineDustGrade} />
         </Box>
         <Flex direction="column" justifyContent="center" flexGrow={1}>
           <Flex justifyContent="space-between" alignItems="center" py={1}>
@@ -77,7 +78,7 @@ const RankItem = ({
               {FINE_DUST}
             </Text>
             <Text as="p" fontSize={{ base: 10, sm: 12 }} fontWeight={800}>
-              {rankInfo.fineDustScale}
+              {info.fineDustScale}
             </Text>
           </Flex>
           <Flex justifyContent="space-between" alignItems="center" py={1}>
@@ -93,7 +94,7 @@ const RankItem = ({
               {ULTRA_FINE_DUST}
             </Text>
             <Text as="p" fontSize={{ base: 10, sm: 12 }} fontWeight={800}>
-              {rankInfo.ultraFineDustScale}
+              {info.ultraFineDustScale}
             </Text>
           </Flex>
         </Flex>

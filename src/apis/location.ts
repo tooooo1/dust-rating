@@ -14,7 +14,7 @@ export const getAllLocation = async () => {
             },
           })
           .then((res) => ({
-            sidoName,
+            location: sidoName,
             latitude: Number(res.data.documents[0].y),
             longitude: Number(res.data.documents[0].x),
           }))

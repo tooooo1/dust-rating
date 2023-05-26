@@ -48,7 +48,7 @@ const DustForecast = () => {
   );
 
   const dustInfo = cityDustInfos?.find(
-    (cityDustInfo) => cityDustInfo.cityName === searchedCity
+    (cityDustInfo) => cityDustInfo.location === searchedCity
   ) as CityDustInfo;
 
   return (
@@ -78,7 +78,7 @@ const DustForecast = () => {
         mt={10}
         mb={{ base: 2, sm: 3, md: 4 }}
       >
-        {dustInfo.cityName}
+        {dustInfo.location}
         {isLargerThan480 && `의 ${FINE_DUST} 농도는 다음과 같습니다.`}
       </Text>
       <Text
@@ -130,7 +130,7 @@ const DustForecast = () => {
             </Text>
             <DustLevel direction="row" />
           </Flex>
-          <DustChart cityName={dustInfo.cityName} />
+          <DustChart location={dustInfo.location} />
         </Box>
         <Divider borderColor="#dfdfdf" mb={14} />
         <Box width="100%">
@@ -150,7 +150,7 @@ const DustForecast = () => {
               />
             }
           >
-            <ForecastInfo cityName={dustInfo.cityName} />
+            <ForecastInfo location={dustInfo.location} />
           </AsyncBoundary>
         </Box>
       </Box>

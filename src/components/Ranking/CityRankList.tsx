@@ -28,13 +28,7 @@ const CityRankList = ({ sido }: CityRankListProps) => {
   return (
     <Box flex="1" width="100%" borderRadius={10} cursor="pointer">
       {cityDustInfos?.map((city, cityIndex) => (
-        <RankItem
-          key={city.cityName}
-          rankNumber={cityIndex + 1}
-          rankTitle={city.cityName}
-          rankInfo={city}
-          location={`${ROUTE.DUST_FORECAST}?sido=${sido}&city=${city.cityName}`}
-        />
+        <RankItem key={city.location} rank={cityIndex + 1} info={city} />
       ))}
     </Box>
   );

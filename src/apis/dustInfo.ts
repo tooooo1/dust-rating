@@ -30,7 +30,7 @@ export const getSidoDustInfos = async () => {
         );
 
         return {
-          sidoName,
+          location: sidoName,
           fineDustScale: Number(dustInfo.pm10Value),
           fineDustGrade: Number(dustInfo.pm10Grade),
           ultraFineDustScale: Number(dustInfo.pm25Value),
@@ -58,7 +58,7 @@ export const getSidoDustInfo = async (sido: string) => {
     );
 
     return {
-      cityName: dustInfo.stationName,
+      location: dustInfo.stationName,
       fineDustScale: Number(dustInfo.pm10Value),
       fineDustGrade: Number(dustInfo.pm10Grade),
       ultraFineDustScale: Number(dustInfo.pm25Value),
@@ -85,7 +85,7 @@ export const getCityDustInfos = async (sido: string) => {
     );
 
     return dustInfos.map((dustInfo: DustStation) => ({
-      cityName: dustInfo.stationName,
+      location: dustInfo.stationName,
       fineDustScale: Number(dustInfo.pm10Value),
       fineDustGrade: Number(dustInfo.pm10Grade),
       ultraFineDustScale: Number(dustInfo.pm25Value),

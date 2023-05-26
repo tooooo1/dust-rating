@@ -51,8 +51,6 @@ export const NavButton = ({ styleProps }: NavButtonProps) => {
     closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
   };
 
-  console.log(isLargerThan480);
-
   return (
     <motion.nav
       initial={false}

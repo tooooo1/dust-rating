@@ -5,12 +5,12 @@ import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 import ForecastTab from './ForecastTab';
 
 interface ForecastInfoProps {
-  cityName: string;
+  location: string;
 }
 
-const ForecastInfo = ({ cityName }: ForecastInfoProps) => {
+const ForecastInfo = ({ location }: ForecastInfoProps) => {
   const { data: dustForecast } = useQuery(
-    ['dust-forecast', cityName],
+    ['dust-forecast', location],
     getDustForecast,
     {
       staleTime: 1000 * 60 * 5,

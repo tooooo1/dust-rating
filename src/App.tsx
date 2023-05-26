@@ -16,14 +16,29 @@ import {
   DustMapPage,
 } from '@/pages';
 import { ROUTE } from '@/utils/constants';
+import SortContextProvider from './store/sort';
 import theme from './styles/theme';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path={ROUTE.HOME} element={<Logo />}>
       <Route index element={<ChoicePage />} />
-      <Route path={ROUTE.RANKING} element={<SidoRankingPage />} />
-      <Route path={`${ROUTE.RANKING}/:place`} element={<CityRankingPage />} />
+      <Route
+        path={ROUTE.RANKING}
+        element={
+          <SortContextProvider>
+            <SidoRankingPage />
+          </SortContextProvider>
+        }
+      />
+      <Route
+        path={`${ROUTE.RANKING}/:place`}
+        element={
+          <SortContextProvider>
+            <CityRankingPage />
+          </SortContextProvider>
+        }
+      />
       <Route
         path={ROUTE.DUST_FORECAST}
         element={

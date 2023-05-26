@@ -34,17 +34,12 @@ export interface DustFigures {
   ultraFineDustScale: number;
   ultraFineDustGrade: number;
 }
-
-export interface MarkerInfo extends DustFigures {
-  name: string;
-}
-
 export interface SidoDustInfo extends DustFigures {
-  sidoName: string;
+  location: string;
 }
 
 export interface CityDustInfo extends DustFigures {
-  cityName: string;
+  location: string;
   dataTime: string;
 }
 

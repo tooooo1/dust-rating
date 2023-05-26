@@ -1,38 +1,22 @@
-import { Flex, Box, Text, Center } from '@chakra-ui/react';
+import { Center, Flex, Spinner } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { MouseEvent, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { getSidoDustInfo } from '@/apis/dustInfo';
+import { NavButton } from '@/components/Nav/NavButton';
 import {
-  AsyncBoundary,
-  DustFigureBar,
-  DustState,
-  ErrorFallback,
-  ListFallback,
-} from '@/components/common';
-import Select from '@/components/common/Select';
-import NaviButton from '@/components/Nav/NavButton';
-import { SelectTabList, CityRankList } from '@/components/Ranking';
+  CityRankList,
+  RankingContent,
+  RankingHeader,
+} from '@/components/Ranking';
+import RankingDetail from '@/components/Ranking/RankingDetail';
 import theme from '@/styles/theme';
-import type { SortType } from '@/types/dust';
-import {
-  DUST_GRADE,
-  FINE_DUST,
-  ULTRA_FINE_DUST,
-  INIT_SIDO,
-  ROUTE,
-  BACKGROUND_ANIMATION,
-  SIDO_NAMES,
-  KIND_OF_DUST,
-} from '@/utils/constants';
+import { DUST_GRADE, INIT_SIDO, BACKGROUND_ANIMATION } from '@/utils/constants';
 
 const CityRanking = () => {
-  const navigate = useNavigate();
-
   const { place = INIT_SIDO } = useParams();
-  const [selectedSortType, setSelectedSortType] = useState<SortType>(FINE_DUST);
-  const [bgcolorGrade, setBgcolorGrade] = useState(0);
+  const [grade, setGrade] = useState(0);
 
   const { data: sidoDustInfo } = useQuery(
     ['sido-dust-info', place],
@@ -42,20 +26,12 @@ const CityRanking = () => {
     }
   );
 
-  const handleSelectSortType = (e: MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.value === FINE_DUST
-      ? setSelectedSortType(FINE_DUST)
-      : setSelectedSortType(ULTRA_FINE_DUST);
-  };
-
-  const handleSelectedSidoChange = (place: string) => {
-    setSelectedSortType(FINE_DUST);
-    setBgcolorGrade(
-      (prevBgcolor) => sidoDustInfo?.fineDustGrade ?? prevBgcolor
+  if (!sidoDustInfo)
+    return (
+      <Center height="100vh">
+        <Spinner />
+      </Center>
     );
-
-    navigate(`${ROUTE.RANKING}/${place}`);
-  };
 
   return (
     <Flex
@@ -64,14 +40,12 @@ const CityRanking = () => {
       as={motion.div}
       animation={BACKGROUND_ANIMATION}
       bgGradient={
-        theme.backgroundColors[
-          DUST_GRADE[sidoDustInfo?.fineDustGrade ?? bgcolorGrade]
-        ]
+        theme.backgroundColors[DUST_GRADE[sidoDustInfo?.fineDustGrade ?? grade]]
       }
       textAlign="center"
       backgroundSize="200% 200%"
     >
-      <NaviButton
+      <NavButton
         styleProps={{
           marginTop: 10,
           display: 'flex',
@@ -79,113 +53,19 @@ const CityRanking = () => {
           minWidth: '10%',
         }}
       />
-      <Text
-        as="h1"
-        fontSize={{ base: 16, sm: 18, md: 20 }}
-        fontWeight={600}
-        color="#ffffff"
-        mt={10}
-        mb={{ base: 2, sm: 3, md: 4 }}
+      <RankingHeader dataTime={sidoDustInfo?.dataTime} />
+      <RankingDetail
+        place={place}
+        setGrade={setGrade}
+        dustInfo={sidoDustInfo}
+      />
+      <RankingContent
+        backgroundColor={
+          theme.colors[DUST_GRADE[sidoDustInfo?.fineDustGrade || grade]]
+        }
       >
-        {`전국 ${selectedSortType} 농도는 다음과 같습니다`}
-      </Text>
-      <Text
-        as="p"
-        fontSize={{ base: 14, sm: 16, md: 18 }}
-        fontWeight={300}
-        color="#ffffff"
-        mb={6}
-      >
-        {sidoDustInfo?.dataTime || '0000-00-00 00:00'} 기준
-      </Text>
-      <Box
-        maxWidth="30rem"
-        width={{ base: '80%', sm: '80%' }}
-        margin="0 auto"
-        position="relative"
-        borderTopRadius={10}
-        textAlign="center"
-        bg="rgba(255, 255, 255, 0.6)"
-        boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
-        backdropFilter="blur(7px)"
-        p={{ base: 4, sm: 6 }}
-      >
-        <Text
-          as="p"
-          fontSize={{ base: 20, sm: 22 }}
-          fontWeight={700}
-          mb={{ base: 2, sm: 4 }}
-        >
-          {place}
-        </Text>
-        <Box position="absolute" top={4} left={4}>
-          <Select options={SIDO_NAMES} onClick={handleSelectedSidoChange} />
-        </Box>
-        <Text
-          as="div"
-          mt="1rem"
-          fontSize={{ base: 14, sm: 15 }}
-          color="#4d4d4d"
-        >
-          현재의 대기질 지수는
-        </Text>
-        <Center my={5}>
-          <DustState dustGrade={sidoDustInfo?.fineDustGrade || 0} />
-        </Center>
-        <DustFigureBar
-          kindOfDust={FINE_DUST}
-          scale={sidoDustInfo?.fineDustScale}
-          grade={sidoDustInfo?.fineDustGrade}
-        />
-        <DustFigureBar
-          kindOfDust={ULTRA_FINE_DUST}
-          scale={sidoDustInfo?.ultraFineDustScale}
-          grade={sidoDustInfo?.ultraFineDustGrade}
-        />
-      </Box>
-      <Flex
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        maxWidth="38rem"
-        width="100%"
-        margin="0 auto"
-        borderRadius={20}
-        bg="#ffffff"
-        mb={20}
-        px={{ base: '1rem', sm: 10, md: 16 }}
-        py={10}
-      >
-        <Text
-          as="p"
-          fontSize={{ base: 12, sm: 14 }}
-          margin="0 auto"
-          px={8}
-          py={3}
-          borderRadius={25}
-          color="#ffffff"
-          bg={
-            theme.colors[
-              DUST_GRADE[sidoDustInfo?.fineDustGrade || bgcolorGrade]
-            ]
-          }
-          transition="all 500ms ease-in-out"
-        >
-          {`지역별 ${selectedSortType} 농도 순위`}
-        </Text>
-        <SelectTabList
-          handleClick={handleSelectSortType}
-          selectTabList={KIND_OF_DUST}
-        />
-        <AsyncBoundary
-          rejectFallback={
-            <ErrorFallback errorMessage="지역별 미세먼지 정보를 불러오지 못했어요." />
-          }
-          pendingFallback={<ListFallback />}
-        >
-          <CityRankList sido={place} sortType={selectedSortType} />
-        </AsyncBoundary>
-      </Flex>
+        <CityRankList sido={place} />
+      </RankingContent>
     </Flex>
   );
 };

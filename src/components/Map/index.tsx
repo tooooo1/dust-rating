@@ -22,7 +22,7 @@ import MarkerModalButton from '@/components/Map/MarkerModalButton';
 import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
 import useMap from '@/hooks/useMap';
 import theme from '@/styles/theme';
-import type { CityDustInfo, MarkerInfo } from '@/types/dust';
+import type { CityDustInfo, SidoDustInfo } from '@/types/dust';
 import type { MapAndMakers } from '@/types/map';
 import {
   FINE_DUST,
@@ -84,18 +84,18 @@ const Map = () => {
   });
 
   const makeMarkerTemplate = ({
-    name,
+    location,
     fineDustScale,
     fineDustGrade,
     ultraFineDustScale,
     ultraFineDustGrade,
-  }: MarkerInfo) => {
+  }: SidoDustInfo) => {
     const backgroundColor = theme.colors[DUST_GRADE[fineDustGrade]];
 
     return `
-          <div class="dust-info-marker" id="${name}" 
+          <div class="dust-info-marker" id="${location}" 
           data-finedustscale="${fineDustScale} "data-finedustgrade="${fineDustGrade}" data-ultrafinedustscale="${ultraFineDustScale}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};">
-            <p class="city-name">${name}</p>
+            <p class="city-name">${location}</p>
             <div class="dust-info">
               <div>${fineDustScale}</div>
               <span class="divider">/</span>
@@ -118,18 +118,18 @@ const Map = () => {
 
     sidoDustInfos.forEach(
       ({
-        sidoName,
+        location,
         fineDustScale,
         fineDustGrade,
         ultraFineDustScale,
         ultraFineDustGrade,
       }) => {
         const { latitude, longitude } = allLocation.find(
-          (scale) => scale.sidoName === sidoName
+          (scale) => scale.location === location
         ) || { latitude: 0, longitude: 0 };
 
         const template = makeMarkerTemplate({
-          name: sidoName,
+          location,
           fineDustScale,
           fineDustGrade,
           ultraFineDustScale,
@@ -168,19 +168,19 @@ const Map = () => {
 
     cityDustInfos.forEach(
       ({
-        cityName,
+        location,
         fineDustScale,
         fineDustGrade,
         ultraFineDustScale,
         ultraFineDustGrade,
       }) => {
-        geocoder.addressSearch(cityName, (result, status) => {
+        geocoder.addressSearch(location, (result, status) => {
           if (status === kakao.maps.services.Status.OK) {
             const latitude = Number(result[0].y);
             const longitude = Number(result[0].x);
 
             const template = makeMarkerTemplate({
-              name: cityName,
+              location,
               fineDustScale,
               fineDustGrade,
               ultraFineDustScale,

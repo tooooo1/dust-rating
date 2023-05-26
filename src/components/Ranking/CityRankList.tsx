@@ -1,17 +1,19 @@
 import { Box } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { getCityDustInfos } from '@/apis/dustInfo';
-import type { CityDustInfo, SortType } from '@/types/dust';
-import { FINE_DUST } from '@/utils/constants';
+import { useSort } from '@/store/sort';
+import type { CityDustInfo } from '@/types/dust';
+import { ROUTE } from '@/utils/constants';
 import { sortDustList } from '@/utils/sortDustList';
-import CityRankItem from './CityRankItem';
+import RankItem from './RankItem';
 
 interface CityRankListProps {
   sido: string;
-  sortType?: SortType;
 }
 
-const CityRankList = ({ sortType = FINE_DUST, sido }: CityRankListProps) => {
+const CityRankList = ({ sido }: CityRankListProps) => {
+  const { sortType } = useSort();
+
   const { data: cityDustInfos } = useQuery(
     ['city-dust-infos', sido],
     () => getCityDustInfos(sido),
@@ -26,12 +28,7 @@ const CityRankList = ({ sortType = FINE_DUST, sido }: CityRankListProps) => {
   return (
     <Box flex="1" width="100%" borderRadius={10} cursor="pointer">
       {cityDustInfos?.map((city, cityIndex) => (
-        <CityRankItem
-          key={city.cityName}
-          rank={cityIndex + 1}
-          sido={sido}
-          city={city}
-        />
+        <RankItem key={city.location} rank={cityIndex + 1} info={city} />
       ))}
     </Box>
   );

@@ -7,6 +7,9 @@ export const KIND_OF_DUST = [FINE_DUST, ULTRA_FINE_DUST];
 export const FINE_DUST_CODE = 'PM10';
 export const ULTRA_FINE_DUST_CODE = 'PM25';
 
+export const FINE_DUST_IMG_CODE = 'PM10';
+export const ULTRA_FINE_DUST_IMG_CODE = 'PM2P5';
+
 export const INIT_DATATIME = '0000-00-00 00:00';
 
 export const DUST_GRADE: { [key: number]: GradeType } = {

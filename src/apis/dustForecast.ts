@@ -1,6 +1,11 @@
 import axios from 'axios';
-import type { DustCode } from '@/types/dust';
-import { FINE_DUST_CODE, ULTRA_FINE_DUST_CODE } from '@/utils/constants';
+import type { DustCode, DustImgCode } from '@/types/dust';
+import {
+  FINE_DUST_CODE,
+  FINE_DUST_IMG_CODE,
+  ULTRA_FINE_DUST_CODE,
+  ULTRA_FINE_DUST_IMG_CODE,
+} from '@/utils/constants';
 import { getTodayDate } from '@/utils/formaters';
 
 const { VITE_DUST_FORECAST_URL, VITE_DUST_INFO_API_KEY } = import.meta.env;
@@ -14,6 +19,12 @@ interface DustForecastData {
   informOverall: string;
   informData: string;
 }
+
+const getImage = (dustForecast: DustForecastData, dustImgCode: DustImgCode) => {
+  return Object.values(dustForecast).find(
+    (value) => typeof value === 'string' && value.includes(dustImgCode)
+  );
+};
 
 const getGifImage = (dustForecast: DustForecastData): string => {
   return Object.values(dustForecast).find(
@@ -65,14 +76,14 @@ export const getDustForecast = async () => {
 
     return {
       fineDust: {
-        imageSrc: fineDust.imageUrl1,
+        imageSrc: getImage(fineDust, FINE_DUST_IMG_CODE),
         gifImageSrc: getGifImage(fineDust),
         informCause: fineDust.informCause,
         informOverall: fineDust.informOverall,
         date: fineDust.informData,
       },
       ultraFineDust: {
-        imageSrc: ultraFineDust.imageUrl1,
+        imageSrc: getImage(ultraFineDust, ULTRA_FINE_DUST_IMG_CODE),
         gifImageSrc: getGifImage(ultraFineDust),
         informCause: ultraFineDust.informCause,
         informOverall: ultraFineDust.informOverall,

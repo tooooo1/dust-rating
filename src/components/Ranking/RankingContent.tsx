@@ -6,7 +6,7 @@ import {
   ListFallback,
 } from '@/components/common';
 import { useSort } from '@/store/sort';
-import { KIND_OF_DUST } from '@/utils/constants';
+import { KIND_OF_DUST, SORT_TYPE } from '@/utils/constants';
 import SelectTabList from './SelectTabList';
 
 interface RankingContentProps {
@@ -17,7 +17,7 @@ const RankingContent = ({
   children,
   backgroundColor,
 }: PropsWithChildren<RankingContentProps>) => {
-  const { dustType } = useSort();
+  const { dustType, setDustType, setSortType } = useSort();
 
   return (
     <Flex
@@ -46,7 +46,8 @@ const RankingContent = ({
       >
         지역별 {dustType} 농도 순위
       </Text>
-      <SelectTabList selectTabList={KIND_OF_DUST} />
+      <SelectTabList selectTabList={KIND_OF_DUST} onClick={setDustType} />
+      <SelectTabList selectTabList={SORT_TYPE} onClick={setSortType} />
       <AsyncBoundary
         rejectFallback={
           <ErrorFallback errorMessage="지역별 미세먼지 정보를 불러오지 못했어요." />

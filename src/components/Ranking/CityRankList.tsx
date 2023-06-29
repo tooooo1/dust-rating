@@ -10,11 +10,11 @@ interface CityRankListProps {
 }
 
 const CityRankList = ({ sido }: CityRankListProps) => {
-  const { dustType } = useSort();
+  const { dustType, sortType } = useSort();
 
   const cityDustInfoList = useCityDustInfoListQuery(sido, {
     select: (data: CityDustInfo[]) =>
-      sortDustList<CityDustInfo>(dustType, data),
+      sortDustList<CityDustInfo>(dustType, sortType, data),
     suspense: true,
   });
 

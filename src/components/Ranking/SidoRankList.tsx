@@ -5,10 +5,10 @@ import { sortDustList } from '@/utils/sortDustList';
 import RankItem from './RankItem';
 
 const SidoRankList = () => {
-  const { dustType } = useSort();
+  const { dustType, sortType } = useSort();
 
   const sidoDustInfoList = useSidoDustInfoListQuery({
-    select: (data) => sortDustList<SidoDustInfo>(dustType, data),
+    select: (data) => sortDustList<SidoDustInfo>(dustType, sortType, data),
     keepPreviousData: true,
     suspense: true,
   });

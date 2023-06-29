@@ -11,8 +11,6 @@ export const SelectTabList = ({
   selectTabList,
   onClick,
 }: SelectTabListProps) => {
-  const { setDustType } = useSort();
-
   return (
     <Tabs
       width="100%"

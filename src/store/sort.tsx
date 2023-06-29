@@ -6,7 +6,12 @@ import {
   PropsWithChildren,
 } from 'react';
 import type { DustType, SortType } from '@/types/dust';
-import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
+import {
+  FINE_DUST,
+  ULTRA_FINE_DUST,
+  ASCENDING,
+  DESCENDING,
+} from '@/utils/constants';
 
 interface SortContextState {
   dustType: DustType;
@@ -17,7 +22,7 @@ interface SortContextState {
 
 const initialSortState: SortContextState = {
   dustType: FINE_DUST,
-  sortType: 'ASCENDING',
+  sortType: ASCENDING,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setDustType: () => {},
   setSortType: () => {},
@@ -29,7 +34,7 @@ export const useSort = () => useContext(SortContext);
 
 const SortContextProvider = ({ children }: PropsWithChildren) => {
   const [dustType, setDustType] = useState<DustType>(FINE_DUST);
-  const [sortType, setSortType] = useState<SortType>('ASCENDING');
+  const [sortType, setSortType] = useState<SortType>(ASCENDING);
 
   const handleDustTypeChange = (e: MouseEvent<HTMLButtonElement>) => {
     setDustType(
@@ -38,9 +43,7 @@ const SortContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const handleSortTypeChnage = (e: MouseEvent<HTMLButtonElement>) => {
-    setSortType(
-      e.currentTarget.value === 'ASCENDING' ? 'ASCENDING' : 'DESCENDING'
-    );
+    setSortType(e.currentTarget.value === ASCENDING ? ASCENDING : DESCENDING);
   };
 
   return (

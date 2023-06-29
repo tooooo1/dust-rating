@@ -1,0 +1,17 @@
+name: Assign Assignees and Reviewers
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  assign:
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hkusu/review-assign-action@v1
+        with:
+          assignees: ${{ github.actor }}
+          reviewers: ${{ github.repository_owner }}

@@ -17,7 +17,7 @@ const RankingContent = ({
   children,
   backgroundColor,
 }: PropsWithChildren<RankingContentProps>) => {
-  const { sortType } = useSort();
+  const { dustType } = useSort();
 
   return (
     <Flex
@@ -44,7 +44,7 @@ const RankingContent = ({
         bg={backgroundColor}
         transition="all 500ms ease-in-out"
       >
-        지역별 {sortType} 농도 순위
+        지역별 {dustType} 농도 순위
       </Text>
       <SelectTabList selectTabList={KIND_OF_DUST} />
       <AsyncBoundary

@@ -11,7 +11,7 @@ type Flag = null | '통신장애';
 
 export type GradeType = 'NONE' | 'GOOD' | 'NORMAL' | 'BAD' | 'DANGER';
 
-export type SortType = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
+export type DustType = typeof FINE_DUST | typeof ULTRA_FINE_DUST;
 export type DustCode = typeof FINE_DUST_CODE | typeof ULTRA_FINE_DUST_CODE;
 export type DustImgCode =
   | typeof FINE_DUST_IMG_CODE

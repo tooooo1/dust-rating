@@ -7,7 +7,7 @@ interface RankingHeaderProps {
 }
 
 const RankingHeader = ({ dataTime }: RankingHeaderProps) => {
-  const { sortType: dustType } = useSort();
+  const { dustType: dustType } = useSort();
 
   return (
     <>

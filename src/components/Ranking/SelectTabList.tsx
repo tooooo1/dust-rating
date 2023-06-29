@@ -6,7 +6,7 @@ interface SelectTabListProps {
 }
 
 export const SelectTabList = ({ selectTabList }: SelectTabListProps) => {
-  const { setSortType } = useSort();
+  const { setDustType } = useSort();
 
   return (
     <Tabs
@@ -22,7 +22,7 @@ export const SelectTabList = ({ selectTabList }: SelectTabListProps) => {
             key={tabItem}
             value={tabItem}
             fontSize={{ base: 14, sm: 16 }}
-            onClick={setSortType}
+            onClick={setDustType}
           >
             {tabItem}
           </Tab>

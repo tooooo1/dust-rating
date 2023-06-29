@@ -22,3 +22,4 @@ export {
   ZINDEX_MARKER_MOUSE_OUT,
 } from '@/utils/constants/map';
 export { BACKGROUND_ANIMATION, SCROLL_STYLE } from '@/utils/constants/style';
+export { SORT_TYPE } from '@/utils/constants/sort';

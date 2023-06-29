@@ -1,13 +1,24 @@
 import { Alert, AlertIcon, AlertTitle, Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { FallbackSizeType, fallbackSize } from '@/types/error';
 import { ROUTE } from '@/utils/constants';
 
 interface ErrorFallbackProps {
+  size?: FallbackSizeType;
   errorMessage: string;
 }
 
-const ErrorFallback = ({ errorMessage }: ErrorFallbackProps) => {
+const ErrorFallback = ({
+  size = fallbackSize.CARD,
+  errorMessage,
+}: ErrorFallbackProps) => {
   const navigate = useNavigate();
+
+  const fullStyleProps = {
+    width: '38rem',
+    margin: 'auto',
+    height: '100vh',
+  };
 
   return (
     <Alert
@@ -19,6 +30,7 @@ const ErrorFallback = ({ errorMessage }: ErrorFallbackProps) => {
       textAlign="center"
       borderRadius={8}
       py={6}
+      {...(size === fallbackSize.FULL && fullStyleProps)}
     >
       <AlertIcon boxSize={6} m={0} />
       <AlertTitle fontSize={{ base: 14, sm: 16 }} mt={4} mr={0}>

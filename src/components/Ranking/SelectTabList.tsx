@@ -1,11 +1,16 @@
 import { Tabs, TabList, Tab } from '@chakra-ui/react';
 import { useSort } from '@/store/sort';
+import { MouseEvent } from 'react';
 
 interface SelectTabListProps {
   selectTabList: string[];
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const SelectTabList = ({ selectTabList }: SelectTabListProps) => {
+export const SelectTabList = ({
+  selectTabList,
+  onClick,
+}: SelectTabListProps) => {
   const { setDustType } = useSort();
 
   return (
@@ -22,7 +27,7 @@ export const SelectTabList = ({ selectTabList }: SelectTabListProps) => {
             key={tabItem}
             value={tabItem}
             fontSize={{ base: 14, sm: 16 }}
-            onClick={setDustType}
+            onClick={onClick}
           >
             {tabItem}
           </Tab>

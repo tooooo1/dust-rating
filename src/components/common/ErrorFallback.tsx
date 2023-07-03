@@ -3,12 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { FallbackSizeType, fallbackSize } from '@/types/error';
 import { ROUTE } from '@/utils/constants';
 import { ERROR_MESSAGE } from '@/utils/constants/message';
-
-const fullStyleProps = {
-  width: '38rem',
-  margin: 'auto',
-  height: '100vh',
-};
 interface ErrorFallbackProps {
   size?: FallbackSizeType;
   errorMessage: (typeof ERROR_MESSAGE)[keyof typeof ERROR_MESSAGE];
@@ -30,7 +24,7 @@ const ErrorFallback = ({
       textAlign="center"
       borderRadius={8}
       py={6}
-      {...(size === fallbackSize.FULL && fullStyleProps)}
+      height={size !== fallbackSize.FULL ? '100vh' : undefined}
     >
       <AlertIcon boxSize={6} m={0} />
       <AlertTitle fontSize={{ base: 14, sm: 16 }} mt={4} mr={0}>

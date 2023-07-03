@@ -4,6 +4,11 @@ import { FallbackSizeType, fallbackSize } from '@/types/error';
 import { ROUTE } from '@/utils/constants';
 import { ERROR_MESSAGE } from '@/utils/constants/message';
 
+const fullStyleProps = {
+  width: '38rem',
+  margin: 'auto',
+  height: '100vh',
+};
 interface ErrorFallbackProps {
   size?: FallbackSizeType;
   errorMessage: (typeof ERROR_MESSAGE)[keyof typeof ERROR_MESSAGE];
@@ -14,12 +19,6 @@ const ErrorFallback = ({
   errorMessage,
 }: ErrorFallbackProps) => {
   const navigate = useNavigate();
-
-  const fullStyleProps = {
-    width: '38rem',
-    margin: 'auto',
-    height: '100vh',
-  };
 
   return (
     <Alert

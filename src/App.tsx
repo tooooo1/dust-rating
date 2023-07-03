@@ -18,7 +18,6 @@ import {
 import { ROUTE } from '@/utils/constants';
 import SortContextProvider from './store/sort';
 import theme from './styles/theme';
-import { fallbackSize } from './types/error';
 import { ERROR_MESSAGE } from './utils/constants/message';
 
 const router = createBrowserRouter(
@@ -53,21 +52,7 @@ const router = createBrowserRouter(
           </AsyncBoundary>
         }
       />
-      <Route
-        path={ROUTE.DUST_MAP}
-        element={
-          <AsyncBoundary
-            rejectFallback={
-              <ErrorFallback
-                size={fallbackSize.FULL}
-                errorMessage={ERROR_MESSAGE.NO_MAP_DATA}
-              />
-            }
-          >
-            <DustMapPage />
-          </AsyncBoundary>
-        }
-      />
+      <Route path={ROUTE.DUST_MAP} element={<DustMapPage />} />
       <Route path="*" element={<Navigate replace to={ROUTE.HOME} />} />
     </Route>
   )

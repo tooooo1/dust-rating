@@ -26,8 +26,8 @@ import {
   INIT_CITY,
   INIT_DATATIME,
   BACKGROUND_ANIMATION,
+  ERROR_MESSAGE,
 } from '@/utils/constants';
-import { ERROR_MESSAGE } from '@/utils/constants/message';
 
 const DustForecast = () => {
   const [searchParams] = useSearchParams();

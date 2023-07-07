@@ -1,6 +1,6 @@
 import type { ComponentProps, PropsWithChildren } from 'react';
 import { ErrorBoundary as Error_Boundary } from 'react-error-boundary';
-import { ERROR_MESSAGE } from '@/utils/constants/message';
+import { ERROR_MESSAGE } from '@/utils/constants';
 import ErrorFallback from './ErrorFallback';
 
 type Fallback = 'fallback';

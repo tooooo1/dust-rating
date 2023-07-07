@@ -3,7 +3,7 @@ import { ErrorFallback } from '@/components/common';
 import ErrorBoundary from '@/components/common/ErrorBoundary';
 import Map from '@/components/Map';
 import { fallbackSize } from '@/types/error';
-import { ERROR_MESSAGE } from '@/utils/constants/message';
+import { ERROR_MESSAGE } from '@/utils/constants';
 
 const DustMapPage = () => {
   return (

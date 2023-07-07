@@ -1,8 +1,8 @@
 import { Alert, AlertIcon, AlertTitle, Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { FallbackSizeType, fallbackSize } from '@/types/error';
-import { ROUTE } from '@/utils/constants';
-import { ERROR_MESSAGE } from '@/utils/constants/message';
+import { ROUTE, ERROR_MESSAGE } from '@/utils/constants';
+
 interface ErrorFallbackProps {
   size?: FallbackSizeType;
   errorMessage: (typeof ERROR_MESSAGE)[keyof typeof ERROR_MESSAGE];

@@ -15,10 +15,9 @@ import {
   DustForecastPage,
   DustMapPage,
 } from '@/pages';
-import { ROUTE } from '@/utils/constants';
+import { ROUTE, ERROR_MESSAGE } from '@/utils/constants';
 import SortContextProvider from './store/sort';
 import theme from './styles/theme';
-import { ERROR_MESSAGE } from './utils/constants/message';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

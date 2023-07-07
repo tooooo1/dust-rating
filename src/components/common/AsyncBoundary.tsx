@@ -1,13 +1,13 @@
 import { Center, Spinner } from '@chakra-ui/react';
 import { Suspense, type ComponentProps, type PropsWithChildren } from 'react';
-import CustomErrorBoundary from './CustomErrorBoundary';
+import ErrorBoundary from './ErrorBoundary';
 
 type Fallback = 'fallback';
 
 type SuspenseProps = Omit<ComponentProps<typeof Suspense>, Fallback>;
 
 interface AsyncBoundaryProps
-  extends ComponentProps<typeof CustomErrorBoundary>,
+  extends ComponentProps<typeof ErrorBoundary>,
     SuspenseProps {
   pendingFallback?: ComponentProps<typeof Suspense>[Fallback];
 }
@@ -24,11 +24,11 @@ const AsyncBoundary = ({
   );
 
   return (
-    <CustomErrorBoundary rejectFallback={rejectFallback}>
+    <ErrorBoundary rejectFallback={rejectFallback}>
       <Suspense fallback={pendingFallback || spinnerFallback}>
         {children}
       </Suspense>
-    </CustomErrorBoundary>
+    </ErrorBoundary>
   );
 };
 

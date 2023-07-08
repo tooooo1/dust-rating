@@ -46,8 +46,12 @@ const RankingContent = ({
       >
         지역별 {dustType} 농도 순위
       </Text>
-      <SelectTabList selectTabList={KIND_OF_DUST} onClick={setDustType} />
-      <SelectTabList selectTabList={SORT_TYPE} onClick={setSortType} />
+      <SelectTabList
+        selectTabList={KIND_OF_DUST}
+        handleClickTab={setDustType}
+        selectOption={SORT_TYPE}
+        handleClickOption={setSortType}
+      />
       <AsyncBoundary
         rejectFallback={
           <ErrorFallback errorMessage="지역별 미세먼지 정보를 불러오지 못했어요." />

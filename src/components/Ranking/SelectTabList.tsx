@@ -1,15 +1,18 @@
 import { Tabs, TabList, Tab } from '@chakra-ui/react';
-import { useSort } from '@/store/sort';
 import { MouseEvent } from 'react';
 
 interface SelectTabListProps {
   selectTabList: string[];
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  handleClickTab: (e: MouseEvent<HTMLButtonElement>) => void;
+  selectOption?: string[];
+  handleClickOption?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const SelectTabList = ({
   selectTabList,
-  onClick,
+  handleClickTab,
+  selectOption,
+  handleClickOption,
 }: SelectTabListProps) => {
   return (
     <Tabs
@@ -25,12 +28,26 @@ export const SelectTabList = ({
             key={tabItem}
             value={tabItem}
             fontSize={{ base: 14, sm: 16 }}
-            onClick={onClick}
+            onClick={handleClickTab}
           >
             {tabItem}
           </Tab>
         ))}
       </TabList>
+      {selectOption && (
+        <TabList>
+          {selectOption.map((tabItem) => (
+            <Tab
+              key={tabItem}
+              value={tabItem}
+              fontSize={{ base: 14, sm: 16 }}
+              onClick={handleClickOption}
+            >
+              {tabItem}
+            </Tab>
+          ))}
+        </TabList>
+      )}
     </Tabs>
   );
 };

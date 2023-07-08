@@ -1,18 +1,15 @@
 import { Center, Spinner } from '@chakra-ui/react';
-import { PropsWithChildren, Suspense, type ComponentProps } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import ErrorFallback from './ErrorFallback';
+import { Suspense, type ComponentProps, type PropsWithChildren } from 'react';
+import ErrorBoundary from './ErrorBoundary';
 
-type ErrorBoundaryProps = Omit<
-  ComponentProps<typeof ErrorBoundary>,
-  'fallback'
->;
+type Fallback = 'fallback';
 
-type SuspenseProps = Omit<ComponentProps<typeof Suspense>, 'fallback'>;
+type SuspenseProps = Omit<ComponentProps<typeof Suspense>, Fallback>;
 
-interface AsyncBoundaryProps extends ErrorBoundaryProps, SuspenseProps {
-  rejectFallback?: ComponentProps<typeof ErrorBoundary>['fallback'];
-  pendingFallback?: ComponentProps<typeof Suspense>['fallback'];
+interface AsyncBoundaryProps
+  extends ComponentProps<typeof ErrorBoundary>,
+    SuspenseProps {
+  pendingFallback?: ComponentProps<typeof Suspense>[Fallback];
 }
 
 const AsyncBoundary = ({
@@ -27,11 +24,7 @@ const AsyncBoundary = ({
   );
 
   return (
-    <ErrorBoundary
-      fallback={
-        rejectFallback || <ErrorFallback errorMessage="에러가 발생했어요." />
-      }
-    >
+    <ErrorBoundary rejectFallback={rejectFallback}>
       <Suspense fallback={pendingFallback || spinnerFallback}>
         {children}
       </Suspense>

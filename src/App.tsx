@@ -15,7 +15,7 @@ import {
   DustForecastPage,
   DustMapPage,
 } from '@/pages';
-import { ROUTE } from '@/utils/constants';
+import { ROUTE, ERROR_MESSAGE } from '@/utils/constants';
 import SortContextProvider from './store/sort';
 import theme from './styles/theme';
 
@@ -44,7 +44,7 @@ const router = createBrowserRouter(
         element={
           <AsyncBoundary
             rejectFallback={
-              <ErrorFallback errorMessage="해당 지역의 예보 정보를 불러오지 못했어요." />
+              <ErrorFallback errorMessage={ERROR_MESSAGE.NO_FORECAST_DATA} />
             }
           >
             <DustForecastPage />

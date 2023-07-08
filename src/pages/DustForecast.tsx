@@ -26,6 +26,7 @@ import {
   INIT_CITY,
   INIT_DATATIME,
   BACKGROUND_ANIMATION,
+  ERROR_MESSAGE,
 } from '@/utils/constants';
 
 const DustForecast = () => {
@@ -131,7 +132,7 @@ const DustForecast = () => {
           </Text>
           <AsyncBoundary
             rejectFallback={
-              <ErrorFallback errorMessage="대기질 예보 정보를 불러오지 못했어요." />
+              <ErrorFallback errorMessage={ERROR_MESSAGE.NO_FORECAST_DATA} />
             }
             pendingFallback={
               <Skeleton

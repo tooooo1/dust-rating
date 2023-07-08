@@ -6,7 +6,7 @@ import {
   ListFallback,
 } from '@/components/common';
 import { useSort } from '@/store/sort';
-import { KIND_OF_DUST, SORT_TYPE } from '@/utils/constants';
+import { KIND_OF_DUST, ERROR_MESSAGE } from '@/utils/constants';
 import SelectTabList from './SelectTabList';
 
 interface RankingContentProps {
@@ -54,7 +54,7 @@ const RankingContent = ({
       />
       <AsyncBoundary
         rejectFallback={
-          <ErrorFallback errorMessage="지역별 미세먼지 정보를 불러오지 못했어요." />
+          <ErrorFallback errorMessage={ERROR_MESSAGE.NO_RANKING_DATA} />
         }
         pendingFallback={<ListFallback />}
       >

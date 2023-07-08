@@ -282,7 +282,6 @@ const Map = () => {
           type="full-screen"
           onClick={() => handleFullScreenChange(cityDustInfoMarkers)}
         />
-        <ControlButton type="go-back" onClick={handleClickGoBack} />
         {zoomLevel === MAX_ZOOM_LEVEL && !sidoDustInfoList && <Spinner />}
       </VStack>
       {!cityDustInfoList ? <Spinner zIndex={10} /> : ''}

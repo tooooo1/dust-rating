@@ -23,3 +23,4 @@ export {
 } from '@/utils/constants/map';
 export { BACKGROUND_ANIMATION, SCROLL_STYLE } from '@/utils/constants/style';
 export { ERROR_MESSAGE } from '@/utils/constants/message';
+export { SORT_TYPE } from '@/utils/constants/sort';

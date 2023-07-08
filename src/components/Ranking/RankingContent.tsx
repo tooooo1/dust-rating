@@ -6,7 +6,7 @@ import {
   ListFallback,
 } from '@/components/common';
 import { useSort } from '@/store/sort';
-import { KIND_OF_DUST, ERROR_MESSAGE } from '@/utils/constants';
+import { KIND_OF_DUST, ERROR_MESSAGE, SORT_TYPE } from '@/utils/constants';
 import SelectTabList from './SelectTabList';
 
 interface RankingContentProps {

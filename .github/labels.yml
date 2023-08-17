@@ -1,5 +1,8 @@
-feature: ['feature/*', 'feat/*']
-fix: 'fix/*'
-refactor: 'refactor/*'
-chore: 'chore/*'
-document: ['document/*', 'docs/*']
+enhancement:
+  - src/**/*
+documentation:
+  - "**/*.md"
+dependencies:
+  - package*.json
+.github:
+  - .github/**/*

@@ -235,9 +235,9 @@ const Map = () => {
     SIDO_NAMES.includes(city)
       ? navigate(`${ROUTE.RANKING}/${city}`)
       : navigate(
-          `${ROUTE.DUST_FORECAST}?sido=${encodeURIComponent(
-            currentSido
-          )}&city=${encodeURIComponent(city)}`
+          `${ROUTE.DUST_FORECAST}?sido=
+            ${currentSido}
+          &city=${city}`
         );
   };
 

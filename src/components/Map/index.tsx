@@ -234,11 +234,7 @@ const Map = () => {
   const handleClickForeCastButton = () => {
     SIDO_NAMES.includes(city)
       ? navigate(`${ROUTE.RANKING}/${city}`)
-      : navigate(
-          `${ROUTE.DUST_FORECAST}?sido=
-            ${currentSido}
-          &city=${city}`
-        );
+      : navigate(`${ROUTE.DUST_FORECAST}?sido=${currentSido}&city=${city}`);
   };
 
   const handleClickGoBack = () => {

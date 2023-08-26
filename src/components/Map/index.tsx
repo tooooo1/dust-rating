@@ -38,6 +38,7 @@ import {
   ZINDEX_MARKER_MOUSE_OVER,
   ZINDEX_MARKER_MOUSE_OUT,
   ROUTE,
+  SIDO_NAMES,
 } from '@/utils/constants';
 import ControlButton from './ControlButton';
 
@@ -231,11 +232,9 @@ const Map = () => {
   }, []);
 
   const handleClickForeCastButton = () => {
-    navigate(
-      `${ROUTE.DUST_FORECAST}?sido=${encodeURIComponent(
-        currentSido
-      )}&city=${encodeURIComponent(city)}`
-    );
+    SIDO_NAMES.includes(city)
+      ? navigate(`${ROUTE.RANKING}/${city}`)
+      : navigate(`${ROUTE.DUST_FORECAST}?sido=${currentSido}&city=${city}`);
   };
 
   const handleClickGoBack = () => {

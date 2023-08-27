@@ -1,24 +1,11 @@
 /* global kakao */
-import {
-  VStack,
-  Box,
-  Spinner,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { VStack, Box, Spinner, useDisclosure } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllLocation } from '@/apis/location';
 import { DustLevel } from '@/components/common';
-import MarkerModalButton from '@/components/Map/MarkerModalButton';
-import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
+import MakerModal from '@/components/Map/MarkerModal';
 import {
   useCityDustInfoListQuery,
   useSidoDustInfoListQuery,
@@ -26,8 +13,6 @@ import {
 import useMap from '@/hooks/useMap';
 import type { MapAndMakers } from '@/types/map';
 import {
-  FINE_DUST,
-  ULTRA_FINE_DUST,
   CITY_ZOOM_LEVEL,
   MAX_ZOOM_LEVEL,
   COLOR_MARKER_MOUSE_OVER,
@@ -98,7 +83,7 @@ const Map = () => {
     return () => {
       setMakerToNull({ map, markers: sidoDustInfoMarkers });
     };
-  }, [map, sidoDustInfoList, allLocation]);
+  }, [sidoDustInfoList, allLocation]);
 
   useEffect(() => {
     if (
@@ -181,7 +166,7 @@ const Map = () => {
           );
         });
     };
-  }, [cityDustInfoMarkers, currentLocation, zoomLevel]);
+  }, [currentLocation, zoomLevel]);
 
   return (
     <Box position="relative" width="100%" height="100%" ref={mapRef}>
@@ -205,30 +190,13 @@ const Map = () => {
       <Box position="absolute" bottom="1.5rem" zIndex={10}>
         <DustLevel direction="column" />
       </Box>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader textAlign="center">{city}</ModalHeader>
-          <ModalCloseButton borderColor={'#ffffff'} />
-          <ModalBody>
-            <MarkerModalDustInfo
-              kindOfDust={FINE_DUST}
-              dustScale={dustInfo.fineDustScale}
-              dustGrade={dustInfo.fineDustGrade}
-            />
-            <MarkerModalDustInfo
-              kindOfDust={ULTRA_FINE_DUST}
-              dustScale={dustInfo.ultraFineDustScale}
-              dustGrade={dustInfo.ultraFineDustGrade}
-            />
-          </ModalBody>
-          <ModalFooter display="flex" justifyContent="space-around">
-            <MarkerModalButton handleClick={handleClickForeCastButton}>
-              예보 페이지로 이동하기
-            </MarkerModalButton>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <MakerModal
+        city={city}
+        dustInfo={dustInfo}
+        handleClickForeCastButton={handleClickForeCastButton}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
     </Box>
   );
 };

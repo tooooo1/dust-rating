@@ -17,7 +17,6 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllLocation } from '@/apis/location';
 import { DustLevel } from '@/components/common';
-import MarkerTemplate from '@/components/Map/MakerTemplate';
 import MarkerModalButton from '@/components/Map/MarkerModalButton';
 import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
 import {
@@ -25,7 +24,6 @@ import {
   useSidoDustInfoListQuery,
 } from '@/hooks/useDustInfoQuery';
 import useMap from '@/hooks/useMap';
-import { CityDustInfo } from '@/types/dust';
 import type { MapAndMakers } from '@/types/map';
 import {
   FINE_DUST,
@@ -39,12 +37,11 @@ import {
   ROUTE,
   SIDO_NAMES,
 } from '@/utils/constants';
-import { makeCityMaker } from '@/utils/makers';
+import { makeCityMaker, makeSidoMaker } from '@/utils/makers';
 import ControlButton from './ControlButton';
 
 const Map = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const sidoDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
   const [cityDustInfoMarkers, setCityDustInfoMarkers] = useState<
     kakao.maps.CustomOverlay[]
   >([]);
@@ -89,44 +86,19 @@ const Map = () => {
   useEffect(() => {
     if (!map || !sidoDustInfoList || !allLocation) return;
 
-    sidoDustInfoList.forEach(
-      ({
-        location,
-        fineDustScale,
-        fineDustGrade,
-        ultraFineDustScale,
-        ultraFineDustGrade,
-      }) => {
-        const { latitude, longitude } = allLocation.find(
-          (scale) => scale.location === location
-        ) || { latitude: 0, longitude: 0 };
+    const sidoDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
 
-        const template = MarkerTemplate({
-          location,
-          fineDustScale,
-          fineDustGrade,
-          ultraFineDustScale,
-          ultraFineDustGrade,
-        });
-
-        const marker = new kakao.maps.CustomOverlay({
-          clickable: true,
-          position: new kakao.maps.LatLng(latitude, longitude),
-          content: template,
-        });
-
-        sidoDustInfoMarkers.push(marker);
-      }
-    );
-
-    sidoDustInfoMarkers.forEach((marker) => {
-      marker.setMap(map);
+    makeSidoMaker({
+      map,
+      sidoDustInfoList,
+      allLocation,
+      sidoDustInfoMarkers,
     });
 
     return () => {
       setMakerToNull({ map, markers: sidoDustInfoMarkers });
     };
-  }, [sidoDustInfoList, allLocation, sidoDustInfoMarkers]);
+  }, [map, sidoDustInfoList, allLocation]);
 
   useEffect(() => {
     if (
@@ -146,21 +118,24 @@ const Map = () => {
     return () => {
       setMakerToNull({ map, markers: cityDustInfoMarkers });
     };
-  }, [cityDustInfoList]);
+  }, [map, zoomLevel, cityDustInfoMarkers, cityDustInfoList]);
 
-  const handleClickMarker = useCallback((city: HTMLDivElement) => {
-    setCity(city.id);
+  const handleClickMarker = useCallback(
+    (city: HTMLDivElement) => {
+      setCity(city.id);
 
-    const nextDustInfo = {
-      fineDustScale: Number(city.dataset.finedustscale || 1),
-      fineDustGrade: Number(city.dataset.finedustgrade || 1),
-      ultraFineDustScale: Number(city.dataset.ultrafinedustscale || 1),
-      ultraFineDustGrade: Number(city.dataset.ultrafinedustgrade || 1),
-    };
+      const nextDustInfo = {
+        fineDustScale: Number(city.dataset.finedustscale || 1),
+        fineDustGrade: Number(city.dataset.finedustgrade || 1),
+        ultraFineDustScale: Number(city.dataset.ultrafinedustscale || 1),
+        ultraFineDustGrade: Number(city.dataset.ultrafinedustgrade || 1),
+      };
 
-    setDustInfo(nextDustInfo);
-    onOpen();
-  }, []);
+      setDustInfo(nextDustInfo);
+      onOpen();
+    },
+    [onOpen]
+  );
 
   const handleMouseOverMarker = useCallback((city: HTMLDivElement) => {
     city.style.color = COLOR_MARKER_MOUSE_OVER;
@@ -209,7 +184,15 @@ const Map = () => {
           );
         });
     };
-  }, [cityDustInfoMarkers, currentLocation, zoomLevel]);
+  }, [
+    map,
+    handleClickMarker,
+    handleMouseOverMarker,
+    handleMouseOutMarker,
+    cityDustInfoMarkers,
+    currentLocation,
+    zoomLevel,
+  ]);
 
   return (
     <Box position="relative" width="100%" height="100%" ref={mapRef}>

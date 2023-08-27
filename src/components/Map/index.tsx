@@ -118,24 +118,21 @@ const Map = () => {
     return () => {
       setMakerToNull({ map, markers: cityDustInfoMarkers });
     };
-  }, [map, zoomLevel, cityDustInfoMarkers, cityDustInfoList]);
+  }, [cityDustInfoList]);
 
-  const handleClickMarker = useCallback(
-    (city: HTMLDivElement) => {
-      setCity(city.id);
+  const handleClickMarker = useCallback((city: HTMLDivElement) => {
+    setCity(city.id);
 
-      const nextDustInfo = {
-        fineDustScale: Number(city.dataset.finedustscale || 1),
-        fineDustGrade: Number(city.dataset.finedustgrade || 1),
-        ultraFineDustScale: Number(city.dataset.ultrafinedustscale || 1),
-        ultraFineDustGrade: Number(city.dataset.ultrafinedustgrade || 1),
-      };
+    const nextDustInfo = {
+      fineDustScale: Number(city.dataset.finedustscale || 1),
+      fineDustGrade: Number(city.dataset.finedustgrade || 1),
+      ultraFineDustScale: Number(city.dataset.ultrafinedustscale || 1),
+      ultraFineDustGrade: Number(city.dataset.ultrafinedustgrade || 1),
+    };
 
-      setDustInfo(nextDustInfo);
-      onOpen();
-    },
-    [onOpen]
-  );
+    setDustInfo(nextDustInfo);
+    onOpen();
+  }, []);
 
   const handleMouseOverMarker = useCallback((city: HTMLDivElement) => {
     city.style.color = COLOR_MARKER_MOUSE_OVER;
@@ -184,15 +181,7 @@ const Map = () => {
           );
         });
     };
-  }, [
-    map,
-    handleClickMarker,
-    handleMouseOverMarker,
-    handleMouseOutMarker,
-    cityDustInfoMarkers,
-    currentLocation,
-    zoomLevel,
-  ]);
+  }, [cityDustInfoMarkers, currentLocation, zoomLevel]);
 
   return (
     <Box position="relative" width="100%" height="100%" ref={mapRef}>

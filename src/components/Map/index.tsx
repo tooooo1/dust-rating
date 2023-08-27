@@ -17,6 +17,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllLocation } from '@/apis/location';
 import { DustLevel } from '@/components/common';
+import MarkerTemplate from '@/components/Map/MakerTemplate';
 import MarkerModalButton from '@/components/Map/MarkerModalButton';
 import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
 import {
@@ -24,13 +25,10 @@ import {
   useSidoDustInfoListQuery,
 } from '@/hooks/useDustInfoQuery';
 import useMap from '@/hooks/useMap';
-import theme from '@/styles/theme';
-import type { SidoDustInfo } from '@/types/dust';
 import type { MapAndMakers } from '@/types/map';
 import {
   FINE_DUST,
   ULTRA_FINE_DUST,
-  DUST_GRADE,
   CITY_ZOOM_LEVEL,
   MAX_ZOOM_LEVEL,
   COLOR_MARKER_MOUSE_OVER,
@@ -78,28 +76,6 @@ const Map = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  const makeMarkerTemplate = ({
-    location,
-    fineDustScale,
-    fineDustGrade,
-    ultraFineDustScale,
-    ultraFineDustGrade,
-  }: SidoDustInfo) => {
-    const backgroundColor = theme.colors[DUST_GRADE[fineDustGrade]];
-
-    return `
-          <div class="dust-info-marker" id="${location}" 
-          data-finedustscale="${fineDustScale} "data-finedustgrade="${fineDustGrade}" data-ultrafinedustscale="${ultraFineDustScale}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};">
-            <p class="city-name">${location}</p>
-            <div class="dust-info">
-              <div>${fineDustScale}</div>
-              <span class="divider">/</span>
-              <div>${ultraFineDustScale}</div>  
-            </div>
-          </div>
-    `;
-  };
-
   const setMakerToNull = ({ map, markers }: MapAndMakers) => {
     if (map && markers.length) {
       markers.forEach((marker) => {
@@ -123,7 +99,7 @@ const Map = () => {
           (scale) => scale.location === location
         ) || { latitude: 0, longitude: 0 };
 
-        const template = makeMarkerTemplate({
+        const template = MarkerTemplate({
           location,
           fineDustScale,
           fineDustGrade,
@@ -173,7 +149,7 @@ const Map = () => {
             const latitude = Number(result[0].y);
             const longitude = Number(result[0].x);
 
-            const template = makeMarkerTemplate({
+            const template = MarkerTemplate({
               location,
               fineDustScale,
               fineDustGrade,

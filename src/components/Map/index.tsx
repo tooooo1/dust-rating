@@ -25,6 +25,7 @@ import {
   useSidoDustInfoListQuery,
 } from '@/hooks/useDustInfoQuery';
 import useMap from '@/hooks/useMap';
+import { CityDustInfo } from '@/types/dust';
 import type { MapAndMakers } from '@/types/map';
 import {
   FINE_DUST,
@@ -38,6 +39,7 @@ import {
   ROUTE,
   SIDO_NAMES,
 } from '@/utils/constants';
+import { makeCityMaker } from '@/utils/makers';
 import ControlButton from './ControlButton';
 
 const Map = () => {
@@ -134,45 +136,12 @@ const Map = () => {
     )
       return;
 
-    const geocoder = new kakao.maps.services.Geocoder();
-
-    cityDustInfoList.forEach(
-      ({
-        location,
-        fineDustScale,
-        fineDustGrade,
-        ultraFineDustScale,
-        ultraFineDustGrade,
-      }) => {
-        geocoder.addressSearch(location, (result, status) => {
-          if (status === kakao.maps.services.Status.OK) {
-            const latitude = Number(result[0].y);
-            const longitude = Number(result[0].x);
-
-            const template = MarkerTemplate({
-              location,
-              fineDustScale,
-              fineDustGrade,
-              ultraFineDustScale,
-              ultraFineDustGrade,
-            });
-
-            const marker = new kakao.maps.CustomOverlay({
-              map,
-              position: new kakao.maps.LatLng(latitude, longitude),
-              content: template,
-            });
-
-            if (
-              !cityDustInfoMarkers.find(
-                (value) => value.getPosition() === marker.getPosition()
-              )
-            )
-              setCityDustInfoMarkers((prev) => [...prev, marker]);
-          }
-        });
-      }
-    );
+    makeCityMaker({
+      map,
+      cityDustInfoList,
+      cityDustInfoMarkers,
+      setCityDustInfoMarkers,
+    });
 
     return () => {
       setMakerToNull({ map, markers: cityDustInfoMarkers });
@@ -217,6 +186,7 @@ const Map = () => {
     navigate(-1);
   };
 
+  // 마커에 이벤트 추가, 제거
   useEffect(() => {
     document
       .querySelectorAll<HTMLDivElement>('.dust-info-marker')

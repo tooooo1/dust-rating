@@ -30,7 +30,8 @@ const Map = () => {
   const [cityDustInfoMarkers, setCityDustInfoMarkers] = useState<
     kakao.maps.CustomOverlay[]
   >([]);
-  const [city, setCity] = useState('동네 정보를 받아오지 못했어요');
+  const [selectedSidoOrCity, setSelectedSidoOrCity] =
+    useState('동네 정보를 받아오지 못했어요');
   const [dustInfo, setDustInfo] = useState({
     fineDustScale: 0,
     fineDustGrade: 0,
@@ -131,7 +132,7 @@ const Map = () => {
   }, [currentLocation, cityDustInfoMarkers, zoomLevel]);
 
   const handleClickMarker = useCallback((city: HTMLDivElement) => {
-    setCity(city.id);
+    setSelectedSidoOrCity(city.id);
 
     const nextDustInfo = {
       fineDustScale: Number(city.dataset.finedustscale || 1),
@@ -159,9 +160,11 @@ const Map = () => {
   }, []);
 
   const handleClickForeCastButton = () => {
-    SIDO_NAMES.includes(city)
-      ? navigate(`${ROUTE.RANKING}/${city}`)
-      : navigate(`${ROUTE.DUST_FORECAST}?sido=${currentSido}&city=${city}`);
+    SIDO_NAMES.includes(selectedSidoOrCity)
+      ? navigate(`${ROUTE.RANKING}/${selectedSidoOrCity}`)
+      : navigate(
+          `${ROUTE.DUST_FORECAST}?sido=${currentSido}&city=${selectedSidoOrCity}`
+        );
   };
 
   const handleClickGoBack = () => {
@@ -191,7 +194,7 @@ const Map = () => {
         <DustLevel direction="column" />
       </Box>
       <MakerModal
-        city={city}
+        city={selectedSidoOrCity}
         dustInfo={dustInfo}
         handleClickForeCastButton={handleClickForeCastButton}
         isOpen={isOpen}

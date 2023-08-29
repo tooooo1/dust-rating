@@ -9,7 +9,7 @@ export {
   ULTRA_FINE_DUST_IMG_CODE,
   DUST_GRADE,
   KIND_OF_DUST,
-  INIT_DATATIME,
+  INIT_DATA_TIME,
 } from '@/utils/constants/dust';
 export { ROUTE } from '@/utils/constants/route';
 export {

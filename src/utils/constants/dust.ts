@@ -10,7 +10,7 @@ export const ULTRA_FINE_DUST_CODE = 'PM25';
 export const FINE_DUST_IMG_CODE = 'PM10';
 export const ULTRA_FINE_DUST_IMG_CODE = 'PM2P5';
 
-export const INIT_DATATIME = '0000-00-00 00:00';
+export const INIT_DATA_TIME = '0000-00-00 00:00';
 
 export const DUST_GRADE: { [key: number]: GradeType } = {
   0: 'NONE',
@@ -34,5 +34,5 @@ export const INIT_CITY_DUST_INFO = {
   fineDustGrade: 9999,
   ultraFineDustScale: 9999,
   ultraFineDustGrade: 9999,
-  dataTime: INIT_DATATIME,
+  dataTime: INIT_DATA_TIME,
 };

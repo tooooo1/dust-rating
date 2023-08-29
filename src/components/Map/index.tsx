@@ -105,6 +105,31 @@ const Map = () => {
     };
   }, [cityDustInfoList]);
 
+  // 마커에 이벤트 추가, 제거
+  useEffect(() => {
+    document
+      .querySelectorAll<HTMLDivElement>('.dust-info-marker')
+      .forEach((city) => {
+        city.onclick = () => handleClickMarker(city);
+        city.onmouseover = () => handleMouseOverMarker(city);
+        city.onmouseout = () => handleMouseOutMarker(city);
+      });
+
+    return () => {
+      document
+        .querySelectorAll<HTMLDivElement>('.dust-info-marker')
+        .forEach((city) => {
+          city.removeEventListener('click', () => handleClickMarker(city));
+          city.removeEventListener('mouseover', () =>
+            handleMouseOverMarker(city)
+          );
+          city.removeEventListener('mouseout', () =>
+            handleMouseOutMarker(city)
+          );
+        });
+    };
+  }, [currentLocation, cityDustInfoMarkers, zoomLevel]);
+
   const handleClickMarker = useCallback((city: HTMLDivElement) => {
     setCity(city.id);
 
@@ -142,31 +167,6 @@ const Map = () => {
   const handleClickGoBack = () => {
     navigate(-1);
   };
-
-  // 마커에 이벤트 추가, 제거
-  useEffect(() => {
-    document
-      .querySelectorAll<HTMLDivElement>('.dust-info-marker')
-      .forEach((city) => {
-        city.onclick = () => handleClickMarker(city);
-        city.onmouseover = () => handleMouseOverMarker(city);
-        city.onmouseout = () => handleMouseOutMarker(city);
-      });
-
-    return () => {
-      document
-        .querySelectorAll<HTMLDivElement>('.dust-info-marker')
-        .forEach((city) => {
-          city.removeEventListener('click', () => handleClickMarker(city));
-          city.removeEventListener('mouseover', () =>
-            handleMouseOverMarker(city)
-          );
-          city.removeEventListener('mouseout', () =>
-            handleMouseOutMarker(city)
-          );
-        });
-    };
-  }, [currentLocation, zoomLevel]);
 
   return (
     <Box position="relative" width="100%" height="100%" ref={mapRef}>

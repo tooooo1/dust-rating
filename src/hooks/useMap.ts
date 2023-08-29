@@ -127,6 +127,7 @@ const useMap = ({ mapRef, cityDustInfoMarkers }: useMapProps) => {
     kakao.maps.event.addListener(map, 'zoom_changed', () => {
       const zoomLevel = map.getLevel();
       setZoomLevel(zoomLevel);
+
       if (CITY_ZOOM_LEVEL <= zoomLevel && zoomLevel <= MAX_ZOOM_LEVEL) {
         cityDustInfoMarkers?.forEach((value) => {
           value.setMap(null);

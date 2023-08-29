@@ -21,7 +21,9 @@ import {
   ZINDEX_MARKER_MOUSE_OUT,
   ROUTE,
   SIDO_NAMES,
+  INIT_DUST_INFO,
 } from '@/utils/constants';
+
 import { makeCityMaker, makeSidoMaker } from '@/utils/makers';
 import ControlButton from './ControlButton';
 
@@ -32,12 +34,7 @@ const Map = () => {
   >([]);
   const [selectedSidoOrCity, setSelectedSidoOrCity] =
     useState('동네 정보를 받아오지 못했어요');
-  const [dustInfo, setDustInfo] = useState({
-    fineDustScale: 0,
-    fineDustGrade: 0,
-    ultraFineDustScale: 0,
-    ultraFineDustGrade: 0,
-  });
+  const [dustInfo, setDustInfo] = useState(INIT_DUST_INFO);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     map,

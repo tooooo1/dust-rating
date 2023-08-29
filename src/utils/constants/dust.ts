@@ -20,6 +20,13 @@ export const DUST_GRADE: { [key: number]: GradeType } = {
   4: 'DANGER',
 };
 
+export const INIT_DUST_INFO = {
+  fineDustScale: 0,
+  fineDustGrade: 0,
+  ultraFineDustScale: 0,
+  ultraFineDustGrade: 0,
+};
+
 export const INIT_SIDO_DUST_INFO = {
   location: '정보를 불러오지 못했어요',
   fineDustScale: 9999,

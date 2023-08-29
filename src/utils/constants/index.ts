@@ -10,6 +10,7 @@ export {
   DUST_GRADE,
   KIND_OF_DUST,
   INIT_DATA_TIME,
+  INIT_DUST_INFO,
 } from '@/utils/constants/dust';
 export { ROUTE } from '@/utils/constants/route';
 export {

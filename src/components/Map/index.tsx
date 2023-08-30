@@ -11,7 +11,6 @@ import {
   useSidoDustInfoListQuery,
 } from '@/hooks/useDustInfoQuery';
 import useMap from '@/hooks/useMap';
-import type { MapAndMakers } from '@/types/map';
 import {
   CITY_ZOOM_LEVEL,
   MAX_ZOOM_LEVEL,
@@ -24,7 +23,7 @@ import {
   INIT_DUST_INFO,
 } from '@/utils/constants';
 
-import { makeCityMaker, makeSidoMaker } from '@/utils/makers';
+import { makeCityMaker, makeSidoMaker, setMakerToNull } from '@/utils/makers';
 import ControlButton from './ControlButton';
 
 const Map = () => {
@@ -58,14 +57,6 @@ const Map = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  const setMakerToNull = ({ map, markers }: MapAndMakers) => {
-    if (map && markers.length) {
-      markers.forEach((marker) => {
-        marker.setMap(null);
-      });
-    }
-  };
-
   useEffect(() => {
     if (!map || !sidoDustInfoList || !allLocation) return;
 
@@ -73,9 +64,9 @@ const Map = () => {
 
     makeSidoMaker({
       map,
-      sidoDustInfoList,
+      markers: sidoDustInfoMarkers,
+      dustInfoList: sidoDustInfoList,
       allLocation,
-      sidoDustInfoMarkers,
     });
 
     return () => {
@@ -93,8 +84,8 @@ const Map = () => {
 
     makeCityMaker({
       map,
-      cityDustInfoList,
-      cityDustInfoMarkers,
+      markers: cityDustInfoMarkers,
+      dustInfoList: cityDustInfoList,
       setCityDustInfoMarkers,
     });
 

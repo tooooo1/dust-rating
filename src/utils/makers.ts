@@ -1,17 +1,13 @@
 import { SetStateAction, Dispatch } from 'react';
 import MarkerTemplate from '@/components/Map/MakerTemplate';
-import { CityDustInfo, SidoDustInfo } from '@/types/dust';
 
-interface makeCityMakerProps {
-  map: kakao.maps.Map | null;
-  cityDustInfoList: CityDustInfo[];
-  cityDustInfoMarkers: kakao.maps.CustomOverlay[];
+import type { MapAndMakers } from '@/types/map';
+
+interface makeCityMakerProps extends MapAndMakers {
   setCityDustInfoMarkers: Dispatch<SetStateAction<kakao.maps.CustomOverlay[]>>;
 }
 
-interface makeSidoMakerProps {
-  map: kakao.maps.Map | null;
-  sidoDustInfoList: SidoDustInfo[];
+interface makeSidoMakerProps extends MapAndMakers {
   allLocation:
     | {
         location: string;
@@ -19,20 +15,19 @@ interface makeSidoMakerProps {
         longitude: number;
       }[]
     | undefined;
-  sidoDustInfoMarkers: kakao.maps.CustomOverlay[];
 }
 
 export const makeCityMaker = ({
   map,
-  cityDustInfoList,
-  cityDustInfoMarkers,
+  dustInfoList,
+  markers,
   setCityDustInfoMarkers,
 }: makeCityMakerProps) => {
   if (!map) return;
 
   const geocoder = new kakao.maps.services.Geocoder();
 
-  cityDustInfoList.forEach(
+  dustInfoList.forEach(
     ({
       location,
       fineDustScale,
@@ -60,7 +55,7 @@ export const makeCityMaker = ({
           });
 
           if (
-            !cityDustInfoMarkers.find(
+            !markers.find(
               (value) => value.getPosition() === marker.getPosition()
             )
           )
@@ -73,13 +68,13 @@ export const makeCityMaker = ({
 
 export const makeSidoMaker = ({
   map,
-  sidoDustInfoList,
+  dustInfoList,
   allLocation,
-  sidoDustInfoMarkers,
+  markers,
 }: makeSidoMakerProps) => {
-  if (!map || !sidoDustInfoList || !allLocation) return;
+  if (!map || !dustInfoList || !allLocation) return;
 
-  sidoDustInfoList.forEach(
+  dustInfoList.forEach(
     ({
       location,
       fineDustScale,
@@ -105,11 +100,22 @@ export const makeSidoMaker = ({
         content: template,
       });
 
-      sidoDustInfoMarkers.push(marker);
+      markers.push(marker);
     }
   );
 
-  sidoDustInfoMarkers.forEach((marker) => {
+  markers.forEach((marker) => {
     marker.setMap(map);
   });
+};
+
+export const setMakerToNull = ({
+  map,
+  markers,
+}: Omit<MapAndMakers, 'dustInfoList'>) => {
+  if (map && markers.length) {
+    markers.forEach((marker) => {
+      marker.setMap(null);
+    });
+  }
 };

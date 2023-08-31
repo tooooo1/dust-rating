@@ -1,5 +1,5 @@
 import type { SetStateAction, Dispatch } from 'react';
-import MarkerTemplate from '@/components/Map/MakerTemplate';
+import MarkerTemplate from '@/components/Map/MarkerTemplate';
 
 import type { MapAndMakers } from '@/types/map';
 

@@ -1,13 +1,13 @@
 import type { SetStateAction, Dispatch } from 'react';
 import MarkerTemplate from '@/components/Map/MarkerTemplate';
 
-import type { MapAndMakers } from '@/types/map';
+import type { MapAndMarkers } from '@/types/map';
 
-interface MakeCityMarker extends MapAndMakers {
+interface MakeCityMarker extends MapAndMarkers {
   setCityDustInfoMarkers: Dispatch<SetStateAction<kakao.maps.CustomOverlay[]>>;
 }
 
-interface MakeSidoMarker extends MapAndMakers {
+interface MakeSidoMarker extends MapAndMarkers {
   allLocation:
     | {
         location: string;
@@ -17,7 +17,7 @@ interface MakeSidoMarker extends MapAndMakers {
     | undefined;
 }
 
-export const makeCityMaker = ({
+export const makeCityMarker = ({
   map,
   dustInfoList,
   markers,
@@ -66,7 +66,7 @@ export const makeCityMaker = ({
   );
 };
 
-export const makeSidoMaker = ({
+export const makeSidoMarker = ({
   map,
   dustInfoList,
   allLocation,
@@ -112,7 +112,7 @@ export const makeSidoMaker = ({
 export const removeMarker = ({
   map,
   markers,
-}: Omit<MapAndMakers, 'dustInfoList'>) => {
+}: Omit<MapAndMarkers, 'dustInfoList'>) => {
   if (map && markers.length) {
     markers.forEach((marker) => {
       marker.setMap(null);

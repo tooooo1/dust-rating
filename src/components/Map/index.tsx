@@ -23,7 +23,7 @@ import {
   INIT_DUST_INFO,
 } from '@/utils/constants';
 
-import { makeCityMaker, makeSidoMaker, removeMarker } from '@/utils/makers';
+import { makeCityMarker, makeSidoMarker, removeMarker } from '@/utils/markers';
 import ControlButton from './ControlButton';
 
 const Map = () => {
@@ -62,7 +62,7 @@ const Map = () => {
 
     const sidoDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
 
-    makeSidoMaker({
+    makeSidoMarker({
       map,
       markers: sidoDustInfoMarkers,
       dustInfoList: sidoDustInfoList,
@@ -82,7 +82,7 @@ const Map = () => {
     )
       return;
 
-    makeCityMaker({
+    makeCityMarker({
       map,
       markers: cityDustInfoMarkers,
       dustInfoList: cityDustInfoList,

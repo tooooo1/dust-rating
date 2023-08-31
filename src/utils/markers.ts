@@ -1,6 +1,5 @@
 import type { SetStateAction, Dispatch } from 'react';
 import MarkerTemplate from '@/components/Map/MarkerTemplate';
-
 import type { MapAndMarkers } from '@/types/map';
 
 interface MakeCityMarker extends MapAndMarkers {

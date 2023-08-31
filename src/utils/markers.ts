@@ -72,35 +72,21 @@ export const makeSidoMarker = ({
 }: MakeSidoMarker) => {
   if (!map || !dustInfoList || !allLocation) return;
 
-  dustInfoList.forEach(
-    ({
-      location,
-      fineDustScale,
-      fineDustGrade,
-      ultraFineDustScale,
-      ultraFineDustGrade,
-    }) => {
-      const { latitude, longitude } = allLocation.find(
-        (scale) => scale.location === location
-      ) || { latitude: 0, longitude: 0 };
+  dustInfoList.forEach((dustInfoItem) => {
+    const { latitude, longitude } = allLocation.find(
+      (scale) => scale.location === dustInfoItem.location
+    ) || { latitude: 0, longitude: 0 };
 
-      const template = MarkerTemplate({
-        location,
-        fineDustScale,
-        fineDustGrade,
-        ultraFineDustScale,
-        ultraFineDustGrade,
-      });
+    const template = MarkerTemplate(dustInfoItem);
 
-      const marker = new kakao.maps.CustomOverlay({
-        clickable: true,
-        position: new kakao.maps.LatLng(latitude, longitude),
-        content: template,
-      });
+    const marker = new kakao.maps.CustomOverlay({
+      clickable: true,
+      position: new kakao.maps.LatLng(latitude, longitude),
+      content: template,
+    });
 
-      markers.push(marker);
-    }
-  );
+    markers.push(marker);
+  });
 
   markers.forEach((marker) => {
     marker.setMap(map);

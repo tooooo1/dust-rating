@@ -36,31 +36,29 @@ export const makeCityMarker = ({
       ultraFineDustGrade,
     }) => {
       geocoder.addressSearch(location, (result, status) => {
-        if (status === kakao.maps.services.Status.OK) {
-          const latitude = Number(result[0].y);
-          const longitude = Number(result[0].x);
+        if (status !== kakao.maps.services.Status.OK) return;
 
-          const template = MarkerTemplate({
-            location,
-            fineDustScale,
-            fineDustGrade,
-            ultraFineDustScale,
-            ultraFineDustGrade,
-          });
+        const latitude = Number(result[0].y);
+        const longitude = Number(result[0].x);
 
-          const marker = new kakao.maps.CustomOverlay({
-            map,
-            position: new kakao.maps.LatLng(latitude, longitude),
-            content: template,
-          });
+        const template = MarkerTemplate({
+          location,
+          fineDustScale,
+          fineDustGrade,
+          ultraFineDustScale,
+          ultraFineDustGrade,
+        });
 
-          if (
-            !markers.find(
-              (value) => value.getPosition() === marker.getPosition()
-            )
-          )
-            setCityDustInfoMarkers((prev) => [...prev, marker]);
-        }
+        const marker = new kakao.maps.CustomOverlay({
+          map,
+          position: new kakao.maps.LatLng(latitude, longitude),
+          content: template,
+        });
+
+        if (
+          !markers.find((value) => value.getPosition() === marker.getPosition())
+        )
+          setCityDustInfoMarkers((prev) => [...prev, marker]);
       });
     }
   );

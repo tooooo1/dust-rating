@@ -1,4 +1,4 @@
-import { SetStateAction, Dispatch } from 'react';
+import type { SetStateAction, Dispatch } from 'react';
 import MarkerTemplate from '@/components/Map/MakerTemplate';
 
 import type { MapAndMakers } from '@/types/map';

@@ -23,7 +23,7 @@ import {
   INIT_DUST_INFO,
 } from '@/utils/constants';
 
-import { makeCityMaker, makeSidoMaker, setMakerToNull } from '@/utils/makers';
+import { makeCityMaker, makeSidoMaker, removeMarker } from '@/utils/makers';
 import ControlButton from './ControlButton';
 
 const Map = () => {
@@ -70,7 +70,7 @@ const Map = () => {
     });
 
     return () => {
-      setMakerToNull({ map, markers: sidoDustInfoMarkers });
+      removeMarker({ map, markers: sidoDustInfoMarkers });
     };
   }, [sidoDustInfoList, allLocation]);
 
@@ -90,7 +90,7 @@ const Map = () => {
     });
 
     return () => {
-      setMakerToNull({ map, markers: cityDustInfoMarkers });
+      removeMarker({ map, markers: cityDustInfoMarkers });
     };
   }, [cityDustInfoList]);
 

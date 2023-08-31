@@ -109,7 +109,7 @@ export const makeSidoMaker = ({
   });
 };
 
-export const setMakerToNull = ({
+export const removeMarker = ({
   map,
   markers,
 }: Omit<MapAndMakers, 'dustInfoList'>) => {

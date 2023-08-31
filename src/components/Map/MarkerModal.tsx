@@ -11,7 +11,7 @@ import MarkerModalButton from '@/components/Map/MarkerModalButton';
 import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 
-interface MakerModalProps {
+interface MarkerModalProps {
   city: string;
   dustInfo: {
     fineDustScale: number;
@@ -24,13 +24,13 @@ interface MakerModalProps {
   onClose: () => void;
 }
 
-const MakerModal = ({
+const MarkerModal = ({
   city,
   dustInfo,
   handleClickForeCastButton,
   isOpen,
   onClose,
-}: MakerModalProps) => {
+}: MarkerModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -59,4 +59,4 @@ const MakerModal = ({
   );
 };
 
-export default MakerModal;
+export default MarkerModal;

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllLocation } from '@/apis/location';
 import { DustLevel } from '@/components/common';
-import MakerModal from '@/components/Map/MarkerModal';
+import MarkerModal from '@/components/Map/MarkerModal';
 import {
   useCityDustInfoListQuery,
   useSidoDustInfoListQuery,
@@ -181,7 +181,7 @@ const Map = () => {
       <Box position="absolute" bottom="1.5rem" zIndex={10}>
         <DustLevel direction="column" />
       </Box>
-      <MakerModal
+      <MarkerModal
         city={selectedSidoOrCity}
         dustInfo={dustInfo}
         handleClickForeCastButton={handleClickForeCastButton}

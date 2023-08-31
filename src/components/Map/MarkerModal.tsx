@@ -1,4 +1,5 @@
 import {
+  Button,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -7,7 +8,6 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import MarkerModalButton from '@/components/Map/MarkerModalButton';
 import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 
@@ -50,9 +50,14 @@ const MarkerModal = ({
           />
         </ModalBody>
         <ModalFooter display="flex" justifyContent="space-around">
-          <MarkerModalButton handleClick={handleClickForeCastButton}>
+          <Button
+            colorScheme="blue"
+            mr={3}
+            backgroundColor="#53caf2"
+            onClick={handleClickForeCastButton}
+          >
             예보 페이지로 이동하기
-          </MarkerModalButton>
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

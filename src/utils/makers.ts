@@ -3,11 +3,11 @@ import MarkerTemplate from '@/components/Map/MakerTemplate';
 
 import type { MapAndMakers } from '@/types/map';
 
-interface makeCityMarker extends MapAndMakers {
+interface MakeCityMarker extends MapAndMakers {
   setCityDustInfoMarkers: Dispatch<SetStateAction<kakao.maps.CustomOverlay[]>>;
 }
 
-interface makeSidoMarker extends MapAndMakers {
+interface MakeSidoMarker extends MapAndMakers {
   allLocation:
     | {
         location: string;
@@ -22,7 +22,7 @@ export const makeCityMaker = ({
   dustInfoList,
   markers,
   setCityDustInfoMarkers,
-}: makeCityMarker) => {
+}: MakeCityMarker) => {
   if (!map) return;
 
   const geocoder = new kakao.maps.services.Geocoder();
@@ -71,7 +71,7 @@ export const makeSidoMaker = ({
   dustInfoList,
   allLocation,
   markers,
-}: makeSidoMarker) => {
+}: MakeSidoMarker) => {
   if (!map || !dustInfoList || !allLocation) return;
 
   dustInfoList.forEach(

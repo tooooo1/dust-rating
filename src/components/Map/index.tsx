@@ -21,6 +21,8 @@ import {
   ROUTE,
   SIDO_NAMES,
   INIT_DUST_INFO,
+  INIT_DUST_SCALE,
+  INIT_DUST_GRADE,
 } from '@/utils/constants';
 
 import { makeCityMarker, makeSidoMarker, removeMarker } from '@/utils/markers';
@@ -123,10 +125,14 @@ const Map = () => {
     setSelectedSidoOrCity(city.id);
 
     const nextDustInfo = {
-      fineDustScale: Number(city.dataset.finedustscale || 1),
-      fineDustGrade: Number(city.dataset.finedustgrade || 1),
-      ultraFineDustScale: Number(city.dataset.ultrafinedustscale || 1),
-      ultraFineDustGrade: Number(city.dataset.ultrafinedustgrade || 1),
+      fineDustScale: Number(city.dataset.finedustscale || INIT_DUST_SCALE),
+      fineDustGrade: Number(city.dataset.finedustgrade || INIT_DUST_GRADE),
+      ultraFineDustScale: Number(
+        city.dataset.ultrafinedustscale || INIT_DUST_SCALE
+      ),
+      ultraFineDustGrade: Number(
+        city.dataset.ultrafinedustgrade || INIT_DUST_GRADE
+      ),
     };
 
     setDustInfo(nextDustInfo);

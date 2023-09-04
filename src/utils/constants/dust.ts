@@ -20,6 +20,9 @@ export const DUST_GRADE: { [key: number]: GradeType } = {
   4: 'DANGER',
 };
 
+export const INIT_DUST_SCALE = 0;
+export const INIT_DUST_GRADE = 0;
+
 export const INIT_DUST_INFO = {
   fineDustScale: 0,
   fineDustGrade: 0,
@@ -29,17 +32,17 @@ export const INIT_DUST_INFO = {
 
 export const INIT_SIDO_DUST_INFO = {
   location: '정보를 불러오지 못했어요',
-  fineDustScale: 9999,
-  fineDustGrade: 9999,
-  ultraFineDustScale: 9999,
-  ultraFineDustGrade: 9999,
+  fineDustScale: INIT_DUST_SCALE,
+  fineDustGrade: INIT_DUST_GRADE,
+  ultraFineDustScale: INIT_DUST_SCALE,
+  ultraFineDustGrade: INIT_DUST_GRADE,
 };
 
 export const INIT_CITY_DUST_INFO = {
   location: '정보를 불러오지 못했어요',
-  fineDustScale: 9999,
-  fineDustGrade: 9999,
-  ultraFineDustScale: 9999,
-  ultraFineDustGrade: 9999,
+  fineDustScale: INIT_DUST_SCALE,
+  fineDustGrade: INIT_DUST_GRADE,
+  ultraFineDustScale: INIT_DUST_SCALE,
+  ultraFineDustGrade: INIT_DUST_GRADE,
   dataTime: INIT_DATA_TIME,
 };

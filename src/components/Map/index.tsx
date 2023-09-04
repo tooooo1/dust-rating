@@ -186,7 +186,7 @@ const Map = () => {
         dustInfo={dustInfo}
         handleClickForeCastButton={handleClickForeCastButton}
         isOpen={isOpen}
-        onClose={onClose}
+        handleClose={onClose}
       />
     </Box>
   );

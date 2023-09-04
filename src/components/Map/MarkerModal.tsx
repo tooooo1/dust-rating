@@ -17,7 +17,7 @@ interface MarkerModalProps {
   dustInfo: DustFigures;
   handleClickForeCastButton: () => void;
   isOpen: boolean;
-  onClose: () => void;
+  handleClose: () => void;
 }
 
 const MarkerModal = ({
@@ -25,10 +25,10 @@ const MarkerModal = ({
   dustInfo,
   handleClickForeCastButton,
   isOpen,
-  onClose,
+  handleClose,
 }: MarkerModalProps) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={handleClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader textAlign="center">{city}</ModalHeader>

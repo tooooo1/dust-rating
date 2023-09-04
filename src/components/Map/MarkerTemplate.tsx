@@ -12,8 +12,7 @@ export const MarkerTemplate = ({
   const backgroundColor = theme.colors[DUST_GRADE[fineDustGrade]];
 
   return `
-        <div class="dust-info-marker" id="${location}" 
-        data-finedustscale="${fineDustScale} "data-finedustgrade="${fineDustGrade}" data-ultrafinedustscale="${ultraFineDustScale}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};">
+        <div class="dust-info-marker" id="${location}" data-finedustscale="${fineDustScale} "data-finedustgrade="${fineDustGrade}" data-ultrafinedustscale="${ultraFineDustScale}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};">
           <p class="city-name">${location}</p>
           <div class="dust-info">
             <div>${fineDustScale}</div>

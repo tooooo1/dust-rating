@@ -9,16 +9,12 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
+import { DustFigures } from '@/types/dust';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 
 interface MarkerModalProps {
   city: string;
-  dustInfo: {
-    fineDustScale: number;
-    fineDustGrade: number;
-    ultraFineDustScale: number;
-    ultraFineDustGrade: number;
-  };
+  dustInfo: DustFigures;
   handleClickForeCastButton: () => void;
   isOpen: boolean;
   onClose: () => void;

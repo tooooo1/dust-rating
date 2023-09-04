@@ -7,13 +7,11 @@ interface MakeCityMarker extends MapAndMarkers {
 }
 
 interface MakeSidoMarker extends MapAndMarkers {
-  allLocation:
-    | {
-        location: string;
-        latitude: number;
-        longitude: number;
-      }[]
-    | undefined;
+  allLocation: {
+    location: string;
+    latitude: number;
+    longitude: number;
+  }[];
 }
 
 export const makeCityMarker = ({

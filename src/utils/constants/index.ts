@@ -28,6 +28,7 @@ export {
   COLOR_MARKER_MOUSE_OUT,
   ZINDEX_MARKER_MOUSE_OVER,
   ZINDEX_MARKER_MOUSE_OUT,
+  INIT_ZINDEX,
 } from '@/utils/constants/map';
 export { BACKGROUND_ANIMATION, SCROLL_STYLE } from '@/utils/constants/style';
 export { ERROR_MESSAGE } from '@/utils/constants/message';

@@ -24,6 +24,7 @@ import {
   INIT_DUST_SCALE,
   INIT_DUST_GRADE,
   ERROR_MESSAGE,
+  INIT_ZINDEX,
 } from '@/utils/constants';
 import { makeCityMarker, makeSidoMarker, removeMarker } from '@/utils/markers';
 import ControlButton from './ControlButton';
@@ -166,10 +167,10 @@ const Map = () => {
 
   return (
     <Box position="relative" width="100%" height="100%" ref={mapRef}>
-      <Box position="absolute" top="1rem" left="1rem" zIndex={10}>
+      <Box position="absolute" top="1rem" left="1rem" zIndex={INIT_ZINDEX}>
         <ControlButton type="go-back" onClick={handleClickGoBack} />
       </Box>
-      <VStack position="absolute" top="1rem" right="1rem" zIndex={10}>
+      <VStack position="absolute" top="1rem" right="1rem" zIndex={INIT_ZINDEX}>
         <ControlButton
           type="current-location"
           onClick={handleCurrentLocationChange}
@@ -182,8 +183,8 @@ const Map = () => {
         />
         {zoomLevel === MAX_ZOOM_LEVEL && !sidoDustInfoList && <Spinner />}
       </VStack>
-      {!cityDustInfoList ? <Spinner zIndex={10} /> : ''}
-      <Box position="absolute" bottom="1.5rem" zIndex={10}>
+      {!cityDustInfoList ? <Spinner zIndex={INIT_ZINDEX} /> : ''}
+      <Box position="absolute" bottom="1.5rem" zIndex={INIT_ZINDEX}>
         <DustLevel direction="column" />
       </Box>
       <MarkerModal

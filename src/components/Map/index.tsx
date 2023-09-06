@@ -38,7 +38,7 @@ const Map = () => {
     ERROR_MESSAGE.NO_CITY_DATA
   );
   const [dustInfo, setDustInfo] = useState(INIT_DUST_INFO);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose: handleClose } = useDisclosure();
   const {
     map,
     zoomLevel,
@@ -192,7 +192,7 @@ const Map = () => {
         dustInfo={dustInfo}
         handleClickForeCastButton={handleClickForeCastButton}
         isOpen={isOpen}
-        handleClose={onClose}
+        handleClose={handleClose}
       />
     </Box>
   );

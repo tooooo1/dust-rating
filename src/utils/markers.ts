@@ -1,7 +1,7 @@
 import type { SetStateAction, Dispatch } from 'react';
-import markerTemplate from '@/components/Map/markerTemplate';
 import type { MapAndMarkers } from '@/types/map';
 import { NOT_FOUND_LOCATION } from '@/utils/constants';
+import markerTemplate from '@/utils/markerTemplate';
 
 interface MakeCityMarker extends MapAndMarkers {
   setCityDustInfoMarkers: Dispatch<SetStateAction<kakao.maps.CustomOverlay[]>>;

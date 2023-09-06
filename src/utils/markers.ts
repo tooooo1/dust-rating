@@ -25,11 +25,11 @@ export const makeCityMarker = ({
   const geocoder = new kakao.maps.services.Geocoder();
 
   dustInfoList.forEach((dustInfoItem) => {
-    geocoder.addressSearch(dustInfoItem.location, (result, status) => {
+    geocoder.addressSearch(dustInfoItem.location, ([result], status) => {
       if (status !== kakao.maps.services.Status.OK) return;
 
-      const latitude = Number(result[0].y);
-      const longitude = Number(result[0].x);
+      const latitude = Number(result.y);
+      const longitude = Number(result.x);
 
       const template = MarkerTemplate(dustInfoItem);
 

@@ -55,9 +55,7 @@ const Map = () => {
 
   const cityDustInfoList = useCityDustInfoListQuery(currentSido);
 
-  const { data: allLocation } = useQuery(['all-location'], getAllLocation, {
-    staleTime: INIT_STALE_TIME,
-  });
+  const { data: allLocation } = useQuery(['all-location'], getAllLocation);
 
   useEffect(() => {
     if (!map || !sidoDustInfoList || !allLocation) return;

@@ -7,7 +7,6 @@ const useDustForecastQuery = (place: string) => {
     ['dust-forecast', place],
     getDustForecast,
     {
-      staleTime: INIT_STALE_TIME,
       suspense: true,
     }
   );

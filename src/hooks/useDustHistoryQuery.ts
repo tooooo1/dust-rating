@@ -6,10 +6,7 @@ import { INIT_STALE_TIME } from '@/utils/constants';
 const useDustHistoryQuery = (place: string) => {
   const { data: dustHistories } = useQuery<DustHistory[]>(
     ['dust-history', place],
-    () => getDustHistory(place),
-    {
-      staleTime: INIT_STALE_TIME,
-    }
+    () => getDustHistory(place)
   );
 
   return dustHistories;

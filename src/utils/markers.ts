@@ -1,6 +1,7 @@
 import type { SetStateAction, Dispatch } from 'react';
 import MarkerTemplate from '@/components/Map/MarkerTemplate';
 import type { MapAndMarkers } from '@/types/map';
+import { NOT_FOUND_LOCATION } from '@/utils/constants';
 
 interface MakeCityMarker extends MapAndMarkers {
   setCityDustInfoMarkers: Dispatch<SetStateAction<kakao.maps.CustomOverlay[]>>;
@@ -56,9 +57,9 @@ export const makeSidoMarker = ({
   if (!map || !dustInfoList || !allLocation) return;
 
   dustInfoList.forEach((dustInfoItem) => {
-    const { latitude, longitude } = allLocation.find(
-      (scale) => scale.location === dustInfoItem.location
-    ) || { latitude: 0, longitude: 0 };
+    const { latitude, longitude } =
+      allLocation.find((scale) => scale.location === dustInfoItem.location) ||
+      NOT_FOUND_LOCATION;
 
     const template = MarkerTemplate(dustInfoItem);
 

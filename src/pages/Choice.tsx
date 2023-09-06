@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from 'react';
 import { BsMapFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import ChoiceNavigateButton from '@/components/Choice/ChoiceNavigateButton';
+import theme from '@/styles/theme';
 import { FINE_DUST, SIDO_NAMES, INIT_SIDO, ROUTE } from '@/utils/constants';
 
 const Choice = () => {
@@ -33,7 +34,7 @@ const Choice = () => {
       alignItems="center"
       color="#ffffff"
       textAlign="center"
-      backgroundColor="#53caf2"
+      backgroundColor={theme.backgroundColors.INIT}
     >
       <Image src="images/location.png" alt="location" width={30} height={30} />
       <Text as="span" fontSize={{ base: 14, sm: 16 }} fontWeight={400} mt={4}>

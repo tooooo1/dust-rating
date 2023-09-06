@@ -24,7 +24,7 @@ import {
   DUST_GRADE,
   INIT_SIDO,
   INIT_CITY,
-  INIT_DATATIME,
+  INIT_DATA_TIME,
   BACKGROUND_ANIMATION,
   ERROR_MESSAGE,
 } from '@/utils/constants';
@@ -81,7 +81,7 @@ const DustForecast = () => {
         color="#ffffff"
         mb={6}
       >
-        {dustInfo.dataTime || INIT_DATATIME} 기준
+        {dustInfo.dataTime || INIT_DATA_TIME} 기준
       </Text>
       <Box
         width="100%"

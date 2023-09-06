@@ -1,8 +1,9 @@
 import { Box, Image } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
+import theme from '@/styles/theme';
 
 const Logo = () => (
-  <Box position="relative" bg="#53caf2">
+  <Box position="relative" bg={theme.backgroundColors.INIT}>
     <Image
       src="/images/il.jpg"
       alt="il"

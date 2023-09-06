@@ -1,6 +1,6 @@
 import { Text } from '@chakra-ui/react';
 import { useSort } from '@/store/sort';
-import { INIT_DATATIME } from '@/utils/constants';
+import { INIT_DATA_TIME } from '@/utils/constants';
 
 interface RankingHeaderProps {
   dataTime: string;
@@ -28,7 +28,7 @@ const RankingHeader = ({ dataTime }: RankingHeaderProps) => {
         color="#ffffff"
         mb={6}
       >
-        {dataTime || INIT_DATATIME} 기준
+        {dataTime || INIT_DATA_TIME} 기준
       </Text>
     </>
   );

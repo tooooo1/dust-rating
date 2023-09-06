@@ -3,6 +3,10 @@ import { SIDO_NAMES } from '@/utils/constants';
 
 const { VITE_KAKAO_MAP_URL, VITE_KAKAO_API_KEY } = import.meta.env;
 
+/**
+ *
+ * @description 17개 Sido위치를 반환하는 함수
+ */
 export const getAllLocation = async () => {
   try {
     const result = await Promise.all(

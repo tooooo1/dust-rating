@@ -1,36 +1,17 @@
 /* global kakao */
-import {
-  VStack,
-  Box,
-  Spinner,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { VStack, Box, Spinner, useDisclosure } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllLocation } from '@/apis/location';
 import { DustLevel } from '@/components/common';
-import MarkerModalButton from '@/components/Map/MarkerModalButton';
-import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
+import MarkerModal from '@/components/Map/MarkerModal';
 import {
   useCityDustInfoListQuery,
   useSidoDustInfoListQuery,
 } from '@/hooks/useDustInfoQuery';
 import useMap from '@/hooks/useMap';
-import theme from '@/styles/theme';
-import type { SidoDustInfo } from '@/types/dust';
-import type { MapAndMakers } from '@/types/map';
 import {
-  FINE_DUST,
-  ULTRA_FINE_DUST,
-  DUST_GRADE,
   CITY_ZOOM_LEVEL,
   MAX_ZOOM_LEVEL,
   COLOR_MARKER_MOUSE_OVER,
@@ -39,23 +20,25 @@ import {
   ZINDEX_MARKER_MOUSE_OUT,
   ROUTE,
   SIDO_NAMES,
+  INIT_DUST_INFO,
+  INIT_DUST_SCALE,
+  INIT_DUST_GRADE,
+  ERROR_MESSAGE,
+  INIT_ZINDEX,
 } from '@/utils/constants';
+import { makeCityMarker, makeSidoMarker, removeMarker } from '@/utils/markers';
 import ControlButton from './ControlButton';
 
 const Map = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const sidoDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
   const [cityDustInfoMarkers, setCityDustInfoMarkers] = useState<
     kakao.maps.CustomOverlay[]
   >([]);
-  const [city, setCity] = useState('동네 정보를 받아오지 못했어요');
-  const [dustInfo, setDustInfo] = useState({
-    fineDustScale: 0,
-    fineDustGrade: 0,
-    ultraFineDustScale: 0,
-    ultraFineDustGrade: 0,
-  });
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedSidoOrCity, setSelectedSidoOrCity] = useState<string>(
+    ERROR_MESSAGE.NO_CITY_DATA
+  );
+  const [dustInfo, setDustInfo] = useState(INIT_DUST_INFO);
+  const { isOpen, onOpen, onClose: handleClose } = useDisclosure();
   const {
     map,
     zoomLevel,
@@ -74,81 +57,24 @@ const Map = () => {
 
   const cityDustInfoList = useCityDustInfoListQuery(currentSido);
 
-  const { data: allLocation } = useQuery(['all-location'], getAllLocation, {
-    staleTime: 1000 * 60 * 5,
-  });
-
-  const makeMarkerTemplate = ({
-    location,
-    fineDustScale,
-    fineDustGrade,
-    ultraFineDustScale,
-    ultraFineDustGrade,
-  }: SidoDustInfo) => {
-    const backgroundColor = theme.colors[DUST_GRADE[fineDustGrade]];
-
-    return `
-          <div class="dust-info-marker" id="${location}" 
-          data-finedustscale="${fineDustScale} "data-finedustgrade="${fineDustGrade}" data-ultrafinedustscale="${ultraFineDustScale}" data-ultrafinedustgrade="${ultraFineDustGrade}" style="background-color: ${backgroundColor};">
-            <p class="city-name">${location}</p>
-            <div class="dust-info">
-              <div>${fineDustScale}</div>
-              <span class="divider">/</span>
-              <div>${ultraFineDustScale}</div>  
-            </div>
-          </div>
-    `;
-  };
-
-  const setMakerToNull = ({ map, markers }: MapAndMakers) => {
-    if (map && markers.length) {
-      markers.forEach((marker) => {
-        marker.setMap(null);
-      });
-    }
-  };
+  const { data: allLocation } = useQuery(['all-location'], getAllLocation);
 
   useEffect(() => {
     if (!map || !sidoDustInfoList || !allLocation) return;
 
-    sidoDustInfoList.forEach(
-      ({
-        location,
-        fineDustScale,
-        fineDustGrade,
-        ultraFineDustScale,
-        ultraFineDustGrade,
-      }) => {
-        const { latitude, longitude } = allLocation.find(
-          (scale) => scale.location === location
-        ) || { latitude: 0, longitude: 0 };
+    const sidoDustInfoMarkers: kakao.maps.CustomOverlay[] = [];
 
-        const template = makeMarkerTemplate({
-          location,
-          fineDustScale,
-          fineDustGrade,
-          ultraFineDustScale,
-          ultraFineDustGrade,
-        });
-
-        const marker = new kakao.maps.CustomOverlay({
-          clickable: true,
-          position: new kakao.maps.LatLng(latitude, longitude),
-          content: template,
-        });
-
-        sidoDustInfoMarkers.push(marker);
-      }
-    );
-
-    sidoDustInfoMarkers.forEach((marker) => {
-      marker.setMap(map);
+    makeSidoMarker({
+      map,
+      markers: sidoDustInfoMarkers,
+      dustInfoList: sidoDustInfoList,
+      allLocation,
     });
 
     return () => {
-      setMakerToNull({ map, markers: sidoDustInfoMarkers });
+      removeMarker({ map, markers: sidoDustInfoMarkers });
     };
-  }, [sidoDustInfoList, allLocation, sidoDustInfoMarkers]);
+  }, [sidoDustInfoList, allLocation]);
 
   useEffect(() => {
     if (
@@ -158,89 +84,19 @@ const Map = () => {
     )
       return;
 
-    const geocoder = new kakao.maps.services.Geocoder();
-
-    cityDustInfoList.forEach(
-      ({
-        location,
-        fineDustScale,
-        fineDustGrade,
-        ultraFineDustScale,
-        ultraFineDustGrade,
-      }) => {
-        geocoder.addressSearch(location, (result, status) => {
-          if (status === kakao.maps.services.Status.OK) {
-            const latitude = Number(result[0].y);
-            const longitude = Number(result[0].x);
-
-            const template = makeMarkerTemplate({
-              location,
-              fineDustScale,
-              fineDustGrade,
-              ultraFineDustScale,
-              ultraFineDustGrade,
-            });
-
-            const marker = new kakao.maps.CustomOverlay({
-              map,
-              position: new kakao.maps.LatLng(latitude, longitude),
-              content: template,
-            });
-
-            if (
-              !cityDustInfoMarkers.find(
-                (value) => value.getPosition() === marker.getPosition()
-              )
-            )
-              setCityDustInfoMarkers((prev) => [...prev, marker]);
-          }
-        });
-      }
-    );
+    makeCityMarker({
+      map,
+      markers: cityDustInfoMarkers,
+      dustInfoList: cityDustInfoList,
+      setCityDustInfoMarkers,
+    });
 
     return () => {
-      setMakerToNull({ map, markers: cityDustInfoMarkers });
+      removeMarker({ map, markers: cityDustInfoMarkers });
     };
   }, [cityDustInfoList]);
 
-  const handleClickMarker = useCallback((city: HTMLDivElement) => {
-    setCity(city.id);
-
-    const nextDustInfo = {
-      fineDustScale: Number(city.dataset.finedustscale || 1),
-      fineDustGrade: Number(city.dataset.finedustgrade || 1),
-      ultraFineDustScale: Number(city.dataset.ultrafinedustscale || 1),
-      ultraFineDustGrade: Number(city.dataset.ultrafinedustgrade || 1),
-    };
-
-    setDustInfo(nextDustInfo);
-    onOpen();
-  }, []);
-
-  const handleMouseOverMarker = useCallback((city: HTMLDivElement) => {
-    city.style.color = COLOR_MARKER_MOUSE_OVER;
-    if (city.parentElement) {
-      city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OVER;
-    }
-  }, []);
-
-  const handleMouseOutMarker = useCallback((city: HTMLDivElement) => {
-    city.style.color = COLOR_MARKER_MOUSE_OUT;
-    if (city.parentElement) {
-      city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OUT;
-    }
-  }, []);
-
-  const handleClickForeCastButton = () => {
-    SIDO_NAMES.includes(city)
-      ? navigate(`${ROUTE.RANKING}/${city}`)
-      : navigate(`${ROUTE.DUST_FORECAST}?sido=${currentSido}&city=${city}`);
-  };
-
-  const handleClickGoBack = () => {
-    navigate(-1);
-  };
-
+  // 마커에 이벤트 추가, 제거
   useEffect(() => {
     document
       .querySelectorAll<HTMLDivElement>('.dust-info-marker')
@@ -263,14 +119,58 @@ const Map = () => {
           );
         });
     };
-  }, [cityDustInfoMarkers, currentLocation, zoomLevel]);
+  }, [currentLocation, cityDustInfoMarkers, zoomLevel]);
+
+  const handleClickMarker = useCallback((city: HTMLDivElement) => {
+    setSelectedSidoOrCity(city.id);
+
+    const nextDustInfo = {
+      fineDustScale: Number(city.dataset.finedustscale) || INIT_DUST_SCALE,
+      fineDustGrade: Number(city.dataset.finedustgrade) || INIT_DUST_GRADE,
+      ultraFineDustScale: Number(
+        city.dataset.ultrafinedustscale || INIT_DUST_SCALE
+      ),
+      ultraFineDustGrade: Number(
+        city.dataset.ultrafinedustgrade || INIT_DUST_GRADE
+      ),
+    };
+
+    setDustInfo(nextDustInfo);
+    onOpen();
+  }, []);
+
+  const handleMouseOverMarker = useCallback((city: HTMLDivElement) => {
+    city.style.color = COLOR_MARKER_MOUSE_OVER;
+    if (city.parentElement) {
+      city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OVER;
+    }
+  }, []);
+
+  const handleMouseOutMarker = useCallback((city: HTMLDivElement) => {
+    city.style.color = COLOR_MARKER_MOUSE_OUT;
+    if (city.parentElement) {
+      city.parentElement.style.zIndex = ZINDEX_MARKER_MOUSE_OUT;
+    }
+  }, []);
+
+  const handleClickForeCastButton = () => {
+    SIDO_NAMES.includes(selectedSidoOrCity)
+      ? navigate(`${ROUTE.RANKING}/${selectedSidoOrCity}`)
+      : navigate(
+          `${ROUTE.DUST_FORECAST}?sido=${currentSido}&city=${selectedSidoOrCity}`
+        );
+  };
+
+  const handleClickGoBack = () => {
+    navigate(-1);
+  };
 
   return (
     <Box position="relative" width="100%" height="100%" ref={mapRef}>
-      <Box position="absolute" top="1rem" left="1rem" zIndex={10}>
+      <Box position="absolute" top="1rem" left="1rem" zIndex={INIT_ZINDEX}>
         <ControlButton type="go-back" onClick={handleClickGoBack} />
       </Box>
-      <VStack position="absolute" top="1rem" right="1rem" zIndex={10}>
+      <VStack position="absolute" top="1rem" right="1rem" zIndex={INIT_ZINDEX}>
         <ControlButton
           type="current-location"
           onClick={handleCurrentLocationChange}
@@ -283,34 +183,24 @@ const Map = () => {
         />
         {zoomLevel === MAX_ZOOM_LEVEL && !sidoDustInfoList && <Spinner />}
       </VStack>
-      {!cityDustInfoList ? <Spinner zIndex={10} /> : ''}
-      <Box position="absolute" bottom="1.5rem" zIndex={10}>
+      {!cityDustInfoList && (
+        <Spinner
+          position="relative"
+          top="50%"
+          left="50%"
+          zIndex={INIT_ZINDEX}
+        />
+      )}
+      <Box position="absolute" bottom="1.5rem" zIndex={INIT_ZINDEX}>
         <DustLevel direction="column" />
       </Box>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader textAlign="center">{city}</ModalHeader>
-          <ModalCloseButton borderColor={'#ffffff'} />
-          <ModalBody>
-            <MarkerModalDustInfo
-              kindOfDust={FINE_DUST}
-              dustScale={dustInfo.fineDustScale}
-              dustGrade={dustInfo.fineDustGrade}
-            />
-            <MarkerModalDustInfo
-              kindOfDust={ULTRA_FINE_DUST}
-              dustScale={dustInfo.ultraFineDustScale}
-              dustGrade={dustInfo.ultraFineDustGrade}
-            />
-          </ModalBody>
-          <ModalFooter display="flex" justifyContent="space-around">
-            <MarkerModalButton handleClick={handleClickForeCastButton}>
-              예보 페이지로 이동하기
-            </MarkerModalButton>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <MarkerModal
+        city={selectedSidoOrCity}
+        dustInfo={dustInfo}
+        handleClickForeCastButton={handleClickForeCastButton}
+        isOpen={isOpen}
+        handleClose={handleClose}
+      />
     </Box>
   );
 };

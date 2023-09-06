@@ -183,7 +183,14 @@ const Map = () => {
         />
         {zoomLevel === MAX_ZOOM_LEVEL && !sidoDustInfoList && <Spinner />}
       </VStack>
-      {!cityDustInfoList && <Spinner zIndex={INIT_ZINDEX} />}
+      {!cityDustInfoList && (
+        <Spinner
+          position="relative"
+          top="50%"
+          left="50%"
+          zIndex={INIT_ZINDEX}
+        />
+      )}
       <Box position="absolute" bottom="1.5rem" zIndex={INIT_ZINDEX}>
         <DustLevel direction="column" />
       </Box>

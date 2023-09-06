@@ -125,8 +125,8 @@ const Map = () => {
     setSelectedSidoOrCity(city.id);
 
     const nextDustInfo = {
-      fineDustScale: Number(city.dataset.finedustscale || INIT_DUST_SCALE),
-      fineDustGrade: Number(city.dataset.finedustgrade || INIT_DUST_GRADE),
+      fineDustScale: Number(city.dataset.finedustscale) || INIT_DUST_SCALE,
+      fineDustGrade: Number(city.dataset.finedustgrade) || INIT_DUST_GRADE,
       ultraFineDustScale: Number(
         city.dataset.ultrafinedustscale || INIT_DUST_SCALE
       ),

@@ -21,6 +21,8 @@ export const DUST_GRADE: { [key: number]: GradeType } = {
   4: 'DANGER',
 };
 
+export const INIT_STALE_TIME = 1000 * 60 * 5;
+
 export const INIT_DUST_SCALE = 0;
 export const INIT_DUST_GRADE = 0;
 

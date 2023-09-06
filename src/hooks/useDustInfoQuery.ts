@@ -5,12 +5,13 @@ import {
   getSidoDustInfos,
 } from '@/apis/dustInfo';
 import { CityDustInfo, SidoDustInfo } from '@/types/dust';
+import { INIT_STALE_TIME } from '@/utils/constants';
 
 export const useSidoDustInfoQuery = (place: string) => {
   const { data: sidoDustInfo } = useQuery(
     ['sido-dust-info', place],
     () => getSidoDustInfo(place),
-    { staleTime: 1000 * 60 * 5 }
+    { staleTime: INIT_STALE_TIME }
   );
 
   return sidoDustInfo;
@@ -24,7 +25,7 @@ export const useSidoDustInfoListQuery = (
     getSidoDustInfos,
     {
       ...options,
-      staleTime: 1000 * 60 * 5,
+      staleTime: INIT_STALE_TIME,
     }
   );
 

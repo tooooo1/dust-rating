@@ -23,6 +23,7 @@ import {
   INIT_DUST_INFO,
   INIT_DUST_SCALE,
   INIT_DUST_GRADE,
+  INIT_STALE_TIME,
 } from '@/utils/constants';
 
 import { makeCityMarker, makeSidoMarker, removeMarker } from '@/utils/markers';
@@ -56,7 +57,7 @@ const Map = () => {
   const cityDustInfoList = useCityDustInfoListQuery(currentSido);
 
   const { data: allLocation } = useQuery(['all-location'], getAllLocation, {
-    staleTime: 1000 * 60 * 5,
+    staleTime: INIT_STALE_TIME,
   });
 
   useEffect(() => {

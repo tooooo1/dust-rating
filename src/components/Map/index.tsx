@@ -23,7 +23,7 @@ import {
   INIT_DUST_INFO,
   INIT_DUST_SCALE,
   INIT_DUST_GRADE,
-  INIT_STALE_TIME,
+  ERROR_MESSAGE,
 } from '@/utils/constants';
 import { makeCityMarker, makeSidoMarker, removeMarker } from '@/utils/markers';
 import ControlButton from './ControlButton';
@@ -33,8 +33,9 @@ const Map = () => {
   const [cityDustInfoMarkers, setCityDustInfoMarkers] = useState<
     kakao.maps.CustomOverlay[]
   >([]);
-  const [selectedSidoOrCity, setSelectedSidoOrCity] =
-    useState('동네 정보를 받아오지 못했어요');
+  const [selectedSidoOrCity, setSelectedSidoOrCity] = useState<string>(
+    ERROR_MESSAGE.NO_CITY_DATA
+  );
   const [dustInfo, setDustInfo] = useState(INIT_DUST_INFO);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {

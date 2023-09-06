@@ -16,6 +16,8 @@ const theme = extendTheme({
     BAD: '#fda60d',
     NORMAL: '#03c73c',
     GOOD: '#30a2ff',
+    MAP_ICON_BACKGROUND: '#b4e9fa',
+    MAP_ICON_HOVER_MAP_ICON_BACKGROUND: '#86e0fc',
   },
   backgroundColors: {
     DANGER:

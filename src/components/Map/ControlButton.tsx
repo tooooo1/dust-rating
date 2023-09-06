@@ -1,6 +1,7 @@
 import { IconButton } from '@chakra-ui/react';
 import { AiOutlineFullscreenExit, AiOutlineArrowLeft } from 'react-icons/ai';
 import { BiTargetLock, BiPlus, BiMinus } from 'react-icons/bi';
+import theme from '@/styles/theme';
 
 const icons = {
   'current-location': <BiTargetLock />,
@@ -21,9 +22,9 @@ const ControlButton = ({ type, onClick }: ControlButtonProps) => {
     <IconButton
       aria-label={type}
       onClick={onClick}
-      backgroundColor="#b4e9fa"
+      backgroundColor={theme.colors.MAP_ICON_BACKGROUND}
       icon={icons[type]}
-      _hover={{ bg: '#86e0fc' }}
+      _hover={{ bg: theme.colors.MAP_ICON_HOVER_MAP_ICON_BACKGROUND }}
     />
   );
 };

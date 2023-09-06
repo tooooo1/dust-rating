@@ -25,7 +25,6 @@ import {
   INIT_DUST_GRADE,
   INIT_STALE_TIME,
 } from '@/utils/constants';
-
 import { makeCityMarker, makeSidoMarker, removeMarker } from '@/utils/markers';
 import ControlButton from './ControlButton';
 

@@ -2,7 +2,7 @@ import theme from '@/styles/theme';
 import type { SidoDustInfo } from '@/types/dust';
 import { DUST_GRADE } from '@/utils/constants';
 
-export const MarkerTemplate = ({
+const MarkerTemplate = ({
   location,
   fineDustScale,
   fineDustGrade,

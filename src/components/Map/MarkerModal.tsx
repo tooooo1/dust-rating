@@ -32,7 +32,7 @@ const MarkerModal = ({
       <ModalOverlay />
       <ModalContent>
         <ModalHeader textAlign="center">{city}</ModalHeader>
-        <ModalCloseButton borderColor={'#ffffff'} />
+        <ModalCloseButton borderColor="#ffffff" />
         <ModalBody>
           <MarkerModalDustInfo
             kindOfDust={FINE_DUST}

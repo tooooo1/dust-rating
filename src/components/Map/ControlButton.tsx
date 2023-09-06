@@ -22,9 +22,9 @@ const ControlButton = ({ type, onClick }: ControlButtonProps) => {
     <IconButton
       aria-label={type}
       onClick={onClick}
-      backgroundColor={theme.colors.MAP_ICON_BACKGROUND}
+      backgroundColor={theme.backgroundColors.MAP_ICON_BACKGROUND}
       icon={icons[type]}
-      _hover={{ bg: theme.colors.MAP_ICON_HOVER_MAP_ICON_BACKGROUND }}
+      _hover={{ bg: theme.backgroundColors.MAP_ICON_HOVER_MAP_ICON_BACKGROUND }}
     />
   );
 };

@@ -16,8 +16,6 @@ const theme = extendTheme({
     BAD: '#fda60d',
     NORMAL: '#03c73c',
     GOOD: '#30a2ff',
-    MAP_ICON_BACKGROUND: '#b4e9fa',
-    MAP_ICON_HOVER_MAP_ICON_BACKGROUND: '#86e0fc',
   },
   backgroundColors: {
     DANGER:
@@ -28,6 +26,8 @@ const theme = extendTheme({
     GOOD: 'linear-gradient(77deg, rgba(255,255,180,1) 0%, rgba(83,202,242,1) 50%, rgba(48,162,255,1) 100%)',
     NONE: '#ffffff8f',
     INIT: '#53caf2',
+    MAP_ICON_BACKGROUND: '#b4e9fa',
+    MAP_ICON_HOVER_MAP_ICON_BACKGROUND: '#86e0fc',
   },
 });
 

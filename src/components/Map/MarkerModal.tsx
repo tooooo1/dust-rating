@@ -9,6 +9,7 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 import MarkerModalDustInfo from '@/components/Map/MarkerModalDustInfo';
+import theme from '@/styles/theme';
 import { DustFigures } from '@/types/dust';
 import { FINE_DUST, ULTRA_FINE_DUST } from '@/utils/constants';
 
@@ -49,7 +50,7 @@ const MarkerModal = ({
           <Button
             colorScheme="blue"
             mr={3}
-            backgroundColor="#53caf2"
+            backgroundColor={theme.backgroundColors.INIT}
             onClick={handleClickForeCastButton}
           >
             예보 페이지로 이동하기

@@ -17,6 +17,7 @@ const theme = extendTheme({
     NORMAL: '#03c73c',
     GOOD: '#30a2ff',
     SECONDARY: '#3a9cbd',
+    BEIGE: '#dfdfdf',
   },
   backgroundColors: {
     DANGER:

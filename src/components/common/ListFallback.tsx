@@ -1,4 +1,5 @@
 import { Skeleton } from '@chakra-ui/react';
+import theme from '@/styles/theme';
 
 interface ListFallbackProps {
   count?: number;
@@ -15,7 +16,7 @@ const ListFallback = ({ count = SIDO_COUNT }: ListFallbackProps) => {
           width="100%"
           height="3rem"
           my={3}
-          endColor="#dfdfdf"
+          endColor={theme.colors.BEIGE}
         />
       ))}
     </>

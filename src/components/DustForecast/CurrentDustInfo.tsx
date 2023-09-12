@@ -1,4 +1,5 @@
 import { Box, Text, Flex } from '@chakra-ui/react';
+import theme from '@/styles/theme';
 import DustState from '../common/DustState';
 
 interface CurrentDustInfoProps {
@@ -13,7 +14,10 @@ export const CurrentDustInfo = ({
   dustGrade,
 }: CurrentDustInfoProps) => {
   return (
-    <Box flexGrow={1} borderX={{ base: 'none', sm: '1px solid #dfdfdf' }}>
+    <Box
+      flexGrow={1}
+      borderX={{ base: 'none', sm: `1px solid ${theme.colors.BEIGE}` }}
+    >
       <Text as="p" fontSize={{ base: 18, sm: 20 }} fontWeight={600} mb={2}>
         {kindOfDust}
       </Text>

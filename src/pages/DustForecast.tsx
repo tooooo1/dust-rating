@@ -97,7 +97,7 @@ const DustForecast = () => {
           alignItems="center"
           pb={10}
           mb={14}
-          borderBottom="1px solid #dfdfdf"
+          borderBottom={`1px solid ${theme.colors.BEIGE}`}
         >
           <CurrentDustInfo
             kindOfDust={FINE_DUST}
@@ -125,7 +125,7 @@ const DustForecast = () => {
           </Flex>
           <DustChart location={dustInfo.location} />
         </Box>
-        <Divider borderColor="#dfdfdf" mb={14} />
+        <Divider borderColor={theme.colors.BEIGE} mb={14} />
         <Box width="100%">
           <Text as="p" fontSize={{ base: 18, sm: 20 }} fontWeight={600} mb={6}>
             대기질 예보
@@ -139,7 +139,7 @@ const DustForecast = () => {
                 width="100%"
                 height={860}
                 borderRadius={12}
-                endColor="#dfdfdf"
+                endColor={theme.colors.BEIGE}
               />
             }
           >

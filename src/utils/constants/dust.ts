@@ -43,3 +43,5 @@ export const INIT_CITY_DUST_INFO = {
   dataTime: INIT_DATA_TIME,
   ...INIT_DUST_INFO,
 };
+
+export const DUST_PERCENT_DENOMINATOR = 500;

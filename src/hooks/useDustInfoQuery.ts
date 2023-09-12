@@ -5,7 +5,6 @@ import {
   getSidoDustInfos,
 } from '@/apis/dustInfo';
 import { CityDustInfo, SidoDustInfo } from '@/types/dust';
-import { INIT_STALE_TIME } from '@/utils/constants';
 
 export const useSidoDustInfoQuery = (place: string) => {
   const { data: sidoDustInfo } = useQuery(['sido-dust-info', place], () =>

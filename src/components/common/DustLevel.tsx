@@ -13,7 +13,7 @@ export const DustLevel = ({ direction = 'row' }: DustLevelProps) => {
       fontSize={{ base: 12, sm: 14 }}
       fontWeight={500}
       textAlign="center"
-      color="#ffffff"
+      color="white"
       gap={1}
     >
       <Box

@@ -32,7 +32,7 @@ const Choice = () => {
       direction="column"
       justifyContent="center"
       alignItems="center"
-      color="#ffffff"
+      color="white"
       textAlign="center"
       backgroundColor={theme.backgroundColors.INIT}
     >
@@ -51,11 +51,11 @@ const Choice = () => {
           variant="filled"
           width={{ base: 24, sm: 28 }}
           fontSize={14}
-          bg="#ffffff"
+          bg="white"
           color="#2a282f"
           opacity={0.8}
           cursor="pointer"
-          _focus={{ bg: '#ffffff' }}
+          _focus={{ bg: 'white' }}
           onChange={handlePlaceChange}
           value={place}
         >
@@ -66,7 +66,7 @@ const Choice = () => {
           ))}
         </Select>
         <Button
-          color="#ffffff"
+          color="white"
           bg={theme.colors.SECONDARY}
           px={4}
           fontSize={14}

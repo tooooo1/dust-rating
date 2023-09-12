@@ -67,7 +67,7 @@ const DustForecast = () => {
         as="h1"
         fontSize={{ base: 16, sm: 18, md: 20 }}
         fontWeight={600}
-        color="#ffffff"
+        color="white"
         mt={10}
         mb={{ base: 2, sm: 3, md: 4 }}
       >
@@ -78,7 +78,7 @@ const DustForecast = () => {
         as="p"
         fontSize={{ base: 14, sm: 16, md: 18 }}
         fontWeight={300}
-        color="#ffffff"
+        color="white"
         mb={6}
       >
         {dustInfo.dataTime || INIT_DATA_TIME} 기준
@@ -88,7 +88,7 @@ const DustForecast = () => {
         maxWidth="38rem"
         margin="0 auto"
         borderRadius={10}
-        bg="#ffffff"
+        bg="white"
         mb={20}
         px={{ base: 6, sm: 14, md: 16 }}
         py={16}

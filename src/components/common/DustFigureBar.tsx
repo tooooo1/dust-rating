@@ -1,7 +1,7 @@
 import { Flex, Text, Progress } from '@chakra-ui/react';
 import { FINE_DUST, ULTRA_FINE_DUST, DUST_GRADE } from '@/utils/constants';
 
-export const DUST_GRADE_COLOR = {
+const DUST_GRADE_COLOR = {
   NONE: 'gray',
   DANGER: 'red',
   BAD: 'yellow',

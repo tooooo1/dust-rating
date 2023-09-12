@@ -67,7 +67,7 @@ const Choice = () => {
         </Select>
         <Button
           color="#ffffff"
-          bg="#3a9cbd"
+          bg={theme.colors.SECONDARY}
           px={4}
           fontSize={14}
           _hover={{ bg: '#2886A6' }}

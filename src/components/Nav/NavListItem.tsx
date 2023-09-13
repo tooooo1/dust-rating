@@ -1,6 +1,7 @@
 import { Button } from '@chakra-ui/react';
 import { Variants, motion } from 'framer-motion';
 import { PropsWithChildren } from 'react';
+import theme from '@/styles/theme';
 
 interface NavListItemProps {
   variants: Variants;
@@ -17,7 +18,7 @@ export const NavListItem = ({
       <Button
         fontSize={14}
         height={9}
-        _hover={{ bg: '#ffffff8f' }}
+        _hover={{ bg: theme.backgroundColors.NONE }}
         onClick={handleClick}
       >
         {children}

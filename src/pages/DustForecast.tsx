@@ -67,7 +67,7 @@ const DustForecast = () => {
         as="h1"
         fontSize={{ base: 16, sm: 18, md: 20 }}
         fontWeight={600}
-        color="#ffffff"
+        color="white"
         mt={10}
         mb={{ base: 2, sm: 3, md: 4 }}
       >
@@ -78,7 +78,7 @@ const DustForecast = () => {
         as="p"
         fontSize={{ base: 14, sm: 16, md: 18 }}
         fontWeight={300}
-        color="#ffffff"
+        color="white"
         mb={6}
       >
         {dustInfo.dataTime || INIT_DATA_TIME} 기준
@@ -88,7 +88,7 @@ const DustForecast = () => {
         maxWidth="38rem"
         margin="0 auto"
         borderRadius={10}
-        bg="#ffffff"
+        bg="white"
         mb={20}
         px={{ base: 6, sm: 14, md: 16 }}
         py={16}
@@ -97,7 +97,7 @@ const DustForecast = () => {
           alignItems="center"
           pb={10}
           mb={14}
-          borderBottom="1px solid #dfdfdf"
+          borderBottom={`1px solid ${theme.colors.BEIGE}`}
         >
           <CurrentDustInfo
             kindOfDust={FINE_DUST}
@@ -125,7 +125,7 @@ const DustForecast = () => {
           </Flex>
           <DustChart location={dustInfo.location} />
         </Box>
-        <Divider borderColor="#dfdfdf" mb={14} />
+        <Divider borderColor={theme.colors.BEIGE} mb={14} />
         <Box width="100%">
           <Text as="p" fontSize={{ base: 18, sm: 20 }} fontWeight={600} mb={6}>
             대기질 예보
@@ -139,7 +139,7 @@ const DustForecast = () => {
                 width="100%"
                 height={860}
                 borderRadius={12}
-                endColor="#dfdfdf"
+                endColor={theme.colors.BEIGE}
               />
             }
           >

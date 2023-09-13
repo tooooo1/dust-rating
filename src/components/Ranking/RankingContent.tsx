@@ -28,7 +28,7 @@ const RankingContent = ({
       width="100%"
       margin="0 auto"
       borderRadius={20}
-      bg="#ffffff"
+      bg="white"
       mb={20}
       px={{ base: '1rem', sm: 10, md: 16 }}
       py={10}
@@ -40,7 +40,7 @@ const RankingContent = ({
         px={8}
         py={3}
         borderRadius={25}
-        color="#ffffff"
+        color="white"
         bg={backgroundColor}
         transition="all 500ms ease-in-out"
       >

@@ -1,5 +1,6 @@
 import { Alert, AlertIcon, AlertTitle, Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import theme from '@/styles/theme';
 import { FallbackSizeType, fallbackSize } from '@/types/error';
 import { ROUTE, ERROR_MESSAGE } from '@/utils/constants';
 
@@ -35,11 +36,11 @@ const ErrorFallback = ({
         variant="outline"
         mt={4}
         borderWidth={2}
-        bg="#ffffff"
+        bg="white"
         opacity={1}
         fontSize={14}
         borderRadius={20}
-        _hover={{ bg: '#ffffff8f' }}
+        _hover={{ bg: theme.backgroundColors.NONE }}
         onClick={() => navigate(ROUTE.HOME)}
       >
         메인으로 돌아가기

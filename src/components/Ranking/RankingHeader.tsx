@@ -15,7 +15,7 @@ const RankingHeader = ({ dataTime }: RankingHeaderProps) => {
         as="h1"
         fontSize={{ base: 16, sm: 18, md: 20 }}
         fontWeight={600}
-        color="#ffffff"
+        color="white"
         mt={10}
         mb={{ base: 2, sm: 3, md: 4 }}
       >
@@ -25,7 +25,7 @@ const RankingHeader = ({ dataTime }: RankingHeaderProps) => {
         as="p"
         fontSize={{ base: 14, sm: 16, md: 18 }}
         fontWeight={300}
-        color="#ffffff"
+        color="white"
         mb={6}
       >
         {dataTime || INIT_DATA_TIME} 기준

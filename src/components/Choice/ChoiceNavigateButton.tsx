@@ -1,5 +1,6 @@
 import { Button } from '@chakra-ui/react';
 import { PropsWithChildren, ReactElement } from 'react';
+import theme from '@/styles/theme';
 
 interface ChoiceNavigateButtonProps {
   icon?: ReactElement;
@@ -15,11 +16,11 @@ export const ChoiceNavigateButton = ({
     <Button
       rightIcon={icon}
       mt="0.5rem"
-      color="#3a9cbd"
-      borderColor="#3a9cbd"
+      color={theme.colors.SECONDARY}
+      borderColor={theme.colors.SECONDARY}
       fontSize={14}
       borderWidth={2}
-      bg="#ffffff"
+      bg="white"
       opacity={0.8}
       borderRadius={20}
       onClick={handleClick}

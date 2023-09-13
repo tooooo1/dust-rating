@@ -18,6 +18,7 @@ export {
   INIT_DUST_SCALE,
   INIT_DUST_GRADE,
   INIT_STALE_TIME,
+  DUST_PERCENT_DENOMINATOR,
 } from '@/utils/constants/dust';
 export { ROUTE } from '@/utils/constants/route';
 export {
